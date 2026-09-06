@@ -1,0 +1,1158 @@
+{
+  "version": "2025",
+  "count": 128,
+  "questions": [
+    {
+      "n": 1,
+      "category": "American Government",
+      "question": "What is the form of government of the United States?",
+      "answer": "A republic (a constitution-based federal republic / representative democracy)",
+      "spoken": "A republic. Also acceptable: a constitution-based federal republic or representative democracy.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 2,
+      "category": "American Government",
+      "question": "What is the supreme law of the land?",
+      "answer": "The (U.S.) Constitution",
+      "spoken": "The U.S. Constitution.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 3,
+      "category": "American Government",
+      "question": "Name one thing the U.S. Constitution does.",
+      "answer": "Forms the government (also: defines the powers and parts of government; protects the rights of the people)",
+      "spoken": "Forms the government. Also acceptable: defines the powers and parts of government, or protects the rights of the people.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 4,
+      "category": "American Government",
+      "question": "The U.S. Constitution starts with the words \"We the People.\" What does \"We the People\" mean?",
+      "answer": "Self-government — the people govern themselves (popular sovereignty / consent of the governed)",
+      "spoken": "Self-government — the people govern themselves. Also acceptable: popular sovereignty or consent of the governed.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 5,
+      "category": "American Government",
+      "question": "How are changes made to the U.S. Constitution?",
+      "answer": "Through amendments (the amendment process)",
+      "spoken": "Through amendments, the amendment process.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 6,
+      "category": "American Government",
+      "question": "What does the Bill of Rights protect?",
+      "answer": "The basic rights of people living in the United States",
+      "spoken": "The basic rights of people living in the United States.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 7,
+      "category": "American Government",
+      "question": "How many amendments does the U.S. Constitution have?",
+      "answer": "Twenty-seven (27)",
+      "spoken": "Twenty-seven.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 8,
+      "category": "American Government",
+      "question": "Why is the Declaration of Independence important?",
+      "answer": "It says America is free from British control (it says all people are created equal; it identifies rights and freedoms)",
+      "spoken": "It says America is free from British control. Also acceptable: it says all people are created equal, or it identifies rights and freedoms.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 9,
+      "category": "American Government",
+      "question": "What founding document said the American colonies were free from Britain?",
+      "answer": "The Declaration of Independence",
+      "spoken": "The Declaration of Independence.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 10,
+      "category": "American Government",
+      "question": "Name two important ideas from the Declaration of Independence and the U.S. Constitution.",
+      "answer": "Equality and liberty (also: social contract, natural rights, limited government, self-government)",
+      "spoken": "Equality and liberty. Also acceptable: social contract, natural rights, limited government, self-government.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 11,
+      "category": "American Government",
+      "question": "The words \"Life, Liberty, and the pursuit of Happiness\" are in what founding document?",
+      "answer": "The Declaration of Independence",
+      "spoken": "The Declaration of Independence.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 12,
+      "category": "American Government",
+      "question": "What is the economic system of the United States?",
+      "answer": "A free-market economy (capitalism)",
+      "spoken": "A free-market economy, or capitalism.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 13,
+      "category": "American Government",
+      "question": "What is the rule of law?",
+      "answer": "Everyone must follow the law (no one is above the law, including leaders and the government)",
+      "spoken": "Everyone must follow the law. No one is above the law, including leaders and the government.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 14,
+      "category": "American Government",
+      "question": "Many documents influenced the U.S. Constitution. Name one.",
+      "answer": "The Declaration of Independence (also: Articles of Confederation, Federalist Papers, Magna Carta, Mayflower Compact)",
+      "spoken": "The Declaration of Independence. Also acceptable: Articles of Confederation, Federalist Papers, Magna Carta, Mayflower Compact.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 15,
+      "category": "American Government",
+      "question": "There are three branches of government. Why?",
+      "answer": "So no branch is too powerful — checks and balances / separation of powers",
+      "spoken": "So no branch is too powerful — checks and balances or separation of powers.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 16,
+      "category": "American Government",
+      "question": "Name the three branches of government.",
+      "answer": "Legislative (Congress), executive (the President), and judicial (the courts)",
+      "spoken": "Legislative: Congress. Executive: the President. Judicial: the courts.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 17,
+      "category": "American Government",
+      "question": "The President of the United States is in charge of which branch of government?",
+      "answer": "The executive branch",
+      "spoken": "The executive branch.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 18,
+      "category": "American Government",
+      "question": "What part of the federal government writes laws?",
+      "answer": "Congress (the legislative branch)",
+      "spoken": "Congress, the legislative branch.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 19,
+      "category": "American Government",
+      "question": "What are the two parts of the U.S. Congress?",
+      "answer": "The Senate and the House (of Representatives)",
+      "spoken": "The Senate and the House of Representatives.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 20,
+      "category": "American Government",
+      "question": "Name one power of the U.S. Congress.",
+      "answer": "Writes laws (also: declares war, makes the federal budget)",
+      "spoken": "Writes laws. Also acceptable: declares war, makes the federal budget.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 21,
+      "category": "American Government",
+      "question": "How many U.S. senators are there?",
+      "answer": "One hundred (100)",
+      "spoken": "One hundred.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 22,
+      "category": "American Government",
+      "question": "How long is a term for a U.S. senator?",
+      "answer": "Six (6) years",
+      "spoken": "Six years.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 23,
+      "category": "American Government",
+      "question": "Who is one of your state's U.S. senators now?",
+      "answer": "Depends on your state.",
+      "spoken": "This answer depends on your state. Look up your state's two U.S. senators before your interview.",
+      "dynamic": true,
+      "note": "Look this up for your state. District of Columbia residents and people in U.S. territories may answer that they have no U.S. senators."
+    },
+    {
+      "n": 24,
+      "category": "American Government",
+      "question": "How many voting members are in the House of Representatives?",
+      "answer": "Four hundred thirty-five (435)",
+      "spoken": "Four hundred thirty-five.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 25,
+      "category": "American Government",
+      "question": "How long is a term for a member of the House of Representatives?",
+      "answer": "Two (2) years",
+      "spoken": "Two years.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 26,
+      "category": "American Government",
+      "question": "Why do U.S. representatives serve shorter terms than U.S. senators?",
+      "answer": "To more closely follow public opinion",
+      "spoken": "To more closely follow public opinion.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 27,
+      "category": "American Government",
+      "question": "How many senators does each state have?",
+      "answer": "Two (2)",
+      "spoken": "Two.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 28,
+      "category": "American Government",
+      "question": "Why does each state have two senators?",
+      "answer": "For equal representation among the states (the Great / Connecticut Compromise)",
+      "spoken": "For equal representation among the states. Also acceptable: the Great Compromise, also called the Connecticut Compromise.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 29,
+      "category": "American Government",
+      "question": "Name your U.S. representative.",
+      "answer": "Depends on where you live.",
+      "spoken": "This answer depends on where you live. Look up your U.S. representative before your interview.",
+      "dynamic": true,
+      "note": "Look this up for your district. Residents of territories with non-voting Delegates or Resident Commissioners may name that person."
+    },
+    {
+      "n": 30,
+      "category": "American Government",
+      "question": "What is the name of the Speaker of the House of Representatives now?",
+      "answer": "Mike Johnson",
+      "spoken": "Mike Johnson. Verify this before your interview, current officials can change.",
+      "dynamic": true,
+      "note": "Current official — verify before your interview."
+    },
+    {
+      "n": 31,
+      "category": "American Government",
+      "question": "Who does a U.S. senator represent?",
+      "answer": "The people of their state",
+      "spoken": "The people of their state.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 32,
+      "category": "American Government",
+      "question": "Who elects U.S. senators?",
+      "answer": "Citizens from their state",
+      "spoken": "Citizens from their state.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 33,
+      "category": "American Government",
+      "question": "Who does a member of the House of Representatives represent?",
+      "answer": "The people in their (congressional) district",
+      "spoken": "The people in their congressional district.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 34,
+      "category": "American Government",
+      "question": "Who elects members of the House of Representatives?",
+      "answer": "Citizens from their (congressional) district",
+      "spoken": "Citizens from their congressional district.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 35,
+      "category": "American Government",
+      "question": "Some states have more representatives than other states. Why?",
+      "answer": "Because they have more people (the state's population)",
+      "spoken": "Because they have more people, the state's population.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 36,
+      "category": "American Government",
+      "question": "The President of the United States is elected for how many years?",
+      "answer": "Four (4) years",
+      "spoken": "Four years.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 37,
+      "category": "American Government",
+      "question": "The President of the United States can serve only two terms. Why?",
+      "answer": "Because of the 22nd Amendment (to keep the president from becoming too powerful)",
+      "spoken": "Because of the 22nd Amendment to keep the president from becoming too powerful.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 38,
+      "category": "American Government",
+      "question": "What is the name of the President of the United States now?",
+      "answer": "Donald J. Trump",
+      "spoken": "Donald J. Trump. Verify this before your interview, current officials can change.",
+      "dynamic": true,
+      "note": "Current official — verify before your interview."
+    },
+    {
+      "n": 39,
+      "category": "American Government",
+      "question": "What is the name of the Vice President of the United States now?",
+      "answer": "JD Vance",
+      "spoken": "JD Vance. Verify this before your interview, current officials can change.",
+      "dynamic": true,
+      "note": "Current official — verify before your interview."
+    },
+    {
+      "n": 40,
+      "category": "American Government",
+      "question": "If the President can no longer serve, who becomes President?",
+      "answer": "The Vice President",
+      "spoken": "The Vice President.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 41,
+      "category": "American Government",
+      "question": "Name one power of the President.",
+      "answer": "Signs bills into law (also: vetoes bills, enforces laws, commander in chief, appoints judges)",
+      "spoken": "Signs bills into law. Also acceptable: vetoes bills, enforces laws, commander in chief, appoints judges.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 42,
+      "category": "American Government",
+      "question": "Who is the Commander in Chief of the U.S. military?",
+      "answer": "The President",
+      "spoken": "The President.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 43,
+      "category": "American Government",
+      "question": "Who signs bills to become laws?",
+      "answer": "The President",
+      "spoken": "The President.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 44,
+      "category": "American Government",
+      "question": "Who vetoes bills?",
+      "answer": "The President",
+      "spoken": "The President.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 45,
+      "category": "American Government",
+      "question": "Who appoints federal judges?",
+      "answer": "The President",
+      "spoken": "The President.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 46,
+      "category": "American Government",
+      "question": "The executive branch has many parts. Name one.",
+      "answer": "The President (also: the Cabinet, federal departments and agencies)",
+      "spoken": "The President. Also acceptable: the Cabinet, federal departments and agencies.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 47,
+      "category": "American Government",
+      "question": "What does the President's Cabinet do?",
+      "answer": "Advises the President",
+      "spoken": "Advises the President.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 48,
+      "category": "American Government",
+      "question": "What are two Cabinet-level positions?",
+      "answer": "Two examples: Secretary of State and Secretary of Transportation (any two department secretaries, the Attorney General, or the Vice President)",
+      "spoken": "For example: Secretary of State and Secretary of Transportation. Any two department secretaries, the Attorney General, or the Vice President are acceptable.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 49,
+      "category": "American Government",
+      "question": "Why is the Electoral College important?",
+      "answer": "It decides who is elected President",
+      "spoken": "It decides who is elected President.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 50,
+      "category": "American Government",
+      "question": "What is one part of the judicial branch?",
+      "answer": "The Supreme Court (also: federal courts)",
+      "spoken": "The Supreme Court. Also acceptable: federal courts.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 51,
+      "category": "American Government",
+      "question": "What does the judicial branch do?",
+      "answer": "Reviews and explains laws (decides if a law goes against the Constitution; resolves disputes)",
+      "spoken": "Reviews and explains laws. Also acceptable: decides if a law goes against the Constitution, or resolves disputes.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 52,
+      "category": "American Government",
+      "question": "What is the highest court in the United States?",
+      "answer": "The Supreme Court",
+      "spoken": "The Supreme Court.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 53,
+      "category": "American Government",
+      "question": "How many seats are on the Supreme Court?",
+      "answer": "Nine (9)",
+      "spoken": "Nine.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 54,
+      "category": "American Government",
+      "question": "How many Supreme Court justices are usually needed to decide a case?",
+      "answer": "Five (5)",
+      "spoken": "Five.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 55,
+      "category": "American Government",
+      "question": "How long do Supreme Court justices serve?",
+      "answer": "For life (until they resign, retire, die, or are removed)",
+      "spoken": "For life until they resign, retire, die, or are removed.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 56,
+      "category": "American Government",
+      "question": "Supreme Court justices serve for life. Why?",
+      "answer": "To be independent (of politics / outside influence)",
+      "spoken": "To be independent of politics or outside influence.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 57,
+      "category": "American Government",
+      "question": "Who is the Chief Justice of the United States now?",
+      "answer": "John Roberts (John G. Roberts, Jr.)",
+      "spoken": "John Roberts. Verify this before your interview, current officials can change.",
+      "dynamic": true,
+      "note": "Current official — verify before your interview."
+    },
+    {
+      "n": 58,
+      "category": "American Government",
+      "question": "Name one power that is only for the federal government.",
+      "answer": "Print paper money (also: declare war, create an army, make treaties, set foreign policy)",
+      "spoken": "Print paper money. Also acceptable: declare war, create an army, make treaties, set foreign policy.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 59,
+      "category": "American Government",
+      "question": "Name one power that is only for the states.",
+      "answer": "Give a driver's license (also: provide schooling/education, provide police and fire departments)",
+      "spoken": "Give a driver's license. Also acceptable: provide schooling or education, provide police and fire departments.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 60,
+      "category": "American Government",
+      "question": "What is the purpose of the 10th Amendment?",
+      "answer": "Powers not given to the federal government belong to the states or the people",
+      "spoken": "Powers not given to the federal government belong to the states or the people.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 61,
+      "category": "American Government",
+      "question": "Who is the governor of your state now?",
+      "answer": "Depends on your state.",
+      "spoken": "This answer depends on your state. Look up your governor before your interview.",
+      "dynamic": true,
+      "note": "Look this up for your state. Territory residents may name their governor; D.C. residents may answer that D.C. does not have a governor."
+    },
+    {
+      "n": 62,
+      "category": "American Government",
+      "question": "What is the capital of your state?",
+      "answer": "Depends on your state.",
+      "spoken": "This answer depends on your state. Look up your state capital before your interview.",
+      "dynamic": true,
+      "note": "Look this up for your state. D.C. residents may answer that D.C. is not a state and has no capital; territory residents may name their capital."
+    },
+    {
+      "n": 63,
+      "category": "American Government",
+      "question": "There are four amendments to the U.S. Constitution about who can vote. Describe one of them.",
+      "answer": "Any citizen can vote (also: you don't have to pay a poll tax; any citizen 18 and older can vote; men and women can vote)",
+      "spoken": "Any citizen can vote. Also acceptable: you don't have to pay a poll tax, or any citizen 18 and older can vote, or men and women can vote.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 64,
+      "category": "American Government",
+      "question": "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?",
+      "answer": "Citizens",
+      "spoken": "Citizens.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 65,
+      "category": "American Government",
+      "question": "What are three rights of everyone living in the United States?",
+      "answer": "Freedom of speech, freedom of religion, and freedom of assembly (any three: also freedom of the press, the right to bear arms, freedom to petition the government)",
+      "spoken": "Freedom of speech, freedom of religion, and freedom of assembly. Also acceptable: freedom of the press, the right to bear arms, or freedom to petition the government.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 66,
+      "category": "American Government",
+      "question": "What do we show loyalty to when we say the Pledge of Allegiance?",
+      "answer": "The United States (and the flag)",
+      "spoken": "The United States and the flag.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 67,
+      "category": "American Government",
+      "question": "Name two promises that new citizens make in the Oath of Allegiance.",
+      "answer": "To obey the laws of the United States and to be loyal to the United States (also: give up loyalty to other countries, defend the Constitution, serve the nation if needed)",
+      "spoken": "To obey the laws of the United States and to be loyal to the United States. Also acceptable: give up loyalty to other countries, defend the Constitution, serve the nation if needed.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 68,
+      "category": "American Government",
+      "question": "How can people become United States citizens?",
+      "answer": "Be born in the United States (under the 14th Amendment), or naturalize; people can also become citizens through their parents under conditions set by Congress",
+      "spoken": "Be born in the United States under the 14th Amendment, or naturalize. People can also become citizens through their parents under conditions set by Congress.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 69,
+      "category": "American Government",
+      "question": "What are two examples of civic participation in the United States?",
+      "answer": "Vote and run for office (also: join a political party, call your senator or representative, join a community group, give an elected official your opinion)",
+      "spoken": "Vote and run for office. Also acceptable: join a political party, call your senator or representative, join a community group, give an elected official your opinion.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 70,
+      "category": "American Government",
+      "question": "What is one way Americans can serve their country?",
+      "answer": "Vote (also: pay taxes, serve on a jury, join the military, run for office, do community service)",
+      "spoken": "Vote. Also acceptable: pay taxes, serve on a jury, join the military, run for office, do community service.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 71,
+      "category": "American Government",
+      "question": "Why is it important to pay federal taxes?",
+      "answer": "It is required by law (all people who earn money must pay; taxes fund the government)",
+      "spoken": "It is required by law. Also acceptable: all people who earn money must pay, or taxes fund the government.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 72,
+      "category": "American Government",
+      "question": "It is important for all men age 18 through 25 to register for the Selective Service. Name one reason why.",
+      "answer": "It is required by law (so men can be called to serve if needed)",
+      "spoken": "It is required by law so men can be called to serve if needed.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 73,
+      "category": "American History",
+      "question": "The colonists came to America for many reasons. Name one.",
+      "answer": "Freedom (also: political liberty, religious freedom, economic opportunity, to escape persecution)",
+      "spoken": "Freedom. Also acceptable: political liberty, religious freedom, economic opportunity, to escape persecution.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 74,
+      "category": "American History",
+      "question": "Who lived in America before the Europeans arrived?",
+      "answer": "Native Americans (American Indians)",
+      "spoken": "Native Americans, also called American Indians.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 75,
+      "category": "American History",
+      "question": "What group of people was taken and sold as slaves?",
+      "answer": "Africans (people from Africa)",
+      "spoken": "Africans, people from Africa.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 76,
+      "category": "American History",
+      "question": "What war did the Americans fight to win independence from Britain?",
+      "answer": "The American Revolution (the Revolutionary War)",
+      "spoken": "The American Revolution, also called the Revolutionary War.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 77,
+      "category": "American History",
+      "question": "Name one reason why the Americans declared independence from Britain.",
+      "answer": "High taxes (taxation without representation; also: British soldiers stayed in their houses; they didn't have self-government)",
+      "spoken": "High taxes, taxation without representation. Also acceptable: British soldiers stayed in their houses, or they didn't have self-government.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 78,
+      "category": "American History",
+      "question": "Who wrote the Declaration of Independence?",
+      "answer": "Thomas Jefferson",
+      "spoken": "Thomas Jefferson.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 79,
+      "category": "American History",
+      "question": "When was the Declaration of Independence adopted?",
+      "answer": "July 4, 1776",
+      "spoken": "July 4, 1776.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 80,
+      "category": "American History",
+      "question": "The American Revolution had many important events. Name one.",
+      "answer": "The Declaration of Independence (also: the Battle of Bunker Hill, the Battle of Saratoga, the Battle of Yorktown, Washington crossing the Delaware)",
+      "spoken": "The Declaration of Independence. Also acceptable: the Battle of Bunker Hill, the Battle of Saratoga, the Battle of Yorktown, Washington crossing the Delaware.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 81,
+      "category": "American History",
+      "question": "There were 13 original states. Name five.",
+      "answer": "Any five: Massachusetts, New York, New Hampshire, New Jersey, Delaware, Connecticut, Rhode Island, Pennsylvania, Maryland, Virginia, North Carolina, South Carolina, Georgia",
+      "spoken": "Any five: Massachusetts, New York, New Hampshire, New Jersey, Delaware, Connecticut, Rhode Island, Pennsylvania, Maryland, Virginia, North Carolina, South Carolina, Georgia.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 82,
+      "category": "American History",
+      "question": "What founding document was written in 1787?",
+      "answer": "The (U.S.) Constitution",
+      "spoken": "The U.S. Constitution.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 83,
+      "category": "American History",
+      "question": "The Federalist Papers supported the passage of the U.S. Constitution. Name one of the writers.",
+      "answer": "James Madison (also: Alexander Hamilton, John Jay; published under the name Publius)",
+      "spoken": "James Madison. Also acceptable: Alexander Hamilton, or John Jay. They published under the name Publius.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 84,
+      "category": "American History",
+      "question": "Why were the Federalist Papers important?",
+      "answer": "They helped people understand the U.S. Constitution (and supported its ratification)",
+      "spoken": "They helped people understand the U.S. Constitution and supported its ratification.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 85,
+      "category": "American History",
+      "question": "Benjamin Franklin is famous for many things. Name one.",
+      "answer": "U.S. diplomat (also: oldest member of the Constitutional Convention, first Postmaster General, writer of Poor Richard's Almanac, started the first free libraries)",
+      "spoken": "U.S. diplomat. Also acceptable: oldest member of the Constitutional Convention, first Postmaster General, writer of Poor Richard's Almanac, started the first free libraries.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 86,
+      "category": "American History",
+      "question": "George Washington is famous for many things. Name one.",
+      "answer": "First President of the United States (the “Father of Our Country”; general of the Continental Army)",
+      "spoken": "First President of the United States. Also acceptable: the \"Father of Our Country\", or general of the Continental Army.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 87,
+      "category": "American History",
+      "question": "Thomas Jefferson is famous for many things. Name one.",
+      "answer": "Writer of the Declaration of Independence (also: third President, founded the University of Virginia, first Secretary of State)",
+      "spoken": "Writer of the Declaration of Independence. Also acceptable: third President, founded the University of Virginia, first Secretary of State.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 88,
+      "category": "American History",
+      "question": "James Madison is famous for many things. Name one.",
+      "answer": "One of the writers of the Federalist Papers (“Father of the Constitution”; fourth President)",
+      "spoken": "One of the writers of the Federalist Papers. Also acceptable: \"Father of the Constitution\", or fourth President.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 89,
+      "category": "American History",
+      "question": "Alexander Hamilton is famous for many things. Name one.",
+      "answer": "One of the writers of the Federalist Papers (first Secretary of the Treasury; founder of the national bank)",
+      "spoken": "One of the writers of the Federalist Papers. Also acceptable: first Secretary of the Treasury, or founder of the national bank.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 90,
+      "category": "American History",
+      "question": "What territory did the United States buy from France in 1803?",
+      "answer": "The Louisiana Territory (Louisiana)",
+      "spoken": "The Louisiana Territory Louisiana.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 91,
+      "category": "American History",
+      "question": "Name one war fought by the United States in the 1800s.",
+      "answer": "The Civil War (also: the War of 1812, the Mexican-American War, the Spanish-American War)",
+      "spoken": "The Civil War. Also acceptable: the War of 1812, the Mexican-American War, the Spanish-American War.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 92,
+      "category": "American History",
+      "question": "Name the U.S. war between the North and the South.",
+      "answer": "The Civil War",
+      "spoken": "The Civil War.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 93,
+      "category": "American History",
+      "question": "The Civil War had many important events. Name one.",
+      "answer": "The Emancipation Proclamation (also: the Battle of Gettysburg, the Gettysburg Address, the surrender at Appomattox, the assassination of Lincoln)",
+      "spoken": "The Emancipation Proclamation. Also acceptable: the Battle of Gettysburg, the Gettysburg Address, the surrender at Appomattox, the assassination of Lincoln.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 94,
+      "category": "American History",
+      "question": "Abraham Lincoln is famous for many things. Name one.",
+      "answer": "He freed the slaves (Emancipation Proclamation); saved the Union; was President during the Civil War",
+      "spoken": "He freed the slaves with the Emancipation Proclamation. Also acceptable: he saved the Union, or was President during the Civil War.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 95,
+      "category": "American History",
+      "question": "What did the Emancipation Proclamation do?",
+      "answer": "Freed the slaves (in the Confederate states)",
+      "spoken": "Freed the slaves in the Confederate states.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 96,
+      "category": "American History",
+      "question": "What U.S. war ended slavery?",
+      "answer": "The Civil War",
+      "spoken": "The Civil War.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 97,
+      "category": "American History",
+      "question": "What amendment says all persons born or naturalized in the United States, and subject to the jurisdiction thereof, are U.S. citizens?",
+      "answer": "The 14th Amendment",
+      "spoken": "The 14th Amendment.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 98,
+      "category": "American History",
+      "question": "When did all men get the right to vote?",
+      "answer": "After the Civil War (with the 15th Amendment)",
+      "spoken": "After the Civil War with the 15th Amendment.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 99,
+      "category": "American History",
+      "question": "Name one leader of the women's rights movement in the 1800s.",
+      "answer": "Susan B. Anthony (also: Elizabeth Cady Stanton, Sojourner Truth, Harriet Tubman, Lucretia Mott)",
+      "spoken": "Susan B. Anthony. Also acceptable: Elizabeth Cady Stanton, Sojourner Truth, Harriet Tubman, Lucretia Mott.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 100,
+      "category": "American History",
+      "question": "Name one war fought by the United States in the 1900s.",
+      "answer": "World War I (also: World War II, the Korean War, the Vietnam War, the Persian Gulf War)",
+      "spoken": "World War I. Also acceptable: World War II, the Korean War, the Vietnam War, the Persian Gulf War.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 101,
+      "category": "American History",
+      "question": "Why did the United States enter World War I?",
+      "answer": "To support the Allied powers (also: because Germany attacked U.S. ships; the Zimmermann Telegram)",
+      "spoken": "To support the Allied powers. Also acceptable: because Germany attacked U.S. ships, or the Zimmermann Telegram.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 102,
+      "category": "American History",
+      "question": "When did all women get the right to vote?",
+      "answer": "After World War I (1920, with the 19th Amendment)",
+      "spoken": "After World War I, in 1920, with the 19th Amendment.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 103,
+      "category": "American History",
+      "question": "What was the Great Depression?",
+      "answer": "The longest economic recession in modern history (a long period when many people were out of work and poor)",
+      "spoken": "The longest economic recession in modern history a long period when many people were out of work and poor.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 104,
+      "category": "American History",
+      "question": "When did the Great Depression start?",
+      "answer": "The stock market crash of 1929",
+      "spoken": "The stock market crash of 1929.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 105,
+      "category": "American History",
+      "question": "Who was President during the Great Depression and World War II?",
+      "answer": "(Franklin) Roosevelt",
+      "spoken": "Franklin Roosevelt.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 106,
+      "category": "American History",
+      "question": "Why did the United States enter World War II?",
+      "answer": "To support the Allied powers (also: after the Japanese attack on Pearl Harbor)",
+      "spoken": "To support the Allied powers. Also acceptable: after the Japanese attack on Pearl Harbor.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 107,
+      "category": "American History",
+      "question": "Dwight Eisenhower is famous for many things. Name one.",
+      "answer": "General during World War II (also: 34th President, Supreme Allied Commander, started the Interstate Highway System)",
+      "spoken": "General during World War II. Also acceptable: 34th President, Supreme Allied Commander, started the Interstate Highway System.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 108,
+      "category": "American History",
+      "question": "Who was the United States' main rival during the Cold War?",
+      "answer": "The Soviet Union (Russia)",
+      "spoken": "The Soviet Union, or Russia.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 109,
+      "category": "American History",
+      "question": "During the Cold War, what was one main concern of the United States?",
+      "answer": "Communism (also: the spread of communism, nuclear war)",
+      "spoken": "Communism. Also acceptable: the spread of communism, nuclear war.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 110,
+      "category": "American History",
+      "question": "Why did the United States enter the Korean War?",
+      "answer": "To stop the spread of communism",
+      "spoken": "To stop the spread of communism.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 111,
+      "category": "American History",
+      "question": "Why did the United States enter the Vietnam War?",
+      "answer": "To stop the spread of communism",
+      "spoken": "To stop the spread of communism.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 112,
+      "category": "American History",
+      "question": "What did the civil rights movement do?",
+      "answer": "Fought to end racial discrimination",
+      "spoken": "Fought to end racial discrimination.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 113,
+      "category": "American History",
+      "question": "Martin Luther King, Jr. is famous for many things. Name one.",
+      "answer": "He fought for civil rights (also: worked for equality for all Americans; gave the “I Have a Dream” speech)",
+      "spoken": "He fought for civil rights. Also acceptable: worked for equality for all Americans, or gave the \"I Have a Dream\" speech.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 114,
+      "category": "American History",
+      "question": "Why did the United States enter the Persian Gulf War?",
+      "answer": "To force the Iraqi military out of Kuwait",
+      "spoken": "To force the Iraqi military out of Kuwait.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 115,
+      "category": "American History",
+      "question": "What major event happened on September 11, 2001 in the United States?",
+      "answer": "Terrorists attacked the United States",
+      "spoken": "Terrorists attacked the United States.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 116,
+      "category": "American History",
+      "question": "Name one U.S. military conflict after the September 11, 2001 attacks.",
+      "answer": "The War in Afghanistan (also: the War in Iraq / Operation Enduring Freedom / Operation Iraqi Freedom)",
+      "spoken": "The War in Afghanistan. Also acceptable: the War in Iraq or Operation Enduring Freedom or Operation Iraqi Freedom.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 117,
+      "category": "American History",
+      "question": "Name one American Indian tribe in the United States.",
+      "answer": "For example: Hopi, Navajo, Cherokee, Sioux, Apache, Iroquois, Pueblo, Chippewa, Choctaw, Seminole (any federally recognized tribe)",
+      "spoken": "For example: Hopi, Navajo, Cherokee, Sioux, Apache, Iroquois, Pueblo, Chippewa, Choctaw, or Seminole. Any federally recognized tribe is acceptable.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 118,
+      "category": "American History",
+      "question": "Name one example of an American innovation.",
+      "answer": "The airplane (also: the light bulb, the assembly line, the moon landing, the integrated circuit / microchip)",
+      "spoken": "The airplane. Also acceptable: the light bulb, the assembly line, the moon landing, the integrated circuit or microchip.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 119,
+      "category": "Symbols & Holidays",
+      "question": "What is the capital of the United States?",
+      "answer": "Washington, D.C.",
+      "spoken": "Washington, D.C.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 120,
+      "category": "Symbols & Holidays",
+      "question": "Where is the Statue of Liberty?",
+      "answer": "New York Harbor (Liberty Island; also acceptable: New Jersey, near New York City, on the Hudson River)",
+      "spoken": "New York Harbor, Liberty Island. Also acceptable: New Jersey, near New York City, or on the Hudson River.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 121,
+      "category": "Symbols & Holidays",
+      "question": "Why does the flag have 13 stripes?",
+      "answer": "Because there were 13 original colonies",
+      "spoken": "Because there were 13 original colonies.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 122,
+      "category": "Symbols & Holidays",
+      "question": "Why does the flag have 50 stars?",
+      "answer": "Because there are 50 states",
+      "spoken": "Because there are 50 states.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 123,
+      "category": "Symbols & Holidays",
+      "question": "What is the name of the national anthem?",
+      "answer": "The Star-Spangled Banner",
+      "spoken": "The Star-Spangled Banner.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 124,
+      "category": "Symbols & Holidays",
+      "question": "The Nation's first motto was \"E Pluribus Unum.\" What does that mean?",
+      "answer": "“Out of many, one”",
+      "spoken": "\"Out of many, one\".",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 125,
+      "category": "Symbols & Holidays",
+      "question": "What is Independence Day?",
+      "answer": "A holiday celebrating the country's birthday (the adoption of the Declaration of Independence — the Fourth of July)",
+      "spoken": "A holiday celebrating the country's birthday: the adoption of the Declaration of Independence, the Fourth of July.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 126,
+      "category": "Symbols & Holidays",
+      "question": "Name three national U.S. holidays.",
+      "answer": "For example: Independence Day, Thanksgiving, and Christmas (also: New Year's Day, Memorial Day, Labor Day, Veterans Day, Martin Luther King Jr. Day, Presidents' Day, Juneteenth, Columbus Day)",
+      "spoken": "For example: Independence Day, Thanksgiving, and Christmas. Also acceptable: New Year's Day, Memorial Day, Labor Day, Veterans Day, Martin Luther King Jr. Day, Presidents' Day, Juneteenth, Columbus Day.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 127,
+      "category": "Symbols & Holidays",
+      "question": "What is Memorial Day?",
+      "answer": "A holiday to honor soldiers who died in military service",
+      "spoken": "A holiday to honor soldiers who died in military service.",
+      "dynamic": false,
+      "note": null
+    },
+    {
+      "n": 128,
+      "category": "Symbols & Holidays",
+      "question": "What is Veterans Day?",
+      "answer": "A holiday to honor people who served in the U.S. military",
+      "spoken": "A holiday to honor people who served in the U.S. military.",
+      "dynamic": false,
+      "note": null
+    }
+  ]
+}
