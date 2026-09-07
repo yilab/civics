@@ -139,8 +139,15 @@ final class StudyEngine {
     private func speakQuestionAt(_ position: Int) {
         cancelTimer()
         let q = deck[position]
-        let text = settings.value.announceMeta ? "Question \(q.n). \(q.question)" : q.question
-        speak("q-\(q.n)", text: text)
+        let mode = settings.value.speechMode
+        // english/bilingual start with the English question; chinese goes straight to zh
+        // (falling back to English when no translation exists).
+        if mode == .chinese, q.questionZh != nil {
+            speak("zq-\(q.n)", text: zhQuestionText(q), language: .chinese)
+        } else {
+            let text = settings.value.announceMeta ? "Question \(q.n). \(q.question)" : q.question
+            speak("q-\(q.n)", text: text, language: .english)
+        }
         emit(state.copy(
             phase: .speakingQuestion,
             position: position,
@@ -152,17 +159,40 @@ final class StudyEngine {
     private func revealAnswer() {
         cancelTimer()
         guard let q = state.current else { return }
-        speak("a-\(q.n)", text: q.spoken)
+        if settings.value.speechMode == .chinese, let spokenZh = q.spokenZh {
+            speak("za-\(q.n)", text: spokenZh, language: .chinese)
+        } else {
+            speak("a-\(q.n)", text: q.spoken, language: .english)
+        }
         emit(state.copy(phase: .speakingAnswer, answerRevealed: true))
     }
 
     private func onUtteranceDone(_ utteranceID: String) {
         guard utteranceID == expectedUtterance else { return }
-        switch utteranceID.prefix(2) {
-        case "q-": beginThinkPause()
-        case "a-": beginAwaitingAdvance()
-        default: break
+        let mode = settings.value.speechMode
+        // z-prefixed ids must be checked before their English counterparts.
+        if utteranceID.hasPrefix("zq-") {
+            beginThinkPause()
+        } else if utteranceID.hasPrefix("za-") {
+            beginAwaitingAdvance()
+        } else if utteranceID.hasPrefix("q-") {
+            if mode == .bilingual, let q = state.current, let qZh = q.questionZh {
+                speak("zq-\(q.n)", text: zhQuestionText(q), language: .chinese)
+            } else {
+                beginThinkPause()
+            }
+        } else if utteranceID.hasPrefix("a-") {
+            if mode == .bilingual, let q = state.current, let spokenZh = q.spokenZh {
+                speak("za-\(q.n)", text: spokenZh, language: .chinese)
+            } else {
+                beginAwaitingAdvance()
+            }
         }
+    }
+
+    private func zhQuestionText(_ q: Question) -> String {
+        guard let qZh = q.questionZh else { return q.question }
+        return settings.value.announceMeta ? "第 \(q.n) 题。 \(qZh)" : qZh
     }
 
     private func onUtteranceError(_ utteranceID: String) {
@@ -208,9 +238,9 @@ final class StudyEngine {
 
     // ------------------------------------------------------------------ helpers
 
-    private func speak(_ utteranceID: String, text: String) {
+    private func speak(_ utteranceID: String, text: String, language: SpeechLanguage) {
         expectedUtterance = utteranceID
-        speech.speak(utteranceID: utteranceID, text: text)
+        speech.speak(utteranceID: utteranceID, text: text, language: language)
     }
 
     private func cancelTimer() {

@@ -33,6 +33,10 @@ class QuestionRepository(private val jsonSource: () -> String) {
                     spoken = o.getString("spoken"),
                     dynamic = o.optBoolean("dynamic", false),
                     note = if (o.isNull("note")) null else o.getString("note"),
+                    questionZh = o.optString("questionZh").ifBlank { null },
+                    answerZh = o.optString("answerZh").ifBlank { null },
+                    spokenZh = o.optString("spokenZh").ifBlank { null },
+                    noteZh = o.optString("noteZh").ifBlank { null },
                 )
             }
         }

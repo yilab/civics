@@ -17,9 +17,13 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.yilab.civics.R
 import com.yilab.civics.data.Categories
+import com.yilab.civics.settings.SpeechMode
 import com.yilab.civics.settings.StudySettings
+import com.yilab.civics.settings.UiLanguage
 import java.util.Locale
 import kotlin.math.round
 
@@ -36,9 +40,12 @@ fun SettingsScreen(
             .padding(horizontal = 20.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
-        SettingsSection("Voice") {
+        SettingsSection(R.string.settings_voice) {
             Text(
-                "Speech rate: ${String.format(Locale.US, "%.2f", settings.speechRate)}×",
+                stringResource(
+                    R.string.settings_speech_rate,
+                    String.format(Locale.US, "%.2f", settings.speechRate),
+                ),
                 style = MaterialTheme.typography.bodyLarge,
             )
             Slider(
@@ -47,21 +54,58 @@ fun SettingsScreen(
                 valueRange = 0.75f..1.5f,
             )
             SwitchRow(
-                label = "Announce question number",
+                label = stringResource(R.string.settings_announce_meta),
                 checked = settings.announceMeta,
                 onCheckedChange = { v -> onChange { it.copy(announceMeta = v) } },
             )
-        }
-
-        SettingsSection("Playback") {
-            Text("Pause before revealing the answer", style = MaterialTheme.typography.bodyLarge)
+            Text(
+                stringResource(R.string.settings_speech_language),
+                style = MaterialTheme.typography.bodyLarge,
+            )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(
-                    StudySettings.THINK_WAIT_FOR_PRESS to "Wait",
-                    0 to "None",
-                    3 to "3s",
-                    5 to "5s",
-                    10 to "10s",
+                    SpeechMode.ENGLISH to R.string.mode_english,
+                    SpeechMode.BILINGUAL to R.string.mode_bilingual,
+                    SpeechMode.CHINESE to R.string.mode_chinese,
+                ).forEach { (mode, labelRes) ->
+                    FilterChip(
+                        selected = settings.speechMode == mode,
+                        onClick = { onChange { it.copy(speechMode = mode) } },
+                        label = { Text(stringResource(labelRes)) },
+                    )
+                }
+            }
+        }
+
+        SettingsSection(R.string.settings_language) {
+            Text(
+                stringResource(R.string.settings_ui_language),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                listOf(
+                    UiLanguage.SYSTEM to R.string.ui_system,
+                    UiLanguage.ENGLISH to R.string.ui_english,
+                    UiLanguage.CHINESE to R.string.ui_chinese,
+                ).forEach { (lang, labelRes) ->
+                    FilterChip(
+                        selected = settings.uiLanguage == lang,
+                        onClick = { onChange { it.copy(uiLanguage = lang) } },
+                        label = { Text(stringResource(labelRes)) },
+                    )
+                }
+            }
+        }
+
+        SettingsSection(R.string.settings_playback) {
+            Text(stringResource(R.string.settings_think_pause), style = MaterialTheme.typography.bodyLarge)
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                listOf(
+                    StudySettings.THINK_WAIT_FOR_PRESS to stringResource(R.string.think_wait),
+                    0 to stringResource(R.string.think_none),
+                    3 to stringResource(R.string.think_seconds, 3),
+                    5 to stringResource(R.string.think_seconds, 5),
+                    10 to stringResource(R.string.think_seconds, 10),
                 ).forEach { (seconds, label) ->
                     FilterChip(
                         selected = settings.thinkSeconds == seconds,
@@ -71,46 +115,46 @@ fun SettingsScreen(
                 }
             }
             SwitchRow(
-                label = "Auto-advance after the answer",
+                label = stringResource(R.string.settings_auto_advance),
                 checked = settings.autoAdvance,
                 onCheckedChange = { v -> onChange { it.copy(autoAdvance = v) } },
             )
         }
 
-        SettingsSection("Deck") {
+        SettingsSection(R.string.settings_deck) {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Categories.values.forEach { cat ->
                     FilterChip(
                         selected = settings.category == cat,
                         onClick = { onChange { it.copy(category = cat) } },
-                        label = { Text(if (cat == Categories.ALL) "All 128 questions" else cat) },
+                        label = { Text(categoryLabel(cat)) },
                     )
                 }
             }
             SwitchRow(
-                label = "Shuffle",
+                label = stringResource(R.string.settings_shuffle),
                 checked = settings.shuffle,
                 onCheckedChange = { v -> onChange { it.copy(shuffle = v) } },
             )
         }
 
-        SettingsSection("Progress") {
+        SettingsSection(R.string.settings_progress) {
             Text(
-                "${settings.known.size} of 128 marked as known",
+                stringResource(R.string.settings_known_progress, settings.known.size),
                 style = MaterialTheme.typography.bodyLarge,
             )
             TextButton(onClick = { onChange { it.copy(known = emptySet()) } }) {
-                Text("Clear known marks")
+                Text(stringResource(R.string.settings_clear_known))
             }
         }
     }
 }
 
 @Composable
-private fun SettingsSection(title: String, content: @Composable () -> Unit) {
+private fun SettingsSection(titleRes: Int, content: @Composable () -> Unit) {
     Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
         Text(
-            title.uppercase(),
+            stringResource(titleRes).uppercase(),
             style = MaterialTheme.typography.labelMedium,
             color = MaterialTheme.colorScheme.primary,
         )

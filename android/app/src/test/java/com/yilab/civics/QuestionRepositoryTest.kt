@@ -53,4 +53,20 @@ class QuestionRepositoryTest {
         assertEquals(ordered.toSet(), shuffled.toSet())
         assertNotEquals(ordered, shuffled)
     }
+
+    @Test
+    fun `every question has a chinese version`() {
+        repo.questions.forEach { q ->
+            assertTrue("blank questionZh for Q${q.n}", !q.questionZh.isNullOrBlank())
+            assertTrue("blank answerZh for Q${q.n}", !q.answerZh.isNullOrBlank())
+            assertTrue("blank spokenZh for Q${q.n}", !q.spokenZh.isNullOrBlank())
+            // TTS-clean: no ASCII or full-width parentheses, like the English spoken field.
+            val spoken = q.spokenZh.orEmpty()
+            assertTrue(
+                "spokenZh has parens for Q${q.n}",
+                '(' !in spoken && ')' !in spoken && '（' !in spoken && '）' !in spoken,
+            )
+            if (q.dynamic) assertTrue("dynamic Q${q.n} should carry a noteZh", q.noteZh != null)
+        }
+    }
 }

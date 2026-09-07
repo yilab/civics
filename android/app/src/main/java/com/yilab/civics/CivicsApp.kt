@@ -2,13 +2,19 @@ package com.yilab.civics
 
 import android.app.Application
 import com.yilab.civics.audio.AndroidSpeechEngine
+import com.yilab.civics.audio.SpeechLanguage
 import com.yilab.civics.audio.StudyEngine
 import com.yilab.civics.data.QuestionRepository
 import com.yilab.civics.settings.SettingsRepository
+import com.yilab.civics.settings.SpeechMode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 class CivicsApp : Application() {
@@ -21,15 +27,27 @@ class CivicsApp : Application() {
         private set
     lateinit var studyEngine: StudyEngine
         private set
+    private lateinit var speech: AndroidSpeechEngine
 
-    /** False when no usable TTS engine/voice is installed; the UI surfaces a warning. */
-    val ttsAvailable = MutableStateFlow(true)
+    private val speechReady = MutableStateFlow(false)
+
+    /** False when a voice required by the current speech mode is missing; the UI surfaces a warning. */
+    var ttsAvailable: StateFlow<Boolean> = MutableStateFlow(true)
+        private set
 
     override fun onCreate() {
         super.onCreate()
         questionRepo = QuestionRepository.fromAssets(this)
         settingsRepo = SettingsRepository(this, appScope)
-        val speech = AndroidSpeechEngine(this) { available -> ttsAvailable.value = available }
+        speech = AndroidSpeechEngine(this) { ready -> speechReady.value = ready }
+        ttsAvailable = combine(settingsRepo.settings, speechReady) { s, _ ->
+            when (s.speechMode) {
+                SpeechMode.ENGLISH -> speech.isAvailable(SpeechLanguage.ENGLISH)
+                SpeechMode.CHINESE -> speech.isAvailable(SpeechLanguage.CHINESE)
+                SpeechMode.BILINGUAL ->
+                    speech.isAvailable(SpeechLanguage.ENGLISH) && speech.isAvailable(SpeechLanguage.CHINESE)
+            }
+        }.stateIn(appScope, SharingStarted.Eagerly, true)
         studyEngine = StudyEngine(
             speech = speech,
             repo = questionRepo,

@@ -3,6 +3,7 @@ package com.yilab.civics.audio
 import com.yilab.civics.data.Categories
 import com.yilab.civics.data.Question
 import com.yilab.civics.data.QuestionRepository
+import com.yilab.civics.settings.SpeechMode
 import com.yilab.civics.settings.StudySettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -121,11 +122,17 @@ class StudyEngine(
         cancelTimer()
         val q = deck[position]
         val settings = settingsFlow.value
-        val text = buildString {
-            if (settings.announceMeta) append("Question ${q.n}. ")
-            append(q.question)
+        // english/bilingual start with the English question; chinese goes straight to zh
+        // (falling back to English when no translation exists).
+        if (settings.speechMode == SpeechMode.CHINESE && q.questionZh != null) {
+            speak("zq-${q.n}", zhQuestionText(q), SpeechLanguage.CHINESE)
+        } else {
+            val text = buildString {
+                if (settings.announceMeta) append("Question ${q.n}. ")
+                append(q.question)
+            }
+            speak("q-${q.n}", text, SpeechLanguage.ENGLISH)
         }
-        speak("q-${q.n}", text)
         emit(
             state.value.copy(
                 phase = Phase.SPEAKING_QUESTION,
@@ -139,16 +146,43 @@ class StudyEngine(
     private fun revealAnswer() {
         cancelTimer()
         val q = state.value.current ?: return
-        speak("a-${q.n}", q.spoken)
+        if (settingsFlow.value.speechMode == SpeechMode.CHINESE && q.spokenZh != null) {
+            speak("za-${q.n}", q.spokenZh, SpeechLanguage.CHINESE)
+        } else {
+            speak("a-${q.n}", q.spoken, SpeechLanguage.ENGLISH)
+        }
         emit(state.value.copy(phase = Phase.SPEAKING_ANSWER, answerRevealed = true))
     }
 
     private fun onUtteranceDone(utteranceId: String) {
         if (utteranceId != expectedUtterance) return
+        val mode = settingsFlow.value.speechMode
+        // z-prefixed ids must be checked before their English counterparts.
         when {
-            utteranceId.startsWith("q-") -> beginThinkPause()
-            utteranceId.startsWith("a-") -> beginAwaitingAdvance()
+            utteranceId.startsWith("zq-") -> beginThinkPause()
+            utteranceId.startsWith("za-") -> beginAwaitingAdvance()
+            utteranceId.startsWith("q-") -> {
+                val q = state.value.current
+                if (mode == SpeechMode.BILINGUAL && q?.questionZh != null) {
+                    speak("zq-${q.n}", zhQuestionText(q), SpeechLanguage.CHINESE)
+                } else {
+                    beginThinkPause()
+                }
+            }
+            utteranceId.startsWith("a-") -> {
+                val q = state.value.current
+                if (mode == SpeechMode.BILINGUAL && q?.spokenZh != null) {
+                    speak("za-${q.n}", q.spokenZh, SpeechLanguage.CHINESE)
+                } else {
+                    beginAwaitingAdvance()
+                }
+            }
         }
+    }
+
+    private fun zhQuestionText(q: Question): String {
+        val qZh = q.questionZh ?: return q.question
+        return if (settingsFlow.value.announceMeta) "第 ${q.n} 题。 $qZh" else qZh
     }
 
     private fun onUtteranceError(utteranceId: String) {
@@ -200,9 +234,9 @@ class StudyEngine(
 
     // ------------------------------------------------------------------ helpers
 
-    private fun speak(utteranceId: String, text: String) {
+    private fun speak(utteranceId: String, text: String, language: SpeechLanguage) {
         expectedUtterance = utteranceId
-        speech.speak(utteranceId, text)
+        speech.speak(utteranceId, text, language)
     }
 
     private fun cancelTimer() {

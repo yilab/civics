@@ -24,7 +24,8 @@ class AndroidSpeechEngine(
     private val mainHandler = Handler(Looper.getMainLooper())
     private var tts: TextToSpeech? = null
     private var ready = false
-    private var pending: Pair<String, String>? = null
+    private var pending: Triple<String, String, SpeechLanguage>? = null
+    private val available = mutableSetOf<SpeechLanguage>()
 
     init {
         TextToSpeech(context.applicationContext) { status ->
@@ -39,8 +40,10 @@ class AndroidSpeechEngine(
                         .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
                         .build()
                 )
-                val lang = engine.setLanguage(Locale.US)
-                ready = lang != TextToSpeech.LANG_MISSING_DATA && lang != TextToSpeech.LANG_NOT_SUPPORTED
+                available.clear()
+                if (engine.languageSupported(Locale.US)) available += SpeechLanguage.ENGLISH
+                if (engine.languageSupported(Locale.SIMPLIFIED_CHINESE)) available += SpeechLanguage.CHINESE
+                ready = SpeechLanguage.ENGLISH in available
                 engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onStart(utteranceId: String?) = Unit
 
@@ -66,23 +69,29 @@ class AndroidSpeechEngine(
                 })
             }
             onAvailabilityChanged(ready)
-            pending?.let { (id, text) ->
+            pending?.let { (id, text, language) ->
                 pending = null
-                if (ready) speakNow(id, text)
+                if (ready) speakNow(id, text, language)
             }
         }.also { tts = it }
     }
 
-    override fun speak(utteranceId: String, text: String) {
+    override fun isAvailable(language: SpeechLanguage): Boolean = language in available
+
+    override fun speak(utteranceId: String, text: String, language: SpeechLanguage) {
         if (ready) {
-            speakNow(utteranceId, text)
+            speakNow(utteranceId, text, language)
         } else {
-            pending = utteranceId to text
+            pending = Triple(utteranceId, text, language)
         }
     }
 
-    private fun speakNow(utteranceId: String, text: String) {
+    private fun speakNow(utteranceId: String, text: String, language: SpeechLanguage) {
         val engine = tts ?: return
+        engine.language = when (language) {
+            SpeechLanguage.CHINESE -> Locale.SIMPLIFIED_CHINESE
+            SpeechLanguage.ENGLISH -> Locale.US
+        }
         engine.setSpeechRate(speechRate)
         engine.speak(text, TextToSpeech.QUEUE_FLUSH, Bundle(), utteranceId)
     }
@@ -95,5 +104,10 @@ class AndroidSpeechEngine(
     override fun shutdown() {
         tts?.stop()
         tts?.shutdown()
+    }
+
+    private fun TextToSpeech.languageSupported(locale: Locale): Boolean {
+        val result = setLanguage(locale)
+        return result != TextToSpeech.LANG_MISSING_DATA && result != TextToSpeech.LANG_NOT_SUPPORTED
     }
 }

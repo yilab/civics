@@ -3,6 +3,8 @@ import SwiftUI
 struct ListenScreen: View {
     let state: StudyState
     let ttsAvailable: Bool
+    /// True when Chinese text takes visual precedence (UI language = 中文).
+    var zhPrimary: Bool = false
     let onPrimary: () -> Void
     let onPause: () -> Void
     let onNext: () -> Void
@@ -13,22 +15,19 @@ struct ListenScreen: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 0) {
                 if !ttsAvailable {
-                    Text(
-                        "No text-to-speech voice is available. Enable a voice in Settings › Accessibility › "
-                            + "Spoken Content › Voices to hear questions."
-                    )
-                    .font(.subheadline)
-                    .foregroundStyle(.red)
-                    .padding(16)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(.fill.tertiary, in: RoundedRectangle(cornerRadius: 12))
-                    .padding(.bottom, 16)
+                    Text(L10n.t("listen.noTts"))
+                        .font(.subheadline)
+                        .foregroundStyle(.red)
+                        .padding(16)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(.fill.tertiary, in: RoundedRectangle(cornerRadius: 12))
+                        .padding(.bottom, 16)
                 }
 
                 HStack {
                     Text(headerText)
                     Spacer()
-                    Text("\(state.known.count) known")
+                    Text(L10n.t("listen.knownCount", state.known.count))
                         .foregroundStyle(.secondary)
                 }
                 .font(.footnote.weight(.semibold))
@@ -57,17 +56,17 @@ struct ListenScreen: View {
                     Button(action: onPrevious) {
                         Image(systemName: "backward.end.fill")
                     }
-                    .accessibilityLabel("Previous question")
+                    .accessibilityLabel(L10n.t("listen.previousQuestion"))
 
                     Button(action: onPause) {
                         Image(systemName: "stop.fill")
                     }
-                    .accessibilityLabel("Stop")
+                    .accessibilityLabel(L10n.t("listen.stop"))
 
                     Button(action: onNext) {
                         Image(systemName: "forward.end.fill")
                     }
-                    .accessibilityLabel("Next question")
+                    .accessibilityLabel(L10n.t("button.nextQuestion"))
 
                     Spacer()
 
@@ -84,13 +83,16 @@ struct ListenScreen: View {
     // MARK: - Pieces
 
     private var headerText: String {
-        state.deckSize > 0 ? "Question \(state.position + 1) of \(state.deckSize)" : "No questions"
+        state.deckSize > 0
+            ? L10n.t("listen.questionOf", state.position + 1, state.deckSize)
+            : L10n.t("listen.noQuestions")
     }
 
     private var progress: Double {
         state.deckSize == 0 ? 0 : Double(state.position + 1) / Double(state.deckSize)
     }
 
+    /// Both languages are always shown; emphasis follows the UI language.
     private var card: some View {
         VStack(alignment: .leading, spacing: 0) {
             if let q = state.current {
@@ -99,25 +101,26 @@ struct ListenScreen: View {
                         .font(.title3.weight(.semibold))
                         .foregroundStyle(.tint)
                     Spacer()
-                    Text(q.category.uppercased())
+                    Text(CategoriesL10n.name(q.category).uppercased())
                         .font(.caption2)
                         .foregroundStyle(.secondary)
                 }
                 .padding(.bottom, 12)
 
-                Text(q.question)
+                primaryText(q.question, q.questionZh)
                     .font(.title3.weight(.medium))
 
                 if state.answerRevealed {
                     Divider()
                         .padding(.vertical, 16)
-                    Text("ACCEPTABLE ANSWER")
+                    Text(L10n.t("listen.acceptableAnswer"))
                         .font(.caption2)
                         .foregroundStyle(.tint)
                         .padding(.bottom, 6)
-                    Text(q.answer)
+                    primaryText(q.answer, q.answerZh)
                         .font(.title2)
-                    if let note = q.note {
+                    let note = zhPrimary ? (q.noteZh ?? q.note) : q.note
+                    if let note {
                         Text(note)
                             .font(.footnote)
                             .foregroundStyle(.red)
@@ -125,15 +128,11 @@ struct ListenScreen: View {
                     }
                 }
             } else {
-                Text("Civics Audio Prep")
+                Text(L10n.t("listen.appTitle"))
                     .font(.title2.weight(.semibold))
                     .padding(.bottom, 8)
-                Text(
-                    "Press Start, put your phone away, and answer each question out loud. "
-                        + "On AirPods: one press to hear the answer or continue, two presses for the "
-                        + "next question, three to repeat."
-                )
-                .font(.subheadline)
+                Text(L10n.t("listen.onboarding"))
+                    .font(.subheadline)
             }
         }
         .padding(20)
@@ -141,21 +140,43 @@ struct ListenScreen: View {
         .background(.fill.tertiary, in: RoundedRectangle(cornerRadius: 12))
     }
 
+    /// Primary language in the emphasis style, the other as a muted secondary line.
+    @ViewBuilder
+    private func primaryText(_ english: String, _ chinese: String?) -> some View {
+        if zhPrimary, let chinese {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(chinese)
+                Text(english)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+            }
+        } else {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(english)
+                if let chinese {
+                    Text(chinese)
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
+        }
+    }
+
     private var phaseCaption: String {
         switch state.phase {
         case .idle: ""
-        case .speakingQuestion: "Speaking the question — press to hear the answer"
-        case .thinking: "Your turn — answer out loud, then press"
-        case .speakingAnswer: "Speaking the answer"
-        case .awaitingAdvance: "Press for the next question"
+        case .speakingQuestion: L10n.t("phase.speakingQuestion")
+        case .thinking: L10n.t("phase.thinking")
+        case .speakingAnswer: L10n.t("phase.speakingAnswer")
+        case .awaitingAdvance: L10n.t("phase.awaitingAdvance")
         }
     }
 
     private var primaryLabel: String {
         switch state.phase {
-        case .idle: "Start listening"
-        case .speakingQuestion, .thinking: "Hear the answer"
-        case .speakingAnswer, .awaitingAdvance: "Next question"
+        case .idle: L10n.t("button.start")
+        case .speakingQuestion, .thinking: L10n.t("button.hearAnswer")
+        case .speakingAnswer, .awaitingAdvance: L10n.t("button.nextQuestion")
         }
     }
 
@@ -167,7 +188,7 @@ struct ListenScreen: View {
         } label: {
             HStack(spacing: 6) {
                 Image(systemName: isKnown ? "star.fill" : "star")
-                Text(isKnown ? "Known" : "Mark known")
+                Text(isKnown ? L10n.t("listen.known") : L10n.t("listen.markKnown"))
             }
         }
         .buttonStyle(.bordered)

@@ -10,12 +10,19 @@ struct Question: Hashable, Decodable {
     /// True when the answer changes over time or depends on the user's state.
     let dynamic: Bool
     let note: String?
+    /// Simplified-Chinese translations; English is used as fallback when absent.
+    let questionZh: String?
+    let answerZh: String?
+    let spokenZh: String?
+    let noteZh: String?
 
     private enum CodingKeys: String, CodingKey {
         case n, category, question, answer, spoken, dynamic, note
+        case questionZh, answerZh, spokenZh, noteZh
     }
 
-    init(n: Int, category: String, question: String, answer: String, spoken: String, dynamic: Bool, note: String?) {
+    init(n: Int, category: String, question: String, answer: String, spoken: String, dynamic: Bool, note: String?,
+         questionZh: String? = nil, answerZh: String? = nil, spokenZh: String? = nil, noteZh: String? = nil) {
         self.n = n
         self.category = category
         self.question = question
@@ -23,6 +30,10 @@ struct Question: Hashable, Decodable {
         self.spoken = spoken
         self.dynamic = dynamic
         self.note = note
+        self.questionZh = questionZh
+        self.answerZh = answerZh
+        self.spokenZh = spokenZh
+        self.noteZh = noteZh
     }
 
     init(from decoder: Decoder) throws {
@@ -35,6 +46,10 @@ struct Question: Hashable, Decodable {
         // Absent key decodes as false, like Kotlin's optBoolean("dynamic", false).
         dynamic = try c.decodeIfPresent(Bool.self, forKey: .dynamic) ?? false
         note = try c.decodeIfPresent(String.self, forKey: .note)
+        questionZh = try c.decodeIfPresent(String.self, forKey: .questionZh)
+        answerZh = try c.decodeIfPresent(String.self, forKey: .answerZh)
+        spokenZh = try c.decodeIfPresent(String.self, forKey: .spokenZh)
+        noteZh = try c.decodeIfPresent(String.self, forKey: .noteZh)
     }
 }
 

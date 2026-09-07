@@ -5,11 +5,11 @@ import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -28,20 +28,25 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.core.content.ContextCompat
+import androidx.core.os.LocaleListCompat
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.yilab.civics.audio.CivicsAudioService
+import com.yilab.civics.settings.UiLanguage
 import com.yilab.civics.ui.ListenScreen
 import com.yilab.civics.ui.QuestionsScreen
 import com.yilab.civics.ui.SettingsScreen
 import com.yilab.civics.ui.theme.CivicsTheme
 import kotlinx.coroutines.launch
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // Apply the persisted in-app language before the first composition.
+        applyUiLanguage((applicationContext as CivicsApp).settingsRepo.settings.value.uiLanguage)
         enableEdgeToEdge()
         setContent {
             CivicsTheme {
@@ -51,10 +56,22 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-enum class AppDestinations(val label: String, val icon: Int) {
-    LISTEN("Listen", R.drawable.ic_headset),
-    QUESTIONS("Questions", R.drawable.ic_list),
-    SETTINGS("Settings", R.drawable.ic_settings),
+/** Applies the in-app language; recreates the activity when it actually changes. */
+fun applyUiLanguage(language: UiLanguage) {
+    val locales = when (language) {
+        UiLanguage.SYSTEM -> LocaleListCompat.getEmptyLocaleList()
+        UiLanguage.ENGLISH -> LocaleListCompat.forLanguageTags("en")
+        UiLanguage.CHINESE -> LocaleListCompat.forLanguageTags("zh-CN")
+    }
+    if (AppCompatDelegate.getApplicationLocales() != locales) {
+        AppCompatDelegate.setApplicationLocales(locales)
+    }
+}
+
+enum class AppDestinations(val labelRes: Int, val icon: Int) {
+    LISTEN(R.string.tab_listen, R.drawable.ic_headset),
+    QUESTIONS(R.string.tab_questions, R.drawable.ic_list),
+    SETTINGS(R.string.tab_settings, R.drawable.ic_settings),
 }
 
 @androidx.annotation.OptIn(UnstableApi::class)
@@ -90,6 +107,13 @@ fun CivicsRoot() {
     val ttsAvailable by app.ttsAvailable.collectAsState()
     var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.LISTEN) }
 
+    // Keep the activity locale in sync with the uiLanguage setting.
+    LaunchedEffect(Unit) {
+        app.settingsRepo.settings.collect { applyUiLanguage(it.uiLanguage) }
+    }
+
+    val zhPrimary = settings.uiLanguage == UiLanguage.CHINESE
+
     // Route transport through the session so on-screen and AirPod presses behave identically.
     val primary = { controller?.play() ?: engine.primaryAction() }
     val pause = { controller?.pause() ?: engine.pause() }
@@ -101,9 +125,9 @@ fun CivicsRoot() {
             AppDestinations.entries.forEach { destination ->
                 item(
                     icon = {
-                        Icon(painterResource(destination.icon), contentDescription = destination.label)
+                        Icon(painterResource(destination.icon), contentDescription = stringResource(destination.labelRes))
                     },
-                    label = { Text(destination.label) },
+                    label = { Text(stringResource(destination.labelRes)) },
                     selected = destination == currentDestination,
                     onClick = { currentDestination = destination },
                 )
@@ -115,6 +139,7 @@ fun CivicsRoot() {
                 AppDestinations.LISTEN -> ListenScreen(
                     state = state,
                     ttsAvailable = ttsAvailable,
+                    zhPrimary = zhPrimary,
                     onPrimary = primary,
                     onPause = pause,
                     onNext = next,
@@ -127,6 +152,7 @@ fun CivicsRoot() {
                     questions = app.questionRepo.questions,
                     known = state.known,
                     currentNumber = state.current?.n,
+                    zhPrimary = zhPrimary,
                     onJump = engine::jumpTo,
                     modifier = Modifier.padding(innerPadding),
                 )
@@ -145,7 +171,7 @@ fun CivicsRoot() {
 private fun RequestNotificationPermission() {
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) return
     val context = LocalContext.current
-    val launcher = rememberLauncherForActivityResult(
+    val launcher = androidx.activity.compose.rememberLauncherForActivityResult(
         ActivityResultContracts.RequestPermission()
     ) { }
     LaunchedEffect(Unit) {

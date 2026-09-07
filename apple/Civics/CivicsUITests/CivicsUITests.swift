@@ -18,6 +18,9 @@ final class CivicsUITests: XCTestCase {
     @MainActor
     func testStudyLoop() throws {
         let app = XCUIApplication()
+        // The runner may launch the app with a zh locale on this machine; force
+        // English so assertions don't depend on host/simulator language state.
+        app.launchArguments = ["-AppleLanguages", "(en-US)", "-AppleLocale", "en_US"]
         app.launch()
 
         // Fresh launch shows the onboarding card and the start button.

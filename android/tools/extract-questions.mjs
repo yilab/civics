@@ -3,11 +3,23 @@
 // Usage: node tools/extract-questions.mjs
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
-const html = readFileSync(new URL('../civics-test-study-tool.html', import.meta.url), 'utf8');
+const html = readFileSync(new URL('../../web/civics-test-study-tool.html', import.meta.url), 'utf8');
 const m = html.match(/const Q = (\[[\s\S]*?\]);\s*\n/);
 if (!m) throw new Error('question array not found');
 const Q = eval(m[1]);
 if (Q.length !== 128) throw new Error(`expected 128 questions, got ${Q.length}`);
+
+// Simplified-Chinese translations live in the QZ map keyed by question number.
+// zh answers are written as TTS-friendly prose (no parentheses), so they double
+// as the spoken text.
+const mz = html.match(/const QZ = (\{[\s\S]*?\});\s*\n/);
+if (!mz) throw new Error('translation map not found');
+const QZ = eval(`(${mz[1]})`);
+for (const item of Q) {
+  if (!QZ[item.n] || !QZ[item.n].q || !QZ[item.n].a) {
+    throw new Error(`missing zh translation for question ${item.n}`);
+  }
+}
 
 // Hand-tuned spoken text where heuristics read badly. Keyed by question number.
 const SPOKEN_OVERRIDES = {
@@ -77,6 +89,7 @@ function heuristicSpoken(answer) {
 
 const questions = Q.map((item) => {
   const spoken = SPOKEN_OVERRIDES[item.n] ?? heuristicSpoken(item.a);
+  const zh = QZ[item.n];
   return {
     n: item.n,
     category: item.c,
@@ -85,20 +98,30 @@ const questions = Q.map((item) => {
     spoken,
     dynamic: item.dyn === true,
     note: item.note ? item.note.replace(/<[^>]+>/g, '') : null,
+    questionZh: zh.q,
+    answerZh: zh.a,
+    spokenZh: zh.a,
+    noteZh: zh.note ?? null,
   };
 });
 
-// audit: no leftover parens or double spaces in spoken text
-const bad = questions.filter((q) => /[()]/.test(q.spoken) || / {2}/.test(q.spoken));
+// audit: no leftover parens or double spaces in spoken text (both languages)
+const bad = questions.filter(
+  (q) => /[()]/.test(q.spoken) || / {2}/.test(q.spoken) || /[()（）]/.test(q.spokenZh),
+);
 if (bad.length) {
   console.error('suspicious spoken text:', bad.map((q) => q.n));
   process.exit(1);
 }
 
-mkdirSync(new URL('../app/src/main/assets/', import.meta.url), { recursive: true });
 const out = { version: '2025', count: questions.length, questions };
-writeFileSync(
+const json = JSON.stringify(out, null, 2) + '\n';
+const targets = [
   new URL('../app/src/main/assets/questions.json', import.meta.url),
-  JSON.stringify(out, null, 2) + '\n',
-);
-console.log(`wrote ${questions.length} questions`);
+  new URL('../../apple/Civics/Civics/Resources/questions.json', import.meta.url),
+];
+for (const target of targets) {
+  mkdirSync(new URL('.', target), { recursive: true });
+  writeFileSync(target, json);
+}
+console.log(`wrote ${questions.length} questions to ${targets.length} targets`);

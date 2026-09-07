@@ -5,11 +5,13 @@ struct SettingsScreen: View {
     let settings: StudySettings
     let onChange: ((StudySettings) -> StudySettings) -> Void
 
+    private var zhPrimary: Bool { settings.uiLanguage == .chinese }
+
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                SettingsSection("Voice") {
-                    Text(String(format: "Speech rate: %.2f×", settings.speechRate))
+                SettingsSection("settings.voice") {
+                    Text(L10n.t("settings.speechRate", String(format: "%.2f", settings.speechRate)))
                         .font(.body)
                     Slider(
                         value: Binding(
@@ -19,14 +21,39 @@ struct SettingsScreen: View {
                         in: 0.75...1.5
                     )
                     SwitchRow(
-                        label: "Announce question number",
+                        label: L10n.t("settings.announceMeta"),
                         checked: settings.announceMeta,
                         onChange: { v in onChange { $0.copy(announceMeta: v) } }
                     )
+                    Text(L10n.t("settings.speechLanguage"))
+                        .font(.body)
+                    HStack(spacing: 8) {
+                        ForEach(SpeechMode.allCases, id: \.self) { mode in
+                            Chip(
+                                label: modeLabel(mode),
+                                selected: settings.speechMode == mode,
+                                action: { onChange { $0.copy(speechMode: mode) } }
+                            )
+                        }
+                    }
                 }
 
-                SettingsSection("Playback") {
-                    Text("Pause before revealing the answer")
+                SettingsSection("settings.language") {
+                    Text(L10n.t("settings.uiLanguage"))
+                        .font(.body)
+                    HStack(spacing: 8) {
+                        ForEach(UiLanguage.allCases, id: \.self) { lang in
+                            Chip(
+                                label: uiLanguageLabel(lang),
+                                selected: settings.uiLanguage == lang,
+                                action: { onChange { $0.copy(uiLanguage: lang) } }
+                            )
+                        }
+                    }
+                }
+
+                SettingsSection("settings.playback") {
+                    Text(L10n.t("settings.thinkPause"))
                         .font(.body)
                     HStack(spacing: 8) {
                         ForEach(thinkOptions, id: \.seconds) { option in
@@ -38,33 +65,33 @@ struct SettingsScreen: View {
                         }
                     }
                     SwitchRow(
-                        label: "Auto-advance after the answer",
+                        label: L10n.t("settings.autoAdvance"),
                         checked: settings.autoAdvance,
                         onChange: { v in onChange { $0.copy(autoAdvance: v) } }
                     )
                 }
 
-                SettingsSection("Deck") {
+                SettingsSection("settings.deck") {
                     VStack(alignment: .leading, spacing: 4) {
                         ForEach(Categories.values, id: \.self) { cat in
                             Chip(
-                                label: cat == Categories.all ? "All 128 questions" : cat,
+                                label: CategoriesL10n.name(cat),
                                 selected: settings.category == cat,
                                 action: { onChange { $0.copy(category: cat) } }
                             )
                         }
                     }
                     SwitchRow(
-                        label: "Shuffle",
+                        label: L10n.t("settings.shuffle"),
                         checked: settings.shuffle,
                         onChange: { v in onChange { $0.copy(shuffle: v) } }
                     )
                 }
 
-                SettingsSection("Progress") {
-                    Text("\(settings.known.count) of 128 marked as known")
+                SettingsSection("settings.progressSection") {
+                    Text(L10n.t("settings.knownProgress", settings.known.count))
                         .font(.body)
-                    Button("Clear known marks") {
+                    Button(L10n.t("settings.clearKnown")) {
                         onChange { $0.copy(known: []) }
                     }
                     .buttonStyle(.borderedProminent)
@@ -75,29 +102,45 @@ struct SettingsScreen: View {
         }
     }
 
+    private func modeLabel(_ mode: SpeechMode) -> String {
+        switch mode {
+        case .english: L10n.t("mode.english")
+        case .bilingual: L10n.t("mode.bilingual")
+        case .chinese: L10n.t("mode.chinese")
+        }
+    }
+
+    private func uiLanguageLabel(_ lang: UiLanguage) -> String {
+        switch lang {
+        case .system: L10n.t("ui.system")
+        case .english: L10n.t("ui.english")
+        case .chinese: L10n.t("ui.chinese")
+        }
+    }
+
     private var thinkOptions: [(seconds: Int, label: String)] {
         [
-            (StudySettings.thinkWaitForPress, "Wait"),
-            (0, "None"),
-            (3, "3s"),
-            (5, "5s"),
-            (10, "10s"),
+            (StudySettings.thinkWaitForPress, L10n.t("think.wait")),
+            (0, L10n.t("think.none")),
+            (3, L10n.t("think.seconds", 3)),
+            (5, L10n.t("think.seconds", 5)),
+            (10, L10n.t("think.seconds", 10)),
         ]
     }
 }
 
 private struct SettingsSection<Content: View>: View {
-    let title: String
+    let titleKey: String
     @ViewBuilder let content: Content
 
-    init(_ title: String, @ViewBuilder content: () -> Content) {
-        self.title = title
+    init(_ titleKey: String, @ViewBuilder content: () -> Content) {
+        self.titleKey = titleKey
         self.content = content()
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(title.uppercased())
+            Text(L10n.t(titleKey).uppercased())
                 .font(.footnote.weight(.medium))
                 .foregroundStyle(.tint)
             content

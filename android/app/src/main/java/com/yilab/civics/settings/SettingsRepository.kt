@@ -28,6 +28,8 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
         val SHUFFLE = booleanPreferencesKey("shuffle")
         val ANNOUNCE_META = booleanPreferencesKey("announce_meta")
         val KNOWN = stringSetPreferencesKey("known")
+        val SPEECH_MODE = stringPreferencesKey("speech_mode")
+        val UI_LANGUAGE = stringPreferencesKey("ui_language")
     }
 
     val settings: StateFlow<StudySettings> = store.data
@@ -40,6 +42,16 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
                 shuffle = prefs[Keys.SHUFFLE] ?: false,
                 announceMeta = prefs[Keys.ANNOUNCE_META] ?: true,
                 known = prefs[Keys.KNOWN].orEmpty().mapNotNull { it.toIntOrNull() }.toSet(),
+                speechMode = when (prefs[Keys.SPEECH_MODE]) {
+                    "bilingual" -> SpeechMode.BILINGUAL
+                    "chinese" -> SpeechMode.CHINESE
+                    else -> SpeechMode.ENGLISH
+                },
+                uiLanguage = when (prefs[Keys.UI_LANGUAGE]) {
+                    "english" -> UiLanguage.ENGLISH
+                    "chinese" -> UiLanguage.CHINESE
+                    else -> UiLanguage.SYSTEM
+                },
             )
         }
         .stateIn(scope, SharingStarted.Eagerly, StudySettings())
@@ -54,6 +66,16 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
             prefs[Keys.SHUFFLE] = s.shuffle
             prefs[Keys.ANNOUNCE_META] = s.announceMeta
             prefs[Keys.KNOWN] = s.known.map { it.toString() }.toSet()
+            prefs[Keys.SPEECH_MODE] = when (s.speechMode) {
+                SpeechMode.BILINGUAL -> "bilingual"
+                SpeechMode.CHINESE -> "chinese"
+                SpeechMode.ENGLISH -> "english"
+            }
+            prefs[Keys.UI_LANGUAGE] = when (s.uiLanguage) {
+                UiLanguage.ENGLISH -> "english"
+                UiLanguage.CHINESE -> "chinese"
+                UiLanguage.SYSTEM -> "system"
+            }
         }
     }
 }

@@ -14,7 +14,16 @@ final class AppModel {
     let settingsRepo: SettingsRepository
     let engine: StudyEngine
     let playback: PlaybackCoordinator
-    let ttsAvailable: Bool
+    private let speech: SystemSpeechEngine
+
+    /// Mode-aware TTS availability for the Listen warning card.
+    var ttsAvailable: Bool {
+        switch settingsRepo.settings.speechMode {
+        case .english: speech.isAvailable(.english)
+        case .chinese: speech.isAvailable(.chinese)
+        case .bilingual: speech.isAvailable(.english) && speech.isAvailable(.chinese)
+        }
+    }
 
     init() {
         let questionRepo = QuestionRepository.fromBundle()
@@ -35,7 +44,14 @@ final class AppModel {
         self.settingsRepo = settingsRepo
         self.engine = engine
         self.playback = PlaybackCoordinator(engine: engine)
-        self.ttsAvailable = speech.isAvailable
+        self.speech = speech
+
+        // Point the string resolver at the chosen language before the first
+        // render, and keep it current as the setting changes.
+        L10n.apply(settingsRepo.settings.uiLanguage)
+        settingsRepo.observe { s in
+            L10n.apply(s.uiLanguage)
+        }
 
         // Wires remote commands, now-playing info, and the audio session.
         playback.start()

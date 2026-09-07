@@ -21,6 +21,24 @@ final class SettingsRepository: SettingsSource {
         static let shuffle = "shuffle"
         static let announceMeta = "announce_meta"
         static let known = "known"
+        static let speechMode = "speech_mode"
+        static let uiLanguage = "ui_language"
+    }
+
+    private static func speechMode(_ raw: String?) -> SpeechMode {
+        switch raw {
+        case "bilingual": return .bilingual
+        case "chinese": return .chinese
+        default: return .english
+        }
+    }
+
+    private static func uiLanguage(_ raw: String?) -> UiLanguage {
+        switch raw {
+        case "english": return .english
+        case "chinese": return .chinese
+        default: return .system
+        }
     }
 
     private let defaults: UserDefaults
@@ -47,7 +65,9 @@ final class SettingsRepository: SettingsSource {
             category: defaults.string(forKey: Keys.category) ?? Categories.all,
             shuffle: bool(Keys.shuffle, false),
             announceMeta: bool(Keys.announceMeta, true),
-            known: Set((defaults.stringArray(forKey: Keys.known) ?? []).compactMap(Int.init))
+            known: Set((defaults.stringArray(forKey: Keys.known) ?? []).compactMap(Int.init)),
+            speechMode: Self.speechMode(defaults.string(forKey: Keys.speechMode)),
+            uiLanguage: Self.uiLanguage(defaults.string(forKey: Keys.uiLanguage))
         )
     }
 
@@ -66,6 +86,10 @@ final class SettingsRepository: SettingsSource {
         defaults.set(s.shuffle, forKey: Keys.shuffle)
         defaults.set(s.announceMeta, forKey: Keys.announceMeta)
         defaults.set(s.known.map(String.init), forKey: Keys.known)
+        defaults.set(s.speechMode == .bilingual ? "bilingual" : s.speechMode == .chinese ? "chinese" : "english",
+                     forKey: Keys.speechMode)
+        defaults.set(s.uiLanguage == .english ? "english" : s.uiLanguage == .chinese ? "chinese" : "system",
+                     forKey: Keys.uiLanguage)
         settings = s
         observers.forEach { $0(s) }
     }

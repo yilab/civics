@@ -207,6 +207,18 @@
     padding:1px 6px;margin-left:8px;vertical-align:middle;
   }
 
+  /* ---------- Language toggle & bilingual text ---------- */
+  .modes.langs{margin:0 0 20px;padding:3px;gap:4px;border-radius:9px;}
+  .modes.langs button{
+    flex:1;padding:7px 0;font-size:12.5px;border-radius:7px;border:0;background:transparent;
+  }
+  .modes.langs button[aria-pressed="true"]{background:var(--card);color:var(--ink);box-shadow:var(--shadow);}
+  .q-text.alt,.a-text.alt{
+    font-family:"Inter",system-ui,sans-serif;font-weight:400;font-size:14.5px;line-height:1.5;
+    color:var(--slate);flex:0 0 auto;display:flex;align-items:flex-start;margin-top:10px;
+  }
+  .q-text.alt{font-family:inherit;}
+
   @media (max-width:430px){
     header h1{font-size:25px;}
     .q-text{font-size:21px;}
@@ -232,6 +244,12 @@
     <button id="tab-test" role="tab" aria-selected="false" aria-controls="panel-test">Practice test</button>
   </div>
 
+  <div class="modes langs" role="group" aria-label="Language">
+    <button id="lang-en" aria-pressed="true">English</button>
+    <button id="lang-bi" aria-pressed="false">双语</button>
+    <button id="lang-zh" aria-pressed="false">中文</button>
+  </div>
+
   <!-- ============ FLASHCARDS ============ -->
   <section id="panel-cards" class="panel active" role="tabpanel" aria-labelledby="tab-cards">
     <div class="chips" id="chips"></div>
@@ -248,12 +266,14 @@
         <div class="face front">
           <div class="q-top"><span class="q-num" id="f-num">Q1</span><span class="q-cat" id="f-cat">American Government</span></div>
           <div class="q-text" id="f-q">…</div>
+          <div class="q-text alt" id="f-q2" style="display:none"></div>
           <span class="flip-hint">tap to reveal ↻</span>
         </div>
         <div class="face back">
-          <div class="q-top"><span class="q-num" id="b-num">Q1</span><span class="q-cat">Answer</span></div>
-          <div class="a-label">Acceptable answer</div>
+          <div class="q-top"><span class="q-num" id="b-num">Q1</span><span class="q-cat" id="back-cat">Answer</span></div>
+          <div class="a-label" id="a-label">Acceptable answer</div>
           <div class="a-text" id="b-a">…</div>
+          <div class="a-text alt" id="b-a2" style="display:none"></div>
           <div class="a-note" id="b-note" style="display:none"></div>
           <span class="flip-hint">tap for question ↻</span>
         </div>
@@ -262,7 +282,7 @@
 
     <div class="nav">
       <button class="btn-nav" id="prev" aria-label="Previous question">‹</button>
-      <button class="btn-known" id="known" aria-pressed="false"><span id="known-check">○</span> Mark as known</button>
+      <button class="btn-known" id="known" aria-pressed="false"><span id="known-check">○</span> <span id="known-label">Mark as known</span></button>
       <button class="btn-icon" id="shuffle" aria-label="Shuffle deck" title="Shuffle">⤮</button>
       <button class="btn-nav" id="next" aria-label="Next question">›</button>
     </div>
@@ -288,8 +308,8 @@
       <div class="test-head">
         <span id="t-progress">Question 1 of 20</span>
         <span class="tally">
-          <span><i class="dot g"></i><span id="t-correct">0</span> correct</span>
-          <span><i class="dot r"></i><span id="t-wrong">0</span> missed</span>
+          <span><i class="dot g"></i><span id="t-correct">0</span> <span id="t-correct-label">correct</span></span>
+          <span><i class="dot r"></i><span id="t-wrong">0</span> <span id="t-wrong-label">missed</span></span>
         </span>
       </div>
       <div class="testbar"><i id="t-bar"></i></div>
@@ -297,9 +317,11 @@
       <div class="face front" style="position:relative;min-height:240px;border-radius:16px;">
         <div class="q-top"><span class="q-num" id="t-num">Q1</span><span class="q-cat" id="t-cat">—</span></div>
         <div class="q-text" id="t-q">…</div>
+        <div class="q-text alt" id="t-q2" style="display:none"></div>
         <div class="a-note" id="t-answer" style="display:none;margin-top:18px;border-top:1px solid var(--hair);padding-top:14px;">
           <span class="a-label" style="display:block;margin-bottom:6px;">Acceptable answer</span>
           <span style="font-size:18px;font-weight:600;color:var(--ink);" id="t-a-text"></span>
+          <span id="t-a2" style="display:none;margin-top:10px;font-size:14.5px;line-height:1.5;color:var(--slate);"></span>
           <span id="t-a-note" style="display:block;margin-top:8px;"></span>
         </div>
       </div>
@@ -464,6 +486,209 @@ const Q = [
   {n:128,c:"Symbols & Holidays",q:"What is Veterans Day?",a:"A holiday to honor people who served in the U.S. military"}
 ];
 
+// 中文译文（简体）。键为题号。译文为源数据，供 extract-questions.mjs 提取到两个 App。
+// 答案写成口语化散文（无括号），可直接作为中文朗读文本。
+const QZ = {
+  1:{q:"美国的政体是什么？",a:"共和制。也可接受：基于宪法的联邦共和国，或代议制民主。"},
+  2:{q:"美国的最高法律是什么？",a:"宪法。"},
+  3:{q:"说出美国宪法的一项作用。",a:"建立政府。也可接受：界定政府的权力与组成部分；保障人民的权利。"},
+  4:{q:"美国宪法以“我们人民”开头。“我们人民”是什么意思？",a:"人民自治——人民治理自己。也可接受：人民主权，或统治须征得人民同意。"},
+  5:{q:"美国宪法如何修改？",a:"通过修正案，即修宪程序。"},
+  6:{q:"《权利法案》保护什么？",a:"生活在美国的人的基本权利。"},
+  7:{q:"美国宪法有多少条修正案？",a:"二十七条。"},
+  8:{q:"《独立宣言》为什么重要？",a:"它宣告美国脱离英国控制。也可接受：它宣告人人生而平等；它指明了各项权利与自由。"},
+  9:{q:"哪份建国文件宣告美洲殖民地脱离英国独立？",a:"《独立宣言》。"},
+  10:{q:"说出《独立宣言》和美国宪法的两个重要理念。",a:"平等与自由。也可接受：社会契约、天赋人权、有限政府、人民自治。"},
+  11:{q:"“生命、自由和追求幸福的权利”这些词出现在哪份建国文件中？",a:"《独立宣言》。"},
+  12:{q:"美国的经济制度是什么？",a:"自由市场经济，即资本主义。"},
+  13:{q:"什么是法治？",a:"人人都必须遵守法律。也可接受：任何人都不能凌驾于法律之上，包括领导人和政府。"},
+  14:{q:"许多文件影响了美国宪法。说出其中一份。",a:"《独立宣言》。也可接受：《邦联条例》、《联邦党人文集》、《大宪章》、《五月花号公约》。"},
+  15:{q:"政府有三个分支。为什么？",a:"为了防止任何一个分支权力过大——制衡原则，或三权分立。"},
+  16:{q:"说出政府的三个分支。",a:"立法分支：国会。行政分支：总统。司法分支：法院。"},
+  17:{q:"美国总统执掌政府的哪个分支？",a:"行政分支。"},
+  18:{q:"联邦政府的哪个部门制定法律？",a:"国会，即立法分支。"},
+  19:{q:"美国国会由哪两院组成？",a:"参议院和众议院。"},
+  20:{q:"说出美国国会的一项权力。",a:"制定法律。也可接受：宣战、编制联邦预算。"},
+  21:{q:"美国有多少名参议员？",a:"一百名。"},
+  22:{q:"美国参议员的任期是多久？",a:"六年。"},
+  23:{q:"你所在州的两位美国参议员现在是谁？",a:"取决于你所在的州。",note:"请查你所在州的情况。哥伦比亚特区和美国领地居民可回答他们没有美国参议员。"},
+  24:{q:"众议院有多少名有投票权的议员？",a:"四百三十五名。"},
+  25:{q:"众议院议员的任期是多久？",a:"两年。"},
+  26:{q:"为什么众议员任期比参议员短？",a:"为了更贴近民意。"},
+  27:{q:"每个州有多少名参议员？",a:"两名。"},
+  28:{q:"为什么每个州有两名参议员？",a:"为了让各州享有平等的代表性——大妥协，又称康涅狄格妥协。"},
+  29:{q:"说出你所在选区的美国众议员的名字。",a:"取决于你居住的地方。",note:"请查你所在选区的情况。设有无投票权代表或驻会专员的领地居民可说出此人的名字。"},
+  30:{q:"现任众议院议长是谁？",a:"迈克·约翰逊。",note:"现任官员——面试前请核实。"},
+  31:{q:"美国参议员代表谁？",a:"本州人民。"},
+  32:{q:"谁选举美国参议员？",a:"本州公民。"},
+  33:{q:"众议院议员代表谁？",a:"其所在国会选区的人民。"},
+  34:{q:"谁选举众议院议员？",a:"其所在国会选区的公民。"},
+  35:{q:"有些州的众议员比其他州多。为什么？",a:"因为人更多，即该州人口更多。"},
+  36:{q:"美国总统每届任期几年？",a:"四年。"},
+  37:{q:"美国总统最多只能担任两届。为什么？",a:"因为第二十二修正案——防止总统权力过大。"},
+  38:{q:"现任美国总统是谁？",a:"唐纳德·J·特朗普。",note:"现任官员——面试前请核实。"},
+  39:{q:"现任美国副总统是谁？",a:"JD·万斯。",note:"现任官员——面试前请核实。"},
+  40:{q:"如果总统无法继续任职，谁继任总统？",a:"副总统。"},
+  41:{q:"说出总统的一项权力。",a:"签署法案使之成为法律。也可接受：否决法案、执行法律、担任总司令、任命法官。"},
+  42:{q:"谁是美国军队的总司令？",a:"总统。"},
+  43:{q:"谁签署法案使之成为法律？",a:"总统。"},
+  44:{q:"谁能否决法案？",a:"总统。"},
+  45:{q:"谁任命联邦法官？",a:"总统。"},
+  46:{q:"行政分支有许多组成部分。说出其中一个。",a:"总统。也可接受：内阁、联邦各部和机构。"},
+  47:{q:"总统内阁的职责是什么？",a:"向总统提供咨询。"},
+  48:{q:"哪两个是内阁级别的职位？",a:"例如：国务卿和交通部长。也可接受：任何两位部长、司法部长或副总统。"},
+  49:{q:"选举人团为什么重要？",a:"它决定谁当选总统。"},
+  50:{q:"司法分支的一个组成部分是什么？",a:"最高法院。也可接受：联邦各法院。"},
+  51:{q:"司法分支的职责是什么？",a:"审查和解释法律。也可接受：裁定法律是否违宪；解决纠纷。"},
+  52:{q:"美国最高的法院是什么？",a:"最高法院。"},
+  53:{q:"最高法院有多少个大法官席位？",a:"九个。"},
+  54:{q:"最高法院通常需要多少名大法官才能作出裁决？",a:"五名。"},
+  55:{q:"最高法院大法官的任期是多久？",a:"终身任职——直到辞职、退休、去世或被免职。"},
+  56:{q:"最高法院大法官为什么终身任职？",a:"为了保持独立性，不受政治或外部势力影响。"},
+  57:{q:"现任美国首席大法官是谁？",a:"约翰·罗伯茨。",note:"现任官员——面试前请核实。"},
+  58:{q:"说出一项只属于联邦政府的权力。",a:"印发纸币。也可接受：宣战、建立军队、缔结条约、制定外交政策。"},
+  59:{q:"说出一项只属于州的权力。",a:"颁发驾照。也可接受：提供教育、提供警察和消防部门。"},
+  60:{q:"第十修正案的目的是什么？",a:"未授予联邦政府的权力归属于各州或人民。"},
+  61:{q:"你所在州的现任州长是谁？",a:"取决于你所在的州。",note:"请查你所在州的情况。领地居民可说出其州长；哥伦比亚特区居民可回答该区没有州长。"},
+  62:{q:"你所在州的首府是哪里？",a:"取决于你所在的州。",note:"请查你所在州的情况。哥伦比亚特区居民可回答该区不是一个州、没有首府；领地居民可说出其首府。"},
+  63:{q:"美国宪法有四条关于投票权的修正案。描述其中一条。",a:"任何公民都可以投票。也可接受：无需缴纳人头税；年满十八岁的公民可以投票；男女均可投票。"},
+  64:{q:"在美国，谁可以在联邦选举中投票、竞选联邦公职并担任陪审员？",a:"公民。"},
+  65:{q:"生活在美国的每个人享有哪三项权利？",a:"言论自由、宗教自由和集会自由。也可接受：出版自由、持枪权、向政府请愿的权利。"},
+  66:{q:"我们宣读《效忠誓言》时，效忠的是什么？",a:"美利坚合众国及其国旗。"},
+  67:{q:"说出新公民在《效忠宣誓》中作出的两项承诺。",a:"遵守美国法律，忠于美国。也可接受：放弃对他国的效忠、捍卫宪法、在需要时为国家服务。"},
+  68:{q:"人们怎样才能成为美国公民？",a:"在美国出生——依据第十四修正案，或通过入籍。也可接受：在国会规定的条件下通过父母获得公民身份。"},
+  69:{q:"举两个美国人参与公民事务的例子。",a:"投票和竞选公职。也可接受：加入政党、给参议员或众议员打电话、加入社区团体、向民选官员表达意见。"},
+  70:{q:"美国人为国家服务的一种方式是什么？",a:"投票。也可接受：纳税、担任陪审员、参军、竞选公职、参加社区服务。"},
+  71:{q:"为什么必须缴纳联邦税？",a:"这是法律的要求。也可接受：所有有收入的人都必须纳税；税收为政府提供资金。"},
+  72:{q:"18至25岁的男性必须进行兵役登记。说出一个原因。",a:"这是法律的要求——以便在需要时征召服役。"},
+  73:{q:"殖民者来到美洲有许多原因。说出其中一个。",a:"自由。也可接受：政治自由、宗教自由、经济机会、逃离迫害。"},
+  74:{q:"欧洲人到来之前，谁生活在美洲？",a:"美洲原住民，即印第安人。"},
+  75:{q:"哪一群人被掳掠并卖为奴隶？",a:"非洲人。"},
+  76:{q:"美国人通过哪场战争赢得了脱离英国的独立？",a:"美国独立战争，又称独立革命战争。"},
+  77:{q:"说出美国人宣布脱离英国独立的一个原因。",a:"高额赋税——无代表不纳税。也可接受：英国士兵驻扎民宅；没有自治权。"},
+  78:{q:"谁起草了《独立宣言》？",a:"托马斯·杰斐逊。"},
+  79:{q:"《独立宣言》何时通过？",a:"1776年7月4日。"},
+  80:{q:"美国独立战争中有许多重要事件。说出其中一个。",a:"《独立宣言》的发表。也可接受：邦克山战役、萨拉托加战役、约克镇战役、华盛顿横渡特拉华河。"},
+  81:{q:"最初有13个州。说出其中五个。",a:"例如：马萨诸塞、纽约、新罕布什尔、新泽西、特拉华。也可接受：康涅狄格、罗得岛、宾夕法尼亚、马里兰、弗吉尼亚、北卡罗来纳、南卡罗来纳、佐治亚。"},
+  82:{q:"1787年制定的建国文件是什么？",a:"宪法，即美国宪法。"},
+  83:{q:"《联邦党人文集》支持美国宪法的通过。说出其中一位作者。",a:"詹姆斯·麦迪逊。也可接受：亚历山大·汉密尔顿、约翰·杰伊。他们以“普布利乌斯”的名义发表。"},
+  84:{q:"《联邦党人文集》为什么重要？",a:"它帮助人们理解美国宪法，并推动宪法获得批准。"},
+  85:{q:"本杰明·富兰克林因许多事而闻名。说出其中一件。",a:"美国外交官。也可接受：制宪会议最年长的成员、首任邮政部长、《穷理查年鉴》的作者、创办最早的免费图书馆。"},
+  86:{q:"乔治·华盛顿因许多事而闻名。说出其中一件。",a:"美国第一任总统——“国父”、大陆军总司令。"},
+  87:{q:"托马斯·杰斐逊因许多事而闻名。说出其中一件。",a:"《独立宣言》的起草人。也可接受：第三任总统、创办弗吉尼亚大学、首任国务卿。"},
+  88:{q:"詹姆斯·麦迪逊因许多事而闻名。说出其中一件。",a:"《联邦党人文集》的作者之一——“宪法之父”、第四任总统。"},
+  89:{q:"亚历山大·汉密尔顿因许多事而闻名。说出其中一件。",a:"《联邦党人文集》的作者之一——首任财政部长、国家银行的创立者。"},
+  90:{q:"1803年美国从法国购买了哪块领土？",a:"路易斯安那领地。"},
+  91:{q:"说出美国在19世纪参加的一场战争。",a:"南北战争。也可接受：1812年战争、美墨战争、美西战争。"},
+  92:{q:"美国北方与南方之间的战争叫什么？",a:"南北战争。"},
+  93:{q:"南北战争中有许多重要事件。说出其中一个。",a:"《解放黑人奴隶宣言》的颁布。也可接受：葛底斯堡战役、葛底斯堡演说、阿波马托克斯受降、林肯遇刺。"},
+  94:{q:"亚伯拉罕·林肯因许多事而闻名。说出其中一件。",a:"他解放了奴隶——颁布《解放黑人奴隶宣言》；拯救了联邦；南北战争期间担任总统。"},
+  95:{q:"《解放黑人奴隶宣言》做了什么？",a:"解放了奴隶——限于南方邦联各州。"},
+  96:{q:"哪场美国战争终结了奴隶制？",a:"南北战争。"},
+  97:{q:"哪条修正案规定所有在美国出生或入籍并受其管辖的人都是美国公民？",a:"第十四修正案。"},
+  98:{q:"男性是何时获得投票权的？",a:"南北战争之后——依据第十五修正案。"},
+  99:{q:"说出19世纪女权运动的一位领袖。",a:"苏珊·安东尼。也可接受：伊丽莎白·卡迪·斯坦顿、索杰纳·特鲁斯、哈丽特·塔布曼、卢克丽霞·莫特。"},
+  100:{q:"说出美国在20世纪参加的一场战争。",a:"第一次世界大战。也可接受：第二次世界大战、朝鲜战争、越南战争、海湾战争。"},
+  101:{q:"美国为什么参加第一次世界大战？",a:"为了支持协约国。也可接受：因为德国袭击美国船只；齐默尔曼电报事件。"},
+  102:{q:"女性是何时获得投票权的？",a:"第一次世界大战之后——1920年，依据第十九修正案。"},
+  103:{q:"什么是经济大萧条？",a:"现代史上最长的经济衰退——很长一段时间里许多人失业、贫困。"},
+  104:{q:"经济大萧条始于何时？",a:"1929年股市崩盘。"},
+  105:{q:"经济大萧条和第二次世界大战期间的美国总统是谁？",a:"富兰克林·罗斯福。"},
+  106:{q:"美国为什么参加第二次世界大战？",a:"为了支持同盟国。也可接受：在日本偷袭珍珠港之后。"},
+  107:{q:"德怀特·艾森豪威尔因许多事而闻名。说出其中一件。",a:"第二次世界大战期间的将军。也可接受：第三十四任总统、盟军最高统帅、创建州际公路系统。"},
+  108:{q:"冷战期间美国的主要对手是谁？",a:"苏联，即俄国。"},
+  109:{q:"冷战期间美国的一个主要担忧是什么？",a:"共产主义。也可接受：共产主义的扩散、核战争。"},
+  110:{q:"美国为什么参加朝鲜战争？",a:"为了阻止共产主义的扩散。"},
+  111:{q:"美国为什么参加越南战争？",a:"为了阻止共产主义的扩散。"},
+  112:{q:"民权运动做了什么？",a:"为终结种族歧视而斗争。"},
+  113:{q:"马丁·路德·金因许多事而闻名。说出其中一件。",a:"他为民权而斗争。也可接受：为所有美国人争取平等；发表“我有一个梦想”的演讲。"},
+  114:{q:"美国为什么参加海湾战争？",a:"为了迫使伊拉克军队撤出科威特。"},
+  115:{q:"2001年9月11日美国发生了什么重大事件？",a:"恐怖分子袭击了美国。"},
+  116:{q:"说出9·11袭击之后美国参与的一场军事冲突。",a:"阿富汗战争。也可接受：伊拉克战争，即“持久自由行动”或“伊拉克自由行动”。"},
+  117:{q:"说出美国一个印第安部落的名称。",a:"例如：霍皮、纳瓦霍、切罗基、苏族、阿帕奇、易洛魁、普韦布洛、奇佩瓦、乔克托、塞米诺尔。任何联邦承认的部落均可。"},
+  118:{q:"说出一个美国创新的例子。",a:"飞机。也可接受：电灯泡、流水装配线、登月、集成电路即微芯片。"},
+  119:{q:"美国的首都是哪里？",a:"华盛顿哥伦比亚特区。"},
+  120:{q:"自由女神像在哪里？",a:"纽约港，自由岛。也可接受：新泽西州、纽约市附近、哈德逊河上。"},
+  121:{q:"国旗上为什么有13道条纹？",a:"因为最初有13个殖民地。"},
+  122:{q:"国旗上为什么有50颗星？",a:"因为有50个州。"},
+  123:{q:"美国国歌的名字是什么？",a:"《星条旗》。"},
+  124:{q:"美国第一句国家格言是“E Pluribus Unum”。它是什么意思？",a:"“合众为一”。"},
+  125:{q:"什么是独立日？",a:"庆祝国家生日的节日——《独立宣言》的通过，即七月四日。"},
+  126:{q:"说出三个美国全国性节日。",a:"例如：独立日、感恩节和圣诞节。也可接受：元旦、阵亡将士纪念日、劳动节、退伍军人节、马丁·路德·金纪念日、总统日、六月节、哥伦布日。"},
+  127:{q:"什么是阵亡将士纪念日？",a:"悼念在军队服役中牺牲士兵的节日。"},
+  128:{q:"什么是退伍军人节？",a:"向曾在美国军队服役者致敬的节日。"},
+};
+
+// ---------- language ----------
+// lang: 'en' English only, 'bi' bilingual (EN primary + zh secondary), 'zh' Chinese only.
+// Chrome text follows 'zh'; 'en' and 'bi' keep English chrome.
+let lang = localStorage.getItem('civics-lang') || 'en';
+
+const CATS_ZH = {"All":"全部","American Government":"美国政府","American History":"美国历史","Symbols & Holidays":"象征与节日"};
+
+// Chrome strings: [english, chinese] — zh mode picks the second entry.
+const CHROME = {
+  'tab-cards': ['Flashcards','抽认卡'],
+  'tab-test': ['Practice test','模拟测试'],
+  'a-label': ['Acceptable answer','可接受的答案'],
+  'back-cat': ['Answer','答案'],
+  'start-test': ['Start practice test','开始模拟测试'],
+  'test-h2': null, // set below via wrapper span
+  't-reveal': ['Show answer','显示答案'],
+  't-got': ['✓ I got it','✓ 答对了'],
+  't-miss': ['✗ I missed it','✗ 答错了'],
+  'r-again': ['Take another test','再测一次'],
+  'r-review': ['Back to flashcards','返回抽认卡'],
+  't-correct-label': ['correct','答对'],
+  't-wrong-label': ['missed','答错'],
+};
+const FLIP_HINTS = ['tap to reveal ↻','点击显示答案 ↻','tap for question ↻','点击看题目 ↻'];
+const zh = (en, cn) => lang === 'zh' ? cn : en;
+
+function applyChrome(){
+  const zi = lang === 'zh' ? 1 : 0;
+  for (const [id, pair] of Object.entries(CHROME)) {
+    if (!pair) continue;
+    const el = document.getElementById(id);
+    if (el) el.textContent = pair[zi];
+  }
+  document.querySelectorAll('.flip-hint').forEach((el, i) => {
+    el.textContent = zi
+      ? (i === 0 ? FLIP_HINTS[1] : FLIP_HINTS[3])
+      : (i === 0 ? FLIP_HINTS[0] : FLIP_HINTS[2]);
+  });
+  const h2 = document.querySelector('#test-start h2');
+  if (h2) h2.textContent = zi ? '准备好模拟测试了吗？' : 'Ready for a practice test?';
+  const sub = document.querySelector('#test-start p');
+  if (sub) sub.textContent = zi ? '20 道随机题目，由你如实判分。' : '20 random questions, scored honestly by you.';
+  const rules = document.querySelectorAll('.rules li');
+  const RULES_ZH = [
+    '每次<b>最多 20 道题</b>，逐题作答。',
+    '先看答案，再如实判断自己是否答对。',
+    '答对 <b>12 题</b>立即通过。',
+    '答错 <b>9 题</b>测试即结束——与真实面试相同。',
+  ];
+  const RULES_EN = [
+    "You'll get <b>up to 20 questions</b>, one at a time.",
+    'Reveal the answer, then mark whether you got it right.',
+    'Reach <b>12 correct</b> and you pass instantly.',
+    'Miss <b>9</b> and the test ends — same as the real interview.',
+  ];
+  rules.forEach((li, i) => { li.innerHTML = zi ? RULES_ZH[i] : RULES_EN[i]; });
+  document.getElementById('card').setAttribute('aria-label',
+    zi ? '抽认卡，点击显示答案。' : 'Flashcard. Activate to reveal the answer.');
+}
+
+function setLang(l){
+  lang = l;
+  localStorage.setItem('civics-lang', l);
+  ['en','bi','zh'].forEach(k => document.getElementById('lang-'+k).setAttribute('aria-pressed', k===l));
+  applyChrome();
+  renderCard();
+  renderChips();
+}
+['en','bi','zh'].forEach(k => document.getElementById('lang-'+k).onclick = () => setLang(k));
+
 // ---------- state ----------
 let filter = "All";
 let deck = [];           // indices into Q
@@ -484,30 +709,54 @@ function buildDeck(shuffleIt){
 const card = document.getElementById('card');
 function renderCard(){
   const item = Q[deck[pos]];
+  const z = QZ[item.n];
   card.classList.remove('flipped');
   // small timeout so flip-back isn't visible while content swaps
   document.getElementById('f-num').textContent = "Q"+item.n;
   document.getElementById('b-num').textContent = "Q"+item.n;
-  document.getElementById('f-cat').textContent = item.c;
-  document.getElementById('f-q').textContent = item.q;
-  document.getElementById('b-a').textContent = item.a;
+  document.getElementById('f-cat').textContent = lang==='zh' ? CATS_ZH[item.c] : item.c;
+  const fq2 = document.getElementById('f-q2');
+  const ba2 = document.getElementById('b-a2');
+  if (lang === 'bi') {
+    document.getElementById('f-q').textContent = item.q;
+    fq2.textContent = z.q; fq2.style.display = 'flex';
+    document.getElementById('b-a').textContent = item.a;
+    ba2.textContent = z.a; ba2.style.display = 'flex';
+  } else if (lang === 'zh') {
+    document.getElementById('f-q').textContent = z.q;
+    fq2.style.display = 'none'; fq2.textContent = '';
+    document.getElementById('b-a').textContent = z.a;
+    ba2.style.display = 'none'; ba2.textContent = '';
+  } else {
+    document.getElementById('f-q').textContent = item.q;
+    fq2.style.display = 'none'; fq2.textContent = '';
+    document.getElementById('b-a').textContent = item.a;
+    ba2.style.display = 'none'; ba2.textContent = '';
+  }
   const noteEl = document.getElementById('b-note');
-  if(item.note){noteEl.style.display='block';noteEl.innerHTML=item.note;}
+  const noteZh = z.note;
+  const noteText = lang === 'zh' ? (noteZh ?? item.note) : item.note;
+  if(noteText){noteEl.style.display='block';noteEl.innerHTML=noteText.replace(/<[^>]+>/g,'');}
   else{noteEl.style.display='none';noteEl.innerHTML='';}
-  document.getElementById('card-counter').textContent = "Question "+(pos+1)+" of "+deck.length;
+  document.getElementById('card-counter').textContent =
+    lang==='zh' ? "第 "+(pos+1)+" 题 / 共 "+deck.length+" 题" : "Question "+(pos+1)+" of "+deck.length;
   // known button
   const isKnown = known.has(item.n);
   const kb = document.getElementById('known');
   kb.classList.toggle('on', isKnown);
   kb.setAttribute('aria-pressed', isKnown);
   document.getElementById('known-check').textContent = isKnown ? "✓" : "○";
+  document.getElementById('known-label').textContent = isKnown
+    ? (lang==='zh' ? "已掌握" : "Known")
+    : (lang==='zh' ? "标记为已掌握" : "Mark as known");
   document.getElementById('prev').disabled = pos===0;
   document.getElementById('next').disabled = pos===deck.length-1;
   updateKnownMeter();
 }
 function updateKnownMeter(){
   const total = Q.length;
-  document.getElementById('known-count').textContent = known.size+" known";
+  document.getElementById('known-count').textContent =
+    lang==='zh' ? "已掌握 "+known.size : known.size+" known";
   document.getElementById('known-bar').style.width = (known.size/total*100)+"%";
 }
 function renderChips(){
@@ -516,7 +765,8 @@ function renderChips(){
   CATS.forEach(cat=>{
     const b=document.createElement('button');
     b.className='chip';
-    b.textContent = cat==="All" ? "All 128" : cat;
+    if (cat==="All") b.textContent = lang==='zh' ? "全部 128" : "All 128";
+    else b.textContent = lang==='zh' ? CATS_ZH[cat] : cat;
     b.setAttribute('aria-pressed', cat===filter);
     b.onclick=()=>{filter=cat;buildDeck(false);renderCard();renderChips();};
     wrap.appendChild(b);
@@ -573,16 +823,34 @@ function startTest(){
 }
 function renderTestQ(){
   const item=Q[testOrder[tIdx]];
-  document.getElementById('t-progress').textContent="Question "+(tIdx+1)+" of "+TEST_LEN;
+  const z=QZ[item.n];
+  document.getElementById('t-progress').textContent =
+    lang==='zh' ? "第 "+(tIdx+1)+" 题 / 共 "+TEST_LEN+" 题" : "Question "+(tIdx+1)+" of "+TEST_LEN;
   document.getElementById('t-correct').textContent=tCorrect;
   document.getElementById('t-wrong').textContent=tWrong;
   document.getElementById('t-bar').style.width=((tIdx)/TEST_LEN*100)+"%";
   document.getElementById('t-num').textContent="Q"+item.n;
-  document.getElementById('t-cat').textContent=item.c;
-  document.getElementById('t-q').textContent=item.q;
-  document.getElementById('t-a-text').textContent=item.a;
+  document.getElementById('t-cat').textContent = lang==='zh' ? CATS_ZH[item.c] : item.c;
+  const tq2=document.getElementById('t-q2'), ta2=document.getElementById('t-a2');
+  if(lang==='bi'){
+    document.getElementById('t-q').textContent=item.q;
+    tq2.textContent=z.q; tq2.style.display='flex';
+    document.getElementById('t-a-text').textContent=item.a;
+    ta2.textContent=z.a; ta2.style.display='block';
+  } else if(lang==='zh'){
+    document.getElementById('t-q').textContent=z.q;
+    tq2.style.display='none'; tq2.textContent='';
+    document.getElementById('t-a-text').textContent=z.a;
+    ta2.style.display='none'; ta2.textContent='';
+  } else {
+    document.getElementById('t-q').textContent=item.q;
+    tq2.style.display='none'; tq2.textContent='';
+    document.getElementById('t-a-text').textContent=item.a;
+    ta2.style.display='none'; ta2.textContent='';
+  }
   const tn=document.getElementById('t-a-note');
-  if(item.note){tn.style.display='block';tn.innerHTML=item.note;} else {tn.style.display='none';tn.innerHTML='';}
+  const noteText = lang==='zh' ? (z.note ?? item.note) : item.note;
+  if(noteText){tn.style.display='block';tn.innerHTML=noteText.replace(/<[^>]+>/g,'');} else {tn.style.display='none';tn.innerHTML='';}
   document.getElementById('t-answer').style.display='none';
   document.getElementById('t-reveal').style.display='block';
   document.getElementById('t-grade').style.display='none';
@@ -611,17 +879,23 @@ function finishTest(){
   document.getElementById('test-run').style.display='none';
   document.getElementById('test-result').style.display='block';
   const stamp=document.getElementById('r-stamp');
-  stamp.textContent = passed ? "Passed" : "Not yet";
+  stamp.textContent = zh(passed ? "Passed" : "Not yet", passed ? "通过" : "未通过");
   stamp.className = "stamp "+(passed?"pass":"fail");
   document.getElementById('r-score').textContent=tCorrect;
   document.getElementById('r-total').textContent=tCorrect+tWrong;
   const v=document.getElementById('r-verdict');
   if(passed){
-    v.textContent="You reached 12 correct — that's a passing score. Keep running tests until passing feels routine.";
+    v.textContent = zh(
+      "You reached 12 correct — that's a passing score. Keep running tests until passing feels routine.",
+      "你已答对 12 题——达到通过标准。继续练习，直到通过成为常态。");
   } else if(tWrong>=FAIL_AT){
-    v.textContent="That's 9 missed, which ends the test. Review the questions you find hard in flashcard mode, then try again — there's no limit to practice.";
+    v.textContent = zh(
+      "That's 9 missed, which ends the test. Review the questions you find hard in flashcard mode, then try again — there's no limit to practice.",
+      "答错 9 题，测试结束。回到抽认卡复习难题，然后再来——练习次数不限。");
   } else {
-    v.textContent="You got "+tCorrect+" of "+(tCorrect+tWrong)+" correct. Aim for 12. A little more flashcard time and you'll be there.";
+    v.textContent = zh(
+      "You got "+tCorrect+" of "+(tCorrect+tWrong)+" correct. Aim for 12. A little more flashcard time and you'll be there.",
+      "你答对了 "+(tCorrect+tWrong)+" 题中的 "+tCorrect+" 题。目标是 12 题。再用抽认卡练一练就能达到。");
   }
 }
 document.getElementById('r-again').onclick=startTest;
@@ -634,7 +908,7 @@ document.getElementById('r-review').onclick=()=>{
 // ---------- init ----------
 renderChips();
 buildDeck(false);
-renderCard();
+setLang(lang);
 </script>
 </body>
 </html>

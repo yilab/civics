@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">公民入籍听力备考</string>
+
+    <string name="tab_listen">听题</string>
+    <string name="tab_questions">题库</string>
+    <string name="tab_settings">设置</string>
+
+    <string name="listen_no_tts">未找到可用的语音合成声音。请在系统设置中安装或启用 Google 文字转语音（TTS）以收听题目。</string>
+    <string name="listen_no_questions">暂无题目</string>
+    <string name="listen_question_of">第 %1$d 题 / 共 %2$d 题</string>
+    <string name="listen_known_count">已掌握 %1$d</string>
+    <string name="listen_app_title">公民入籍听力备考</string>
+    <string name="listen_onboarding">点击开始，把手机放到一边，大声回答每道题。AirPods：按一下听答案或继续，按两下下一题，按三下重复本题。</string>
+    <string name="listen_acceptable_answer">可接受的答案</string>
+    <string name="phase_speaking_question">正在读题——按一下听答案</string>
+    <string name="phase_thinking">轮到你了——大声作答，然后按一下</string>
+    <string name="phase_speaking_answer">正在读答案</string>
+    <string name="phase_awaiting_advance">按一下进入下一题</string>
+    <string name="button_start">开始听题</string>
+    <string name="button_hear_answer">听答案</string>
+    <string name="button_next_question">下一题</string>
+    <string name="listen_previous_question">上一题</string>
+    <string name="listen_stop">停止</string>
+    <string name="listen_mark_known">标记为已掌握</string>
+    <string name="listen_known">已掌握</string>
+    <string name="questions_playing_suffix"> · 播放中</string>
+    <string name="questions_known">已掌握</string>
+
+    <string name="settings_voice">语音</string>
+    <string name="settings_language">语言</string>
+    <string name="settings_playback">播放</string>
+    <string name="settings_deck">题库</string>
+    <string name="settings_progress">进度</string>
+    <string name="settings_speech_rate">语速：%1$s×</string>
+    <string name="settings_announce_meta">读出题号</string>
+    <string name="settings_speech_language">朗读语言</string>
+    <string name="mode_english">英语</string>
+    <string name="mode_bilingual">英语 + 中文</string>
+    <string name="mode_chinese">中文</string>
+    <string name="settings_ui_language">界面语言</string>
+    <string name="ui_system">跟随系统</string>
+    <string name="ui_english">English</string>
+    <string name="ui_chinese">中文</string>
+    <string name="settings_think_pause">显示答案前的停顿</string>
+    <string name="think_wait">手动继续</string>
+    <string name="think_none">不停顿</string>
+    <string name="think_seconds">%1$d 秒</string>
+    <string name="settings_auto_advance">答案结束后自动下一题</string>
+    <string name="settings_shuffle">随机顺序</string>
+    <string name="settings_known_progress">已掌握 %1$d / 128 题</string>
+    <string name="settings_clear_known">清除已掌握标记</string>
+
+    <string name="category_all">全部 128 题</string>
+    <string name="category_american_government">美国政府</string>
+    <string name="category_american_history">美国历史</string>
+    <string name="category_symbols_holidays">象征与节日</string>
+</resources>

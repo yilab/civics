@@ -41,4 +41,19 @@ struct QuestionRepositoryTests {
         #expect(Set(ordered) == Set(shuffled))
         #expect(ordered != shuffled)
     }
+
+    @Test func everyQuestionHasAChineseVersion() {
+        for q in repo.questions {
+            #expect(!(q.questionZh ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank questionZh for Q\(q.n)")
+            #expect(!(q.answerZh ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank answerZh for Q\(q.n)")
+            #expect(!(q.spokenZh ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank spokenZh for Q\(q.n)")
+            // TTS-clean: no ASCII or full-width parentheses, like the English spoken field.
+            let spoken = q.spokenZh ?? ""
+            #expect(!spoken.contains("(") && !spoken.contains(")") && !spoken.contains("（") && !spoken.contains("）"),
+                    "spokenZh has parens for Q\(q.n)")
+            if q.dynamic {
+                #expect(q.noteZh != nil, "dynamic Q\(q.n) should carry a noteZh")
+            }
+        }
+    }
 }

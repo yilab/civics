@@ -1,3 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Civics Audio Prep</string>
+
+    <string name="tab_listen">Listen</string>
+    <string name="tab_questions">Questions</string>
+    <string name="tab_settings">Settings</string>
+
+    <string name="listen_no_tts">No text-to-speech voice is available. Install or enable Google Speech Services in system settings to hear questions.</string>
+    <string name="listen_no_questions">No questions</string>
+    <string name="listen_question_of">Question %1$d of %2$d</string>
+    <string name="listen_known_count">%1$d known</string>
+    <string name="listen_app_title">Civics Audio Prep</string>
+    <string name="listen_onboarding">Press Start, put your phone away, and answer each question out loud. On AirPods: one press to hear the answer or continue, two presses for the next question, three to repeat.</string>
+    <string name="listen_acceptable_answer">ACCEPTABLE ANSWER</string>
+    <string name="phase_speaking_question">Speaking the question — press to hear the answer</string>
+    <string name="phase_thinking">Your turn — answer out loud, then press</string>
+    <string name="phase_speaking_answer">Speaking the answer</string>
+    <string name="phase_awaiting_advance">Press for the next question</string>
+    <string name="button_start">Start listening</string>
+    <string name="button_hear_answer">Hear the answer</string>
+    <string name="button_next_question">Next question</string>
+    <string name="listen_previous_question">Previous question</string>
+    <string name="listen_stop">Stop</string>
+    <string name="listen_mark_known">Mark known</string>
+    <string name="listen_known">Known</string>
+    <string name="questions_playing_suffix"> · playing</string>
+    <string name="questions_known">Known</string>
+
+    <string name="settings_voice">Voice</string>
+    <string name="settings_language">Language</string>
+    <string name="settings_playback">Playback</string>
+    <string name="settings_deck">Deck</string>
+    <string name="settings_progress">Progress</string>
+    <string name="settings_speech_rate">Speech rate: %1$s×</string>
+    <string name="settings_announce_meta">Announce question number</string>
+    <string name="settings_speech_language">Speech language</string>
+    <string name="mode_english">English</string>
+    <string name="mode_bilingual">English + 中文</string>
+    <string name="mode_chinese">中文</string>
+    <string name="settings_ui_language">App language</string>
+    <string name="ui_system">System</string>
+    <string name="ui_english">English</string>
+    <string name="ui_chinese">中文</string>
+    <string name="settings_think_pause">Pause before revealing the answer</string>
+    <string name="think_wait">Wait</string>
+    <string name="think_none">None</string>
+    <string name="think_seconds">%1$ds</string>
+    <string name="settings_auto_advance">Auto-advance after the answer</string>
+    <string name="settings_shuffle">Shuffle</string>
+    <string name="settings_known_progress">%1$d of 128 marked as known</string>
+    <string name="settings_clear_known">Clear known marks</string>
+
+    <string name="category_all">All 128 questions</string>
+    <string name="category_american_government">American Government</string>
+    <string name="category_american_history">American History</string>
+    <string name="category_symbols_holidays">Symbols &amp; Holidays</string>
 </resources>

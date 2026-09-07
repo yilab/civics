@@ -2,7 +2,7 @@ import AVFoundation
 
 /// `SpeechEngine` backed by on-device AVSpeechSynthesizer.
 ///
-/// Unlike Android's TextToSpeech there is no async initialization step: en-US
+/// Unlike Android's TextToSpeech there is no async initialization step: voice
 /// availability is known synchronously at construction, so no pending-utterance
 /// slot is needed. There is also no error delegate callback — `onError` exists
 /// on the protocol purely for engine-logic parity and tests.
@@ -12,8 +12,7 @@ final class SystemSpeechEngine: NSObject, SpeechEngine {
     var callback: (any SpeechEngineCallback)?
     var speechRate: Float = 1.0
 
-    /// True when an en-US voice exists on this device.
-    let isAvailable: Bool
+    private let voices: [SpeechLanguage: AVSpeechSynthesisVoice]
 
     private let synthesizer = AVSpeechSynthesizer()
 
@@ -32,14 +31,23 @@ final class SystemSpeechEngine: NSObject, SpeechEngine {
     }
 
     override init() {
-        isAvailable = AVSpeechSynthesisVoice(language: "en-US") != nil
+        let available: [SpeechLanguage: AVSpeechSynthesisVoice?] = [
+            .english: AVSpeechSynthesisVoice(language: "en-US"),
+            .chinese: AVSpeechSynthesisVoice(language: "zh-CN"),
+        ]
+        voices = available.compactMapValues { $0 }
         super.init()
         synthesizer.delegate = self
     }
 
-    func speak(utteranceID: String, text: String) {
+    /// True when a voice for `language` exists on this device.
+    func isAvailable(_ language: SpeechLanguage) -> Bool {
+        voices[language] != nil
+    }
+
+    func speak(utteranceID: String, text: String, language: SpeechLanguage) {
         let u = TaggedUtterance(utteranceID: utteranceID, text: text)
-        u.voice = AVSpeechSynthesisVoice(language: "en-US")
+        u.voice = voices[language]
         // Linear scaling around the default rate, mirroring Android's speech-rate multiplier.
         u.rate = AVSpeechUtteranceDefaultSpeechRate * speechRate
         // AVSpeechSynthesizer enqueues by default; flush first for QUEUE_FLUSH parity.
