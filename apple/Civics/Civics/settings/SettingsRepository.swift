@@ -23,6 +23,7 @@ final class SettingsRepository: SettingsSource {
         static let known = "known"
         static let speechMode = "speech_mode"
         static let uiLanguage = "ui_language"
+        static let testHistory = "test_history"
     }
 
     private static func speechMode(_ raw: String?) -> SpeechMode {
@@ -92,5 +93,27 @@ final class SettingsRepository: SettingsSource {
                      forKey: Keys.uiLanguage)
         settings = s
         observers.forEach { $0(s) }
+    }
+
+    // MARK: - Test history
+
+    /// Recorded practice tests, most recent first.
+    var testHistory: [TestRecord] {
+        get {
+            guard let data = defaults.data(forKey: Keys.testHistory),
+                  let records = try? JSONDecoder().decode([TestRecord].self, from: data)
+            else { return [] }
+            return records
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue) {
+                defaults.set(data, forKey: Keys.testHistory)
+            }
+        }
+    }
+
+    /// Appends a finished test, keeping the 20 most recent.
+    func recordTest(_ record: TestRecord) {
+        testHistory = ([record] + testHistory).prefix(20).map { $0 }
     }
 }

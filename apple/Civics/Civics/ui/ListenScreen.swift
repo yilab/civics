@@ -169,6 +169,8 @@ struct ListenScreen: View {
         case .thinking: L10n.t("phase.thinking")
         case .speakingAnswer: L10n.t("phase.speakingAnswer")
         case .awaitingAdvance: L10n.t("phase.awaitingAdvance")
+        case .awaitingGrade: L10n.t("phase.awaitingGrade")
+        case .finished: ""
         }
     }
 
@@ -177,6 +179,8 @@ struct ListenScreen: View {
         case .idle: L10n.t("button.start")
         case .speakingQuestion, .thinking: L10n.t("button.hearAnswer")
         case .speakingAnswer, .awaitingAdvance: L10n.t("button.nextQuestion")
+        case .awaitingGrade: L10n.t("button.gotIt")
+        case .finished: L10n.t("button.start")
         }
     }
 

@@ -161,6 +161,8 @@ fun ListenScreen(
                 Phase.THINKING -> stringResource(R.string.phase_thinking)
                 Phase.SPEAKING_ANSWER -> stringResource(R.string.phase_speaking_answer)
                 Phase.AWAITING_ADVANCE -> stringResource(R.string.phase_awaiting_advance)
+                Phase.AWAITING_GRADE -> stringResource(R.string.phase_awaiting_grade)
+                Phase.FINISHED -> ""
             },
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
@@ -173,6 +175,8 @@ fun ListenScreen(
                     Phase.IDLE -> stringResource(R.string.button_start)
                     Phase.SPEAKING_QUESTION, Phase.THINKING -> stringResource(R.string.button_hear_answer)
                     Phase.SPEAKING_ANSWER, Phase.AWAITING_ADVANCE -> stringResource(R.string.button_next_question)
+                    Phase.AWAITING_GRADE -> stringResource(R.string.button_got_it)
+                    Phase.FINISHED -> stringResource(R.string.button_start)
                 }
             )
         }

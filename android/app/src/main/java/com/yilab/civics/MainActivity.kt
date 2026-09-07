@@ -41,6 +41,7 @@ import com.yilab.civics.ui.QuestionsScreen
 import com.yilab.civics.ui.SettingsScreen
 import com.yilab.civics.ui.theme.CivicsTheme
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -71,6 +72,7 @@ fun applyUiLanguage(language: UiLanguage) {
 enum class AppDestinations(val labelRes: Int, val icon: Int) {
     LISTEN(R.string.tab_listen, R.drawable.ic_headset),
     QUESTIONS(R.string.tab_questions, R.drawable.ic_list),
+    TEST(R.string.tab_test, R.drawable.ic_list),
     SETTINGS(R.string.tab_settings, R.drawable.ic_settings),
 }
 
@@ -162,6 +164,23 @@ fun CivicsRoot() {
                     onChange = { transform -> app.appScope.launch { app.settingsRepo.update(transform) } },
                     modifier = Modifier.padding(innerPadding),
                 )
+
+                AppDestinations.TEST -> {
+                    var history by remember { mutableStateOf<List<com.yilab.civics.audio.TestRecord>>(emptyList()) }
+                    LaunchedEffect(state.phase) {
+                        history = withContext(kotlinx.coroutines.Dispatchers.IO) { app.settingsRepo.testHistory() }
+                    }
+                    com.yilab.civics.ui.TestScreen(
+                        state = state,
+                        history = history,
+                        zhPrimary = zhPrimary,
+                        onStart = { engine.startTest() },
+                        onReveal = primary,
+                        onGrade = { engine.grade(it) },
+                        onBackToStudy = { engine.startStudy() },
+                        modifier = Modifier.padding(innerPadding),
+                    )
+                }
             }
         }
     }

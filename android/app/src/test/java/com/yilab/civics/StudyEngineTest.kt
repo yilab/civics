@@ -4,6 +4,7 @@ import com.yilab.civics.audio.Phase
 import com.yilab.civics.audio.SpeechEngine
 import com.yilab.civics.audio.SpeechLanguage
 import com.yilab.civics.audio.StudyEngine
+import com.yilab.civics.audio.TestRecord
 import com.yilab.civics.data.QuestionRepository
 import com.yilab.civics.settings.SpeechMode
 import com.yilab.civics.settings.StudySettings
@@ -50,10 +51,11 @@ class StudyEngineTest {
     private fun TestScope.engine(
         settings: MutableStateFlow<StudySettings>,
         onKnownChanged: (Int, Boolean) -> Unit = { _, _ -> },
+        onTestFinished: (TestRecord) -> Unit = {},
     ): Pair<StudyEngine, FakeSpeechEngine> {
         val speech = FakeSpeechEngine()
         // backgroundScope: the engine's settings-collection coroutine never completes by design
-        val engine = StudyEngine(speech, repo, settings, backgroundScope, onKnownChanged)
+        val engine = StudyEngine(speech, repo, settings, backgroundScope, onKnownChanged, onTestFinished)
         return engine to speech
     }
 
@@ -283,5 +285,93 @@ class StudyEngineTest {
         engine.primaryAction()
         assertEquals("q-1", speech.spoken.last().first) // no questionZh -> English fallback
         assertEquals(SpeechLanguage.ENGLISH, speech.spoken.last().third)
+    }
+
+    // -------------------------------------------------------- practice test mode
+
+    @Test
+    fun `startTest speaks the first of a twenty-question deck`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        assertEquals(com.yilab.civics.audio.EngineMode.TEST, engine.state.value.mode)
+        assertEquals(com.yilab.civics.audio.StudyState.TEST_TOTAL, engine.state.value.deckSize)
+        assertEquals(Phase.SPEAKING_QUESTION, engine.state.value.phase)
+        assertTrue(speech.spoken.last().first.startsWith("q-"))
+    }
+
+    @Test
+    fun `grading advances through the test`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        speech.finishLast() // question -> think
+        engine.primaryAction() // reveal
+        speech.finishLast() // answer -> awaiting grade
+        assertEquals(Phase.AWAITING_GRADE, engine.state.value.phase)
+        engine.grade(true)
+        assertEquals(1, engine.state.value.testCorrect)
+        assertEquals(1, engine.state.value.testIndex)
+        assertEquals(Phase.SPEAKING_QUESTION, engine.state.value.phase)
+    }
+
+    @Test
+    fun `test passes at twelve correct`() = runTest {
+        var finished: TestRecord? = null
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()), onTestFinished = { finished = it })
+        engine.startTest()
+        repeat(com.yilab.civics.audio.StudyState.TEST_PASS_AT) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(true)
+        }
+        assertEquals(Phase.FINISHED, engine.state.value.phase)
+        assertEquals(com.yilab.civics.audio.TestOutcome.PASSED, engine.state.value.testOutcome)
+        assertEquals(true, finished?.passed)
+        assertEquals(com.yilab.civics.audio.StudyState.TEST_PASS_AT, finished?.correct)
+    }
+
+    @Test
+    fun `test fails at nine wrong`() = runTest {
+        var finished: TestRecord? = null
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()), onTestFinished = { finished = it })
+        engine.startTest()
+        repeat(com.yilab.civics.audio.StudyState.TEST_FAIL_AT) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(false)
+        }
+        assertEquals(Phase.FINISHED, engine.state.value.phase)
+        assertEquals(com.yilab.civics.audio.TestOutcome.FAILED, engine.state.value.testOutcome)
+        assertEquals(false, finished?.passed)
+    }
+
+    @Test
+    fun `a wrong answer unmarks a known question`() = runTest {
+        // Single-question repo whose only question is already marked known.
+        val json = """{"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null}]}"""
+        val single = QuestionRepository { json }
+        val events = mutableListOf<Pair<Int, Boolean>>()
+        val speech = FakeSpeechEngine()
+        val engine = StudyEngine(speech, single, MutableStateFlow(StudySettings(known = setOf(1))), backgroundScope, { n, k -> events += n to k })
+        engine.startTest()
+        assertEquals(1, engine.state.value.current?.n)
+        assertTrue(engine.state.value.known.contains(1))
+        speech.finishLast()
+        engine.primaryAction()
+        speech.finishLast()
+        engine.grade(false)
+        assertEquals(listOf(1 to false), events)
+    }
+
+    @Test
+    fun `next and previous are disabled during a test`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        val before = speech.spoken.last().first
+        engine.next()
+        engine.previous()
+        assertEquals(before, speech.spoken.last().first)
+        assertEquals(Phase.SPEAKING_QUESTION, engine.state.value.phase)
     }
 }

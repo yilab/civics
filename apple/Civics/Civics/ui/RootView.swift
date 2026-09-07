@@ -1,12 +1,13 @@
 import SwiftUI
 
 enum AppDestination: Hashable {
-    case listen, questions, settings
+    case listen, questions, test, settings
 
     var labelKey: String {
         switch self {
         case .listen: "tab.listen"
         case .questions: "tab.questions"
+        case .test: "tab.test"
         case .settings: "tab.settings"
         }
     }
@@ -15,6 +16,7 @@ enum AppDestination: Hashable {
         switch self {
         case .listen: "headphones"
         case .questions: "list.bullet"
+        case .test: "checkmark.circle"
         case .settings: "gearshape"
         }
     }
@@ -47,6 +49,17 @@ struct RootView: View {
                     currentNumber: model.engine.state.current?.n,
                     zhPrimary: zhPrimary,
                     onJump: { model.engine.jumpTo($0) }
+                )
+            }
+            Tab(L10n.t(AppDestination.test.labelKey), systemImage: AppDestination.test.icon) {
+                TestScreen(
+                    state: model.engine.state,
+                    history: model.settingsRepo.testHistory,
+                    zhPrimary: zhPrimary,
+                    onStart: { model.engine.startTest() },
+                    onReveal: { model.playback.play() },
+                    onGrade: { model.engine.grade(correct: $0) },
+                    onBackToStudy: { model.engine.startStudy() }
                 )
             }
             Tab(L10n.t(AppDestination.settings.labelKey), systemImage: AppDestination.settings.icon) {

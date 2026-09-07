@@ -97,7 +97,8 @@ struct StudyEngineTests {
     private func makeEngine(
         settings: SettingsBox,
         scheduler: ManualScheduler = ManualScheduler(),
-        onKnownChanged: @escaping (Int, Bool) -> Void = { _, _ in }
+        onKnownChanged: @escaping (Int, Bool) -> Void = { _, _ in },
+        onTestFinished: @escaping (TestRecord) -> Void = { _ in }
     ) -> (StudyEngine, FakeSpeechEngine) {
         let speech = FakeSpeechEngine()
         let engine = StudyEngine(
@@ -105,7 +106,8 @@ struct StudyEngineTests {
             repo: repo,
             settings: settings,
             scheduler: scheduler,
-            onKnownChanged: onKnownChanged
+            onKnownChanged: onKnownChanged,
+            onTestFinished: onTestFinished
         )
         return (engine, speech)
     }
@@ -320,5 +322,108 @@ struct StudyEngineTests {
         engine.primaryAction()
         #expect(speech.spoken.last?.utteranceID == "q-1") // no questionZh -> English fallback
         #expect(speech.spoken.last?.language == .english)
+    }
+
+    // MARK: - Practice test mode
+
+    private func makeTestEngine(
+        onKnownChanged: @escaping (Int, Bool) -> Void = { _, _ in },
+        onTestFinished: @escaping (TestRecord) -> Void = { _ in }
+    ) -> (StudyEngine, FakeSpeechEngine) {
+        makeEngine(
+            settings: SettingsBox(StudySettings()),
+            onKnownChanged: onKnownChanged,
+            onTestFinished: onTestFinished
+        )
+    }
+
+    @Test func startTestSpeaksFirstOfATwentyQuestionDeck() {
+        let (engine, speech) = makeTestEngine()
+        engine.startTest()
+        #expect(engine.state.mode == .test)
+        #expect(engine.state.deckSize == StudyState.testTotal)
+        #expect(engine.state.phase == .speakingQuestion)
+        #expect(speech.spoken.last?.utteranceID.hasPrefix("q-") == true)
+    }
+
+    @Test func gradingAdvancesThroughTheTest() {
+        let (engine, speech) = makeTestEngine()
+        engine.startTest()
+        speech.finishLast() // question -> think
+        engine.primaryAction() // reveal answer
+        speech.finishLast() // answer -> awaiting grade
+        #expect(engine.state.phase == .awaitingGrade)
+        engine.grade(correct: true)
+        #expect(engine.state.testCorrect == 1)
+        #expect(engine.state.testIndex == 1)
+        #expect(engine.state.phase == .speakingQuestion)
+    }
+
+    @Test func testPassesAtTwelveCorrect() {
+        var finished: TestRecord?
+        let (engine, speech) = makeTestEngine(onTestFinished: { finished = $0 })
+        engine.startTest()
+        for _ in 0..<StudyState.testPassAt {
+            speech.finishLast() // question done
+            engine.primaryAction() // reveal
+            speech.finishLast() // answer done -> awaiting grade
+            engine.grade(correct: true)
+        }
+        #expect(engine.state.phase == .finished)
+        #expect(engine.state.testOutcome == .passed)
+        #expect(finished?.passed == true)
+        #expect(finished?.correct == StudyState.testPassAt)
+    }
+
+    @Test func testFailsAtNineWrong() {
+        var finished: TestRecord?
+        let (engine, speech) = makeTestEngine(onTestFinished: { finished = $0 })
+        engine.startTest()
+        for _ in 0..<StudyState.testFailAt {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(correct: false)
+        }
+        #expect(engine.state.phase == .finished)
+        #expect(engine.state.testOutcome == .failed)
+        #expect(finished?.passed == false)
+        #expect(finished?.wrong == StudyState.testFailAt)
+    }
+
+    @Test func aWrongAnswerUnmarksAKnownQuestion() {
+        // Single-question repo whose only question is already marked known.
+        let json = """
+        {"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null}]}
+        """.data(using: .utf8)!
+        let single = QuestionRepository(jsonSource: { json })
+        var knownEvents: [(Int, Bool)] = []
+        let speech = FakeSpeechEngine()
+        let engine = StudyEngine(
+            speech: speech, repo: single, settings: SettingsBox(StudySettings(known: [1])),
+            scheduler: ManualScheduler(),
+            onKnownChanged: { n, known in knownEvents.append((n, known)) }
+        )
+        engine.startTest()
+        #expect(engine.state.current?.n == 1)
+        #expect(engine.state.known.contains(1))
+        speech.finishLast() // question done
+        engine.primaryAction() // reveal
+        speech.finishLast() // answer -> awaiting grade
+        engine.grade(correct: false)
+        // Known question answered wrong -> unmark it via the callback.
+        #expect(knownEvents.count == 1)
+        #expect(knownEvents[0].0 == 1 && knownEvents[0].1 == false)
+    }
+
+    @Test func nextAndPreviousAreDisabledDuringATest() {
+        let (engine, speech) = makeTestEngine()
+        engine.startTest()
+        let before = speech.spoken.last?.utteranceID
+        engine.next()
+        engine.previous()
+        // No skipping: the spoken utterance is unchanged.
+        #expect(speech.spoken.last?.utteranceID == before)
+        #expect(engine.state.phase == .speakingQuestion)
     }
 }

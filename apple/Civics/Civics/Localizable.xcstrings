@@ -1,304 +1,1200 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "tab.listen" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Listen" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "听题" } }
-      }
+    "%lld" : {
+
     },
-    "tab.questions" : {
+    "button.gotIt" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Questions" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "题库" } }
-      }
-    },
-    "tab.settings" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Settings" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "设置" } }
-      }
-    },
-    "listen.noTts" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No text-to-speech voice is available. Enable a voice in Settings › Accessibility › Spoken Content › Voices to hear questions." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "未找到可用的语音合成声音。请在 设置 › 辅助功能 › 朗读内容 › 声音 中启用一个声音。" } }
-      }
-    },
-    "listen.noQuestions" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "No questions" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "暂无题目" } }
-      }
-    },
-    "listen.questionOf" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Question %lld of %lld" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "第 %lld 题 / 共 %lld 题" } }
-      }
-    },
-    "listen.knownCount" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld known" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已掌握 %lld" } }
-      }
-    },
-    "listen.appTitle" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Civics Audio Prep" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "公民入籍听力备考" } }
-      }
-    },
-    "listen.onboarding" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press Start, put your phone away, and answer each question out loud. On AirPods: one press to hear the answer or continue, two presses for the next question, three to repeat." } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "点击开始，把手机放到一边，大声回答每道题。AirPods：按一下听答案或继续，按两下下一题，按三下重复本题。" } }
-      }
-    },
-    "listen.acceptableAnswer" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "ACCEPTABLE ANSWER" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "可接受的答案" } }
-      }
-    },
-    "phase.speakingQuestion" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Speaking the question — press to hear the answer" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在读题——按一下听答案" } }
-      }
-    },
-    "phase.thinking" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Your turn — answer out loud, then press" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "轮到你了——大声作答，然后按一下" } }
-      }
-    },
-    "phase.speakingAnswer" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Speaking the answer" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "正在读答案" } }
-      }
-    },
-    "phase.awaitingAdvance" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Press for the next question" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "按一下进入下一题" } }
-      }
-    },
-    "button.start" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Start listening" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "开始听题" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I got it"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答对了"
+          }
+        }
       }
     },
     "button.hearAnswer" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Hear the answer" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "听答案" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Hear the answer"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "听答案"
+          }
+        }
+      }
+    },
+    "button.missedIt" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "I missed it"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答错了"
+          }
+        }
       }
     },
     "button.nextQuestion" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Next question" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "下一题" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Next question"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "下一题"
+          }
+        }
       }
     },
-    "listen.previousQuestion" : {
+    "button.start" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Previous question" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "上一题" } }
-      }
-    },
-    "listen.stop" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Stop" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "停止" } }
-      }
-    },
-    "listen.markKnown" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Mark known" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "标记为已掌握" } }
-      }
-    },
-    "listen.known" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Known" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已掌握" } }
-      }
-    },
-    "questions.playingSuffix" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : " · playing" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : " · 播放中" } }
-      }
-    },
-    "questions.known" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Known" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已掌握" } }
-      }
-    },
-    "settings.voice" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "VOICE" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语音" } }
-      }
-    },
-    "settings.playback" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "PLAYBACK" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "播放" } }
-      }
-    },
-    "settings.deck" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "DECK" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "题库" } }
-      }
-    },
-    "settings.progressSection" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "PROGRESS" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "进度" } }
-      }
-    },
-    "settings.language" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "LANGUAGE" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语言" } }
-      }
-    },
-    "settings.speechRate" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Speech rate: %@×" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "语速：%@×" } }
-      }
-    },
-    "settings.announceMeta" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Announce question number" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "读出题号" } }
-      }
-    },
-    "settings.speechLanguage" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Speech language" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "朗读语言" } }
-      }
-    },
-    "mode.english" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "English" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "英语" } }
-      }
-    },
-    "mode.bilingual" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "English + 中文" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "英语 + 中文" } }
-      }
-    },
-    "mode.chinese" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "中文" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "中文" } }
-      }
-    },
-    "settings.uiLanguage" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "App language" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "界面语言" } }
-      }
-    },
-    "ui.system" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "System" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "跟随系统" } }
-      }
-    },
-    "ui.english" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "English" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "English" } }
-      }
-    },
-    "ui.chinese" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "中文" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "中文" } }
-      }
-    },
-    "settings.thinkPause" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Pause before revealing the answer" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "显示答案前的停顿" } }
-      }
-    },
-    "think.wait" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Wait" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "手动继续" } }
-      }
-    },
-    "think.none" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "None" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "不停顿" } }
-      }
-    },
-    "think.seconds" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%llds" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "%lld 秒" } }
-      }
-    },
-    "settings.autoAdvance" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Auto-advance after the answer" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "答案结束后自动下一题" } }
-      }
-    },
-    "settings.shuffle" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Shuffle" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "随机顺序" } }
-      }
-    },
-    "settings.knownProgress" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "%lld of 128 marked as known" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "已掌握 %lld / 128 题" } }
-      }
-    },
-    "settings.clearKnown" : {
-      "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Clear known marks" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "清除已掌握标记" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start listening"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始听题"
+          }
+        }
       }
     },
     "category.all" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "All 128 questions" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "全部 128 题" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "All 128 questions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "全部 128 题"
+          }
+        }
       }
     },
     "category.americanGovernment" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "American Government" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "美国政府" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "American Government"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美国政府"
+          }
+        }
       }
     },
     "category.americanHistory" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "American History" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "美国历史" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "American History"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "美国历史"
+          }
+        }
       }
     },
     "category.symbolsHolidays" : {
+      "extractionState" : "stale",
       "localizations" : {
-        "en" : { "stringUnit" : { "state" : "translated", "value" : "Symbols & Holidays" } },
-        "zh-Hans" : { "stringUnit" : { "state" : "translated", "value" : "象征与节日" } }
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Symbols & Holidays"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "象征与节日"
+          }
+        }
+      }
+    },
+    "listen.acceptableAnswer" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "ACCEPTABLE ANSWER"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "可接受的答案"
+          }
+        }
+      }
+    },
+    "listen.appTitle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Civics Audio Prep"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "公民入籍听力备考"
+          }
+        }
+      }
+    },
+    "listen.known" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Known"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已掌握"
+          }
+        }
+      }
+    },
+    "listen.knownCount" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld known"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已掌握 %lld"
+          }
+        }
+      }
+    },
+    "listen.markKnown" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Mark known"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "标记为已掌握"
+          }
+        }
+      }
+    },
+    "listen.noQuestions" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No questions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "暂无题目"
+          }
+        }
+      }
+    },
+    "listen.noTts" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No text-to-speech voice is available. Enable a voice in Settings › Accessibility › Spoken Content › Voices to hear questions."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未找到可用的语音合成声音。请在 设置 › 辅助功能 › 朗读内容 › 声音 中启用一个声音。"
+          }
+        }
+      }
+    },
+    "listen.onboarding" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press Start, put your phone away, and answer each question out loud. On AirPods: one press to hear the answer or continue, two presses for the next question, three to repeat."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "点击开始，把手机放到一边，大声回答每道题。AirPods：按一下听答案或继续，按两下下一题，按三下重复本题。"
+          }
+        }
+      }
+    },
+    "listen.previousQuestion" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Previous question"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "上一题"
+          }
+        }
+      }
+    },
+    "listen.questionOf" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question %lld of %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %lld 题 / 共 %lld 题"
+          }
+        }
+      }
+    },
+    "listen.stop" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Stop"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "停止"
+          }
+        }
+      }
+    },
+    "mode.bilingual" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English + 中文"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "英语 + 中文"
+          }
+        }
+      }
+    },
+    "mode.chinese" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中文"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中文"
+          }
+        }
+      }
+    },
+    "mode.english" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "英语"
+          }
+        }
+      }
+    },
+    "phase.awaitingAdvance" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Press for the next question"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "按一下进入下一题"
+          }
+        }
+      }
+    },
+    "phase.awaitingGrade" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Did you get it right?"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答对了吗？"
+          }
+        }
+      }
+    },
+    "phase.speakingAnswer" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speaking the answer"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在读答案"
+          }
+        }
+      }
+    },
+    "phase.speakingQuestion" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speaking the question — press to hear the answer"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "正在读题——按一下听答案"
+          }
+        }
+      }
+    },
+    "phase.thinking" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your turn — answer out loud, then press"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "轮到你了——大声作答，然后按一下"
+          }
+        }
+      }
+    },
+    "Q%lld" : {
+
+    },
+    "questions.known" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Known"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已掌握"
+          }
+        }
+      }
+    },
+    "questions.playingSuffix" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · playing"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : " · 播放中"
+          }
+        }
+      }
+    },
+    "settings.announceMeta" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Announce question number"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "读出题号"
+          }
+        }
+      }
+    },
+    "settings.autoAdvance" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Auto-advance after the answer"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答案结束后自动下一题"
+          }
+        }
+      }
+    },
+    "settings.clearKnown" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Clear known marks"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "清除已掌握标记"
+          }
+        }
+      }
+    },
+    "settings.deck" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "DECK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "题库"
+          }
+        }
+      }
+    },
+    "settings.knownProgress" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld of 128 marked as known"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "已掌握 %lld / 128 题"
+          }
+        }
+      }
+    },
+    "settings.language" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "LANGUAGE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语言"
+          }
+        }
+      }
+    },
+    "settings.playback" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PLAYBACK"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "播放"
+          }
+        }
+      }
+    },
+    "settings.progressSection" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "PROGRESS"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "进度"
+          }
+        }
+      }
+    },
+    "settings.shuffle" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Shuffle"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "随机顺序"
+          }
+        }
+      }
+    },
+    "settings.speechLanguage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speech language"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "朗读语言"
+          }
+        }
+      }
+    },
+    "settings.speechRate" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speech rate: %@×"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语速：%@×"
+          }
+        }
+      }
+    },
+    "settings.thinkPause" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pause before revealing the answer"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "显示答案前的停顿"
+          }
+        }
+      }
+    },
+    "settings.uiLanguage" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "App language"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "界面语言"
+          }
+        }
+      }
+    },
+    "settings.voice" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "VOICE"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "语音"
+          }
+        }
+      }
+    },
+    "tab.listen" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Listen"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "听题"
+          }
+        }
+      }
+    },
+    "tab.questions" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Questions"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "题库"
+          }
+        }
+      }
+    },
+    "tab.settings" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "设置"
+          }
+        }
+      }
+    },
+    "tab.test" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Test"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "测试"
+          }
+        }
+      }
+    },
+    "test.again" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Take another test"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "再测一次"
+          }
+        }
+      }
+    },
+    "test.backToStudy" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Back to listening"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "返回听题"
+          }
+        }
+      }
+    },
+    "test.correctLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "correct"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答对"
+          }
+        }
+      }
+    },
+    "test.failed" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Not yet"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "未通过"
+          }
+        }
+      }
+    },
+    "test.history" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Recent tests"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最近测试"
+          }
+        }
+      }
+    },
+    "test.missedLabel" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "missed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答错"
+          }
+        }
+      }
+    },
+    "test.passed" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Passed"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "通过"
+          }
+        }
+      }
+    },
+    "test.progress" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Question %lld of %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "第 %lld 题 / 共 %lld 题"
+          }
+        }
+      }
+    },
+    "test.rules1" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Up to 20 questions, one at a time."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "最多 20 道题，逐题作答。"
+          }
+        }
+      }
+    },
+    "test.rules2" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reveal the answer, then mark whether you got it right."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "先看答案，再如实判断自己是否答对。"
+          }
+        }
+      }
+    },
+    "test.rules3" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Reach 12 correct to pass; miss 9 and the test ends — like the real interview."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答对 12 题即通过；答错 9 题测试结束——与真实面试相同。"
+          }
+        }
+      }
+    },
+    "test.score" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld / %lld"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld / %lld"
+          }
+        }
+      }
+    },
+    "test.start" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Start practice test"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "开始模拟测试"
+          }
+        }
+      }
+    },
+    "test.title" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Practice test"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "模拟测试"
+          }
+        }
+      }
+    },
+    "test.verdictFail" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "9 missed ends the test. Review in study mode, then try again."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "答错 9 题，测试结束。回到听题模式复习后再试。"
+          }
+        }
+      }
+    },
+    "test.verdictPass" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "You reached 12 correct — that's a passing score."
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "你已答对 12 题——达到通过标准。"
+          }
+        }
+      }
+    },
+    "think.none" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "None"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "不停顿"
+          }
+        }
+      }
+    },
+    "think.seconds" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%llds"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%lld 秒"
+          }
+        }
+      }
+    },
+    "think.wait" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wait"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "手动继续"
+          }
+        }
+      }
+    },
+    "ui.chinese" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中文"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "中文"
+          }
+        }
+      }
+    },
+    "ui.english" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "English"
+          }
+        }
+      }
+    },
+    "ui.system" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "System"
+          }
+        },
+        "zh-Hans" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "跟随系统"
+          }
+        }
       }
     }
   },

@@ -38,6 +38,9 @@ final class AppModel {
                 settingsRepo.update { s in
                     s.copy(known: known ? s.known.union([n]) : s.known.subtracting([n]))
                 }
+            },
+            onTestFinished: { record in
+                settingsRepo.recordTest(record)
             }
         )
         self.questionRepo = questionRepo

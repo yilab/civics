@@ -44,4 +44,31 @@ final class CivicsUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Q2"].waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts["ACCEPTABLE ANSWER"].exists)
     }
+
+    /// Drives a practice test: start, answer Q1, grade it, and confirm the test
+    /// advances with the score recorded.
+    @MainActor
+    func testPracticeTestFlow() throws {
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", "(en-US)", "-AppleLocale", "en_US"]
+        app.launch()
+
+        // Open the Test tab and start a test.
+        app.tabBars.buttons["Test"].tap()
+        let start = app.buttons["Start practice test"]
+        XCTAssertTrue(start.waitForExistence(timeout: 10))
+        start.tap()
+
+        // Q1 speaks; reveal the answer, then the grade buttons appear.
+        let reveal = app.buttons["Hear the answer"]
+        XCTAssertTrue(reveal.waitForExistence(timeout: 10))
+        reveal.tap()
+        XCTAssertTrue(app.staticTexts["ACCEPTABLE ANSWER"].waitForExistence(timeout: 10))
+        let gotIt = app.buttons["I got it"]
+        XCTAssertTrue(gotIt.waitForExistence(timeout: 10))
+
+        // Grade correct: score goes to 1 and the next question begins.
+        gotIt.tap()
+        XCTAssertTrue(app.staticTexts["Question 2 of 20"].waitForExistence(timeout: 10))
+    }
 }
