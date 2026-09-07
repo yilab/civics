@@ -253,13 +253,15 @@ final class StudyEngine {
     private func speakQuestionAt(_ position: Int) {
         cancelTimer()
         let q = deck[position]
-        let mode = settings.value.speechMode
-        // english/bilingual start with the English question; chinese goes straight to zh
-        // (falling back to English when no translation exists).
-        if mode == .chinese, q.questionZh != nil {
-            speak("zq-\(q.n)", text: zhQuestionText(q), language: .chinese)
+        let s = settings.value
+        let lang = s.spokenLanguage
+        // english/bilingual start with the English question; a single non-English
+        // language goes straight to the translation (falling back to English when
+        // no translation exists).
+        if !s.bilingual, lang != .english, q.translation(lang) != nil {
+            speak("zq-\(q.n)", text: translationQuestionText(q, lang), language: lang)
         } else {
-            let text = settings.value.announceMeta ? "Question \(q.n). \(q.question)" : q.question
+            let text = s.announceMeta ? "Question \(q.n). \(q.question)" : q.question
             speak("q-\(q.n)", text: text, language: .english)
         }
         emit(state.copy(
@@ -273,8 +275,10 @@ final class StudyEngine {
     private func revealAnswer() {
         cancelTimer()
         guard let q = state.current else { return }
-        if settings.value.speechMode == .chinese, let spokenZh = q.spokenZh {
-            speak("za-\(q.n)", text: spokenZh, language: .chinese)
+        let s = settings.value
+        let lang = s.spokenLanguage
+        if !s.bilingual, lang != .english, let t = q.translation(lang) {
+            speak("za-\(q.n)", text: t.spoken, language: lang)
         } else {
             speak("a-\(q.n)", text: q.spoken, language: .english)
         }
@@ -292,30 +296,31 @@ final class StudyEngine {
 
     private func onUtteranceDone(_ utteranceID: String) {
         guard utteranceID == expectedUtterance else { return }
-        let mode = settings.value.speechMode
+        let s = settings.value
+        let lang = s.spokenLanguage
         // z-prefixed ids must be checked before their English counterparts.
         if utteranceID.hasPrefix("zq-") {
             beginThinkPause()
         } else if utteranceID.hasPrefix("za-") {
             afterAnswerSpoken()
         } else if utteranceID.hasPrefix("q-") {
-            if mode == .bilingual, let q = state.current, let qZh = q.questionZh {
-                speak("zq-\(q.n)", text: zhQuestionText(q), language: .chinese)
+            if s.bilingual, let q = state.current, q.translation(lang) != nil {
+                speak("zq-\(q.n)", text: translationQuestionText(q, lang), language: lang)
             } else {
                 beginThinkPause()
             }
         } else if utteranceID.hasPrefix("a-") {
-            if mode == .bilingual, let q = state.current, let spokenZh = q.spokenZh {
-                speak("za-\(q.n)", text: spokenZh, language: .chinese)
+            if s.bilingual, let q = state.current, let t = q.translation(lang) {
+                speak("za-\(q.n)", text: t.spoken, language: lang)
             } else {
                 afterAnswerSpoken()
             }
         }
     }
 
-    private func zhQuestionText(_ q: Question) -> String {
-        guard let qZh = q.questionZh else { return q.question }
-        return settings.value.announceMeta ? "第 \(q.n) 题。 \(qZh)" : qZh
+    private func translationQuestionText(_ q: Question, _ language: SpeechLanguage) -> String {
+        guard let t = q.translation(language) else { return q.question }
+        return settings.value.announceMeta ? "\(language.questionPrefix(q.n)) \(t.question)" : t.question
     }
 
     private func onUtteranceError(_ utteranceID: String) {

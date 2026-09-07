@@ -2,7 +2,9 @@ package com.yilab.civics.ui
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -21,12 +23,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
 import com.yilab.civics.data.Categories
-import com.yilab.civics.settings.SpeechMode
+import com.yilab.civics.data.SpeechLanguage
 import com.yilab.civics.settings.StudySettings
 import com.yilab.civics.settings.UiLanguage
 import java.util.Locale
 import kotlin.math.round
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun SettingsScreen(
     settings: StudySettings,
@@ -62,19 +65,25 @@ fun SettingsScreen(
                 stringResource(R.string.settings_speech_language),
                 style = MaterialTheme.typography.bodyLarge,
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(
-                    SpeechMode.ENGLISH to R.string.mode_english,
-                    SpeechMode.BILINGUAL to R.string.mode_bilingual,
-                    SpeechMode.CHINESE to R.string.mode_chinese,
-                ).forEach { (mode, labelRes) ->
+                    SpeechLanguage.ENGLISH to R.string.ui_english,
+                    SpeechLanguage.CHINESE_SIMPLIFIED to R.string.ui_zh_hans,
+                    SpeechLanguage.CHINESE_TRADITIONAL to R.string.ui_zh_hant,
+                    SpeechLanguage.SPANISH to R.string.ui_spanish,
+                ).forEach { (lang, labelRes) ->
                     FilterChip(
-                        selected = settings.speechMode == mode,
-                        onClick = { onChange { it.copy(speechMode = mode) } },
+                        selected = settings.spokenLanguage == lang,
+                        onClick = { onChange { it.copy(spokenLanguage = lang) } },
                         label = { Text(stringResource(labelRes)) },
                     )
                 }
             }
+            SwitchRow(
+                label = stringResource(R.string.settings_bilingual),
+                checked = settings.bilingual,
+                onCheckedChange = { v -> onChange { it.copy(bilingual = v) } },
+            )
         }
 
         SettingsSection(R.string.settings_language) {
@@ -82,11 +91,13 @@ fun SettingsScreen(
                 stringResource(R.string.settings_ui_language),
                 style = MaterialTheme.typography.bodyLarge,
             )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 listOf(
                     UiLanguage.SYSTEM to R.string.ui_system,
                     UiLanguage.ENGLISH to R.string.ui_english,
-                    UiLanguage.CHINESE to R.string.ui_chinese,
+                    UiLanguage.CHINESE_SIMPLIFIED to R.string.ui_zh_hans,
+                    UiLanguage.CHINESE_TRADITIONAL to R.string.ui_zh_hant,
+                    UiLanguage.SPANISH to R.string.ui_spanish,
                 ).forEach { (lang, labelRes) ->
                     FilterChip(
                         selected = settings.uiLanguage == lang,

@@ -33,12 +33,24 @@ class QuestionRepository(private val jsonSource: () -> String) {
                     spoken = o.getString("spoken"),
                     dynamic = o.optBoolean("dynamic", false),
                     note = if (o.isNull("note")) null else o.getString("note"),
-                    questionZh = o.optString("questionZh").ifBlank { null },
-                    answerZh = o.optString("answerZh").ifBlank { null },
-                    spokenZh = o.optString("spokenZh").ifBlank { null },
-                    noteZh = o.optString("noteZh").ifBlank { null },
+                    translations = parseTranslations(o.optJSONObject("translations")),
                 )
             }
+        }
+
+        private fun parseTranslations(node: JSONObject?): Map<String, Translation> {
+            node ?: return emptyMap()
+            val out = LinkedHashMap<String, Translation>()
+            for (key in node.keys()) {
+                val t = node.optJSONObject(key) ?: continue
+                out[key] = Translation(
+                    question = t.optString("question"),
+                    answer = t.optString("answer"),
+                    spoken = t.optString("spoken"),
+                    note = if (t.isNull("note")) null else t.optString("note"),
+                )
+            }
+            return out
         }
     }
 }

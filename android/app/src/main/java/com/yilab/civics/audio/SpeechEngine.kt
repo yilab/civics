@@ -1,7 +1,6 @@
 package com.yilab.civics.audio
 
-/** The language an utterance is spoken in. */
-enum class SpeechLanguage { ENGLISH, CHINESE }
+import com.yilab.civics.data.SpeechLanguage
 
 /**
  * Minimal text-to-speech abstraction so the study engine can be unit-tested.

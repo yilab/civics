@@ -28,12 +28,16 @@ import com.yilab.civics.audio.Phase
 import com.yilab.civics.audio.StudyState
 import com.yilab.civics.audio.TestOutcome
 import com.yilab.civics.audio.TestRecord
+import com.yilab.civics.data.SpeechLanguage
 
 @Composable
 fun TestScreen(
     state: StudyState,
     history: List<TestRecord>,
-    zhPrimary: Boolean,
+    /** The spoken language whose translation is shown alongside the English text. */
+    language: SpeechLanguage,
+    /** True when the translation takes visual precedence (UI language matches it). */
+    translationPrimary: Boolean,
     onStart: () -> Unit,
     onReveal: () -> Unit,
     onGrade: (Boolean) -> Unit,
@@ -49,7 +53,7 @@ fun TestScreen(
         when (state.phase) {
             Phase.FINISHED -> Finished(state, onStart, onBackToStudy)
             Phase.IDLE -> Start(history, onStart)
-            else -> Running(state, zhPrimary, onReveal, onGrade)
+            else -> Running(state, language, translationPrimary, onReveal, onGrade)
         }
     }
 }
@@ -97,7 +101,13 @@ private fun Start(history: List<TestRecord>, onStart: () -> Unit) {
 }
 
 @Composable
-private fun Running(state: StudyState, zhPrimary: Boolean, onReveal: () -> Unit, onGrade: (Boolean) -> Unit) {
+private fun Running(
+    state: StudyState,
+    language: SpeechLanguage,
+    translationPrimary: Boolean,
+    onReveal: () -> Unit,
+    onGrade: (Boolean) -> Unit,
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -126,13 +136,13 @@ private fun Running(state: StudyState, zhPrimary: Boolean, onReveal: () -> Unit,
                     Text(categoryLabel(q.category).uppercase(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Spacer(Modifier.height(12.dp))
-                BilingualText(q.question, q.questionZh, zhPrimary, MaterialTheme.typography.headlineSmall)
+                BilingualText(q.question, q.translation(language)?.question, translationPrimary, MaterialTheme.typography.headlineSmall)
                 if (state.answerRevealed) {
                     HorizontalDivider(Modifier.padding(vertical = 16.dp))
                     Text(stringResource(R.string.listen_acceptable_answer), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.tertiary)
                     Spacer(Modifier.height(6.dp))
-                    BilingualText(q.answer, q.answerZh, zhPrimary, MaterialTheme.typography.titleLarge)
-                    val note = if (zhPrimary) q.noteZh ?: q.note else q.note
+                    BilingualText(q.answer, q.translation(language)?.answer, translationPrimary, MaterialTheme.typography.titleLarge)
+                    val note = if (translationPrimary) q.translation(language)?.note ?: q.note else q.note
                     note?.let {
                         Spacer(Modifier.height(10.dp))
                         Text(it, style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.error)
@@ -205,18 +215,18 @@ private fun Finished(state: StudyState, onStart: () -> Unit, onBackToStudy: () -
 }
 
 @Composable
-private fun BilingualText(english: String, chinese: String?, zhPrimary: Boolean, style: androidx.compose.ui.text.TextStyle) {
+private fun BilingualText(english: String, translated: String?, translationPrimary: Boolean, style: androidx.compose.ui.text.TextStyle) {
     val secondary = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-    if (zhPrimary && chinese != null) {
+    if (translationPrimary && translated != null) {
         Column {
-            Text(chinese, style = style)
+            Text(translated, style = style)
             Spacer(Modifier.height(4.dp))
             Text(english, style = secondary)
         }
     } else {
         Column {
             Text(english, style = style)
-            chinese?.let {
+            translated?.let {
                 Spacer(Modifier.height(4.dp))
                 Text(it, style = secondary)
             }

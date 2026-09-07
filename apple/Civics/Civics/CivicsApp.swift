@@ -18,11 +18,12 @@ final class AppModel {
 
     /// Mode-aware TTS availability for the Listen warning card.
     var ttsAvailable: Bool {
-        switch settingsRepo.settings.speechMode {
-        case .english: speech.isAvailable(.english)
-        case .chinese: speech.isAvailable(.chinese)
-        case .bilingual: speech.isAvailable(.english) && speech.isAvailable(.chinese)
-        }
+        let s = settingsRepo.settings
+        let lang = s.spokenLanguage
+        if lang == .english { return speech.isAvailable(.english) }
+        return s.bilingual
+            ? speech.isAvailable(.english) && speech.isAvailable(lang)
+            : speech.isAvailable(lang)
     }
 
     init() {

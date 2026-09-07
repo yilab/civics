@@ -87,9 +87,23 @@ function heuristicSpoken(answer) {
   return tidy(s);
 }
 
+// Extra languages (Spanish, Traditional Chinese) live in a separate file so the
+// web tool's QZ map stays the Simplified-Chinese source of truth.
+const extra = JSON.parse(
+  readFileSync(new URL('./translations-extra.json', import.meta.url), 'utf8'),
+);
+
 const questions = Q.map((item) => {
   const spoken = SPOKEN_OVERRIDES[item.n] ?? heuristicSpoken(item.a);
   const zh = QZ[item.n];
+  const translations = {
+    'zh-Hans': { question: zh.q, answer: zh.a, spoken: zh.a, note: zh.note ?? null },
+  };
+  for (const code of ['es', 'zh-Hant']) {
+    const t = extra[code]?.[item.n];
+    if (!t || !t.q || !t.a) throw new Error(`missing ${code} translation for question ${item.n}`);
+    translations[code] = { question: t.q, answer: t.a, spoken: t.a, note: t.note ?? null };
+  }
   return {
     n: item.n,
     category: item.c,
@@ -98,16 +112,16 @@ const questions = Q.map((item) => {
     spoken,
     dynamic: item.dyn === true,
     note: item.note ? item.note.replace(/<[^>]+>/g, '') : null,
-    questionZh: zh.q,
-    answerZh: zh.a,
-    spokenZh: zh.a,
-    noteZh: zh.note ?? null,
+    translations,
   };
 });
 
-// audit: no leftover parens or double spaces in spoken text (both languages)
+// audit: no leftover parens or double spaces in spoken text (all languages)
 const bad = questions.filter(
-  (q) => /[()]/.test(q.spoken) || / {2}/.test(q.spoken) || /[()（）]/.test(q.spokenZh),
+  (q) =>
+    /[()]/.test(q.spoken) ||
+    / {2}/.test(q.spoken) ||
+    Object.values(q.translations).some((t) => /[()（）]/.test(t.spoken)),
 );
 if (bad.length) {
   console.error('suspicious spoken text:', bad.map((q) => q.n));

@@ -5,8 +5,6 @@ struct SettingsScreen: View {
     let settings: StudySettings
     let onChange: ((StudySettings) -> StudySettings) -> Void
 
-    private var zhPrimary: Bool { settings.uiLanguage == .chinese }
-
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -27,21 +25,26 @@ struct SettingsScreen: View {
                     )
                     Text(L10n.t("settings.speechLanguage"))
                         .font(.body)
-                    HStack(spacing: 8) {
-                        ForEach(SpeechMode.allCases, id: \.self) { mode in
+                    FlowRow(spacing: 8) {
+                        ForEach(SpeechLanguage.allCases, id: \.self) { lang in
                             Chip(
-                                label: modeLabel(mode),
-                                selected: settings.speechMode == mode,
-                                action: { onChange { $0.copy(speechMode: mode) } }
+                                label: languageLabel(lang),
+                                selected: settings.spokenLanguage == lang,
+                                action: { onChange { $0.copy(spokenLanguage: lang) } }
                             )
                         }
                     }
+                    SwitchRow(
+                        label: L10n.t("settings.bilingual"),
+                        checked: settings.bilingual,
+                        onChange: { v in onChange { $0.copy(bilingual: v) } }
+                    )
                 }
 
                 SettingsSection("settings.language") {
                     Text(L10n.t("settings.uiLanguage"))
                         .font(.body)
-                    HStack(spacing: 8) {
+                    FlowRow(spacing: 8) {
                         ForEach(UiLanguage.allCases, id: \.self) { lang in
                             Chip(
                                 label: uiLanguageLabel(lang),
@@ -102,11 +105,13 @@ struct SettingsScreen: View {
         }
     }
 
-    private func modeLabel(_ mode: SpeechMode) -> String {
-        switch mode {
-        case .english: L10n.t("mode.english")
-        case .bilingual: L10n.t("mode.bilingual")
-        case .chinese: L10n.t("mode.chinese")
+    /// Language autonyms are the same in every UI language.
+    private func languageLabel(_ lang: SpeechLanguage) -> String {
+        switch lang {
+        case .english: L10n.t("ui.english")
+        case .chineseSimplified: L10n.t("ui.zhHans")
+        case .chineseTraditional: L10n.t("ui.zhHant")
+        case .spanish: L10n.t("ui.spanish")
         }
     }
 
@@ -114,7 +119,9 @@ struct SettingsScreen: View {
         switch lang {
         case .system: L10n.t("ui.system")
         case .english: L10n.t("ui.english")
-        case .chinese: L10n.t("ui.chinese")
+        case .chineseSimplified: L10n.t("ui.zhHans")
+        case .chineseTraditional: L10n.t("ui.zhHant")
+        case .spanish: L10n.t("ui.spanish")
         }
     }
 
@@ -182,5 +189,47 @@ private struct Chip: View {
                 )
         }
         .buttonStyle(.plain)
+    }
+}
+
+/// A minimal wrapping row so five language chips fit on narrow screens.
+private struct FlowRow: Layout {
+    var spacing: CGFloat = 8
+
+    func sizeThatFits(proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) -> CGSize {
+        let width = proposal.width ?? .infinity
+        var x: CGFloat = 0
+        var y: CGFloat = 0
+        var rowHeight: CGFloat = 0
+        var maxX: CGFloat = 0
+        for subview in subviews {
+            let size = subview.sizeThatFits(.unspecified)
+            if x > 0, x + size.width > width {
+                x = 0
+                y += rowHeight + spacing
+                rowHeight = 0
+            }
+            x += size.width + spacing
+            rowHeight = max(rowHeight, size.height)
+            maxX = max(maxX, x - spacing)
+        }
+        return CGSize(width: min(maxX, width), height: y + rowHeight)
+    }
+
+    func placeSubviews(in bounds: CGRect, proposal: ProposedViewSize, subviews: Subviews, cache: inout ()) {
+        var x = bounds.minX
+        var y = bounds.minY
+        var rowHeight: CGFloat = 0
+        for subview in subviews {
+            let size = subview.sizeThatFits(.unspecified)
+            if x > bounds.minX, x + size.width > bounds.maxX {
+                x = bounds.minX
+                y += rowHeight + spacing
+                rowHeight = 0
+            }
+            subview.place(at: CGPoint(x: x, y: y), proposal: ProposedViewSize(size))
+            x += size.width + spacing
+            rowHeight = max(rowHeight, size.height)
+        }
     }
 }

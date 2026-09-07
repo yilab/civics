@@ -2,6 +2,7 @@ package com.yilab.civics
 
 import com.yilab.civics.data.Categories
 import com.yilab.civics.data.QuestionRepository
+import com.yilab.civics.data.SpeechLanguage
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotEquals
 import org.junit.Assert.assertTrue
@@ -55,18 +56,42 @@ class QuestionRepositoryTest {
     }
 
     @Test
-    fun `every question has a chinese version`() {
+    fun `every question has a simplified chinese translation`() {
         repo.questions.forEach { q ->
-            assertTrue("blank questionZh for Q${q.n}", !q.questionZh.isNullOrBlank())
-            assertTrue("blank answerZh for Q${q.n}", !q.answerZh.isNullOrBlank())
-            assertTrue("blank spokenZh for Q${q.n}", !q.spokenZh.isNullOrBlank())
+            val t = q.translation(SpeechLanguage.CHINESE_SIMPLIFIED)
+            assertTrue("missing zh-Hans translation for Q${q.n}", t != null)
+            t ?: return@forEach
+            assertTrue("blank zh-Hans question for Q${q.n}", t.question.isNotBlank())
+            assertTrue("blank zh-Hans answer for Q${q.n}", t.answer.isNotBlank())
+            assertTrue("blank zh-Hans spoken for Q${q.n}", t.spoken.isNotBlank())
             // TTS-clean: no ASCII or full-width parentheses, like the English spoken field.
-            val spoken = q.spokenZh.orEmpty()
+            val spoken = t.spoken
             assertTrue(
-                "spokenZh has parens for Q${q.n}",
+                "zh-Hans spoken has parens for Q${q.n}",
                 '(' !in spoken && ')' !in spoken && '（' !in spoken && '）' !in spoken,
             )
-            if (q.dynamic) assertTrue("dynamic Q${q.n} should carry a noteZh", q.noteZh != null)
+            if (q.dynamic) assertTrue("dynamic Q${q.n} should carry a zh-Hans note", t.note != null)
         }
+    }
+
+    @Test
+    fun `translations map parses multiple languages and tolerates absent ones`() {
+        val json = """{"questions":[
+            {"n":1,"category":"American Government","question":"Q1?","answer":"A1","spoken":"A1 spoken","dynamic":false,"note":null,
+             "translations":{"es":{"question":"¿P1?","answer":"R1","spoken":"R1 hablada"},
+                             "zh-Hant":{"question":"題目一","answer":"答案一","spoken":"答案一","note":"附註一"}}},
+            {"n":2,"category":"American History","question":"Q2?","answer":"A2","spoken":"A2 spoken"}
+        ]}"""
+        val repo = QuestionRepository { json }
+        val q1 = repo.byNumber(1)!!
+        assertEquals(2, q1.translations.size)
+        assertEquals("¿P1?", q1.translation(SpeechLanguage.SPANISH)?.question)
+        assertEquals(null, q1.translation(SpeechLanguage.SPANISH)?.note) // note is optional
+        assertEquals("附註一", q1.translation(SpeechLanguage.CHINESE_TRADITIONAL)?.note)
+        assertEquals(null, q1.translation(SpeechLanguage.CHINESE_SIMPLIFIED)) // a language may be absent
+        val q2 = repo.byNumber(2)!!
+        assertTrue(q2.translations.isEmpty())
+        assertEquals(null, q2.translation(SpeechLanguage.SPANISH))
+        assertEquals(false, q2.dynamic) // absent dynamic decodes as false
     }
 }

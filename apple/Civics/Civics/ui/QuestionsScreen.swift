@@ -4,8 +4,10 @@ struct QuestionsScreen: View {
     let questions: [Question]
     let known: Set<Int>
     let currentNumber: Int?
-    /// True when Chinese text takes visual precedence (UI language = 中文).
-    var zhPrimary: Bool = false
+    /// The spoken language whose translation is shown alongside the English text.
+    var language: SpeechLanguage = .english
+    /// True when the translation takes visual precedence (UI language matches it).
+    var translationPrimary: Bool = false
     let onJump: (Int) -> Void
 
     var body: some View {
@@ -20,8 +22,9 @@ struct QuestionsScreen: View {
                                 + (q.n == currentNumber ? L10n.t("questions.playingSuffix") : ""))
                                 .font(.footnote)
                                 .foregroundStyle(q.n == currentNumber ? Color.accentColor : .secondary)
-                            if zhPrimary, let qZh = q.questionZh {
-                                Text(qZh)
+                            let translated = q.translation(language)?.question
+                            if translationPrimary, let translated {
+                                Text(translated)
                                     .font(.body)
                                     .foregroundStyle(.primary)
                                     .multilineTextAlignment(.leading)
@@ -34,8 +37,8 @@ struct QuestionsScreen: View {
                                     .font(.body)
                                     .foregroundStyle(.primary)
                                     .multilineTextAlignment(.leading)
-                                if let qZh = q.questionZh {
-                                    Text(qZh)
+                                if let translated {
+                                    Text(translated)
                                         .font(.footnote)
                                         .foregroundStyle(.secondary)
                                         .multilineTextAlignment(.leading)

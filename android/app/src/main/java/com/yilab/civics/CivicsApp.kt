@@ -2,11 +2,10 @@ package com.yilab.civics
 
 import android.app.Application
 import com.yilab.civics.audio.AndroidSpeechEngine
-import com.yilab.civics.audio.SpeechLanguage
 import com.yilab.civics.audio.StudyEngine
 import com.yilab.civics.data.QuestionRepository
+import com.yilab.civics.data.SpeechLanguage
 import com.yilab.civics.settings.SettingsRepository
-import com.yilab.civics.settings.SpeechMode
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -41,11 +40,11 @@ class CivicsApp : Application() {
         settingsRepo = SettingsRepository(this, appScope)
         speech = AndroidSpeechEngine(this) { ready -> speechReady.value = ready }
         ttsAvailable = combine(settingsRepo.settings, speechReady) { s, _ ->
-            when (s.speechMode) {
-                SpeechMode.ENGLISH -> speech.isAvailable(SpeechLanguage.ENGLISH)
-                SpeechMode.CHINESE -> speech.isAvailable(SpeechLanguage.CHINESE)
-                SpeechMode.BILINGUAL ->
-                    speech.isAvailable(SpeechLanguage.ENGLISH) && speech.isAvailable(SpeechLanguage.CHINESE)
+            val lang = s.spokenLanguage
+            when {
+                lang == SpeechLanguage.ENGLISH -> speech.isAvailable(SpeechLanguage.ENGLISH)
+                s.bilingual -> speech.isAvailable(SpeechLanguage.ENGLISH) && speech.isAvailable(lang)
+                else -> speech.isAvailable(lang)
             }
         }.stateIn(appScope, SharingStarted.Eagerly, true)
         studyEngine = StudyEngine(

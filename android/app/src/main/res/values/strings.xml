@@ -54,13 +54,13 @@
     <string name="settings_speech_rate">Speech rate: %1$s×</string>
     <string name="settings_announce_meta">Announce question number</string>
     <string name="settings_speech_language">Speech language</string>
-    <string name="mode_english">English</string>
-    <string name="mode_bilingual">English + 中文</string>
-    <string name="mode_chinese">中文</string>
+    <string name="settings_bilingual">Also hear the English original</string>
     <string name="settings_ui_language">App language</string>
     <string name="ui_system">System</string>
     <string name="ui_english">English</string>
-    <string name="ui_chinese">中文</string>
+    <string name="ui_zh_hans">简体</string>
+    <string name="ui_zh_hant">繁體</string>
+    <string name="ui_spanish">Español</string>
     <string name="settings_think_pause">Pause before revealing the answer</string>
     <string name="think_wait">Wait</string>
     <string name="think_none">None</string>

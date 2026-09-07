@@ -3,7 +3,7 @@ package com.yilab.civics.audio
 import com.yilab.civics.data.Categories
 import com.yilab.civics.data.Question
 import com.yilab.civics.data.QuestionRepository
-import com.yilab.civics.settings.SpeechMode
+import com.yilab.civics.data.SpeechLanguage
 import com.yilab.civics.settings.StudySettings
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -255,10 +255,12 @@ class StudyEngine(
         cancelTimer()
         val q = deck[position]
         val settings = settingsFlow.value
-        // english/bilingual start with the English question; chinese goes straight to zh
-        // (falling back to English when no translation exists).
-        if (settings.speechMode == SpeechMode.CHINESE && q.questionZh != null) {
-            speak("zq-${q.n}", zhQuestionText(q), SpeechLanguage.CHINESE)
+        val lang = settings.spokenLanguage
+        // english/bilingual start with the English question; a single non-English
+        // language goes straight to the translation (falling back to English when
+        // no translation exists).
+        if (!settings.bilingual && lang != SpeechLanguage.ENGLISH && q.translation(lang) != null) {
+            speak("zq-${q.n}", translationQuestionText(q, lang), lang)
         } else {
             val text = buildString {
                 if (settings.announceMeta) append("Question ${q.n}. ")
@@ -279,8 +281,11 @@ class StudyEngine(
     private fun revealAnswer() {
         cancelTimer()
         val q = state.value.current ?: return
-        if (settingsFlow.value.speechMode == SpeechMode.CHINESE && q.spokenZh != null) {
-            speak("za-${q.n}", q.spokenZh, SpeechLanguage.CHINESE)
+        val settings = settingsFlow.value
+        val lang = settings.spokenLanguage
+        val translation = q.translation(lang)
+        if (!settings.bilingual && lang != SpeechLanguage.ENGLISH && translation != null) {
+            speak("za-${q.n}", translation.spoken, lang)
         } else {
             speak("a-${q.n}", q.spoken, SpeechLanguage.ENGLISH)
         }
@@ -298,23 +303,25 @@ class StudyEngine(
 
     private fun onUtteranceDone(utteranceId: String) {
         if (utteranceId != expectedUtterance) return
-        val mode = settingsFlow.value.speechMode
+        val settings = settingsFlow.value
+        val lang = settings.spokenLanguage
         // z-prefixed ids must be checked before their English counterparts.
         when {
             utteranceId.startsWith("zq-") -> beginThinkPause()
             utteranceId.startsWith("za-") -> afterAnswerSpoken()
             utteranceId.startsWith("q-") -> {
                 val q = state.value.current
-                if (mode == SpeechMode.BILINGUAL && q?.questionZh != null) {
-                    speak("zq-${q.n}", zhQuestionText(q), SpeechLanguage.CHINESE)
+                if (settings.bilingual && q?.translation(lang) != null) {
+                    speak("zq-${q.n}", translationQuestionText(q, lang), lang)
                 } else {
                     beginThinkPause()
                 }
             }
             utteranceId.startsWith("a-") -> {
                 val q = state.value.current
-                if (mode == SpeechMode.BILINGUAL && q?.spokenZh != null) {
-                    speak("za-${q.n}", q.spokenZh, SpeechLanguage.CHINESE)
+                val t = q?.translation(lang)
+                if (settings.bilingual && q != null && t != null) {
+                    speak("za-${q.n}", t.spoken, lang)
                 } else {
                     afterAnswerSpoken()
                 }
@@ -322,9 +329,9 @@ class StudyEngine(
         }
     }
 
-    private fun zhQuestionText(q: Question): String {
-        val qZh = q.questionZh ?: return q.question
-        return if (settingsFlow.value.announceMeta) "第 ${q.n} 题。 $qZh" else qZh
+    private fun translationQuestionText(q: Question, language: SpeechLanguage): String {
+        val t = q.translation(language) ?: return q.question
+        return if (settingsFlow.value.announceMeta) "${language.questionPrefix(q.n)} ${t.question}" else t.question
     }
 
     private fun onUtteranceError(utteranceId: String) {

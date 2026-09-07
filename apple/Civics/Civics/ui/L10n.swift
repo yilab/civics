@@ -24,8 +24,12 @@ enum L10n {
             bundle = .main
         case .english:
             bundle = lproj("en") ?? .main
-        case .chinese:
+        case .chineseSimplified:
             bundle = lproj("zh-Hans") ?? .main
+        case .chineseTraditional:
+            bundle = lproj("zh-Hant") ?? .main
+        case .spanish:
+            bundle = lproj("es") ?? .main
         }
     }
 

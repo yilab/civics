@@ -62,7 +62,9 @@ fun applyUiLanguage(language: UiLanguage) {
     val locales = when (language) {
         UiLanguage.SYSTEM -> LocaleListCompat.getEmptyLocaleList()
         UiLanguage.ENGLISH -> LocaleListCompat.forLanguageTags("en")
-        UiLanguage.CHINESE -> LocaleListCompat.forLanguageTags("zh-CN")
+        UiLanguage.CHINESE_SIMPLIFIED -> LocaleListCompat.forLanguageTags("zh-CN")
+        UiLanguage.CHINESE_TRADITIONAL -> LocaleListCompat.forLanguageTags("zh-TW")
+        UiLanguage.SPANISH -> LocaleListCompat.forLanguageTags("es")
     }
     if (AppCompatDelegate.getApplicationLocales() != locales) {
         AppCompatDelegate.setApplicationLocales(locales)
@@ -114,7 +116,10 @@ fun CivicsRoot() {
         app.settingsRepo.settings.collect { applyUiLanguage(it.uiLanguage) }
     }
 
-    val zhPrimary = settings.uiLanguage == UiLanguage.CHINESE
+    val spoken = settings.spokenLanguage
+    // The translation takes visual precedence when the UI language matches it.
+    val translationPrimary = settings.uiLanguage.speechLanguage == spoken &&
+        spoken != com.yilab.civics.data.SpeechLanguage.ENGLISH
 
     // Route transport through the session so on-screen and AirPod presses behave identically.
     val primary = { controller?.play() ?: engine.primaryAction() }
@@ -141,7 +146,8 @@ fun CivicsRoot() {
                 AppDestinations.LISTEN -> ListenScreen(
                     state = state,
                     ttsAvailable = ttsAvailable,
-                    zhPrimary = zhPrimary,
+                    language = spoken,
+                    translationPrimary = translationPrimary,
                     onPrimary = primary,
                     onPause = pause,
                     onNext = next,
@@ -154,7 +160,8 @@ fun CivicsRoot() {
                     questions = app.questionRepo.questions,
                     known = state.known,
                     currentNumber = state.current?.n,
-                    zhPrimary = zhPrimary,
+                    language = spoken,
+                    translationPrimary = translationPrimary,
                     onJump = engine::jumpTo,
                     modifier = Modifier.padding(innerPadding),
                 )
@@ -173,7 +180,8 @@ fun CivicsRoot() {
                     com.yilab.civics.ui.TestScreen(
                         state = state,
                         history = history,
-                        zhPrimary = zhPrimary,
+                        language = spoken,
+                        translationPrimary = translationPrimary,
                         onStart = { engine.startTest() },
                         onReveal = primary,
                         onGrade = { engine.grade(it) },

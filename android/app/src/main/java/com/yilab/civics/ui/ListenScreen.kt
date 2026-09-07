@@ -35,12 +35,16 @@ import com.yilab.civics.R
 import com.yilab.civics.audio.Phase
 import com.yilab.civics.audio.StudyState
 import com.yilab.civics.data.Question
+import com.yilab.civics.data.SpeechLanguage
 
 @Composable
 fun ListenScreen(
     state: StudyState,
     ttsAvailable: Boolean,
-    zhPrimary: Boolean,
+    /** The spoken language whose translation is shown alongside the English text. */
+    language: SpeechLanguage,
+    /** True when the translation takes visual precedence (UI language matches it). */
+    translationPrimary: Boolean,
     onPrimary: () -> Unit,
     onPause: () -> Unit,
     onNext: () -> Unit,
@@ -122,8 +126,8 @@ fun ListenScreen(
                     Spacer(Modifier.height(12.dp))
                     QuestionAnswerText(
                         english = q.question,
-                        chinese = q.questionZh,
-                        zhPrimary = zhPrimary,
+                        translated = q.translation(language)?.question,
+                        translationPrimary = translationPrimary,
                         style = MaterialTheme.typography.headlineSmall,
                     )
                     if (state.answerRevealed) {
@@ -136,11 +140,11 @@ fun ListenScreen(
                         Spacer(Modifier.height(6.dp))
                         QuestionAnswerText(
                             english = q.answer,
-                            chinese = q.answerZh,
-                            zhPrimary = zhPrimary,
+                            translated = q.translation(language)?.answer,
+                            translationPrimary = translationPrimary,
                             style = MaterialTheme.typography.titleLarge,
                         )
-                        val note = if (zhPrimary) q.noteZh ?: q.note else q.note
+                        val note = if (translationPrimary) q.translation(language)?.note ?: q.note else q.note
                         note?.let {
                             Spacer(Modifier.height(10.dp))
                             Text(
@@ -217,21 +221,21 @@ fun ListenScreen(
 @Composable
 private fun QuestionAnswerText(
     english: String,
-    chinese: String?,
-    zhPrimary: Boolean,
+    translated: String?,
+    translationPrimary: Boolean,
     style: androidx.compose.ui.text.TextStyle,
 ) {
     val secondary = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-    if (zhPrimary && chinese != null) {
+    if (translationPrimary && translated != null) {
         Column {
-            Text(chinese, style = style)
+            Text(translated, style = style)
             Spacer(Modifier.height(4.dp))
             Text(english, style = secondary)
         }
     } else {
         Column {
             Text(english, style = style)
-            chinese?.let {
+            translated?.let {
                 Spacer(Modifier.height(4.dp))
                 Text(it, style = secondary)
             }

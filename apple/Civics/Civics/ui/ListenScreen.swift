@@ -3,8 +3,10 @@ import SwiftUI
 struct ListenScreen: View {
     let state: StudyState
     let ttsAvailable: Bool
-    /// True when Chinese text takes visual precedence (UI language = 中文).
-    var zhPrimary: Bool = false
+    /// The spoken language whose translation is shown alongside the English text.
+    var language: SpeechLanguage = .english
+    /// True when the translation takes visual precedence (UI language matches it).
+    var translationPrimary: Bool = false
     let onPrimary: () -> Void
     let onPause: () -> Void
     let onNext: () -> Void
@@ -107,7 +109,7 @@ struct ListenScreen: View {
                 }
                 .padding(.bottom, 12)
 
-                primaryText(q.question, q.questionZh)
+                primaryText(q.question, q.translation(language)?.question)
                     .font(.title3.weight(.medium))
 
                 if state.answerRevealed {
@@ -117,9 +119,9 @@ struct ListenScreen: View {
                         .font(.caption2)
                         .foregroundStyle(.tint)
                         .padding(.bottom, 6)
-                    primaryText(q.answer, q.answerZh)
+                    primaryText(q.answer, q.translation(language)?.answer)
                         .font(.title2)
-                    let note = zhPrimary ? (q.noteZh ?? q.note) : q.note
+                    let note = translationPrimary ? (q.translation(language)?.note ?? q.note) : q.note
                     if let note {
                         Text(note)
                             .font(.footnote)
@@ -142,10 +144,10 @@ struct ListenScreen: View {
 
     /// Primary language in the emphasis style, the other as a muted secondary line.
     @ViewBuilder
-    private func primaryText(_ english: String, _ chinese: String?) -> some View {
-        if zhPrimary, let chinese {
+    private func primaryText(_ english: String, _ translated: String?) -> some View {
+        if translationPrimary, let translated {
             VStack(alignment: .leading, spacing: 8) {
-                Text(chinese)
+                Text(translated)
                 Text(english)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
@@ -153,8 +155,8 @@ struct ListenScreen: View {
         } else {
             VStack(alignment: .leading, spacing: 8) {
                 Text(english)
-                if let chinese {
-                    Text(chinese)
+                if let translated {
+                    Text(translated)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }

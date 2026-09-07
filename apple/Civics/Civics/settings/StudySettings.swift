@@ -1,20 +1,23 @@
 import Foundation
 
-/// Which languages the study loop speaks.
-enum SpeechMode: Equatable, CaseIterable {
-    /// English only — the interview language.
-    case english
-    /// English first, then the Chinese translation.
-    case bilingual
-    /// Chinese only (for comprehension).
-    case chinese
-}
-
 /// The app chrome language, independent of the system language.
 enum UiLanguage: Equatable, CaseIterable {
     case system
     case english
-    case chinese
+    case chineseSimplified
+    case chineseTraditional
+    case spanish
+
+    /// The spoken language this UI language corresponds to, if any.
+    var speechLanguage: SpeechLanguage? {
+        switch self {
+        case .system: nil
+        case .english: .english
+        case .chineseSimplified: .chineseSimplified
+        case .chineseTraditional: .chineseTraditional
+        case .spanish: .spanish
+        }
+    }
 }
 
 struct StudySettings: Equatable {
@@ -28,8 +31,10 @@ struct StudySettings: Equatable {
     /// Speak "Question N" before the question text.
     var announceMeta: Bool = true
     var known: Set<Int> = []
-    /// Which languages the study loop speaks.
-    var speechMode: SpeechMode = .english
+    /// The language the study loop speaks.
+    var spokenLanguage: SpeechLanguage = .english
+    /// Also speak the English original before the translation.
+    var bilingual: Bool = false
     /// App chrome language (menus, buttons, labels).
     var uiLanguage: UiLanguage = .system
 
@@ -44,7 +49,8 @@ struct StudySettings: Equatable {
         shuffle: Bool? = nil,
         announceMeta: Bool? = nil,
         known: Set<Int>? = nil,
-        speechMode: SpeechMode? = nil,
+        spokenLanguage: SpeechLanguage? = nil,
+        bilingual: Bool? = nil,
         uiLanguage: UiLanguage? = nil
     ) -> StudySettings {
         StudySettings(
@@ -55,7 +61,8 @@ struct StudySettings: Equatable {
             shuffle: shuffle ?? self.shuffle,
             announceMeta: announceMeta ?? self.announceMeta,
             known: known ?? self.known,
-            speechMode: speechMode ?? self.speechMode,
+            spokenLanguage: spokenLanguage ?? self.spokenLanguage,
+            bilingual: bilingual ?? self.bilingual,
             uiLanguage: uiLanguage ?? self.uiLanguage
         )
     }

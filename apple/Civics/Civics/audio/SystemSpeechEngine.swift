@@ -31,11 +31,14 @@ final class SystemSpeechEngine: NSObject, SpeechEngine {
     }
 
     override init() {
-        let available: [SpeechLanguage: AVSpeechSynthesisVoice?] = [
-            .english: AVSpeechSynthesisVoice(language: "en-US"),
-            .chinese: AVSpeechSynthesisVoice(language: "zh-CN"),
-        ]
-        voices = available.compactMapValues { $0 }
+        // Probe every spoken language; a missing voice just drops out of the map.
+        var found: [SpeechLanguage: AVSpeechSynthesisVoice] = [:]
+        for language in SpeechLanguage.allCases {
+            if let voice = AVSpeechSynthesisVoice(language: language.localeCode) {
+                found[language] = voice
+            }
+        }
+        voices = found
         super.init()
         synthesizer.delegate = self
     }

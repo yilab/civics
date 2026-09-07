@@ -27,7 +27,10 @@ struct RootView: View {
     @State private var selected: AppDestination = .listen
 
     var body: some View {
-        let zhPrimary = model.settingsRepo.settings.uiLanguage == .chinese
+        let settings = model.settingsRepo.settings
+        let spoken = settings.spokenLanguage
+        // The translation takes visual precedence when the UI language matches it.
+        let translationPrimary = settings.uiLanguage.speechLanguage == spoken && spoken != .english
         TabView(selection: $selected) {
             Tab(L10n.t(AppDestination.listen.labelKey), systemImage: AppDestination.listen.icon, value: .listen) {
                 // Transport is routed through the playback coordinator so on-screen
@@ -35,7 +38,8 @@ struct RootView: View {
                 ListenScreen(
                     state: model.engine.state,
                     ttsAvailable: model.ttsAvailable,
-                    zhPrimary: zhPrimary,
+                    language: spoken,
+                    translationPrimary: translationPrimary,
                     onPrimary: { model.playback.play() },
                     onPause: { model.playback.pause() },
                     onNext: { model.playback.next() },
@@ -48,7 +52,8 @@ struct RootView: View {
                     questions: model.questionRepo.questions,
                     known: model.engine.state.known,
                     currentNumber: model.engine.state.current?.n,
-                    zhPrimary: zhPrimary,
+                    language: spoken,
+                    translationPrimary: translationPrimary,
                     onJump: { model.engine.jumpTo($0) }
                 )
             }
@@ -56,7 +61,8 @@ struct RootView: View {
                 TestScreen(
                     state: model.engine.state,
                     history: model.settingsRepo.testHistory,
-                    zhPrimary: zhPrimary,
+                    language: spoken,
+                    translationPrimary: translationPrimary,
                     onStart: { model.engine.startTest() },
                     onReveal: { model.playback.play() },
                     onGrade: { model.engine.grade(correct: $0) },

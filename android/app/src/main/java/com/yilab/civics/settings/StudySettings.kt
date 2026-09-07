@@ -1,12 +1,22 @@
 package com.yilab.civics.settings
 
 import com.yilab.civics.data.Categories
-
-/** Which languages the study loop speaks. */
-enum class SpeechMode { ENGLISH, BILINGUAL, CHINESE }
+import com.yilab.civics.data.SpeechLanguage
 
 /** The app chrome language, independent of the system language. */
-enum class UiLanguage { SYSTEM, ENGLISH, CHINESE }
+enum class UiLanguage {
+    SYSTEM, ENGLISH, CHINESE_SIMPLIFIED, CHINESE_TRADITIONAL, SPANISH;
+
+    /** The spoken language this UI language corresponds to, if any. */
+    val speechLanguage: SpeechLanguage?
+        get() = when (this) {
+            SYSTEM -> null
+            ENGLISH -> SpeechLanguage.ENGLISH
+            CHINESE_SIMPLIFIED -> SpeechLanguage.CHINESE_SIMPLIFIED
+            CHINESE_TRADITIONAL -> SpeechLanguage.CHINESE_TRADITIONAL
+            SPANISH -> SpeechLanguage.SPANISH
+        }
+}
 
 data class StudySettings(
     val speechRate: Float = 1.0f,
@@ -19,8 +29,10 @@ data class StudySettings(
     /** Speak "Question N" before the question text. */
     val announceMeta: Boolean = true,
     val known: Set<Int> = emptySet(),
-    /** Which languages the study loop speaks. */
-    val speechMode: SpeechMode = SpeechMode.ENGLISH,
+    /** The language the study loop speaks. */
+    val spokenLanguage: SpeechLanguage = SpeechLanguage.ENGLISH,
+    /** Also speak the English original before the translation. */
+    val bilingual: Boolean = false,
     /** App chrome language (menus, buttons, labels). */
     val uiLanguage: UiLanguage = UiLanguage.SYSTEM,
 ) {

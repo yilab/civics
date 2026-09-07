@@ -1,11 +1,5 @@
 import Foundation
 
-/// The language an utterance is spoken in.
-enum SpeechLanguage {
-    case english
-    case chinese
-}
-
 @MainActor
 protocol SpeechEngineCallback: AnyObject {
     func onDone(utteranceID: String)

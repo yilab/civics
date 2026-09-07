@@ -42,18 +42,44 @@ struct QuestionRepositoryTests {
         #expect(ordered != shuffled)
     }
 
-    @Test func everyQuestionHasAChineseVersion() {
+    @Test func everyQuestionHasASimplifiedChineseTranslation() {
         for q in repo.questions {
-            #expect(!(q.questionZh ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank questionZh for Q\(q.n)")
-            #expect(!(q.answerZh ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank answerZh for Q\(q.n)")
-            #expect(!(q.spokenZh ?? "").trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank spokenZh for Q\(q.n)")
+            guard let t = q.translation(.chineseSimplified) else {
+                Issue.record("missing zh-Hans translation for Q\(q.n)")
+                continue
+            }
+            #expect(!t.question.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank zh-Hans question for Q\(q.n)")
+            #expect(!t.answer.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank zh-Hans answer for Q\(q.n)")
+            #expect(!t.spoken.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty, "blank zh-Hans spoken for Q\(q.n)")
             // TTS-clean: no ASCII or full-width parentheses, like the English spoken field.
-            let spoken = q.spokenZh ?? ""
+            let spoken = t.spoken
             #expect(!spoken.contains("(") && !spoken.contains(")") && !spoken.contains("（") && !spoken.contains("）"),
-                    "spokenZh has parens for Q\(q.n)")
+                    "zh-Hans spoken has parens for Q\(q.n)")
             if q.dynamic {
-                #expect(q.noteZh != nil, "dynamic Q\(q.n) should carry a noteZh")
+                #expect(t.note != nil, "dynamic Q\(q.n) should carry a zh-Hans note")
             }
         }
+    }
+
+    @Test func translationsMapParsesMultipleLanguagesAndToleratesAbsentOnes() {
+        let json = """
+        {"questions":[
+          {"n":1,"category":"American Government","question":"Q1?","answer":"A1","spoken":"A1 spoken","dynamic":false,"note":null,
+           "translations":{"es":{"question":"¿P1?","answer":"R1","spoken":"R1 hablada"},
+                           "zh-Hant":{"question":"題目一","answer":"答案一","spoken":"答案一","note":"附註一"}}},
+          {"n":2,"category":"American History","question":"Q2?","answer":"A2","spoken":"A2 spoken"}
+        ]}
+        """
+        let repo = QuestionRepository(jsonSource: { Data(json.utf8) })
+        let q1 = repo.byNumber(1)
+        #expect(q1?.translations.count == 2)
+        #expect(q1?.translation(.spanish)?.question == "¿P1?")
+        #expect(q1?.translation(.spanish)?.note == nil) // note is optional
+        #expect(q1?.translation(.chineseTraditional)?.note == "附註一")
+        #expect(q1?.translation(.chineseSimplified) == nil) // a language may be absent
+        let q2 = repo.byNumber(2)
+        #expect(q2?.translations.isEmpty == true)
+        #expect(q2?.translation(.spanish) == nil)
+        #expect(q2?.dynamic == false) // absent dynamic decodes as false
     }
 }

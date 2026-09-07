@@ -7,6 +7,7 @@ import android.os.Handler
 import android.os.Looper
 import android.speech.tts.TextToSpeech
 import android.speech.tts.UtteranceProgressListener
+import com.yilab.civics.data.SpeechLanguage
 import java.util.Locale
 
 /**
@@ -41,8 +42,10 @@ class AndroidSpeechEngine(
                         .build()
                 )
                 available.clear()
-                if (engine.languageSupported(Locale.US)) available += SpeechLanguage.ENGLISH
-                if (engine.languageSupported(Locale.SIMPLIFIED_CHINESE)) available += SpeechLanguage.CHINESE
+                // Probe every spoken language; a missing voice just stays out of the set.
+                SpeechLanguage.entries.forEach { lang ->
+                    if (engine.languageSupported(lang.locale)) available += lang
+                }
                 ready = SpeechLanguage.ENGLISH in available
                 engine.setOnUtteranceProgressListener(object : UtteranceProgressListener() {
                     override fun onStart(utteranceId: String?) = Unit
@@ -88,10 +91,7 @@ class AndroidSpeechEngine(
 
     private fun speakNow(utteranceId: String, text: String, language: SpeechLanguage) {
         val engine = tts ?: return
-        engine.language = when (language) {
-            SpeechLanguage.CHINESE -> Locale.SIMPLIFIED_CHINESE
-            SpeechLanguage.ENGLISH -> Locale.US
-        }
+        engine.language = language.locale
         engine.setSpeechRate(speechRate)
         engine.speak(text, TextToSpeech.QUEUE_FLUSH, Bundle(), utteranceId)
     }

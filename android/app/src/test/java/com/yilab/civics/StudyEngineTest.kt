@@ -2,11 +2,10 @@ package com.yilab.civics
 
 import com.yilab.civics.audio.Phase
 import com.yilab.civics.audio.SpeechEngine
-import com.yilab.civics.audio.SpeechLanguage
 import com.yilab.civics.audio.StudyEngine
 import com.yilab.civics.audio.TestRecord
 import com.yilab.civics.data.QuestionRepository
-import com.yilab.civics.settings.SpeechMode
+import com.yilab.civics.data.SpeechLanguage
 import com.yilab.civics.settings.StudySettings
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.test.TestScope
@@ -43,6 +42,15 @@ private class FakeSpeechEngine : SpeechEngine {
     }
 }
 
+private const val NO_TRANSLATIONS_JSON =
+    """{"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null}]}"""
+
+private const val ZH_HANS_ONLY_JSON =
+    """{"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null,"translations":{"zh-Hans":{"question":"简体题目","answer":"简体答案","spoken":"简体答案朗读"}}}]}"""
+
+private const val ES_AND_ZH_HANT_JSON =
+    """{"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null,"translations":{"es":{"question":"¿Pregunta de ejemplo?","answer":"Respuesta","spoken":"Respuesta hablada"},"zh-Hant":{"question":"繁體題目","answer":"繁體答案","spoken":"繁體答案朗讀"}}}]}"""
+
 @OptIn(kotlinx.coroutines.ExperimentalCoroutinesApi::class)
 class StudyEngineTest {
 
@@ -50,6 +58,7 @@ class StudyEngineTest {
 
     private fun TestScope.engine(
         settings: MutableStateFlow<StudySettings>,
+        repo: QuestionRepository = this@StudyEngineTest.repo,
         onKnownChanged: (Int, Boolean) -> Unit = { _, _ -> },
         onTestFinished: (TestRecord) -> Unit = {},
     ): Pair<StudyEngine, FakeSpeechEngine> {
@@ -225,26 +234,29 @@ class StudyEngineTest {
         assertEquals(repo.byNumber(1)?.question, speech.spoken.last().second)
     }
 
-    // ------------------------------------------------------------- speech modes
+    // ------------------------------------------------------------- spoken languages
 
     @Test
-    fun `bilingual mode speaks english then chinese in each phase`() = runTest {
-        val (engine, speech) = engine(MutableStateFlow(StudySettings(speechMode = SpeechMode.BILINGUAL)))
+    fun `bilingual mode speaks english then the translation in each phase`() = runTest {
+        val (engine, speech) = engine(
+            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.CHINESE_SIMPLIFIED, bilingual = true))
+        )
         engine.primaryAction()
         assertEquals("q-1", speech.spoken.last().first)
-        speech.finishLast() // English question done -> Chinese question
+        speech.finishLast() // English question done -> translated question
         assertEquals(Phase.SPEAKING_QUESTION, engine.state.value.phase)
         assertEquals("zq-1", speech.spoken.last().first)
-        assertEquals(SpeechLanguage.CHINESE, speech.spoken.last().third)
+        assertEquals(SpeechLanguage.CHINESE_SIMPLIFIED, speech.spoken.last().third)
         assertTrue(speech.spoken.last().second.startsWith("第 1 题。"))
-        speech.finishLast() // Chinese question done -> think pause
+        speech.finishLast() // translated question done -> think pause
         assertEquals(Phase.THINKING, engine.state.value.phase)
 
         engine.primaryAction() // reveal
         assertEquals("a-1", speech.spoken.last().first)
-        speech.finishLast() // English answer done -> Chinese answer
+        speech.finishLast() // English answer done -> translated answer
         assertEquals("za-1", speech.spoken.last().first)
-        speech.finishLast() // Chinese answer done -> awaiting
+        assertEquals(SpeechLanguage.CHINESE_SIMPLIFIED, speech.spoken.last().third)
+        speech.finishLast() // translated answer done -> awaiting
         assertEquals(Phase.AWAITING_ADVANCE, engine.state.value.phase)
 
         engine.primaryAction() // next
@@ -252,39 +264,118 @@ class StudyEngineTest {
     }
 
     @Test
-    fun `chinese mode speaks only chinese`() = runTest {
-        val (engine, speech) = engine(MutableStateFlow(StudySettings(speechMode = SpeechMode.CHINESE)))
+    fun `chinese only mode speaks only chinese`() = runTest {
+        val (engine, speech) =
+            engine(MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.CHINESE_SIMPLIFIED)))
         engine.primaryAction()
         assertEquals("zq-1", speech.spoken.last().first)
-        assertEquals(SpeechLanguage.CHINESE, speech.spoken.last().third)
+        assertEquals(SpeechLanguage.CHINESE_SIMPLIFIED, speech.spoken.last().third)
         speech.finishLast()
         assertEquals(Phase.THINKING, engine.state.value.phase)
         engine.primaryAction()
         assertEquals("za-1", speech.spoken.last().first)
-        assertEquals(repo.byNumber(1)?.spokenZh, speech.spoken.last().second)
+        assertEquals(
+            repo.byNumber(1)?.translation(SpeechLanguage.CHINESE_SIMPLIFIED)?.spoken,
+            speech.spoken.last().second,
+        )
         speech.finishLast()
         assertEquals(Phase.AWAITING_ADVANCE, engine.state.value.phase)
     }
 
     @Test
-    fun `bilingual announce meta off drops the zh prefix`() = runTest {
-        val (engine, speech) =
-            engine(MutableStateFlow(StudySettings(announceMeta = false, speechMode = SpeechMode.BILINGUAL)))
+    fun `bilingual spanish speaks english then spanish in each phase`() = runTest {
+        val single = QuestionRepository { ES_AND_ZH_HANT_JSON }
+        val (engine, speech) = engine(
+            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.SPANISH, bilingual = true)),
+            repo = single,
+        )
+        engine.primaryAction()
+        assertEquals("q-1", speech.spoken.last().first)
+        assertEquals(SpeechLanguage.ENGLISH, speech.spoken.last().third)
+        speech.finishLast() // English question done -> Spanish question
+        assertEquals("zq-1", speech.spoken.last().first)
+        assertEquals(SpeechLanguage.SPANISH, speech.spoken.last().third)
+        assertTrue(speech.spoken.last().second.startsWith("Pregunta 1."))
+        speech.finishLast()
+        assertEquals(Phase.THINKING, engine.state.value.phase)
+
+        engine.primaryAction() // reveal
+        assertEquals("a-1", speech.spoken.last().first)
+        speech.finishLast() // English answer done -> Spanish answer
+        assertEquals("za-1", speech.spoken.last().first)
+        assertEquals(SpeechLanguage.SPANISH, speech.spoken.last().third)
+        speech.finishLast()
+        assertEquals(Phase.AWAITING_ADVANCE, engine.state.value.phase)
+    }
+
+    @Test
+    fun `traditional chinese uses the hant announce prefix`() = runTest {
+        val single = QuestionRepository { ES_AND_ZH_HANT_JSON }
+        val (engine, speech) = engine(
+            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.CHINESE_TRADITIONAL)),
+            repo = single,
+        )
+        engine.primaryAction()
+        assertEquals("zq-1", speech.spoken.last().first)
+        assertEquals(SpeechLanguage.CHINESE_TRADITIONAL, speech.spoken.last().third)
+        assertTrue(speech.spoken.last().second.startsWith("第 1 題。"))
+        speech.finishLast()
+        assertEquals(Phase.THINKING, engine.state.value.phase)
+        engine.primaryAction()
+        assertEquals("za-1", speech.spoken.last().first)
+        assertEquals("繁體答案朗讀", speech.spoken.last().second)
+    }
+
+    @Test
+    fun `bilingual announce meta off drops the translation prefix`() = runTest {
+        val (engine, speech) = engine(
+            MutableStateFlow(
+                StudySettings(
+                    announceMeta = false,
+                    spokenLanguage = SpeechLanguage.CHINESE_SIMPLIFIED,
+                    bilingual = true,
+                )
+            )
+        )
         engine.primaryAction()
         speech.finishLast()
-        assertEquals(repo.byNumber(1)?.questionZh, speech.spoken.last().second)
+        assertEquals(
+            repo.byNumber(1)?.translation(SpeechLanguage.CHINESE_SIMPLIFIED)?.question,
+            speech.spoken.last().second,
+        )
     }
 
     @Test
     fun `chinese mode without translation falls back to english`() = runTest {
-        // A single-question repo without zh fields simulates untranslated data.
-        val json = """{"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null}]}"""
-        val single = QuestionRepository { json }
-        val speech = FakeSpeechEngine()
-        val engine = StudyEngine(speech, single, MutableStateFlow(StudySettings(speechMode = SpeechMode.CHINESE)), backgroundScope)
+        // A single-question repo without any translations simulates untranslated data.
+        val single = QuestionRepository { NO_TRANSLATIONS_JSON }
+        val (engine, speech) = engine(
+            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.CHINESE_SIMPLIFIED)),
+            repo = single,
+        )
         engine.primaryAction()
-        assertEquals("q-1", speech.spoken.last().first) // no questionZh -> English fallback
+        assertEquals("q-1", speech.spoken.last().first) // no translation -> English fallback
         assertEquals(SpeechLanguage.ENGLISH, speech.spoken.last().third)
+    }
+
+    @Test
+    fun `spanish without a spanish translation falls back to english`() = runTest {
+        // The repo has zh-Hans but not es: the selected language drives the fallback.
+        val single = QuestionRepository { ZH_HANS_ONLY_JSON }
+        val (engine, speech) = engine(
+            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.SPANISH, bilingual = true)),
+            repo = single,
+        )
+        engine.primaryAction()
+        assertEquals("q-1", speech.spoken.last().first)
+        assertEquals(SpeechLanguage.ENGLISH, speech.spoken.last().third)
+        speech.finishLast() // no es translation -> think pause, no z-leg
+        assertEquals(Phase.THINKING, engine.state.value.phase)
+        engine.primaryAction() // reveal
+        assertEquals("a-1", speech.spoken.last().first)
+        assertEquals(SpeechLanguage.ENGLISH, speech.spoken.last().third)
+        speech.finishLast()
+        assertEquals(Phase.AWAITING_ADVANCE, engine.state.value.phase)
     }
 
     // -------------------------------------------------------- practice test mode

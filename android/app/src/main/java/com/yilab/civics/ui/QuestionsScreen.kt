@@ -20,13 +20,17 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
 import com.yilab.civics.data.Question
+import com.yilab.civics.data.SpeechLanguage
 
 @Composable
 fun QuestionsScreen(
     questions: List<Question>,
     known: Set<Int>,
     currentNumber: Int?,
-    zhPrimary: Boolean,
+    /** The spoken language whose translation is shown alongside the English text. */
+    language: SpeechLanguage,
+    /** True when the translation takes visual precedence (UI language matches it). */
+    translationPrimary: Boolean,
     onJump: (Int) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -44,8 +48,9 @@ fun QuestionsScreen(
                 },
                 headlineContent = {
                     Column {
-                        if (zhPrimary && q.questionZh != null) {
-                            Text(q.questionZh)
+                        val translated = q.translation(language)?.question
+                        if (translationPrimary && translated != null) {
+                            Text(translated)
                             Spacer(Modifier.height(2.dp))
                             Text(
                                 q.question,
@@ -54,7 +59,7 @@ fun QuestionsScreen(
                             )
                         } else {
                             Text(q.question)
-                            q.questionZh?.let {
+                            translated?.let {
                                 Spacer(Modifier.height(2.dp))
                                 Text(
                                     it,

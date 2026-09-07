@@ -10,10 +10,26 @@
       "spoken": "A republic. Also acceptable: a constitution-based federal republic or representative democracy.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国的政体是什么？",
-      "answerZh": "共和制。也可接受：基于宪法的联邦共和国，或代议制民主。",
-      "spokenZh": "共和制。也可接受：基于宪法的联邦共和国，或代议制民主。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国的政体是什么？",
+          "answer": "共和制。也可接受：基于宪法的联邦共和国，或代议制民主。",
+          "spoken": "共和制。也可接受：基于宪法的联邦共和国，或代议制民主。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuál es la forma de gobierno de los Estados Unidos?",
+          "answer": "Una república. También se acepta: una república federal basada en una constitución, o una democracia representativa.",
+          "spoken": "Una república. También se acepta: una república federal basada en una constitución, o una democracia representativa.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國的政體是什麼？",
+          "answer": "共和制。也可接受：基於憲法的聯邦共和國，或代議制民主。",
+          "spoken": "共和制。也可接受：基於憲法的聯邦共和國，或代議制民主。",
+          "note": null
+        }
+      }
     },
     {
       "n": 2,
@@ -23,10 +39,26 @@
       "spoken": "The U.S. Constitution.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国的最高法律是什么？",
-      "answerZh": "宪法。",
-      "spokenZh": "宪法。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国的最高法律是什么？",
+          "answer": "宪法。",
+          "spoken": "宪法。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuál es la ley suprema del país?",
+          "answer": "La Constitución.",
+          "spoken": "La Constitución.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國的最高法律是什麼？",
+          "answer": "憲法。",
+          "spoken": "憲法。",
+          "note": null
+        }
+      }
     },
     {
       "n": 3,
@@ -36,10 +68,26 @@
       "spoken": "Forms the government. Also acceptable: defines the powers and parts of government, or protects the rights of the people.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出美国宪法的一项作用。",
-      "answerZh": "建立政府。也可接受：界定政府的权力与组成部分；保障人民的权利。",
-      "spokenZh": "建立政府。也可接受：界定政府的权力与组成部分；保障人民的权利。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出美国宪法的一项作用。",
+          "answer": "建立政府。也可接受：界定政府的权力与组成部分；保障人民的权利。",
+          "spoken": "建立政府。也可接受：界定政府的权力与组成部分；保障人民的权利。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione una cosa que hace la Constitución de los Estados Unidos.",
+          "answer": "Establece el gobierno. También se acepta: define los poderes y las partes del gobierno; protege los derechos del pueblo.",
+          "spoken": "Establece el gobierno. También se acepta: define los poderes y las partes del gobierno; protege los derechos del pueblo.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出美國憲法的一項作用。",
+          "answer": "建立政府。也可接受：界定政府的權力與組成部分；保障人民的權利。",
+          "spoken": "建立政府。也可接受：界定政府的權力與組成部分；保障人民的權利。",
+          "note": null
+        }
+      }
     },
     {
       "n": 4,
@@ -49,10 +97,26 @@
       "spoken": "Self-government — the people govern themselves. Also acceptable: popular sovereignty or consent of the governed.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国宪法以“我们人民”开头。“我们人民”是什么意思？",
-      "answerZh": "人民自治——人民治理自己。也可接受：人民主权，或统治须征得人民同意。",
-      "spokenZh": "人民自治——人民治理自己。也可接受：人民主权，或统治须征得人民同意。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国宪法以“我们人民”开头。“我们人民”是什么意思？",
+          "answer": "人民自治——人民治理自己。也可接受：人民主权，或统治须征得人民同意。",
+          "spoken": "人民自治——人民治理自己。也可接受：人民主权，或统治须征得人民同意。",
+          "note": null
+        },
+        "es": {
+          "question": "La Constitución comienza con las palabras «Nosotros, el Pueblo». ¿Qué significa «Nosotros, el Pueblo»?",
+          "answer": "El autogobierno: el pueblo se gobierna a sí mismo. También se acepta: soberanía popular, o el consentimiento de los gobernados.",
+          "spoken": "El autogobierno: el pueblo se gobierna a sí mismo. También se acepta: soberanía popular, o el consentimiento de los gobernados.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國憲法以「我們人民」開頭。「我們人民」是什麼意思？",
+          "answer": "人民自治——人民治理自己。也可接受：人民主權，或統治須徵得人民同意。",
+          "spoken": "人民自治——人民治理自己。也可接受：人民主權，或統治須徵得人民同意。",
+          "note": null
+        }
+      }
     },
     {
       "n": 5,
@@ -62,10 +126,26 @@
       "spoken": "Through amendments, the amendment process.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国宪法如何修改？",
-      "answerZh": "通过修正案，即修宪程序。",
-      "spokenZh": "通过修正案，即修宪程序。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国宪法如何修改？",
+          "answer": "通过修正案，即修宪程序。",
+          "spoken": "通过修正案，即修宪程序。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cómo se hacen los cambios a la Constitución?",
+          "answer": "Mediante enmiendas, es decir, el proceso de enmienda.",
+          "spoken": "Mediante enmiendas, es decir, el proceso de enmienda.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國憲法如何修改？",
+          "answer": "通過修正案，即修憲程序。",
+          "spoken": "通過修正案，即修憲程序。",
+          "note": null
+        }
+      }
     },
     {
       "n": 6,
@@ -75,10 +155,26 @@
       "spoken": "The basic rights of people living in the United States.",
       "dynamic": false,
       "note": null,
-      "questionZh": "《权利法案》保护什么？",
-      "answerZh": "生活在美国的人的基本权利。",
-      "spokenZh": "生活在美国的人的基本权利。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "《权利法案》保护什么？",
+          "answer": "生活在美国的人的基本权利。",
+          "spoken": "生活在美国的人的基本权利。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué protege la Carta de Derechos?",
+          "answer": "Los derechos básicos de las personas que viven en los Estados Unidos.",
+          "spoken": "Los derechos básicos de las personas que viven en los Estados Unidos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "《權利法案》保護什麼？",
+          "answer": "生活在美國的人的基本權利。",
+          "spoken": "生活在美國的人的基本權利。",
+          "note": null
+        }
+      }
     },
     {
       "n": 7,
@@ -88,10 +184,26 @@
       "spoken": "Twenty-seven.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国宪法有多少条修正案？",
-      "answerZh": "二十七条。",
-      "spokenZh": "二十七条。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国宪法有多少条修正案？",
+          "answer": "二十七条。",
+          "spoken": "二十七条。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuántas enmiendas tiene la Constitución?",
+          "answer": "Veintisiete.",
+          "spoken": "Veintisiete.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國憲法有多少條修正案？",
+          "answer": "二十七條。",
+          "spoken": "二十七條。",
+          "note": null
+        }
+      }
     },
     {
       "n": 8,
@@ -101,10 +213,26 @@
       "spoken": "It says America is free from British control. Also acceptable: it says all people are created equal, or it identifies rights and freedoms.",
       "dynamic": false,
       "note": null,
-      "questionZh": "《独立宣言》为什么重要？",
-      "answerZh": "它宣告美国脱离英国控制。也可接受：它宣告人人生而平等；它指明了各项权利与自由。",
-      "spokenZh": "它宣告美国脱离英国控制。也可接受：它宣告人人生而平等；它指明了各项权利与自由。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "《独立宣言》为什么重要？",
+          "answer": "它宣告美国脱离英国控制。也可接受：它宣告人人生而平等；它指明了各项权利与自由。",
+          "spoken": "它宣告美国脱离英国控制。也可接受：它宣告人人生而平等；它指明了各项权利与自由。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué es importante la Declaración de Independencia?",
+          "answer": "Declara que América es libre del control británico. También se acepta: declara que todas las personas son creadas iguales; identifica derechos y libertades.",
+          "spoken": "Declara que América es libre del control británico. También se acepta: declara que todas las personas son creadas iguales; identifica derechos y libertades.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "《獨立宣言》為什麼重要？",
+          "answer": "它宣告美國脫離英國控制。也可接受：它宣告人人生而平等；它指明了各項權利與自由。",
+          "spoken": "它宣告美國脫離英國控制。也可接受：它宣告人人生而平等；它指明了各項權利與自由。",
+          "note": null
+        }
+      }
     },
     {
       "n": 9,
@@ -114,10 +242,26 @@
       "spoken": "The Declaration of Independence.",
       "dynamic": false,
       "note": null,
-      "questionZh": "哪份建国文件宣告美洲殖民地脱离英国独立？",
-      "answerZh": "《独立宣言》。",
-      "spokenZh": "《独立宣言》。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "哪份建国文件宣告美洲殖民地脱离英国独立？",
+          "answer": "《独立宣言》。",
+          "spoken": "《独立宣言》。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué documento fundacional declaró que las colonias americanas eran libres de Gran Bretaña?",
+          "answer": "La Declaración de Independencia.",
+          "spoken": "La Declaración de Independencia.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "哪份建國文件宣告美洲殖民地脫離英國獨立？",
+          "answer": "《獨立宣言》。",
+          "spoken": "《獨立宣言》。",
+          "note": null
+        }
+      }
     },
     {
       "n": 10,
@@ -127,10 +271,26 @@
       "spoken": "Equality and liberty. Also acceptable: social contract, natural rights, limited government, self-government.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出《独立宣言》和美国宪法的两个重要理念。",
-      "answerZh": "平等与自由。也可接受：社会契约、天赋人权、有限政府、人民自治。",
-      "spokenZh": "平等与自由。也可接受：社会契约、天赋人权、有限政府、人民自治。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出《独立宣言》和美国宪法的两个重要理念。",
+          "answer": "平等与自由。也可接受：社会契约、天赋人权、有限政府、人民自治。",
+          "spoken": "平等与自由。也可接受：社会契约、天赋人权、有限政府、人民自治。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione dos ideas importantes de la Declaración de Independencia y la Constitución.",
+          "answer": "La igualdad y la libertad. También se acepta: el contrato social, los derechos naturales, el gobierno limitado, el autogobierno.",
+          "spoken": "La igualdad y la libertad. También se acepta: el contrato social, los derechos naturales, el gobierno limitado, el autogobierno.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出《獨立宣言》和美國憲法的兩個重要理念。",
+          "answer": "平等與自由。也可接受：社會契約、天賦人權、有限政府、人民自治。",
+          "spoken": "平等與自由。也可接受：社會契約、天賦人權、有限政府、人民自治。",
+          "note": null
+        }
+      }
     },
     {
       "n": 11,
@@ -140,10 +300,26 @@
       "spoken": "The Declaration of Independence.",
       "dynamic": false,
       "note": null,
-      "questionZh": "“生命、自由和追求幸福的权利”这些词出现在哪份建国文件中？",
-      "answerZh": "《独立宣言》。",
-      "spokenZh": "《独立宣言》。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "“生命、自由和追求幸福的权利”这些词出现在哪份建国文件中？",
+          "answer": "《独立宣言》。",
+          "spoken": "《独立宣言》。",
+          "note": null
+        },
+        "es": {
+          "question": "¿En qué documento fundacional están las palabras «la Vida, la Libertad y la búsqueda de la Felicidad»?",
+          "answer": "La Declaración de Independencia.",
+          "spoken": "La Declaración de Independencia.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "「生命、自由和追求幸福的權利」這些詞出現在哪份建國文件中？",
+          "answer": "《獨立宣言》。",
+          "spoken": "《獨立宣言》。",
+          "note": null
+        }
+      }
     },
     {
       "n": 12,
@@ -153,10 +329,26 @@
       "spoken": "A free-market economy, or capitalism.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国的经济制度是什么？",
-      "answerZh": "自由市场经济，即资本主义。",
-      "spokenZh": "自由市场经济，即资本主义。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国的经济制度是什么？",
+          "answer": "自由市场经济，即资本主义。",
+          "spoken": "自由市场经济，即资本主义。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuál es el sistema económico de los Estados Unidos?",
+          "answer": "Una economía de libre mercado, es decir, el capitalismo.",
+          "spoken": "Una economía de libre mercado, es decir, el capitalismo.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國的經濟制度是什麼？",
+          "answer": "自由市場經濟，即資本主義。",
+          "spoken": "自由市場經濟，即資本主義。",
+          "note": null
+        }
+      }
     },
     {
       "n": 13,
@@ -166,10 +358,26 @@
       "spoken": "Everyone must follow the law. No one is above the law, including leaders and the government.",
       "dynamic": false,
       "note": null,
-      "questionZh": "什么是法治？",
-      "answerZh": "人人都必须遵守法律。也可接受：任何人都不能凌驾于法律之上，包括领导人和政府。",
-      "spokenZh": "人人都必须遵守法律。也可接受：任何人都不能凌驾于法律之上，包括领导人和政府。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "什么是法治？",
+          "answer": "人人都必须遵守法律。也可接受：任何人都不能凌驾于法律之上，包括领导人和政府。",
+          "spoken": "人人都必须遵守法律。也可接受：任何人都不能凌驾于法律之上，包括领导人和政府。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué es el estado de derecho?",
+          "answer": "Todos deben obedecer la ley. También se acepta: nadie está por encima de la ley, incluidos los líderes y el gobierno.",
+          "spoken": "Todos deben obedecer la ley. También se acepta: nadie está por encima de la ley, incluidos los líderes y el gobierno.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "什麼是法治？",
+          "answer": "人人都必須遵守法律。也可接受：任何人都不能凌駕於法律之上，包括領導人和政府。",
+          "spoken": "人人都必須遵守法律。也可接受：任何人都不能凌駕於法律之上，包括領導人和政府。",
+          "note": null
+        }
+      }
     },
     {
       "n": 14,
@@ -179,10 +387,26 @@
       "spoken": "The Declaration of Independence. Also acceptable: Articles of Confederation, Federalist Papers, Magna Carta, Mayflower Compact.",
       "dynamic": false,
       "note": null,
-      "questionZh": "许多文件影响了美国宪法。说出其中一份。",
-      "answerZh": "《独立宣言》。也可接受：《邦联条例》、《联邦党人文集》、《大宪章》、《五月花号公约》。",
-      "spokenZh": "《独立宣言》。也可接受：《邦联条例》、《联邦党人文集》、《大宪章》、《五月花号公约》。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "许多文件影响了美国宪法。说出其中一份。",
+          "answer": "《独立宣言》。也可接受：《邦联条例》、《联邦党人文集》、《大宪章》、《五月花号公约》。",
+          "spoken": "《独立宣言》。也可接受：《邦联条例》、《联邦党人文集》、《大宪章》、《五月花号公约》。",
+          "note": null
+        },
+        "es": {
+          "question": "Muchos documentos influyeron en la Constitución. Mencione uno.",
+          "answer": "La Declaración de Independencia. También se acepta: los Artículos de la Confederación, los Ensayos Federalistas, la Carta Magna, el Pacto del Mayflower.",
+          "spoken": "La Declaración de Independencia. También se acepta: los Artículos de la Confederación, los Ensayos Federalistas, la Carta Magna, el Pacto del Mayflower.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "許多文件影響了美國憲法。說出其中一份。",
+          "answer": "《獨立宣言》。也可接受：《邦聯條例》、《聯邦黨人文集》、《大憲章》、《五月花號公約》。",
+          "spoken": "《獨立宣言》。也可接受：《邦聯條例》、《聯邦黨人文集》、《大憲章》、《五月花號公約》。",
+          "note": null
+        }
+      }
     },
     {
       "n": 15,
@@ -192,10 +416,26 @@
       "spoken": "So no branch is too powerful — checks and balances or separation of powers.",
       "dynamic": false,
       "note": null,
-      "questionZh": "政府有三个分支。为什么？",
-      "answerZh": "为了防止任何一个分支权力过大——制衡原则，或三权分立。",
-      "spokenZh": "为了防止任何一个分支权力过大——制衡原则，或三权分立。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "政府有三个分支。为什么？",
+          "answer": "为了防止任何一个分支权力过大——制衡原则，或三权分立。",
+          "spoken": "为了防止任何一个分支权力过大——制衡原则，或三权分立。",
+          "note": null
+        },
+        "es": {
+          "question": "Hay tres ramas del gobierno. ¿Por qué?",
+          "answer": "Para que ninguna rama tenga demasiado poder: los frenos y contrapesos, o la separación de poderes.",
+          "spoken": "Para que ninguna rama tenga demasiado poder: los frenos y contrapesos, o la separación de poderes.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "政府有三個分支。為什麼？",
+          "answer": "為了防止任何一個分支權力過大——制衡原則，或三權分立。",
+          "spoken": "為了防止任何一個分支權力過大——制衡原則，或三權分立。",
+          "note": null
+        }
+      }
     },
     {
       "n": 16,
@@ -205,10 +445,26 @@
       "spoken": "Legislative: Congress. Executive: the President. Judicial: the courts.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出政府的三个分支。",
-      "answerZh": "立法分支：国会。行政分支：总统。司法分支：法院。",
-      "spokenZh": "立法分支：国会。行政分支：总统。司法分支：法院。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出政府的三个分支。",
+          "answer": "立法分支：国会。行政分支：总统。司法分支：法院。",
+          "spoken": "立法分支：国会。行政分支：总统。司法分支：法院。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione las tres ramas del gobierno.",
+          "answer": "La legislativa: el Congreso. La ejecutiva: el Presidente. La judicial: los tribunales.",
+          "spoken": "La legislativa: el Congreso. La ejecutiva: el Presidente. La judicial: los tribunales.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出政府的三個分支。",
+          "answer": "立法分支：國會。行政分支：總統。司法分支：法院。",
+          "spoken": "立法分支：國會。行政分支：總統。司法分支：法院。",
+          "note": null
+        }
+      }
     },
     {
       "n": 17,
@@ -218,10 +474,26 @@
       "spoken": "The executive branch.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国总统执掌政府的哪个分支？",
-      "answerZh": "行政分支。",
-      "spokenZh": "行政分支。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国总统执掌政府的哪个分支？",
+          "answer": "行政分支。",
+          "spoken": "行政分支。",
+          "note": null
+        },
+        "es": {
+          "question": "¿De qué rama del gobierno está a cargo el Presidente?",
+          "answer": "De la rama ejecutiva.",
+          "spoken": "De la rama ejecutiva.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國總統執掌政府的哪個分支？",
+          "answer": "行政分支。",
+          "spoken": "行政分支。",
+          "note": null
+        }
+      }
     },
     {
       "n": 18,
@@ -231,10 +503,26 @@
       "spoken": "Congress, the legislative branch.",
       "dynamic": false,
       "note": null,
-      "questionZh": "联邦政府的哪个部门制定法律？",
-      "answerZh": "国会，即立法分支。",
-      "spokenZh": "国会，即立法分支。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "联邦政府的哪个部门制定法律？",
+          "answer": "国会，即立法分支。",
+          "spoken": "国会，即立法分支。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué parte del gobierno federal escribe las leyes?",
+          "answer": "El Congreso, la rama legislativa.",
+          "spoken": "El Congreso, la rama legislativa.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "聯邦政府的哪個部門制定法律？",
+          "answer": "國會，即立法分支。",
+          "spoken": "國會，即立法分支。",
+          "note": null
+        }
+      }
     },
     {
       "n": 19,
@@ -244,10 +532,26 @@
       "spoken": "The Senate and the House of Representatives.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国国会由哪两院组成？",
-      "answerZh": "参议院和众议院。",
-      "spokenZh": "参议院和众议院。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国国会由哪两院组成？",
+          "answer": "参议院和众议院。",
+          "spoken": "参议院和众议院。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuáles son las dos cámaras del Congreso?",
+          "answer": "El Senado y la Cámara de Representantes.",
+          "spoken": "El Senado y la Cámara de Representantes.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國國會由哪兩院組成？",
+          "answer": "參議院和眾議院。",
+          "spoken": "參議院和眾議院。",
+          "note": null
+        }
+      }
     },
     {
       "n": 20,
@@ -257,10 +561,26 @@
       "spoken": "Writes laws. Also acceptable: declares war, makes the federal budget.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出美国国会的一项权力。",
-      "answerZh": "制定法律。也可接受：宣战、编制联邦预算。",
-      "spokenZh": "制定法律。也可接受：宣战、编制联邦预算。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出美国国会的一项权力。",
+          "answer": "制定法律。也可接受：宣战、编制联邦预算。",
+          "spoken": "制定法律。也可接受：宣战、编制联邦预算。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione un poder del Congreso.",
+          "answer": "Escribir las leyes. También se acepta: declarar la guerra, elaborar el presupuesto federal.",
+          "spoken": "Escribir las leyes. También se acepta: declarar la guerra, elaborar el presupuesto federal.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出美國國會的一項權力。",
+          "answer": "制定法律。也可接受：宣戰、編制聯邦預算。",
+          "spoken": "制定法律。也可接受：宣戰、編制聯邦預算。",
+          "note": null
+        }
+      }
     },
     {
       "n": 21,
@@ -270,10 +590,26 @@
       "spoken": "One hundred.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国有多少名参议员？",
-      "answerZh": "一百名。",
-      "spokenZh": "一百名。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国有多少名参议员？",
+          "answer": "一百名。",
+          "spoken": "一百名。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuántos senadores hay?",
+          "answer": "Cien.",
+          "spoken": "Cien.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國有多少名參議員？",
+          "answer": "一百名。",
+          "spoken": "一百名。",
+          "note": null
+        }
+      }
     },
     {
       "n": 22,
@@ -283,10 +619,26 @@
       "spoken": "Six years.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国参议员的任期是多久？",
-      "answerZh": "六年。",
-      "spokenZh": "六年。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国参议员的任期是多久？",
+          "answer": "六年。",
+          "spoken": "六年。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuánto dura el mandato de un senador?",
+          "answer": "Seis años.",
+          "spoken": "Seis años.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國參議員的任期是多久？",
+          "answer": "六年。",
+          "spoken": "六年。",
+          "note": null
+        }
+      }
     },
     {
       "n": 23,
@@ -296,10 +648,26 @@
       "spoken": "This answer depends on your state. Look up your state's two U.S. senators before your interview.",
       "dynamic": true,
       "note": "Look this up for your state. District of Columbia residents and people in U.S. territories may answer that they have no U.S. senators.",
-      "questionZh": "你所在州的两位美国参议员现在是谁？",
-      "answerZh": "取决于你所在的州。",
-      "spokenZh": "取决于你所在的州。",
-      "noteZh": "请查你所在州的情况。哥伦比亚特区和美国领地居民可回答他们没有美国参议员。"
+      "translations": {
+        "zh-Hans": {
+          "question": "你所在州的两位美国参议员现在是谁？",
+          "answer": "取决于你所在的州。",
+          "spoken": "取决于你所在的州。",
+          "note": "请查你所在州的情况。哥伦比亚特区和美国领地居民可回答他们没有美国参议员。"
+        },
+        "es": {
+          "question": "¿Quiénes son los dos senadores de su estado actualmente?",
+          "answer": "Depende de su estado.",
+          "spoken": "Depende de su estado.",
+          "note": "Búsquelo para su estado. Los residentes del Distrito de Columbia y de los territorios pueden responder que no tienen senadores."
+        },
+        "zh-Hant": {
+          "question": "您所在州的兩位美國參議員現在是誰？",
+          "answer": "取決於您所在的州。",
+          "spoken": "取決於您所在的州。",
+          "note": "請查您所在州的情況。哥倫比亞特區和美國領地居民可回答他們沒有美國參議員。"
+        }
+      }
     },
     {
       "n": 24,
@@ -309,10 +677,26 @@
       "spoken": "Four hundred thirty-five.",
       "dynamic": false,
       "note": null,
-      "questionZh": "众议院有多少名有投票权的议员？",
-      "answerZh": "四百三十五名。",
-      "spokenZh": "四百三十五名。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "众议院有多少名有投票权的议员？",
+          "answer": "四百三十五名。",
+          "spoken": "四百三十五名。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuántos miembros con derecho a voto hay en la Cámara de Representantes?",
+          "answer": "Cuatrocientos treinta y cinco.",
+          "spoken": "Cuatrocientos treinta y cinco.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "眾議院有多少名有投票權的議員？",
+          "answer": "四百三十五名。",
+          "spoken": "四百三十五名。",
+          "note": null
+        }
+      }
     },
     {
       "n": 25,
@@ -322,10 +706,26 @@
       "spoken": "Two years.",
       "dynamic": false,
       "note": null,
-      "questionZh": "众议院议员的任期是多久？",
-      "answerZh": "两年。",
-      "spokenZh": "两年。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "众议院议员的任期是多久？",
+          "answer": "两年。",
+          "spoken": "两年。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuánto dura el mandato de un miembro de la Cámara de Representantes?",
+          "answer": "Dos años.",
+          "spoken": "Dos años.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "眾議院議員的任期是多久？",
+          "answer": "兩年。",
+          "spoken": "兩年。",
+          "note": null
+        }
+      }
     },
     {
       "n": 26,
@@ -335,10 +735,26 @@
       "spoken": "To more closely follow public opinion.",
       "dynamic": false,
       "note": null,
-      "questionZh": "为什么众议员任期比参议员短？",
-      "answerZh": "为了更贴近民意。",
-      "spokenZh": "为了更贴近民意。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "为什么众议员任期比参议员短？",
+          "answer": "为了更贴近民意。",
+          "spoken": "为了更贴近民意。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué los representantes tienen mandatos más cortos que los senadores?",
+          "answer": "Para seguir más de cerca la opinión pública.",
+          "spoken": "Para seguir más de cerca la opinión pública.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "為什麼眾議員任期比參議員短？",
+          "answer": "為了更貼近民意。",
+          "spoken": "為了更貼近民意。",
+          "note": null
+        }
+      }
     },
     {
       "n": 27,
@@ -348,10 +764,26 @@
       "spoken": "Two.",
       "dynamic": false,
       "note": null,
-      "questionZh": "每个州有多少名参议员？",
-      "answerZh": "两名。",
-      "spokenZh": "两名。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "每个州有多少名参议员？",
+          "answer": "两名。",
+          "spoken": "两名。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuántos senadores tiene cada estado?",
+          "answer": "Dos.",
+          "spoken": "Dos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "每個州有多少名參議員？",
+          "answer": "兩名。",
+          "spoken": "兩名。",
+          "note": null
+        }
+      }
     },
     {
       "n": 28,
@@ -361,10 +793,26 @@
       "spoken": "For equal representation among the states. Also acceptable: the Great Compromise, also called the Connecticut Compromise.",
       "dynamic": false,
       "note": null,
-      "questionZh": "为什么每个州有两名参议员？",
-      "answerZh": "为了让各州享有平等的代表性——大妥协，又称康涅狄格妥协。",
-      "spokenZh": "为了让各州享有平等的代表性——大妥协，又称康涅狄格妥协。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "为什么每个州有两名参议员？",
+          "answer": "为了让各州享有平等的代表性——大妥协，又称康涅狄格妥协。",
+          "spoken": "为了让各州享有平等的代表性——大妥协，又称康涅狄格妥协。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué cada estado tiene dos senadores?",
+          "answer": "Por la igualdad de representación entre los estados: el Gran Compromiso, también llamado Compromiso de Connecticut.",
+          "spoken": "Por la igualdad de representación entre los estados: el Gran Compromiso, también llamado Compromiso de Connecticut.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "為什麼每個州有兩名參議員？",
+          "answer": "為了讓各州享有平等的代表性——大妥協，又稱康涅狄格妥協。",
+          "spoken": "為了讓各州享有平等的代表性——大妥協，又稱康涅狄格妥協。",
+          "note": null
+        }
+      }
     },
     {
       "n": 29,
@@ -374,10 +822,26 @@
       "spoken": "This answer depends on where you live. Look up your U.S. representative before your interview.",
       "dynamic": true,
       "note": "Look this up for your district. Residents of territories with non-voting Delegates or Resident Commissioners may name that person.",
-      "questionZh": "说出你所在选区的美国众议员的名字。",
-      "answerZh": "取决于你居住的地方。",
-      "spokenZh": "取决于你居住的地方。",
-      "noteZh": "请查你所在选区的情况。设有无投票权代表或驻会专员的领地居民可说出此人的名字。"
+      "translations": {
+        "zh-Hans": {
+          "question": "说出你所在选区的美国众议员的名字。",
+          "answer": "取决于你居住的地方。",
+          "spoken": "取决于你居住的地方。",
+          "note": "请查你所在选区的情况。设有无投票权代表或驻会专员的领地居民可说出此人的名字。"
+        },
+        "es": {
+          "question": "Mencione el nombre de su representante.",
+          "answer": "Depende de dónde vive.",
+          "spoken": "Depende de dónde vive.",
+          "note": "Búsquelo para su distrito. Los residentes de territorios con delegados o comisionados residentes sin voto pueden nombrar a esa persona."
+        },
+        "zh-Hant": {
+          "question": "說出您所在選區的美國眾議員的名字。",
+          "answer": "取決於您居住的地方。",
+          "spoken": "取決於您居住的地方。",
+          "note": "請查您所在選區的情況。設有無投票權代表或駐會專員的領地居民可說出此人的名字。"
+        }
+      }
     },
     {
       "n": 30,
@@ -387,10 +851,26 @@
       "spoken": "Mike Johnson. Verify this before your interview, current officials can change.",
       "dynamic": true,
       "note": "Current official — verify before your interview.",
-      "questionZh": "现任众议院议长是谁？",
-      "answerZh": "迈克·约翰逊。",
-      "spokenZh": "迈克·约翰逊。",
-      "noteZh": "现任官员——面试前请核实。"
+      "translations": {
+        "zh-Hans": {
+          "question": "现任众议院议长是谁？",
+          "answer": "迈克·约翰逊。",
+          "spoken": "迈克·约翰逊。",
+          "note": "现任官员——面试前请核实。"
+        },
+        "es": {
+          "question": "¿Cómo se llama el Presidente de la Cámara de Representantes actualmente?",
+          "answer": "Mike Johnson.",
+          "spoken": "Mike Johnson.",
+          "note": "Funcionario actual — verifíquelo antes de su entrevista."
+        },
+        "zh-Hant": {
+          "question": "現任眾議院議長是誰？",
+          "answer": "邁克·約翰遜。",
+          "spoken": "邁克·約翰遜。",
+          "note": "現任官員——面試前請核實。"
+        }
+      }
     },
     {
       "n": 31,
@@ -400,10 +880,26 @@
       "spoken": "The people of their state.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国参议员代表谁？",
-      "answerZh": "本州人民。",
-      "spokenZh": "本州人民。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国参议员代表谁？",
+          "answer": "本州人民。",
+          "spoken": "本州人民。",
+          "note": null
+        },
+        "es": {
+          "question": "¿A quién representa un senador?",
+          "answer": "A la gente de su estado.",
+          "spoken": "A la gente de su estado.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國參議員代表誰？",
+          "answer": "本州人民。",
+          "spoken": "本州人民。",
+          "note": null
+        }
+      }
     },
     {
       "n": 32,
@@ -413,10 +909,26 @@
       "spoken": "Citizens from their state.",
       "dynamic": false,
       "note": null,
-      "questionZh": "谁选举美国参议员？",
-      "answerZh": "本州公民。",
-      "spokenZh": "本州公民。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "谁选举美国参议员？",
+          "answer": "本州公民。",
+          "spoken": "本州公民。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién elige a los senadores?",
+          "answer": "Los ciudadanos de su estado.",
+          "spoken": "Los ciudadanos de su estado.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "誰選舉美國參議員？",
+          "answer": "本州公民。",
+          "spoken": "本州公民。",
+          "note": null
+        }
+      }
     },
     {
       "n": 33,
@@ -426,10 +938,26 @@
       "spoken": "The people in their congressional district.",
       "dynamic": false,
       "note": null,
-      "questionZh": "众议院议员代表谁？",
-      "answerZh": "其所在国会选区的人民。",
-      "spokenZh": "其所在国会选区的人民。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "众议院议员代表谁？",
+          "answer": "其所在国会选区的人民。",
+          "spoken": "其所在国会选区的人民。",
+          "note": null
+        },
+        "es": {
+          "question": "¿A quién representa un miembro de la Cámara de Representantes?",
+          "answer": "A la gente de su distrito electoral.",
+          "spoken": "A la gente de su distrito electoral.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "眾議院議員代表誰？",
+          "answer": "其所在國會選區的人民。",
+          "spoken": "其所在國會選區的人民。",
+          "note": null
+        }
+      }
     },
     {
       "n": 34,
@@ -439,10 +967,26 @@
       "spoken": "Citizens from their congressional district.",
       "dynamic": false,
       "note": null,
-      "questionZh": "谁选举众议院议员？",
-      "answerZh": "其所在国会选区的公民。",
-      "spokenZh": "其所在国会选区的公民。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "谁选举众议院议员？",
+          "answer": "其所在国会选区的公民。",
+          "spoken": "其所在国会选区的公民。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién elige a los miembros de la Cámara de Representantes?",
+          "answer": "Los ciudadanos de su distrito electoral.",
+          "spoken": "Los ciudadanos de su distrito electoral.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "誰選舉眾議院議員？",
+          "answer": "其所在國會選區的公民。",
+          "spoken": "其所在國會選區的公民。",
+          "note": null
+        }
+      }
     },
     {
       "n": 35,
@@ -452,10 +996,26 @@
       "spoken": "Because they have more people, the state's population.",
       "dynamic": false,
       "note": null,
-      "questionZh": "有些州的众议员比其他州多。为什么？",
-      "answerZh": "因为人更多，即该州人口更多。",
-      "spokenZh": "因为人更多，即该州人口更多。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "有些州的众议员比其他州多。为什么？",
+          "answer": "因为人更多，即该州人口更多。",
+          "spoken": "因为人更多，即该州人口更多。",
+          "note": null
+        },
+        "es": {
+          "question": "Algunos estados tienen más representantes que otros. ¿Por qué?",
+          "answer": "Porque tienen más gente, es decir, más población.",
+          "spoken": "Porque tienen más gente, es decir, más población.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "有些州的眾議員比其他州多。為什麼？",
+          "answer": "因為人更多，即該州人口更多。",
+          "spoken": "因為人更多，即該州人口更多。",
+          "note": null
+        }
+      }
     },
     {
       "n": 36,
@@ -465,10 +1025,26 @@
       "spoken": "Four years.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国总统每届任期几年？",
-      "answerZh": "四年。",
-      "spokenZh": "四年。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国总统每届任期几年？",
+          "answer": "四年。",
+          "spoken": "四年。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por cuántos años se elige al Presidente?",
+          "answer": "Cuatro años.",
+          "spoken": "Cuatro años.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國總統每屆任期幾年？",
+          "answer": "四年。",
+          "spoken": "四年。",
+          "note": null
+        }
+      }
     },
     {
       "n": 37,
@@ -478,10 +1054,26 @@
       "spoken": "Because of the 22nd Amendment to keep the president from becoming too powerful.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国总统最多只能担任两届。为什么？",
-      "answerZh": "因为第二十二修正案——防止总统权力过大。",
-      "spokenZh": "因为第二十二修正案——防止总统权力过大。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国总统最多只能担任两届。为什么？",
+          "answer": "因为第二十二修正案——防止总统权力过大。",
+          "spoken": "因为第二十二修正案——防止总统权力过大。",
+          "note": null
+        },
+        "es": {
+          "question": "El Presidente solo puede servir dos mandatos. ¿Por qué?",
+          "answer": "Por la Vigesimosegunda Enmienda: para evitar que el presidente acumule demasiado poder.",
+          "spoken": "Por la Vigesimosegunda Enmienda: para evitar que el presidente acumule demasiado poder.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國總統最多只能擔任兩屆。為什麼？",
+          "answer": "因為第二十二修正案——防止總統權力過大。",
+          "spoken": "因為第二十二修正案——防止總統權力過大。",
+          "note": null
+        }
+      }
     },
     {
       "n": 38,
@@ -491,10 +1083,26 @@
       "spoken": "Donald J. Trump. Verify this before your interview, current officials can change.",
       "dynamic": true,
       "note": "Current official — verify before your interview.",
-      "questionZh": "现任美国总统是谁？",
-      "answerZh": "唐纳德·J·特朗普。",
-      "spokenZh": "唐纳德·J·特朗普。",
-      "noteZh": "现任官员——面试前请核实。"
+      "translations": {
+        "zh-Hans": {
+          "question": "现任美国总统是谁？",
+          "answer": "唐纳德·J·特朗普。",
+          "spoken": "唐纳德·J·特朗普。",
+          "note": "现任官员——面试前请核实。"
+        },
+        "es": {
+          "question": "¿Cómo se llama el Presidente de los Estados Unidos actualmente?",
+          "answer": "Donald J. Trump.",
+          "spoken": "Donald J. Trump.",
+          "note": "Funcionario actual — verifíquelo antes de su entrevista."
+        },
+        "zh-Hant": {
+          "question": "現任美國總統是誰？",
+          "answer": "唐納德·J·川普。",
+          "spoken": "唐納德·J·川普。",
+          "note": "現任官員——面試前請核實。"
+        }
+      }
     },
     {
       "n": 39,
@@ -504,10 +1112,26 @@
       "spoken": "JD Vance. Verify this before your interview, current officials can change.",
       "dynamic": true,
       "note": "Current official — verify before your interview.",
-      "questionZh": "现任美国副总统是谁？",
-      "answerZh": "JD·万斯。",
-      "spokenZh": "JD·万斯。",
-      "noteZh": "现任官员——面试前请核实。"
+      "translations": {
+        "zh-Hans": {
+          "question": "现任美国副总统是谁？",
+          "answer": "JD·万斯。",
+          "spoken": "JD·万斯。",
+          "note": "现任官员——面试前请核实。"
+        },
+        "es": {
+          "question": "¿Cómo se llama el Vicepresidente actualmente?",
+          "answer": "JD Vance.",
+          "spoken": "JD Vance.",
+          "note": "Funcionario actual — verifíquelo antes de su entrevista."
+        },
+        "zh-Hant": {
+          "question": "現任美國副總統是誰？",
+          "answer": "JD·萬斯。",
+          "spoken": "JD·萬斯。",
+          "note": "現任官員——面試前請核實。"
+        }
+      }
     },
     {
       "n": 40,
@@ -517,10 +1141,26 @@
       "spoken": "The Vice President.",
       "dynamic": false,
       "note": null,
-      "questionZh": "如果总统无法继续任职，谁继任总统？",
-      "answerZh": "副总统。",
-      "spokenZh": "副总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "如果总统无法继续任职，谁继任总统？",
+          "answer": "副总统。",
+          "spoken": "副总统。",
+          "note": null
+        },
+        "es": {
+          "question": "Si el Presidente ya no puede servir, ¿quién se convierte en Presidente?",
+          "answer": "El Vicepresidente.",
+          "spoken": "El Vicepresidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "如果總統無法繼續任職，誰繼任總統？",
+          "answer": "副總統。",
+          "spoken": "副總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 41,
@@ -530,10 +1170,26 @@
       "spoken": "Signs bills into law. Also acceptable: vetoes bills, enforces laws, commander in chief, appoints judges.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出总统的一项权力。",
-      "answerZh": "签署法案使之成为法律。也可接受：否决法案、执行法律、担任总司令、任命法官。",
-      "spokenZh": "签署法案使之成为法律。也可接受：否决法案、执行法律、担任总司令、任命法官。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出总统的一项权力。",
+          "answer": "签署法案使之成为法律。也可接受：否决法案、执行法律、担任总司令、任命法官。",
+          "spoken": "签署法案使之成为法律。也可接受：否决法案、执行法律、担任总司令、任命法官。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione un poder del Presidente.",
+          "answer": "Firmar proyectos de ley para convertirlos en ley. También se acepta: vetar proyectos de ley, hacer cumplir las leyes, ser el comandante en jefe, nombrar jueces.",
+          "spoken": "Firmar proyectos de ley para convertirlos en ley. También se acepta: vetar proyectos de ley, hacer cumplir las leyes, ser el comandante en jefe, nombrar jueces.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出總統的一項權力。",
+          "answer": "簽署法案使之成為法律。也可接受：否決法案、執行法律、擔任總司令、任命法官。",
+          "spoken": "簽署法案使之成為法律。也可接受：否決法案、執行法律、擔任總司令、任命法官。",
+          "note": null
+        }
+      }
     },
     {
       "n": 42,
@@ -543,10 +1199,26 @@
       "spoken": "The President.",
       "dynamic": false,
       "note": null,
-      "questionZh": "谁是美国军队的总司令？",
-      "answerZh": "总统。",
-      "spokenZh": "总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "谁是美国军队的总司令？",
+          "answer": "总统。",
+          "spoken": "总统。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién es el Comandante en Jefe de las fuerzas armadas?",
+          "answer": "El Presidente.",
+          "spoken": "El Presidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "誰是美國軍隊的總司令？",
+          "answer": "總統。",
+          "spoken": "總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 43,
@@ -556,10 +1228,26 @@
       "spoken": "The President.",
       "dynamic": false,
       "note": null,
-      "questionZh": "谁签署法案使之成为法律？",
-      "answerZh": "总统。",
-      "spokenZh": "总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "谁签署法案使之成为法律？",
+          "answer": "总统。",
+          "spoken": "总统。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién firma los proyectos de ley para que se conviertan en leyes?",
+          "answer": "El Presidente.",
+          "spoken": "El Presidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "誰簽署法案使之成為法律？",
+          "answer": "總統。",
+          "spoken": "總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 44,
@@ -569,10 +1257,26 @@
       "spoken": "The President.",
       "dynamic": false,
       "note": null,
-      "questionZh": "谁能否决法案？",
-      "answerZh": "总统。",
-      "spokenZh": "总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "谁能否决法案？",
+          "answer": "总统。",
+          "spoken": "总统。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién veta los proyectos de ley?",
+          "answer": "El Presidente.",
+          "spoken": "El Presidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "誰能否決法案？",
+          "answer": "總統。",
+          "spoken": "總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 45,
@@ -582,10 +1286,26 @@
       "spoken": "The President.",
       "dynamic": false,
       "note": null,
-      "questionZh": "谁任命联邦法官？",
-      "answerZh": "总统。",
-      "spokenZh": "总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "谁任命联邦法官？",
+          "answer": "总统。",
+          "spoken": "总统。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién nombra a los jueces federales?",
+          "answer": "El Presidente.",
+          "spoken": "El Presidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "誰任命聯邦法官？",
+          "answer": "總統。",
+          "spoken": "總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 46,
@@ -595,10 +1315,26 @@
       "spoken": "The President. Also acceptable: the Cabinet, federal departments and agencies.",
       "dynamic": false,
       "note": null,
-      "questionZh": "行政分支有许多组成部分。说出其中一个。",
-      "answerZh": "总统。也可接受：内阁、联邦各部和机构。",
-      "spokenZh": "总统。也可接受：内阁、联邦各部和机构。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "行政分支有许多组成部分。说出其中一个。",
+          "answer": "总统。也可接受：内阁、联邦各部和机构。",
+          "spoken": "总统。也可接受：内阁、联邦各部和机构。",
+          "note": null
+        },
+        "es": {
+          "question": "La rama ejecutiva tiene muchas partes. Mencione una.",
+          "answer": "El Presidente. También se acepta: el Gabinete, los departamentos y agencias federales.",
+          "spoken": "El Presidente. También se acepta: el Gabinete, los departamentos y agencias federales.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "行政分支有許多組成部分。說出其中一個。",
+          "answer": "總統。也可接受：內閣、聯邦各部和機構。",
+          "spoken": "總統。也可接受：內閣、聯邦各部和機構。",
+          "note": null
+        }
+      }
     },
     {
       "n": 47,
@@ -608,10 +1344,26 @@
       "spoken": "Advises the President.",
       "dynamic": false,
       "note": null,
-      "questionZh": "总统内阁的职责是什么？",
-      "answerZh": "向总统提供咨询。",
-      "spokenZh": "向总统提供咨询。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "总统内阁的职责是什么？",
+          "answer": "向总统提供咨询。",
+          "spoken": "向总统提供咨询。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué hace el Gabinete del Presidente?",
+          "answer": "Asesora al Presidente.",
+          "spoken": "Asesora al Presidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "總統內閣的職責是什麼？",
+          "answer": "向總統提供諮詢。",
+          "spoken": "向總統提供諮詢。",
+          "note": null
+        }
+      }
     },
     {
       "n": 48,
@@ -621,10 +1373,26 @@
       "spoken": "For example: Secretary of State and Secretary of Transportation. Any two department secretaries, the Attorney General, or the Vice President are acceptable.",
       "dynamic": false,
       "note": null,
-      "questionZh": "哪两个是内阁级别的职位？",
-      "answerZh": "例如：国务卿和交通部长。也可接受：任何两位部长、司法部长或副总统。",
-      "spokenZh": "例如：国务卿和交通部长。也可接受：任何两位部长、司法部长或副总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "哪两个是内阁级别的职位？",
+          "answer": "例如：国务卿和交通部长。也可接受：任何两位部长、司法部长或副总统。",
+          "spoken": "例如：国务卿和交通部长。也可接受：任何两位部长、司法部长或副总统。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuáles son dos cargos de nivel de gabinete?",
+          "answer": "Por ejemplo: el Secretario de Estado y el Secretario de Transporte. También se acepta: cualquier par de secretarios de departamento, el Fiscal General o el Vicepresidente.",
+          "spoken": "Por ejemplo: el Secretario de Estado y el Secretario de Transporte. También se acepta: cualquier par de secretarios de departamento, el Fiscal General o el Vicepresidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "哪兩個是內閣級別的職位？",
+          "answer": "例如：國務卿和交通部長。也可接受：任何兩位部長、司法部長或副總統。",
+          "spoken": "例如：國務卿和交通部長。也可接受：任何兩位部長、司法部長或副總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 49,
@@ -634,10 +1402,26 @@
       "spoken": "It decides who is elected President.",
       "dynamic": false,
       "note": null,
-      "questionZh": "选举人团为什么重要？",
-      "answerZh": "它决定谁当选总统。",
-      "spokenZh": "它决定谁当选总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "选举人团为什么重要？",
+          "answer": "它决定谁当选总统。",
+          "spoken": "它决定谁当选总统。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué es importante el Colegio Electoral?",
+          "answer": "Decide quién es elegido Presidente.",
+          "spoken": "Decide quién es elegido Presidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "選舉人團為什麼重要？",
+          "answer": "它決定誰當選總統。",
+          "spoken": "它決定誰當選總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 50,
@@ -647,10 +1431,26 @@
       "spoken": "The Supreme Court. Also acceptable: federal courts.",
       "dynamic": false,
       "note": null,
-      "questionZh": "司法分支的一个组成部分是什么？",
-      "answerZh": "最高法院。也可接受：联邦各法院。",
-      "spokenZh": "最高法院。也可接受：联邦各法院。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "司法分支的一个组成部分是什么？",
+          "answer": "最高法院。也可接受：联邦各法院。",
+          "spoken": "最高法院。也可接受：联邦各法院。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuál es una parte de la rama judicial?",
+          "answer": "La Corte Suprema. También se acepta: los tribunales federales.",
+          "spoken": "La Corte Suprema. También se acepta: los tribunales federales.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "司法分支的一個組成部分是什麼？",
+          "answer": "最高法院。也可接受：聯邦各法院。",
+          "spoken": "最高法院。也可接受：聯邦各法院。",
+          "note": null
+        }
+      }
     },
     {
       "n": 51,
@@ -660,10 +1460,26 @@
       "spoken": "Reviews and explains laws. Also acceptable: decides if a law goes against the Constitution, or resolves disputes.",
       "dynamic": false,
       "note": null,
-      "questionZh": "司法分支的职责是什么？",
-      "answerZh": "审查和解释法律。也可接受：裁定法律是否违宪；解决纠纷。",
-      "spokenZh": "审查和解释法律。也可接受：裁定法律是否违宪；解决纠纷。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "司法分支的职责是什么？",
+          "answer": "审查和解释法律。也可接受：裁定法律是否违宪；解决纠纷。",
+          "spoken": "审查和解释法律。也可接受：裁定法律是否违宪；解决纠纷。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué hace la rama judicial?",
+          "answer": "Revisa y explica las leyes. También se acepta: decide si una ley va en contra de la Constitución; resuelve disputas.",
+          "spoken": "Revisa y explica las leyes. También se acepta: decide si una ley va en contra de la Constitución; resuelve disputas.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "司法分支的職責是什麼？",
+          "answer": "審查和解釋法律。也可接受：裁定法律是否違憲；解決糾紛。",
+          "spoken": "審查和解釋法律。也可接受：裁定法律是否違憲；解決糾紛。",
+          "note": null
+        }
+      }
     },
     {
       "n": 52,
@@ -673,10 +1489,26 @@
       "spoken": "The Supreme Court.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国最高的法院是什么？",
-      "answerZh": "最高法院。",
-      "spokenZh": "最高法院。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国最高的法院是什么？",
+          "answer": "最高法院。",
+          "spoken": "最高法院。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuál es el tribunal más alto de los Estados Unidos?",
+          "answer": "La Corte Suprema.",
+          "spoken": "La Corte Suprema.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國最高的法院是什麼？",
+          "answer": "最高法院。",
+          "spoken": "最高法院。",
+          "note": null
+        }
+      }
     },
     {
       "n": 53,
@@ -686,10 +1518,26 @@
       "spoken": "Nine.",
       "dynamic": false,
       "note": null,
-      "questionZh": "最高法院有多少个大法官席位？",
-      "answerZh": "九个。",
-      "spokenZh": "九个。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "最高法院有多少个大法官席位？",
+          "answer": "九个。",
+          "spoken": "九个。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuántos asientos hay en la Corte Suprema?",
+          "answer": "Nueve.",
+          "spoken": "Nueve.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "最高法院有多少個大法官席位？",
+          "answer": "九個。",
+          "spoken": "九個。",
+          "note": null
+        }
+      }
     },
     {
       "n": 54,
@@ -699,10 +1547,26 @@
       "spoken": "Five.",
       "dynamic": false,
       "note": null,
-      "questionZh": "最高法院通常需要多少名大法官才能作出裁决？",
-      "answerZh": "五名。",
-      "spokenZh": "五名。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "最高法院通常需要多少名大法官才能作出裁决？",
+          "answer": "五名。",
+          "spoken": "五名。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuántos jueces de la Corte Suprema se necesitan normalmente para decidir un caso?",
+          "answer": "Cinco.",
+          "spoken": "Cinco.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "最高法院通常需要多少名大法官才能作出裁決？",
+          "answer": "五名。",
+          "spoken": "五名。",
+          "note": null
+        }
+      }
     },
     {
       "n": 55,
@@ -712,10 +1576,26 @@
       "spoken": "For life until they resign, retire, die, or are removed.",
       "dynamic": false,
       "note": null,
-      "questionZh": "最高法院大法官的任期是多久？",
-      "answerZh": "终身任职——直到辞职、退休、去世或被免职。",
-      "spokenZh": "终身任职——直到辞职、退休、去世或被免职。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "最高法院大法官的任期是多久？",
+          "answer": "终身任职——直到辞职、退休、去世或被免职。",
+          "spoken": "终身任职——直到辞职、退休、去世或被免职。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuánto tiempo sirven los jueces de la Corte Suprema?",
+          "answer": "De por vida: hasta que renuncien, se jubilen, mueran o sean destituidos.",
+          "spoken": "De por vida: hasta que renuncien, se jubilen, mueran o sean destituidos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "最高法院大法官的任期是多久？",
+          "answer": "終身任職——直到辭職、退休、去世或被免職。",
+          "spoken": "終身任職——直到辭職、退休、去世或被免職。",
+          "note": null
+        }
+      }
     },
     {
       "n": 56,
@@ -725,10 +1605,26 @@
       "spoken": "To be independent of politics or outside influence.",
       "dynamic": false,
       "note": null,
-      "questionZh": "最高法院大法官为什么终身任职？",
-      "answerZh": "为了保持独立性，不受政治或外部势力影响。",
-      "spokenZh": "为了保持独立性，不受政治或外部势力影响。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "最高法院大法官为什么终身任职？",
+          "answer": "为了保持独立性，不受政治或外部势力影响。",
+          "spoken": "为了保持独立性，不受政治或外部势力影响。",
+          "note": null
+        },
+        "es": {
+          "question": "Los jueces de la Corte Suprema sirven de por vida. ¿Por qué?",
+          "answer": "Para ser independientes de la política o de influencias externas.",
+          "spoken": "Para ser independientes de la política o de influencias externas.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "最高法院大法官為什麼終身任職？",
+          "answer": "為了保持獨立性，不受政治或外部勢力影響。",
+          "spoken": "為了保持獨立性，不受政治或外部勢力影響。",
+          "note": null
+        }
+      }
     },
     {
       "n": 57,
@@ -738,10 +1634,26 @@
       "spoken": "John Roberts. Verify this before your interview, current officials can change.",
       "dynamic": true,
       "note": "Current official — verify before your interview.",
-      "questionZh": "现任美国首席大法官是谁？",
-      "answerZh": "约翰·罗伯茨。",
-      "spokenZh": "约翰·罗伯茨。",
-      "noteZh": "现任官员——面试前请核实。"
+      "translations": {
+        "zh-Hans": {
+          "question": "现任美国首席大法官是谁？",
+          "answer": "约翰·罗伯茨。",
+          "spoken": "约翰·罗伯茨。",
+          "note": "现任官员——面试前请核实。"
+        },
+        "es": {
+          "question": "¿Quién es el Presidente de la Corte Suprema actualmente?",
+          "answer": "John Roberts.",
+          "spoken": "John Roberts.",
+          "note": "Funcionario actual — verifíquelo antes de su entrevista."
+        },
+        "zh-Hant": {
+          "question": "現任美國首席大法官是誰？",
+          "answer": "約翰·羅伯茨。",
+          "spoken": "約翰·羅伯茨。",
+          "note": "現任官員——面試前請核實。"
+        }
+      }
     },
     {
       "n": 58,
@@ -751,10 +1663,26 @@
       "spoken": "Print paper money. Also acceptable: declare war, create an army, make treaties, set foreign policy.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出一项只属于联邦政府的权力。",
-      "answerZh": "印发纸币。也可接受：宣战、建立军队、缔结条约、制定外交政策。",
-      "spokenZh": "印发纸币。也可接受：宣战、建立军队、缔结条约、制定外交政策。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出一项只属于联邦政府的权力。",
+          "answer": "印发纸币。也可接受：宣战、建立军队、缔结条约、制定外交政策。",
+          "spoken": "印发纸币。也可接受：宣战、建立军队、缔结条约、制定外交政策。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione un poder exclusivo del gobierno federal.",
+          "answer": "Imprimir papel moneda. También se acepta: declarar la guerra, crear un ejército, hacer tratados, fijar la política exterior.",
+          "spoken": "Imprimir papel moneda. También se acepta: declarar la guerra, crear un ejército, hacer tratados, fijar la política exterior.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出一項只屬於聯邦政府的權力。",
+          "answer": "印發紙幣。也可接受：宣戰、建立軍隊、締結條約、制定外交政策。",
+          "spoken": "印發紙幣。也可接受：宣戰、建立軍隊、締結條約、制定外交政策。",
+          "note": null
+        }
+      }
     },
     {
       "n": 59,
@@ -764,10 +1692,26 @@
       "spoken": "Give a driver's license. Also acceptable: provide schooling or education, provide police and fire departments.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出一项只属于州的权力。",
-      "answerZh": "颁发驾照。也可接受：提供教育、提供警察和消防部门。",
-      "spokenZh": "颁发驾照。也可接受：提供教育、提供警察和消防部门。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出一项只属于州的权力。",
+          "answer": "颁发驾照。也可接受：提供教育、提供警察和消防部门。",
+          "spoken": "颁发驾照。也可接受：提供教育、提供警察和消防部门。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione un poder exclusivo de los estados.",
+          "answer": "Expedir la licencia de conducir. También se acepta: proveer educación, proveer policía y bomberos.",
+          "spoken": "Expedir la licencia de conducir. También se acepta: proveer educación, proveer policía y bomberos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出一項只屬於州的權力。",
+          "answer": "頒發駕照。也可接受：提供教育、提供警察和消防部門。",
+          "spoken": "頒發駕照。也可接受：提供教育、提供警察和消防部門。",
+          "note": null
+        }
+      }
     },
     {
       "n": 60,
@@ -777,10 +1721,26 @@
       "spoken": "Powers not given to the federal government belong to the states or the people.",
       "dynamic": false,
       "note": null,
-      "questionZh": "第十修正案的目的是什么？",
-      "answerZh": "未授予联邦政府的权力归属于各州或人民。",
-      "spokenZh": "未授予联邦政府的权力归属于各州或人民。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "第十修正案的目的是什么？",
+          "answer": "未授予联邦政府的权力归属于各州或人民。",
+          "spoken": "未授予联邦政府的权力归属于各州或人民。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuál es el propósito de la Décima Enmienda?",
+          "answer": "Los poderes no otorgados al gobierno federal pertenecen a los estados o al pueblo.",
+          "spoken": "Los poderes no otorgados al gobierno federal pertenecen a los estados o al pueblo.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "第十修正案的目的是什麼？",
+          "answer": "未授予聯邦政府的權力歸屬於各州或人民。",
+          "spoken": "未授予聯邦政府的權力歸屬於各州或人民。",
+          "note": null
+        }
+      }
     },
     {
       "n": 61,
@@ -790,10 +1750,26 @@
       "spoken": "This answer depends on your state. Look up your governor before your interview.",
       "dynamic": true,
       "note": "Look this up for your state. Territory residents may name their governor; D.C. residents may answer that D.C. does not have a governor.",
-      "questionZh": "你所在州的现任州长是谁？",
-      "answerZh": "取决于你所在的州。",
-      "spokenZh": "取决于你所在的州。",
-      "noteZh": "请查你所在州的情况。领地居民可说出其州长；哥伦比亚特区居民可回答该区没有州长。"
+      "translations": {
+        "zh-Hans": {
+          "question": "你所在州的现任州长是谁？",
+          "answer": "取决于你所在的州。",
+          "spoken": "取决于你所在的州。",
+          "note": "请查你所在州的情况。领地居民可说出其州长；哥伦比亚特区居民可回答该区没有州长。"
+        },
+        "es": {
+          "question": "¿Quién es el gobernador de su estado actualmente?",
+          "answer": "Depende de su estado.",
+          "spoken": "Depende de su estado.",
+          "note": "Búsquelo para su estado. Los residentes de territorios pueden nombrar a su gobernador; los del Distrito de Columbia pueden responder que no tiene gobernador."
+        },
+        "zh-Hant": {
+          "question": "您所在州的現任州長是誰？",
+          "answer": "取決於您所在的州。",
+          "spoken": "取決於您所在的州。",
+          "note": "請查您所在州的情況。領地居民可說出其州長；哥倫比亞特區居民可回答該區沒有州長。"
+        }
+      }
     },
     {
       "n": 62,
@@ -803,10 +1779,26 @@
       "spoken": "This answer depends on your state. Look up your state capital before your interview.",
       "dynamic": true,
       "note": "Look this up for your state. D.C. residents may answer that D.C. is not a state and has no capital; territory residents may name their capital.",
-      "questionZh": "你所在州的首府是哪里？",
-      "answerZh": "取决于你所在的州。",
-      "spokenZh": "取决于你所在的州。",
-      "noteZh": "请查你所在州的情况。哥伦比亚特区居民可回答该区不是一个州、没有首府；领地居民可说出其首府。"
+      "translations": {
+        "zh-Hans": {
+          "question": "你所在州的首府是哪里？",
+          "answer": "取决于你所在的州。",
+          "spoken": "取决于你所在的州。",
+          "note": "请查你所在州的情况。哥伦比亚特区居民可回答该区不是一个州、没有首府；领地居民可说出其首府。"
+        },
+        "es": {
+          "question": "¿Cuál es la capital de su estado?",
+          "answer": "Depende de su estado.",
+          "spoken": "Depende de su estado.",
+          "note": "Búsquelo para su estado. Los residentes del Distrito de Columbia pueden responder que no es un estado y no tiene capital; los de territorios pueden nombrar su capital."
+        },
+        "zh-Hant": {
+          "question": "您所在州的首府是哪裡？",
+          "answer": "取決於您所在的州。",
+          "spoken": "取決於您所在的州。",
+          "note": "請查您所在州的情況。哥倫比亞特區居民可回答該區不是一個州、沒有首府；領地居民可說出其首府。"
+        }
+      }
     },
     {
       "n": 63,
@@ -816,10 +1808,26 @@
       "spoken": "Any citizen can vote. Also acceptable: you don't have to pay a poll tax, or any citizen 18 and older can vote, or men and women can vote.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国宪法有四条关于投票权的修正案。描述其中一条。",
-      "answerZh": "任何公民都可以投票。也可接受：无需缴纳人头税；年满十八岁的公民可以投票；男女均可投票。",
-      "spokenZh": "任何公民都可以投票。也可接受：无需缴纳人头税；年满十八岁的公民可以投票；男女均可投票。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国宪法有四条关于投票权的修正案。描述其中一条。",
+          "answer": "任何公民都可以投票。也可接受：无需缴纳人头税；年满十八岁的公民可以投票；男女均可投票。",
+          "spoken": "任何公民都可以投票。也可接受：无需缴纳人头税；年满十八岁的公民可以投票；男女均可投票。",
+          "note": null
+        },
+        "es": {
+          "question": "Hay cuatro enmiendas sobre quién puede votar. Describa una.",
+          "answer": "Cualquier ciudadano puede votar. También se acepta: no hay que pagar un impuesto electoral; cualquier ciudadano mayor de 18 años puede votar; hombres y mujeres pueden votar.",
+          "spoken": "Cualquier ciudadano puede votar. También se acepta: no hay que pagar un impuesto electoral; cualquier ciudadano mayor de 18 años puede votar; hombres y mujeres pueden votar.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國憲法有四條關於投票權的修正案。描述其中一條。",
+          "answer": "任何公民都可以投票。也可接受：無需繳納人頭稅；年滿十八歲的公民可以投票；男女均可投票。",
+          "spoken": "任何公民都可以投票。也可接受：無需繳納人頭稅；年滿十八歲的公民可以投票；男女均可投票。",
+          "note": null
+        }
+      }
     },
     {
       "n": 64,
@@ -829,10 +1837,26 @@
       "spoken": "Citizens.",
       "dynamic": false,
       "note": null,
-      "questionZh": "在美国，谁可以在联邦选举中投票、竞选联邦公职并担任陪审员？",
-      "answerZh": "公民。",
-      "spokenZh": "公民。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "在美国，谁可以在联邦选举中投票、竞选联邦公职并担任陪审员？",
+          "answer": "公民。",
+          "spoken": "公民。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién puede votar en las elecciones federales, postularse a un cargo federal y servir en un jurado?",
+          "answer": "Los ciudadanos.",
+          "spoken": "Los ciudadanos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "在美國，誰可以在聯邦選舉中投票、競選聯邦公職並擔任陪審員？",
+          "answer": "公民。",
+          "spoken": "公民。",
+          "note": null
+        }
+      }
     },
     {
       "n": 65,
@@ -842,10 +1866,26 @@
       "spoken": "Freedom of speech, freedom of religion, and freedom of assembly. Also acceptable: freedom of the press, the right to bear arms, or freedom to petition the government.",
       "dynamic": false,
       "note": null,
-      "questionZh": "生活在美国的每个人享有哪三项权利？",
-      "answerZh": "言论自由、宗教自由和集会自由。也可接受：出版自由、持枪权、向政府请愿的权利。",
-      "spokenZh": "言论自由、宗教自由和集会自由。也可接受：出版自由、持枪权、向政府请愿的权利。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "生活在美国的每个人享有哪三项权利？",
+          "answer": "言论自由、宗教自由和集会自由。也可接受：出版自由、持枪权、向政府请愿的权利。",
+          "spoken": "言论自由、宗教自由和集会自由。也可接受：出版自由、持枪权、向政府请愿的权利。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuáles son tres derechos de todas las personas que viven en los Estados Unidos?",
+          "answer": "La libertad de expresión, la libertad de religión y la libertad de reunión. También se acepta: la libertad de prensa, el derecho a portar armas, la libertad de peticionar al gobierno.",
+          "spoken": "La libertad de expresión, la libertad de religión y la libertad de reunión. También se acepta: la libertad de prensa, el derecho a portar armas, la libertad de peticionar al gobierno.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "生活在美國的每個人享有哪三項權利？",
+          "answer": "言論自由、宗教自由和集會自由。也可接受：出版自由、持槍權、向政府請願的權利。",
+          "spoken": "言論自由、宗教自由和集會自由。也可接受：出版自由、持槍權、向政府請願的權利。",
+          "note": null
+        }
+      }
     },
     {
       "n": 66,
@@ -855,10 +1895,26 @@
       "spoken": "The United States and the flag.",
       "dynamic": false,
       "note": null,
-      "questionZh": "我们宣读《效忠誓言》时，效忠的是什么？",
-      "answerZh": "美利坚合众国及其国旗。",
-      "spokenZh": "美利坚合众国及其国旗。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "我们宣读《效忠誓言》时，效忠的是什么？",
+          "answer": "美利坚合众国及其国旗。",
+          "spoken": "美利坚合众国及其国旗。",
+          "note": null
+        },
+        "es": {
+          "question": "¿A qué mostramos lealtad al decir el Juramento de Lealtad?",
+          "answer": "A los Estados Unidos y a la bandera.",
+          "spoken": "A los Estados Unidos y a la bandera.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "我們宣讀《效忠誓言》時，效忠的是什麼？",
+          "answer": "美利堅合眾國及其國旗。",
+          "spoken": "美利堅合眾國及其國旗。",
+          "note": null
+        }
+      }
     },
     {
       "n": 67,
@@ -868,10 +1924,26 @@
       "spoken": "To obey the laws of the United States and to be loyal to the United States. Also acceptable: give up loyalty to other countries, defend the Constitution, serve the nation if needed.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出新公民在《效忠宣誓》中作出的两项承诺。",
-      "answerZh": "遵守美国法律，忠于美国。也可接受：放弃对他国的效忠、捍卫宪法、在需要时为国家服务。",
-      "spokenZh": "遵守美国法律，忠于美国。也可接受：放弃对他国的效忠、捍卫宪法、在需要时为国家服务。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出新公民在《效忠宣誓》中作出的两项承诺。",
+          "answer": "遵守美国法律，忠于美国。也可接受：放弃对他国的效忠、捍卫宪法、在需要时为国家服务。",
+          "spoken": "遵守美国法律，忠于美国。也可接受：放弃对他国的效忠、捍卫宪法、在需要时为国家服务。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione dos promesas que hacen los nuevos ciudadanos en el Juramento de Lealtad.",
+          "answer": "Obedecer las leyes de los Estados Unidos y ser leales a los Estados Unidos. También se acepta: renunciar a la lealtad a otros países, defender la Constitución, servir a la nación si es necesario.",
+          "spoken": "Obedecer las leyes de los Estados Unidos y ser leales a los Estados Unidos. También se acepta: renunciar a la lealtad a otros países, defender la Constitución, servir a la nación si es necesario.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出新公民在《效忠宣誓》中作出的兩項承諾。",
+          "answer": "遵守美國法律，忠於美國。也可接受：放棄對他國的效忠、捍衛憲法、在需要時為國家服務。",
+          "spoken": "遵守美國法律，忠於美國。也可接受：放棄對他國的效忠、捍衛憲法、在需要時為國家服務。",
+          "note": null
+        }
+      }
     },
     {
       "n": 68,
@@ -881,10 +1953,26 @@
       "spoken": "Be born in the United States under the 14th Amendment, or naturalize. People can also become citizens through their parents under conditions set by Congress.",
       "dynamic": false,
       "note": null,
-      "questionZh": "人们怎样才能成为美国公民？",
-      "answerZh": "在美国出生——依据第十四修正案，或通过入籍。也可接受：在国会规定的条件下通过父母获得公民身份。",
-      "spokenZh": "在美国出生——依据第十四修正案，或通过入籍。也可接受：在国会规定的条件下通过父母获得公民身份。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "人们怎样才能成为美国公民？",
+          "answer": "在美国出生——依据第十四修正案，或通过入籍。也可接受：在国会规定的条件下通过父母获得公民身份。",
+          "spoken": "在美国出生——依据第十四修正案，或通过入籍。也可接受：在国会规定的条件下通过父母获得公民身份。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cómo puede una persona convertirse en ciudadano estadounidense?",
+          "answer": "Naciendo en los Estados Unidos, según la Decimocuarta Enmienda, o naturalizándose. También se acepta: a través de los padres bajo las condiciones fijadas por el Congreso.",
+          "spoken": "Naciendo en los Estados Unidos, según la Decimocuarta Enmienda, o naturalizándose. También se acepta: a través de los padres bajo las condiciones fijadas por el Congreso.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "人們怎樣才能成為美國公民？",
+          "answer": "在美國出生——依據第十四修正案，或通過入籍。也可接受：在國會規定的條件下通過父母獲得公民身份。",
+          "spoken": "在美國出生——依據第十四修正案，或通過入籍。也可接受：在國會規定的條件下通過父母獲得公民身份。",
+          "note": null
+        }
+      }
     },
     {
       "n": 69,
@@ -894,10 +1982,26 @@
       "spoken": "Vote and run for office. Also acceptable: join a political party, call your senator or representative, join a community group, give an elected official your opinion.",
       "dynamic": false,
       "note": null,
-      "questionZh": "举两个美国人参与公民事务的例子。",
-      "answerZh": "投票和竞选公职。也可接受：加入政党、给参议员或众议员打电话、加入社区团体、向民选官员表达意见。",
-      "spokenZh": "投票和竞选公职。也可接受：加入政党、给参议员或众议员打电话、加入社区团体、向民选官员表达意见。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "举两个美国人参与公民事务的例子。",
+          "answer": "投票和竞选公职。也可接受：加入政党、给参议员或众议员打电话、加入社区团体、向民选官员表达意见。",
+          "spoken": "投票和竞选公职。也可接受：加入政党、给参议员或众议员打电话、加入社区团体、向民选官员表达意见。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione dos ejemplos de participación cívica.",
+          "answer": "Votar y postularse a un cargo. También se acepta: afiliarse a un partido político, llamar a su senador o representante, unirse a un grupo comunitario, dar su opinión a un funcionario electo.",
+          "spoken": "Votar y postularse a un cargo. También se acepta: afiliarse a un partido político, llamar a su senador o representante, unirse a un grupo comunitario, dar su opinión a un funcionario electo.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "舉兩個美國人參與公民事務的例子。",
+          "answer": "投票和競選公職。也可接受：加入政黨、給參議員或眾議員打電話、加入社區團體、向民選官員表達意見。",
+          "spoken": "投票和競選公職。也可接受：加入政黨、給參議員或眾議員打電話、加入社區團體、向民選官員表達意見。",
+          "note": null
+        }
+      }
     },
     {
       "n": 70,
@@ -907,10 +2011,26 @@
       "spoken": "Vote. Also acceptable: pay taxes, serve on a jury, join the military, run for office, do community service.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国人为国家服务的一种方式是什么？",
-      "answerZh": "投票。也可接受：纳税、担任陪审员、参军、竞选公职、参加社区服务。",
-      "spokenZh": "投票。也可接受：纳税、担任陪审员、参军、竞选公职、参加社区服务。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国人为国家服务的一种方式是什么？",
+          "answer": "投票。也可接受：纳税、担任陪审员、参军、竞选公职、参加社区服务。",
+          "spoken": "投票。也可接受：纳税、担任陪审员、参军、竞选公职、参加社区服务。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuál es una forma en que los estadounidenses pueden servir a su país?",
+          "answer": "Votar. También se acepta: pagar impuestos, servir en un jurado, unirse al ejército, postularse a un cargo, hacer servicio comunitario.",
+          "spoken": "Votar. También se acepta: pagar impuestos, servir en un jurado, unirse al ejército, postularse a un cargo, hacer servicio comunitario.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國人為國家服務的一種方式是什麼？",
+          "answer": "投票。也可接受：納稅、擔任陪審員、參軍、競選公職、參加社區服務。",
+          "spoken": "投票。也可接受：納稅、擔任陪審員、參軍、競選公職、參加社區服務。",
+          "note": null
+        }
+      }
     },
     {
       "n": 71,
@@ -920,10 +2040,26 @@
       "spoken": "It is required by law. Also acceptable: all people who earn money must pay, or taxes fund the government.",
       "dynamic": false,
       "note": null,
-      "questionZh": "为什么必须缴纳联邦税？",
-      "answerZh": "这是法律的要求。也可接受：所有有收入的人都必须纳税；税收为政府提供资金。",
-      "spokenZh": "这是法律的要求。也可接受：所有有收入的人都必须纳税；税收为政府提供资金。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "为什么必须缴纳联邦税？",
+          "answer": "这是法律的要求。也可接受：所有有收入的人都必须纳税；税收为政府提供资金。",
+          "spoken": "这是法律的要求。也可接受：所有有收入的人都必须纳税；税收为政府提供资金。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué es importante pagar los impuestos federales?",
+          "answer": "Es obligatorio por ley. También se acepta: todos los que ganan dinero deben pagar; los impuestos financian el gobierno.",
+          "spoken": "Es obligatorio por ley. También se acepta: todos los que ganan dinero deben pagar; los impuestos financian el gobierno.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "為什麼必須繳納聯邦稅？",
+          "answer": "這是法律的要求。也可接受：所有有收入的人都必須納稅；稅收為政府提供資金。",
+          "spoken": "這是法律的要求。也可接受：所有有收入的人都必須納稅；稅收為政府提供資金。",
+          "note": null
+        }
+      }
     },
     {
       "n": 72,
@@ -933,10 +2069,26 @@
       "spoken": "It is required by law so men can be called to serve if needed.",
       "dynamic": false,
       "note": null,
-      "questionZh": "18至25岁的男性必须进行兵役登记。说出一个原因。",
-      "answerZh": "这是法律的要求——以便在需要时征召服役。",
-      "spokenZh": "这是法律的要求——以便在需要时征召服役。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "18至25岁的男性必须进行兵役登记。说出一个原因。",
+          "answer": "这是法律的要求——以便在需要时征召服役。",
+          "spoken": "这是法律的要求——以便在需要时征召服役。",
+          "note": null
+        },
+        "es": {
+          "question": "Es importante que los hombres de 18 a 25 años se registren en el Servicio Selectivo. Mencione una razón.",
+          "answer": "Es obligatorio por ley: para que puedan ser llamados a servir si es necesario.",
+          "spoken": "Es obligatorio por ley: para que puedan ser llamados a servir si es necesario.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "18至25歲的男性必須進行兵役登記。說出一個原因。",
+          "answer": "這是法律的要求——以便在需要時徵召服役。",
+          "spoken": "這是法律的要求——以便在需要時徵召服役。",
+          "note": null
+        }
+      }
     },
     {
       "n": 73,
@@ -946,10 +2098,26 @@
       "spoken": "Freedom. Also acceptable: political liberty, religious freedom, economic opportunity, to escape persecution.",
       "dynamic": false,
       "note": null,
-      "questionZh": "殖民者来到美洲有许多原因。说出其中一个。",
-      "answerZh": "自由。也可接受：政治自由、宗教自由、经济机会、逃离迫害。",
-      "spokenZh": "自由。也可接受：政治自由、宗教自由、经济机会、逃离迫害。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "殖民者来到美洲有许多原因。说出其中一个。",
+          "answer": "自由。也可接受：政治自由、宗教自由、经济机会、逃离迫害。",
+          "spoken": "自由。也可接受：政治自由、宗教自由、经济机会、逃离迫害。",
+          "note": null
+        },
+        "es": {
+          "question": "Los colonos vinieron a América por muchas razones. Mencione una.",
+          "answer": "La libertad. También se acepta: la libertad política, la libertad religiosa, la oportunidad económica, huir de la persecución.",
+          "spoken": "La libertad. También se acepta: la libertad política, la libertad religiosa, la oportunidad económica, huir de la persecución.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "殖民者來到美洲有許多原因。說出其中一個。",
+          "answer": "自由。也可接受：政治自由、宗教自由、經濟機會、逃離迫害。",
+          "spoken": "自由。也可接受：政治自由、宗教自由、經濟機會、逃離迫害。",
+          "note": null
+        }
+      }
     },
     {
       "n": 74,
@@ -959,10 +2127,26 @@
       "spoken": "Native Americans, also called American Indians.",
       "dynamic": false,
       "note": null,
-      "questionZh": "欧洲人到来之前，谁生活在美洲？",
-      "answerZh": "美洲原住民，即印第安人。",
-      "spokenZh": "美洲原住民，即印第安人。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "欧洲人到来之前，谁生活在美洲？",
+          "answer": "美洲原住民，即印第安人。",
+          "spoken": "美洲原住民，即印第安人。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién vivía en América antes de que llegaran los europeos?",
+          "answer": "Los nativos americanos, también llamados indios americanos.",
+          "spoken": "Los nativos americanos, también llamados indios americanos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "歐洲人到來之前，誰生活在美洲？",
+          "answer": "美洲原住民，即印第安人。",
+          "spoken": "美洲原住民，即印第安人。",
+          "note": null
+        }
+      }
     },
     {
       "n": 75,
@@ -972,10 +2156,26 @@
       "spoken": "Africans, people from Africa.",
       "dynamic": false,
       "note": null,
-      "questionZh": "哪一群人被掳掠并卖为奴隶？",
-      "answerZh": "非洲人。",
-      "spokenZh": "非洲人。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "哪一群人被掳掠并卖为奴隶？",
+          "answer": "非洲人。",
+          "spoken": "非洲人。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué grupo de personas fue capturado y vendido como esclavo?",
+          "answer": "Los africanos, gente de África.",
+          "spoken": "Los africanos, gente de África.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "哪一群人被擄掠並賣為奴隸？",
+          "answer": "非洲人。",
+          "spoken": "非洲人。",
+          "note": null
+        }
+      }
     },
     {
       "n": 76,
@@ -985,10 +2185,26 @@
       "spoken": "The American Revolution, also called the Revolutionary War.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国人通过哪场战争赢得了脱离英国的独立？",
-      "answerZh": "美国独立战争，又称独立革命战争。",
-      "spokenZh": "美国独立战争，又称独立革命战争。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国人通过哪场战争赢得了脱离英国的独立？",
+          "answer": "美国独立战争，又称独立革命战争。",
+          "spoken": "美国独立战争，又称独立革命战争。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué guerra libraron los americanos para independizarse de Gran Bretaña?",
+          "answer": "La Revolución Americana, también llamada la Guerra de Independencia.",
+          "spoken": "La Revolución Americana, también llamada la Guerra de Independencia.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國人通過哪場戰爭贏得了脫離英國的獨立？",
+          "answer": "美國獨立戰爭，又稱獨立革命戰爭。",
+          "spoken": "美國獨立戰爭，又稱獨立革命戰爭。",
+          "note": null
+        }
+      }
     },
     {
       "n": 77,
@@ -998,10 +2214,26 @@
       "spoken": "High taxes, taxation without representation. Also acceptable: British soldiers stayed in their houses, or they didn't have self-government.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出美国人宣布脱离英国独立的一个原因。",
-      "answerZh": "高额赋税——无代表不纳税。也可接受：英国士兵驻扎民宅；没有自治权。",
-      "spokenZh": "高额赋税——无代表不纳税。也可接受：英国士兵驻扎民宅；没有自治权。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出美国人宣布脱离英国独立的一个原因。",
+          "answer": "高额赋税——无代表不纳税。也可接受：英国士兵驻扎民宅；没有自治权。",
+          "spoken": "高额赋税——无代表不纳税。也可接受：英国士兵驻扎民宅；没有自治权。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione una razón por la que los americanos declararon la independencia.",
+          "answer": "Los altos impuestos, es decir, impuestos sin representación. También se acepta: los soldados británicos se alojaban en sus casas; no tenían autogobierno.",
+          "spoken": "Los altos impuestos, es decir, impuestos sin representación. También se acepta: los soldados británicos se alojaban en sus casas; no tenían autogobierno.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出美國人宣佈脫離英國獨立的一個原因。",
+          "answer": "高額賦稅——無代表不納稅。也可接受：英國士兵駐紮民宅；沒有自治權。",
+          "spoken": "高額賦稅——無代表不納稅。也可接受：英國士兵駐紮民宅；沒有自治權。",
+          "note": null
+        }
+      }
     },
     {
       "n": 78,
@@ -1011,10 +2243,26 @@
       "spoken": "Thomas Jefferson.",
       "dynamic": false,
       "note": null,
-      "questionZh": "谁起草了《独立宣言》？",
-      "answerZh": "托马斯·杰斐逊。",
-      "spokenZh": "托马斯·杰斐逊。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "谁起草了《独立宣言》？",
+          "answer": "托马斯·杰斐逊。",
+          "spoken": "托马斯·杰斐逊。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién redactó la Declaración de Independencia?",
+          "answer": "Thomas Jefferson.",
+          "spoken": "Thomas Jefferson.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "誰起草了《獨立宣言》？",
+          "answer": "托馬斯·傑斐遜。",
+          "spoken": "托馬斯·傑斐遜。",
+          "note": null
+        }
+      }
     },
     {
       "n": 79,
@@ -1024,10 +2272,26 @@
       "spoken": "July 4, 1776.",
       "dynamic": false,
       "note": null,
-      "questionZh": "《独立宣言》何时通过？",
-      "answerZh": "1776年7月4日。",
-      "spokenZh": "1776年7月4日。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "《独立宣言》何时通过？",
+          "answer": "1776年7月4日。",
+          "spoken": "1776年7月4日。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuándo se adoptó la Declaración de Independencia?",
+          "answer": "El 4 de julio de 1776.",
+          "spoken": "El 4 de julio de 1776.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "《獨立宣言》何時通過？",
+          "answer": "1776年7月4日。",
+          "spoken": "1776年7月4日。",
+          "note": null
+        }
+      }
     },
     {
       "n": 80,
@@ -1037,10 +2301,26 @@
       "spoken": "The Declaration of Independence. Also acceptable: the Battle of Bunker Hill, the Battle of Saratoga, the Battle of Yorktown, Washington crossing the Delaware.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国独立战争中有许多重要事件。说出其中一个。",
-      "answerZh": "《独立宣言》的发表。也可接受：邦克山战役、萨拉托加战役、约克镇战役、华盛顿横渡特拉华河。",
-      "spokenZh": "《独立宣言》的发表。也可接受：邦克山战役、萨拉托加战役、约克镇战役、华盛顿横渡特拉华河。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国独立战争中有许多重要事件。说出其中一个。",
+          "answer": "《独立宣言》的发表。也可接受：邦克山战役、萨拉托加战役、约克镇战役、华盛顿横渡特拉华河。",
+          "spoken": "《独立宣言》的发表。也可接受：邦克山战役、萨拉托加战役、约克镇战役、华盛顿横渡特拉华河。",
+          "note": null
+        },
+        "es": {
+          "question": "La Revolución Americana tuvo muchos eventos importantes. Mencione uno.",
+          "answer": "La Declaración de Independencia. También se acepta: la batalla de Bunker Hill, la batalla de Saratoga, la batalla de Yorktown, el cruce del Delaware por Washington.",
+          "spoken": "La Declaración de Independencia. También se acepta: la batalla de Bunker Hill, la batalla de Saratoga, la batalla de Yorktown, el cruce del Delaware por Washington.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國獨立戰爭中有許多重要事件。說出其中一個。",
+          "answer": "《獨立宣言》的發表。也可接受：邦克山戰役、薩拉托加戰役、約克鎮戰役、華盛頓橫渡特拉華河。",
+          "spoken": "《獨立宣言》的發表。也可接受：邦克山戰役、薩拉托加戰役、約克鎮戰役、華盛頓橫渡特拉華河。",
+          "note": null
+        }
+      }
     },
     {
       "n": 81,
@@ -1050,10 +2330,26 @@
       "spoken": "Any five: Massachusetts, New York, New Hampshire, New Jersey, Delaware, Connecticut, Rhode Island, Pennsylvania, Maryland, Virginia, North Carolina, South Carolina, Georgia.",
       "dynamic": false,
       "note": null,
-      "questionZh": "最初有13个州。说出其中五个。",
-      "answerZh": "例如：马萨诸塞、纽约、新罕布什尔、新泽西、特拉华。也可接受：康涅狄格、罗得岛、宾夕法尼亚、马里兰、弗吉尼亚、北卡罗来纳、南卡罗来纳、佐治亚。",
-      "spokenZh": "例如：马萨诸塞、纽约、新罕布什尔、新泽西、特拉华。也可接受：康涅狄格、罗得岛、宾夕法尼亚、马里兰、弗吉尼亚、北卡罗来纳、南卡罗来纳、佐治亚。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "最初有13个州。说出其中五个。",
+          "answer": "例如：马萨诸塞、纽约、新罕布什尔、新泽西、特拉华。也可接受：康涅狄格、罗得岛、宾夕法尼亚、马里兰、弗吉尼亚、北卡罗来纳、南卡罗来纳、佐治亚。",
+          "spoken": "例如：马萨诸塞、纽约、新罕布什尔、新泽西、特拉华。也可接受：康涅狄格、罗得岛、宾夕法尼亚、马里兰、弗吉尼亚、北卡罗来纳、南卡罗来纳、佐治亚。",
+          "note": null
+        },
+        "es": {
+          "question": "Había 13 estados originales. Mencione cinco.",
+          "answer": "Por ejemplo: Massachusetts, Nueva York, Nuevo Hampshire, Nueva Jersey, Delaware. También se acepta: Connecticut, Rhode Island, Pensilvania, Maryland, Virginia, Carolina del Norte, Carolina del Sur, Georgia.",
+          "spoken": "Por ejemplo: Massachusetts, Nueva York, Nuevo Hampshire, Nueva Jersey, Delaware. También se acepta: Connecticut, Rhode Island, Pensilvania, Maryland, Virginia, Carolina del Norte, Carolina del Sur, Georgia.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "最初有13個州。說出其中五個。",
+          "answer": "例如：馬薩諸塞、紐約、新罕布什爾、新澤西、特拉華。也可接受：康涅狄格、羅得島、賓夕法尼亞、馬里蘭、弗吉尼亞、北卡羅來納、南卡羅來納、佐治亞。",
+          "spoken": "例如：馬薩諸塞、紐約、新罕布什爾、新澤西、特拉華。也可接受：康涅狄格、羅得島、賓夕法尼亞、馬里蘭、弗吉尼亞、北卡羅來納、南卡羅來納、佐治亞。",
+          "note": null
+        }
+      }
     },
     {
       "n": 82,
@@ -1063,10 +2359,26 @@
       "spoken": "The U.S. Constitution.",
       "dynamic": false,
       "note": null,
-      "questionZh": "1787年制定的建国文件是什么？",
-      "answerZh": "宪法，即美国宪法。",
-      "spokenZh": "宪法，即美国宪法。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "1787年制定的建国文件是什么？",
+          "answer": "宪法，即美国宪法。",
+          "spoken": "宪法，即美国宪法。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué documento fundacional se escribió en 1787?",
+          "answer": "La Constitución, la Constitución de los Estados Unidos.",
+          "spoken": "La Constitución, la Constitución de los Estados Unidos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "1787年制定的建國文件是什麼？",
+          "answer": "憲法，即美國憲法。",
+          "spoken": "憲法，即美國憲法。",
+          "note": null
+        }
+      }
     },
     {
       "n": 83,
@@ -1076,10 +2388,26 @@
       "spoken": "James Madison. Also acceptable: Alexander Hamilton, or John Jay. They published under the name Publius.",
       "dynamic": false,
       "note": null,
-      "questionZh": "《联邦党人文集》支持美国宪法的通过。说出其中一位作者。",
-      "answerZh": "詹姆斯·麦迪逊。也可接受：亚历山大·汉密尔顿、约翰·杰伊。他们以“普布利乌斯”的名义发表。",
-      "spokenZh": "詹姆斯·麦迪逊。也可接受：亚历山大·汉密尔顿、约翰·杰伊。他们以“普布利乌斯”的名义发表。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "《联邦党人文集》支持美国宪法的通过。说出其中一位作者。",
+          "answer": "詹姆斯·麦迪逊。也可接受：亚历山大·汉密尔顿、约翰·杰伊。他们以“普布利乌斯”的名义发表。",
+          "spoken": "詹姆斯·麦迪逊。也可接受：亚历山大·汉密尔顿、约翰·杰伊。他们以“普布利乌斯”的名义发表。",
+          "note": null
+        },
+        "es": {
+          "question": "Los Ensayos Federalistas apoyaron la aprobación de la Constitución. Mencione uno de los autores.",
+          "answer": "James Madison. También se acepta: Alexander Hamilton o John Jay. Publicaron bajo el nombre de Publius.",
+          "spoken": "James Madison. También se acepta: Alexander Hamilton o John Jay. Publicaron bajo el nombre de Publius.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "《聯邦黨人文集》支持美國憲法的通過。說出其中一位作者。",
+          "answer": "詹姆斯·麥迪遜。也可接受：亞歷山大·漢密爾頓、約翰·傑伊。他們以「普布利烏斯」的名義發表。",
+          "spoken": "詹姆斯·麥迪遜。也可接受：亞歷山大·漢密爾頓、約翰·傑伊。他們以「普布利烏斯」的名義發表。",
+          "note": null
+        }
+      }
     },
     {
       "n": 84,
@@ -1089,10 +2417,26 @@
       "spoken": "They helped people understand the U.S. Constitution and supported its ratification.",
       "dynamic": false,
       "note": null,
-      "questionZh": "《联邦党人文集》为什么重要？",
-      "answerZh": "它帮助人们理解美国宪法，并推动宪法获得批准。",
-      "spokenZh": "它帮助人们理解美国宪法，并推动宪法获得批准。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "《联邦党人文集》为什么重要？",
+          "answer": "它帮助人们理解美国宪法，并推动宪法获得批准。",
+          "spoken": "它帮助人们理解美国宪法，并推动宪法获得批准。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué fueron importantes los Ensayos Federalistas?",
+          "answer": "Ayudaron a la gente a entender la Constitución y apoyaron su ratificación.",
+          "spoken": "Ayudaron a la gente a entender la Constitución y apoyaron su ratificación.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "《聯邦黨人文集》為什麼重要？",
+          "answer": "它幫助人們理解美國憲法，並推動憲法獲得批准。",
+          "spoken": "它幫助人們理解美國憲法，並推動憲法獲得批准。",
+          "note": null
+        }
+      }
     },
     {
       "n": 85,
@@ -1102,10 +2446,26 @@
       "spoken": "U.S. diplomat. Also acceptable: oldest member of the Constitutional Convention, first Postmaster General, writer of Poor Richard's Almanac, started the first free libraries.",
       "dynamic": false,
       "note": null,
-      "questionZh": "本杰明·富兰克林因许多事而闻名。说出其中一件。",
-      "answerZh": "美国外交官。也可接受：制宪会议最年长的成员、首任邮政部长、《穷理查年鉴》的作者、创办最早的免费图书馆。",
-      "spokenZh": "美国外交官。也可接受：制宪会议最年长的成员、首任邮政部长、《穷理查年鉴》的作者、创办最早的免费图书馆。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "本杰明·富兰克林因许多事而闻名。说出其中一件。",
+          "answer": "美国外交官。也可接受：制宪会议最年长的成员、首任邮政部长、《穷理查年鉴》的作者、创办最早的免费图书馆。",
+          "spoken": "美国外交官。也可接受：制宪会议最年长的成员、首任邮政部长、《穷理查年鉴》的作者、创办最早的免费图书馆。",
+          "note": null
+        },
+        "es": {
+          "question": "Benjamin Franklin es famoso por muchas cosas. Mencione una.",
+          "answer": "Fue diplomático estadounidense. También se acepta: el miembro de mayor edad de la Convención Constitucional, el primer Director General de Correos, autor del Almanaque del Pobre Richard, fundó las primeras bibliotecas gratuitas.",
+          "spoken": "Fue diplomático estadounidense. También se acepta: el miembro de mayor edad de la Convención Constitucional, el primer Director General de Correos, autor del Almanaque del Pobre Richard, fundó las primeras bibliotecas gratuitas.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "本傑明·富蘭克林因許多事而聞名。說出其中一件。",
+          "answer": "美國外交官。也可接受：制憲會議最年長的成員、首任郵政部長、《窮理查年鑑》的作者、創辦最早的免費圖書館。",
+          "spoken": "美國外交官。也可接受：制憲會議最年長的成員、首任郵政部長、《窮理查年鑑》的作者、創辦最早的免費圖書館。",
+          "note": null
+        }
+      }
     },
     {
       "n": 86,
@@ -1115,10 +2475,26 @@
       "spoken": "First President of the United States. Also acceptable: the \"Father of Our Country\", or general of the Continental Army.",
       "dynamic": false,
       "note": null,
-      "questionZh": "乔治·华盛顿因许多事而闻名。说出其中一件。",
-      "answerZh": "美国第一任总统——“国父”、大陆军总司令。",
-      "spokenZh": "美国第一任总统——“国父”、大陆军总司令。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "乔治·华盛顿因许多事而闻名。说出其中一件。",
+          "answer": "美国第一任总统——“国父”、大陆军总司令。",
+          "spoken": "美国第一任总统——“国父”、大陆军总司令。",
+          "note": null
+        },
+        "es": {
+          "question": "George Washington es famoso por muchas cosas. Mencione una.",
+          "answer": "Fue el primer Presidente de los Estados Unidos, el Padre de la Patria, general del Ejército Continental.",
+          "spoken": "Fue el primer Presidente de los Estados Unidos, el Padre de la Patria, general del Ejército Continental.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "喬治·華盛頓因許多事而聞名。說出其中一件。",
+          "answer": "美國第一任總統——「國父」、大陸軍總司令。",
+          "spoken": "美國第一任總統——「國父」、大陸軍總司令。",
+          "note": null
+        }
+      }
     },
     {
       "n": 87,
@@ -1128,10 +2504,26 @@
       "spoken": "Writer of the Declaration of Independence. Also acceptable: third President, founded the University of Virginia, first Secretary of State.",
       "dynamic": false,
       "note": null,
-      "questionZh": "托马斯·杰斐逊因许多事而闻名。说出其中一件。",
-      "answerZh": "《独立宣言》的起草人。也可接受：第三任总统、创办弗吉尼亚大学、首任国务卿。",
-      "spokenZh": "《独立宣言》的起草人。也可接受：第三任总统、创办弗吉尼亚大学、首任国务卿。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "托马斯·杰斐逊因许多事而闻名。说出其中一件。",
+          "answer": "《独立宣言》的起草人。也可接受：第三任总统、创办弗吉尼亚大学、首任国务卿。",
+          "spoken": "《独立宣言》的起草人。也可接受：第三任总统、创办弗吉尼亚大学、首任国务卿。",
+          "note": null
+        },
+        "es": {
+          "question": "Thomas Jefferson es famoso por muchas cosas. Mencione una.",
+          "answer": "Redactó la Declaración de Independencia. También se acepta: fue el tercer Presidente, fundó la Universidad de Virginia, fue el primer Secretario de Estado.",
+          "spoken": "Redactó la Declaración de Independencia. También se acepta: fue el tercer Presidente, fundó la Universidad de Virginia, fue el primer Secretario de Estado.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "托馬斯·傑斐遜因許多事而聞名。說出其中一件。",
+          "answer": "《獨立宣言》的起草人。也可接受：第三任總統、創辦弗吉尼亞大學、首任國務卿。",
+          "spoken": "《獨立宣言》的起草人。也可接受：第三任總統、創辦弗吉尼亞大學、首任國務卿。",
+          "note": null
+        }
+      }
     },
     {
       "n": 88,
@@ -1141,10 +2533,26 @@
       "spoken": "One of the writers of the Federalist Papers. Also acceptable: \"Father of the Constitution\", or fourth President.",
       "dynamic": false,
       "note": null,
-      "questionZh": "詹姆斯·麦迪逊因许多事而闻名。说出其中一件。",
-      "answerZh": "《联邦党人文集》的作者之一——“宪法之父”、第四任总统。",
-      "spokenZh": "《联邦党人文集》的作者之一——“宪法之父”、第四任总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "詹姆斯·麦迪逊因许多事而闻名。说出其中一件。",
+          "answer": "《联邦党人文集》的作者之一——“宪法之父”、第四任总统。",
+          "spoken": "《联邦党人文集》的作者之一——“宪法之父”、第四任总统。",
+          "note": null
+        },
+        "es": {
+          "question": "James Madison es famoso por muchas cosas. Mencione una.",
+          "answer": "Fue uno de los autores de los Ensayos Federalistas, el Padre de la Constitución, el cuarto Presidente.",
+          "spoken": "Fue uno de los autores de los Ensayos Federalistas, el Padre de la Constitución, el cuarto Presidente.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "詹姆斯·麥迪遜因許多事而聞名。說出其中一件。",
+          "answer": "《聯邦黨人文集》的作者之一——「憲法之父」、第四任總統。",
+          "spoken": "《聯邦黨人文集》的作者之一——「憲法之父」、第四任總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 89,
@@ -1154,10 +2562,26 @@
       "spoken": "One of the writers of the Federalist Papers. Also acceptable: first Secretary of the Treasury, or founder of the national bank.",
       "dynamic": false,
       "note": null,
-      "questionZh": "亚历山大·汉密尔顿因许多事而闻名。说出其中一件。",
-      "answerZh": "《联邦党人文集》的作者之一——首任财政部长、国家银行的创立者。",
-      "spokenZh": "《联邦党人文集》的作者之一——首任财政部长、国家银行的创立者。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "亚历山大·汉密尔顿因许多事而闻名。说出其中一件。",
+          "answer": "《联邦党人文集》的作者之一——首任财政部长、国家银行的创立者。",
+          "spoken": "《联邦党人文集》的作者之一——首任财政部长、国家银行的创立者。",
+          "note": null
+        },
+        "es": {
+          "question": "Alexander Hamilton es famoso por muchas cosas. Mencione una.",
+          "answer": "Fue uno de los autores de los Ensayos Federalistas, el primer Secretario del Tesoro, fundador del banco nacional.",
+          "spoken": "Fue uno de los autores de los Ensayos Federalistas, el primer Secretario del Tesoro, fundador del banco nacional.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "亞歷山大·漢密爾頓因許多事而聞名。說出其中一件。",
+          "answer": "《聯邦黨人文集》的作者之一——首任財政部長、國家銀行的創立者。",
+          "spoken": "《聯邦黨人文集》的作者之一——首任財政部長、國家銀行的創立者。",
+          "note": null
+        }
+      }
     },
     {
       "n": 90,
@@ -1167,10 +2591,26 @@
       "spoken": "The Louisiana Territory Louisiana.",
       "dynamic": false,
       "note": null,
-      "questionZh": "1803年美国从法国购买了哪块领土？",
-      "answerZh": "路易斯安那领地。",
-      "spokenZh": "路易斯安那领地。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "1803年美国从法国购买了哪块领土？",
+          "answer": "路易斯安那领地。",
+          "spoken": "路易斯安那领地。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué territorio compró Estados Unidos a Francia en 1803?",
+          "answer": "El Territorio de Luisiana.",
+          "spoken": "El Territorio de Luisiana.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "1803年美國從法國購買了哪塊領土？",
+          "answer": "路易斯安那領地。",
+          "spoken": "路易斯安那領地。",
+          "note": null
+        }
+      }
     },
     {
       "n": 91,
@@ -1180,10 +2620,26 @@
       "spoken": "The Civil War. Also acceptable: the War of 1812, the Mexican-American War, the Spanish-American War.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出美国在19世纪参加的一场战争。",
-      "answerZh": "南北战争。也可接受：1812年战争、美墨战争、美西战争。",
-      "spokenZh": "南北战争。也可接受：1812年战争、美墨战争、美西战争。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出美国在19世纪参加的一场战争。",
+          "answer": "南北战争。也可接受：1812年战争、美墨战争、美西战争。",
+          "spoken": "南北战争。也可接受：1812年战争、美墨战争、美西战争。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione una guerra que libró Estados Unidos en el siglo XIX.",
+          "answer": "La Guerra Civil. También se acepta: la Guerra de 1812, la Guerra México-Estadounidense, la Guerra Hispano-Estadounidense.",
+          "spoken": "La Guerra Civil. También se acepta: la Guerra de 1812, la Guerra México-Estadounidense, la Guerra Hispano-Estadounidense.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出美國在19世紀參加的一場戰爭。",
+          "answer": "南北戰爭。也可接受：1812年戰爭、美墨戰爭、美西戰爭。",
+          "spoken": "南北戰爭。也可接受：1812年戰爭、美墨戰爭、美西戰爭。",
+          "note": null
+        }
+      }
     },
     {
       "n": 92,
@@ -1193,10 +2649,26 @@
       "spoken": "The Civil War.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国北方与南方之间的战争叫什么？",
-      "answerZh": "南北战争。",
-      "spokenZh": "南北战争。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国北方与南方之间的战争叫什么？",
+          "answer": "南北战争。",
+          "spoken": "南北战争。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione la guerra entre el Norte y el Sur.",
+          "answer": "La Guerra Civil.",
+          "spoken": "La Guerra Civil.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國北方與南方之間的戰爭叫什麼？",
+          "answer": "南北戰爭。",
+          "spoken": "南北戰爭。",
+          "note": null
+        }
+      }
     },
     {
       "n": 93,
@@ -1206,10 +2678,26 @@
       "spoken": "The Emancipation Proclamation. Also acceptable: the Battle of Gettysburg, the Gettysburg Address, the surrender at Appomattox, the assassination of Lincoln.",
       "dynamic": false,
       "note": null,
-      "questionZh": "南北战争中有许多重要事件。说出其中一个。",
-      "answerZh": "《解放黑人奴隶宣言》的颁布。也可接受：葛底斯堡战役、葛底斯堡演说、阿波马托克斯受降、林肯遇刺。",
-      "spokenZh": "《解放黑人奴隶宣言》的颁布。也可接受：葛底斯堡战役、葛底斯堡演说、阿波马托克斯受降、林肯遇刺。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "南北战争中有许多重要事件。说出其中一个。",
+          "answer": "《解放黑人奴隶宣言》的颁布。也可接受：葛底斯堡战役、葛底斯堡演说、阿波马托克斯受降、林肯遇刺。",
+          "spoken": "《解放黑人奴隶宣言》的颁布。也可接受：葛底斯堡战役、葛底斯堡演说、阿波马托克斯受降、林肯遇刺。",
+          "note": null
+        },
+        "es": {
+          "question": "La Guerra Civil tuvo muchos eventos importantes. Mencione uno.",
+          "answer": "La Proclamación de Emancipación. También se acepta: la batalla de Gettysburg, el Discurso de Gettysburg, la rendición en Appomattox, el asesinato de Lincoln.",
+          "spoken": "La Proclamación de Emancipación. También se acepta: la batalla de Gettysburg, el Discurso de Gettysburg, la rendición en Appomattox, el asesinato de Lincoln.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "南北戰爭中有許多重要事件。說出其中一個。",
+          "answer": "《解放黑人奴隸宣言》的頒佈。也可接受：葛底斯堡戰役、葛底斯堡演說、阿波馬托克斯受降、林肯遇刺。",
+          "spoken": "《解放黑人奴隸宣言》的頒佈。也可接受：葛底斯堡戰役、葛底斯堡演說、阿波馬托克斯受降、林肯遇刺。",
+          "note": null
+        }
+      }
     },
     {
       "n": 94,
@@ -1219,10 +2707,26 @@
       "spoken": "He freed the slaves with the Emancipation Proclamation. Also acceptable: he saved the Union, or was President during the Civil War.",
       "dynamic": false,
       "note": null,
-      "questionZh": "亚伯拉罕·林肯因许多事而闻名。说出其中一件。",
-      "answerZh": "他解放了奴隶——颁布《解放黑人奴隶宣言》；拯救了联邦；南北战争期间担任总统。",
-      "spokenZh": "他解放了奴隶——颁布《解放黑人奴隶宣言》；拯救了联邦；南北战争期间担任总统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "亚伯拉罕·林肯因许多事而闻名。说出其中一件。",
+          "answer": "他解放了奴隶——颁布《解放黑人奴隶宣言》；拯救了联邦；南北战争期间担任总统。",
+          "spoken": "他解放了奴隶——颁布《解放黑人奴隶宣言》；拯救了联邦；南北战争期间担任总统。",
+          "note": null
+        },
+        "es": {
+          "question": "Abraham Lincoln es famoso por muchas cosas. Mencione una.",
+          "answer": "Liberó a los esclavos con la Proclamación de Emancipación. También se acepta: salvó la Unión, fue Presidente durante la Guerra Civil.",
+          "spoken": "Liberó a los esclavos con la Proclamación de Emancipación. También se acepta: salvó la Unión, fue Presidente durante la Guerra Civil.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "亞伯拉罕·林肯因許多事而聞名。說出其中一件。",
+          "answer": "他解放了奴隸——頒佈《解放黑人奴隸宣言》；拯救了聯邦；南北戰爭期間擔任總統。",
+          "spoken": "他解放了奴隸——頒佈《解放黑人奴隸宣言》；拯救了聯邦；南北戰爭期間擔任總統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 95,
@@ -1232,10 +2736,26 @@
       "spoken": "Freed the slaves in the Confederate states.",
       "dynamic": false,
       "note": null,
-      "questionZh": "《解放黑人奴隶宣言》做了什么？",
-      "answerZh": "解放了奴隶——限于南方邦联各州。",
-      "spokenZh": "解放了奴隶——限于南方邦联各州。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "《解放黑人奴隶宣言》做了什么？",
+          "answer": "解放了奴隶——限于南方邦联各州。",
+          "spoken": "解放了奴隶——限于南方邦联各州。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué hizo la Proclamación de Emancipación?",
+          "answer": "Liberó a los esclavos, en los estados confederados.",
+          "spoken": "Liberó a los esclavos, en los estados confederados.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "《解放黑人奴隸宣言》做了什麼？",
+          "answer": "解放了奴隸——限於南方邦聯各州。",
+          "spoken": "解放了奴隸——限於南方邦聯各州。",
+          "note": null
+        }
+      }
     },
     {
       "n": 96,
@@ -1245,10 +2765,26 @@
       "spoken": "The Civil War.",
       "dynamic": false,
       "note": null,
-      "questionZh": "哪场美国战争终结了奴隶制？",
-      "answerZh": "南北战争。",
-      "spokenZh": "南北战争。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "哪场美国战争终结了奴隶制？",
+          "answer": "南北战争。",
+          "spoken": "南北战争。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué guerra de Estados Unidos terminó con la esclavitud?",
+          "answer": "La Guerra Civil.",
+          "spoken": "La Guerra Civil.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "哪場美國戰爭終結了奴隸制？",
+          "answer": "南北戰爭。",
+          "spoken": "南北戰爭。",
+          "note": null
+        }
+      }
     },
     {
       "n": 97,
@@ -1258,10 +2794,26 @@
       "spoken": "The 14th Amendment.",
       "dynamic": false,
       "note": null,
-      "questionZh": "哪条修正案规定所有在美国出生或入籍并受其管辖的人都是美国公民？",
-      "answerZh": "第十四修正案。",
-      "spokenZh": "第十四修正案。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "哪条修正案规定所有在美国出生或入籍并受其管辖的人都是美国公民？",
+          "answer": "第十四修正案。",
+          "spoken": "第十四修正案。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué enmienda dice que toda persona nacida o naturalizada en Estados Unidos y sujeta a su jurisdicción es ciudadana?",
+          "answer": "La Decimocuarta Enmienda.",
+          "spoken": "La Decimocuarta Enmienda.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "哪條修正案規定所有在美國出生或入籍並受其管轄的人都是美國公民？",
+          "answer": "第十四修正案。",
+          "spoken": "第十四修正案。",
+          "note": null
+        }
+      }
     },
     {
       "n": 98,
@@ -1271,10 +2823,26 @@
       "spoken": "After the Civil War with the 15th Amendment.",
       "dynamic": false,
       "note": null,
-      "questionZh": "男性是何时获得投票权的？",
-      "answerZh": "南北战争之后——依据第十五修正案。",
-      "spokenZh": "南北战争之后——依据第十五修正案。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "男性是何时获得投票权的？",
+          "answer": "南北战争之后——依据第十五修正案。",
+          "spoken": "南北战争之后——依据第十五修正案。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuándo obtuvieron todos los hombres el derecho al voto?",
+          "answer": "Después de la Guerra Civil, con la Decimoquinta Enmienda.",
+          "spoken": "Después de la Guerra Civil, con la Decimoquinta Enmienda.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "男性是何時獲得投票權的？",
+          "answer": "南北戰爭之後——依據第十五修正案。",
+          "spoken": "南北戰爭之後——依據第十五修正案。",
+          "note": null
+        }
+      }
     },
     {
       "n": 99,
@@ -1284,10 +2852,26 @@
       "spoken": "Susan B. Anthony. Also acceptable: Elizabeth Cady Stanton, Sojourner Truth, Harriet Tubman, Lucretia Mott.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出19世纪女权运动的一位领袖。",
-      "answerZh": "苏珊·安东尼。也可接受：伊丽莎白·卡迪·斯坦顿、索杰纳·特鲁斯、哈丽特·塔布曼、卢克丽霞·莫特。",
-      "spokenZh": "苏珊·安东尼。也可接受：伊丽莎白·卡迪·斯坦顿、索杰纳·特鲁斯、哈丽特·塔布曼、卢克丽霞·莫特。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出19世纪女权运动的一位领袖。",
+          "answer": "苏珊·安东尼。也可接受：伊丽莎白·卡迪·斯坦顿、索杰纳·特鲁斯、哈丽特·塔布曼、卢克丽霞·莫特。",
+          "spoken": "苏珊·安东尼。也可接受：伊丽莎白·卡迪·斯坦顿、索杰纳·特鲁斯、哈丽特·塔布曼、卢克丽霞·莫特。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione una líder del movimiento por los derechos de la mujer en el siglo XIX.",
+          "answer": "Susan B. Anthony. También se acepta: Elizabeth Cady Stanton, Sojourner Truth, Harriet Tubman, Lucretia Mott.",
+          "spoken": "Susan B. Anthony. También se acepta: Elizabeth Cady Stanton, Sojourner Truth, Harriet Tubman, Lucretia Mott.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出19世紀女權運動的一位領袖。",
+          "answer": "蘇珊·安東尼。也可接受：伊麗莎白·卡迪·斯坦頓、索傑納·特魯斯、哈麗特·塔布曼、盧克麗霞·莫特。",
+          "spoken": "蘇珊·安東尼。也可接受：伊麗莎白·卡迪·斯坦頓、索傑納·特魯斯、哈麗特·塔布曼、盧克麗霞·莫特。",
+          "note": null
+        }
+      }
     },
     {
       "n": 100,
@@ -1297,10 +2881,26 @@
       "spoken": "World War I. Also acceptable: World War II, the Korean War, the Vietnam War, the Persian Gulf War.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出美国在20世纪参加的一场战争。",
-      "answerZh": "第一次世界大战。也可接受：第二次世界大战、朝鲜战争、越南战争、海湾战争。",
-      "spokenZh": "第一次世界大战。也可接受：第二次世界大战、朝鲜战争、越南战争、海湾战争。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出美国在20世纪参加的一场战争。",
+          "answer": "第一次世界大战。也可接受：第二次世界大战、朝鲜战争、越南战争、海湾战争。",
+          "spoken": "第一次世界大战。也可接受：第二次世界大战、朝鲜战争、越南战争、海湾战争。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione una guerra que libró Estados Unidos en el siglo XX.",
+          "answer": "La Primera Guerra Mundial. También se acepta: la Segunda Guerra Mundial, la Guerra de Corea, la Guerra de Vietnam, la Guerra del Golfo Pérsico.",
+          "spoken": "La Primera Guerra Mundial. También se acepta: la Segunda Guerra Mundial, la Guerra de Corea, la Guerra de Vietnam, la Guerra del Golfo Pérsico.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出美國在20世紀參加的一場戰爭。",
+          "answer": "第一次世界大戰。也可接受：第二次世界大戰、朝鮮戰爭、越南戰爭、海灣戰爭。",
+          "spoken": "第一次世界大戰。也可接受：第二次世界大戰、朝鮮戰爭、越南戰爭、海灣戰爭。",
+          "note": null
+        }
+      }
     },
     {
       "n": 101,
@@ -1310,10 +2910,26 @@
       "spoken": "To support the Allied powers. Also acceptable: because Germany attacked U.S. ships, or the Zimmermann Telegram.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国为什么参加第一次世界大战？",
-      "answerZh": "为了支持协约国。也可接受：因为德国袭击美国船只；齐默尔曼电报事件。",
-      "spokenZh": "为了支持协约国。也可接受：因为德国袭击美国船只；齐默尔曼电报事件。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国为什么参加第一次世界大战？",
+          "answer": "为了支持协约国。也可接受：因为德国袭击美国船只；齐默尔曼电报事件。",
+          "spoken": "为了支持协约国。也可接受：因为德国袭击美国船只；齐默尔曼电报事件。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué entró Estados Unidos en la Primera Guerra Mundial?",
+          "answer": "Para apoyar a las potencias Aliadas. También se acepta: porque Alemania atacó barcos estadounidenses; el Telegrama Zimmermann.",
+          "spoken": "Para apoyar a las potencias Aliadas. También se acepta: porque Alemania atacó barcos estadounidenses; el Telegrama Zimmermann.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國為什麼參加第一次世界大戰？",
+          "answer": "為了支持協約國。也可接受：因為德國襲擊美國船隻；齊默爾曼電報事件。",
+          "spoken": "為了支持協約國。也可接受：因為德國襲擊美國船隻；齊默爾曼電報事件。",
+          "note": null
+        }
+      }
     },
     {
       "n": 102,
@@ -1323,10 +2939,26 @@
       "spoken": "After World War I, in 1920, with the 19th Amendment.",
       "dynamic": false,
       "note": null,
-      "questionZh": "女性是何时获得投票权的？",
-      "answerZh": "第一次世界大战之后——1920年，依据第十九修正案。",
-      "spokenZh": "第一次世界大战之后——1920年，依据第十九修正案。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "女性是何时获得投票权的？",
+          "answer": "第一次世界大战之后——1920年，依据第十九修正案。",
+          "spoken": "第一次世界大战之后——1920年，依据第十九修正案。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuándo obtuvieron todas las mujeres el derecho al voto?",
+          "answer": "Después de la Primera Guerra Mundial, en 1920, con la Decimonovena Enmienda.",
+          "spoken": "Después de la Primera Guerra Mundial, en 1920, con la Decimonovena Enmienda.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "女性是何時獲得投票權的？",
+          "answer": "第一次世界大戰之後——1920年，依據第十九修正案。",
+          "spoken": "第一次世界大戰之後——1920年，依據第十九修正案。",
+          "note": null
+        }
+      }
     },
     {
       "n": 103,
@@ -1336,10 +2968,26 @@
       "spoken": "The longest economic recession in modern history a long period when many people were out of work and poor.",
       "dynamic": false,
       "note": null,
-      "questionZh": "什么是经济大萧条？",
-      "answerZh": "现代史上最长的经济衰退——很长一段时间里许多人失业、贫困。",
-      "spokenZh": "现代史上最长的经济衰退——很长一段时间里许多人失业、贫困。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "什么是经济大萧条？",
+          "answer": "现代史上最长的经济衰退——很长一段时间里许多人失业、贫困。",
+          "spoken": "现代史上最长的经济衰退——很长一段时间里许多人失业、贫困。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué fue la Gran Depresión?",
+          "answer": "La recesión económica más larga de la historia moderna: un largo período en el que mucha gente estaba sin trabajo y en la pobreza.",
+          "spoken": "La recesión económica más larga de la historia moderna: un largo período en el que mucha gente estaba sin trabajo y en la pobreza.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "什麼是經濟大蕭條？",
+          "answer": "現代史上最長的經濟衰退——很長一段時間裡許多人失業、貧困。",
+          "spoken": "現代史上最長的經濟衰退——很長一段時間裡許多人失業、貧困。",
+          "note": null
+        }
+      }
     },
     {
       "n": 104,
@@ -1349,10 +2997,26 @@
       "spoken": "The stock market crash of 1929.",
       "dynamic": false,
       "note": null,
-      "questionZh": "经济大萧条始于何时？",
-      "answerZh": "1929年股市崩盘。",
-      "spokenZh": "1929年股市崩盘。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "经济大萧条始于何时？",
+          "answer": "1929年股市崩盘。",
+          "spoken": "1929年股市崩盘。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuándo comenzó la Gran Depresión?",
+          "answer": "Con el desplome de la bolsa de 1929.",
+          "spoken": "Con el desplome de la bolsa de 1929.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "經濟大蕭條始於何時？",
+          "answer": "1929年股市崩盤。",
+          "spoken": "1929年股市崩盤。",
+          "note": null
+        }
+      }
     },
     {
       "n": 105,
@@ -1362,10 +3026,26 @@
       "spoken": "Franklin Roosevelt.",
       "dynamic": false,
       "note": null,
-      "questionZh": "经济大萧条和第二次世界大战期间的美国总统是谁？",
-      "answerZh": "富兰克林·罗斯福。",
-      "spokenZh": "富兰克林·罗斯福。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "经济大萧条和第二次世界大战期间的美国总统是谁？",
+          "answer": "富兰克林·罗斯福。",
+          "spoken": "富兰克林·罗斯福。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién fue Presidente durante la Gran Depresión y la Segunda Guerra Mundial?",
+          "answer": "Franklin Roosevelt.",
+          "spoken": "Franklin Roosevelt.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "經濟大蕭條和第二次世界大戰期間的美國總統是誰？",
+          "answer": "富蘭克林·羅斯福。",
+          "spoken": "富蘭克林·羅斯福。",
+          "note": null
+        }
+      }
     },
     {
       "n": 106,
@@ -1375,10 +3055,26 @@
       "spoken": "To support the Allied powers. Also acceptable: after the Japanese attack on Pearl Harbor.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国为什么参加第二次世界大战？",
-      "answerZh": "为了支持同盟国。也可接受：在日本偷袭珍珠港之后。",
-      "spokenZh": "为了支持同盟国。也可接受：在日本偷袭珍珠港之后。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国为什么参加第二次世界大战？",
+          "answer": "为了支持同盟国。也可接受：在日本偷袭珍珠港之后。",
+          "spoken": "为了支持同盟国。也可接受：在日本偷袭珍珠港之后。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué entró Estados Unidos en la Segunda Guerra Mundial?",
+          "answer": "Para apoyar a las potencias Aliadas. También se acepta: tras el ataque japonés a Pearl Harbor.",
+          "spoken": "Para apoyar a las potencias Aliadas. También se acepta: tras el ataque japonés a Pearl Harbor.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國為什麼參加第二次世界大戰？",
+          "answer": "為了支持同盟國。也可接受：在日本偷襲珍珠港之後。",
+          "spoken": "為了支持同盟國。也可接受：在日本偷襲珍珠港之後。",
+          "note": null
+        }
+      }
     },
     {
       "n": 107,
@@ -1388,10 +3084,26 @@
       "spoken": "General during World War II. Also acceptable: 34th President, Supreme Allied Commander, started the Interstate Highway System.",
       "dynamic": false,
       "note": null,
-      "questionZh": "德怀特·艾森豪威尔因许多事而闻名。说出其中一件。",
-      "answerZh": "第二次世界大战期间的将军。也可接受：第三十四任总统、盟军最高统帅、创建州际公路系统。",
-      "spokenZh": "第二次世界大战期间的将军。也可接受：第三十四任总统、盟军最高统帅、创建州际公路系统。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "德怀特·艾森豪威尔因许多事而闻名。说出其中一件。",
+          "answer": "第二次世界大战期间的将军。也可接受：第三十四任总统、盟军最高统帅、创建州际公路系统。",
+          "spoken": "第二次世界大战期间的将军。也可接受：第三十四任总统、盟军最高统帅、创建州际公路系统。",
+          "note": null
+        },
+        "es": {
+          "question": "Dwight Eisenhower es famoso por muchas cosas. Mencione una.",
+          "answer": "Fue general durante la Segunda Guerra Mundial. También se acepta: el trigésimo cuarto Presidente, Comandante Supremo Aliado, creó el Sistema de Autopistas Interestatales.",
+          "spoken": "Fue general durante la Segunda Guerra Mundial. También se acepta: el trigésimo cuarto Presidente, Comandante Supremo Aliado, creó el Sistema de Autopistas Interestatales.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "德懷特·艾森豪威爾因許多事而聞名。說出其中一件。",
+          "answer": "第二次世界大戰期間的將軍。也可接受：第三十四任總統、盟軍最高統帥、創建州際公路系統。",
+          "spoken": "第二次世界大戰期間的將軍。也可接受：第三十四任總統、盟軍最高統帥、創建州際公路系統。",
+          "note": null
+        }
+      }
     },
     {
       "n": 108,
@@ -1401,10 +3113,26 @@
       "spoken": "The Soviet Union, or Russia.",
       "dynamic": false,
       "note": null,
-      "questionZh": "冷战期间美国的主要对手是谁？",
-      "answerZh": "苏联，即俄国。",
-      "spokenZh": "苏联，即俄国。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "冷战期间美国的主要对手是谁？",
+          "answer": "苏联，即俄国。",
+          "spoken": "苏联，即俄国。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Quién fue el principal rival de Estados Unidos durante la Guerra Fría?",
+          "answer": "La Unión Soviética, es decir, Rusia.",
+          "spoken": "La Unión Soviética, es decir, Rusia.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "冷戰期間美國的主要對手是誰？",
+          "answer": "蘇聯，即俄國。",
+          "spoken": "蘇聯，即俄國。",
+          "note": null
+        }
+      }
     },
     {
       "n": 109,
@@ -1414,10 +3142,26 @@
       "spoken": "Communism. Also acceptable: the spread of communism, nuclear war.",
       "dynamic": false,
       "note": null,
-      "questionZh": "冷战期间美国的一个主要担忧是什么？",
-      "answerZh": "共产主义。也可接受：共产主义的扩散、核战争。",
-      "spokenZh": "共产主义。也可接受：共产主义的扩散、核战争。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "冷战期间美国的一个主要担忧是什么？",
+          "answer": "共产主义。也可接受：共产主义的扩散、核战争。",
+          "spoken": "共产主义。也可接受：共产主义的扩散、核战争。",
+          "note": null
+        },
+        "es": {
+          "question": "Durante la Guerra Fría, ¿cuál era una de las principales preocupaciones de Estados Unidos?",
+          "answer": "El comunismo. También se acepta: la expansión del comunismo, la guerra nuclear.",
+          "spoken": "El comunismo. También se acepta: la expansión del comunismo, la guerra nuclear.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "冷戰期間美國的一個主要擔憂是什麼？",
+          "answer": "共產主義。也可接受：共產主義的擴散、核戰爭。",
+          "spoken": "共產主義。也可接受：共產主義的擴散、核戰爭。",
+          "note": null
+        }
+      }
     },
     {
       "n": 110,
@@ -1427,10 +3171,26 @@
       "spoken": "To stop the spread of communism.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国为什么参加朝鲜战争？",
-      "answerZh": "为了阻止共产主义的扩散。",
-      "spokenZh": "为了阻止共产主义的扩散。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国为什么参加朝鲜战争？",
+          "answer": "为了阻止共产主义的扩散。",
+          "spoken": "为了阻止共产主义的扩散。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué entró Estados Unidos en la Guerra de Corea?",
+          "answer": "Para detener la expansión del comunismo.",
+          "spoken": "Para detener la expansión del comunismo.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國為什麼參加朝鮮戰爭？",
+          "answer": "為了阻止共產主義的擴散。",
+          "spoken": "為了阻止共產主義的擴散。",
+          "note": null
+        }
+      }
     },
     {
       "n": 111,
@@ -1440,10 +3200,26 @@
       "spoken": "To stop the spread of communism.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国为什么参加越南战争？",
-      "answerZh": "为了阻止共产主义的扩散。",
-      "spokenZh": "为了阻止共产主义的扩散。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国为什么参加越南战争？",
+          "answer": "为了阻止共产主义的扩散。",
+          "spoken": "为了阻止共产主义的扩散。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué entró Estados Unidos en la Guerra de Vietnam?",
+          "answer": "Para detener la expansión del comunismo.",
+          "spoken": "Para detener la expansión del comunismo.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國為什麼參加越南戰爭？",
+          "answer": "為了阻止共產主義的擴散。",
+          "spoken": "為了阻止共產主義的擴散。",
+          "note": null
+        }
+      }
     },
     {
       "n": 112,
@@ -1453,10 +3229,26 @@
       "spoken": "Fought to end racial discrimination.",
       "dynamic": false,
       "note": null,
-      "questionZh": "民权运动做了什么？",
-      "answerZh": "为终结种族歧视而斗争。",
-      "spokenZh": "为终结种族歧视而斗争。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "民权运动做了什么？",
+          "answer": "为终结种族歧视而斗争。",
+          "spoken": "为终结种族歧视而斗争。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué hizo el movimiento por los derechos civiles?",
+          "answer": "Luchó para poner fin a la discriminación racial.",
+          "spoken": "Luchó para poner fin a la discriminación racial.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "民權運動做了什麼？",
+          "answer": "為終結種族歧視而鬥爭。",
+          "spoken": "為終結種族歧視而鬥爭。",
+          "note": null
+        }
+      }
     },
     {
       "n": 113,
@@ -1466,10 +3258,26 @@
       "spoken": "He fought for civil rights. Also acceptable: worked for equality for all Americans, or gave the \"I Have a Dream\" speech.",
       "dynamic": false,
       "note": null,
-      "questionZh": "马丁·路德·金因许多事而闻名。说出其中一件。",
-      "answerZh": "他为民权而斗争。也可接受：为所有美国人争取平等；发表“我有一个梦想”的演讲。",
-      "spokenZh": "他为民权而斗争。也可接受：为所有美国人争取平等；发表“我有一个梦想”的演讲。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "马丁·路德·金因许多事而闻名。说出其中一件。",
+          "answer": "他为民权而斗争。也可接受：为所有美国人争取平等；发表“我有一个梦想”的演讲。",
+          "spoken": "他为民权而斗争。也可接受：为所有美国人争取平等；发表“我有一个梦想”的演讲。",
+          "note": null
+        },
+        "es": {
+          "question": "Martin Luther King, Jr. es famoso por muchas cosas. Mencione una.",
+          "answer": "Luchó por los derechos civiles. También se acepta: trabajó por la igualdad de todos los estadounidenses; pronunció el discurso «Tengo un sueño».",
+          "spoken": "Luchó por los derechos civiles. También se acepta: trabajó por la igualdad de todos los estadounidenses; pronunció el discurso «Tengo un sueño».",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "馬丁·路德·金因許多事而聞名。說出其中一件。",
+          "answer": "他為民權而鬥爭。也可接受：為所有美國人爭取平等；發表「我有一個夢想」的演講。",
+          "spoken": "他為民權而鬥爭。也可接受：為所有美國人爭取平等；發表「我有一個夢想」的演講。",
+          "note": null
+        }
+      }
     },
     {
       "n": 114,
@@ -1479,10 +3287,26 @@
       "spoken": "To force the Iraqi military out of Kuwait.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国为什么参加海湾战争？",
-      "answerZh": "为了迫使伊拉克军队撤出科威特。",
-      "spokenZh": "为了迫使伊拉克军队撤出科威特。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国为什么参加海湾战争？",
+          "answer": "为了迫使伊拉克军队撤出科威特。",
+          "spoken": "为了迫使伊拉克军队撤出科威特。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué entró Estados Unidos en la Guerra del Golfo Pérsico?",
+          "answer": "Para expulsar al ejército iraquí de Kuwait.",
+          "spoken": "Para expulsar al ejército iraquí de Kuwait.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國為什麼參加海灣戰爭？",
+          "answer": "為了迫使伊拉克軍隊撤出科威特。",
+          "spoken": "為了迫使伊拉克軍隊撤出科威特。",
+          "note": null
+        }
+      }
     },
     {
       "n": 115,
@@ -1492,10 +3316,26 @@
       "spoken": "Terrorists attacked the United States.",
       "dynamic": false,
       "note": null,
-      "questionZh": "2001年9月11日美国发生了什么重大事件？",
-      "answerZh": "恐怖分子袭击了美国。",
-      "spokenZh": "恐怖分子袭击了美国。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "2001年9月11日美国发生了什么重大事件？",
+          "answer": "恐怖分子袭击了美国。",
+          "spoken": "恐怖分子袭击了美国。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué evento importante ocurrió el 11 de septiembre de 2001 en Estados Unidos?",
+          "answer": "Terroristas atacaron los Estados Unidos.",
+          "spoken": "Terroristas atacaron los Estados Unidos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "2001年9月11日美國發生了什麼重大事件？",
+          "answer": "恐怖分子襲擊了美國。",
+          "spoken": "恐怖分子襲擊了美國。",
+          "note": null
+        }
+      }
     },
     {
       "n": 116,
@@ -1505,10 +3345,26 @@
       "spoken": "The War in Afghanistan. Also acceptable: the War in Iraq or Operation Enduring Freedom or Operation Iraqi Freedom.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出9·11袭击之后美国参与的一场军事冲突。",
-      "answerZh": "阿富汗战争。也可接受：伊拉克战争，即“持久自由行动”或“伊拉克自由行动”。",
-      "spokenZh": "阿富汗战争。也可接受：伊拉克战争，即“持久自由行动”或“伊拉克自由行动”。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出9·11袭击之后美国参与的一场军事冲突。",
+          "answer": "阿富汗战争。也可接受：伊拉克战争，即“持久自由行动”或“伊拉克自由行动”。",
+          "spoken": "阿富汗战争。也可接受：伊拉克战争，即“持久自由行动”或“伊拉克自由行动”。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione un conflicto militar de Estados Unidos después de los atentados del 11 de septiembre.",
+          "answer": "La Guerra de Afganistán. También se acepta: la Guerra de Irak, la Operación Libertad Duradera o la Operación Libertad Iraquí.",
+          "spoken": "La Guerra de Afganistán. También se acepta: la Guerra de Irak, la Operación Libertad Duradera o la Operación Libertad Iraquí.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出9·11襲擊之後美國參與的一場軍事衝突。",
+          "answer": "阿富汗戰爭。也可接受：伊拉克戰爭，即「持久自由行動」或「伊拉克自由行動」。",
+          "spoken": "阿富汗戰爭。也可接受：伊拉克戰爭，即「持久自由行動」或「伊拉克自由行動」。",
+          "note": null
+        }
+      }
     },
     {
       "n": 117,
@@ -1518,10 +3374,26 @@
       "spoken": "For example: Hopi, Navajo, Cherokee, Sioux, Apache, Iroquois, Pueblo, Chippewa, Choctaw, or Seminole. Any federally recognized tribe is acceptable.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出美国一个印第安部落的名称。",
-      "answerZh": "例如：霍皮、纳瓦霍、切罗基、苏族、阿帕奇、易洛魁、普韦布洛、奇佩瓦、乔克托、塞米诺尔。任何联邦承认的部落均可。",
-      "spokenZh": "例如：霍皮、纳瓦霍、切罗基、苏族、阿帕奇、易洛魁、普韦布洛、奇佩瓦、乔克托、塞米诺尔。任何联邦承认的部落均可。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出美国一个印第安部落的名称。",
+          "answer": "例如：霍皮、纳瓦霍、切罗基、苏族、阿帕奇、易洛魁、普韦布洛、奇佩瓦、乔克托、塞米诺尔。任何联邦承认的部落均可。",
+          "spoken": "例如：霍皮、纳瓦霍、切罗基、苏族、阿帕奇、易洛魁、普韦布洛、奇佩瓦、乔克托、塞米诺尔。任何联邦承认的部落均可。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione una tribu de indios americanos.",
+          "answer": "Por ejemplo: hopi, navajo, cheroqui, siux, apache, iroqués, pueblo, chippewa, choctaw o seminola. Se acepta cualquier tribu reconocida a nivel federal.",
+          "spoken": "Por ejemplo: hopi, navajo, cheroqui, siux, apache, iroqués, pueblo, chippewa, choctaw o seminola. Se acepta cualquier tribu reconocida a nivel federal.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出美國一個印第安部落的名稱。",
+          "answer": "例如：霍皮、納瓦霍、切羅基、蘇族、阿帕奇、易洛魁、普韋布洛、奇佩瓦、喬克托、塞米諾爾。任何聯邦承認的部落均可。",
+          "spoken": "例如：霍皮、納瓦霍、切羅基、蘇族、阿帕奇、易洛魁、普韋布洛、奇佩瓦、喬克托、塞米諾爾。任何聯邦承認的部落均可。",
+          "note": null
+        }
+      }
     },
     {
       "n": 118,
@@ -1531,10 +3403,26 @@
       "spoken": "The airplane. Also acceptable: the light bulb, the assembly line, the moon landing, the integrated circuit or microchip.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出一个美国创新的例子。",
-      "answerZh": "飞机。也可接受：电灯泡、流水装配线、登月、集成电路即微芯片。",
-      "spokenZh": "飞机。也可接受：电灯泡、流水装配线、登月、集成电路即微芯片。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出一个美国创新的例子。",
+          "answer": "飞机。也可接受：电灯泡、流水装配线、登月、集成电路即微芯片。",
+          "spoken": "飞机。也可接受：电灯泡、流水装配线、登月、集成电路即微芯片。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione un ejemplo de una innovación estadounidense.",
+          "answer": "El avión. También se acepta: la bombilla eléctrica, la cadena de montaje, el alunizaje, el circuito integrado o microchip.",
+          "spoken": "El avión. También se acepta: la bombilla eléctrica, la cadena de montaje, el alunizaje, el circuito integrado o microchip.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出一個美國創新的例子。",
+          "answer": "飛機。也可接受：電燈泡、流水裝配線、登月、集成電路即微芯片。",
+          "spoken": "飛機。也可接受：電燈泡、流水裝配線、登月、集成電路即微芯片。",
+          "note": null
+        }
+      }
     },
     {
       "n": 119,
@@ -1544,10 +3432,26 @@
       "spoken": "Washington, D.C.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国的首都是哪里？",
-      "answerZh": "华盛顿哥伦比亚特区。",
-      "spokenZh": "华盛顿哥伦比亚特区。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国的首都是哪里？",
+          "answer": "华盛顿哥伦比亚特区。",
+          "spoken": "华盛顿哥伦比亚特区。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cuál es la capital de los Estados Unidos?",
+          "answer": "Washington, Distrito de Columbia.",
+          "spoken": "Washington, Distrito de Columbia.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國的首都是哪裡？",
+          "answer": "華盛頓哥倫比亞特區。",
+          "spoken": "華盛頓哥倫比亞特區。",
+          "note": null
+        }
+      }
     },
     {
       "n": 120,
@@ -1557,10 +3461,26 @@
       "spoken": "New York Harbor, Liberty Island. Also acceptable: New Jersey, near New York City, or on the Hudson River.",
       "dynamic": false,
       "note": null,
-      "questionZh": "自由女神像在哪里？",
-      "answerZh": "纽约港，自由岛。也可接受：新泽西州、纽约市附近、哈德逊河上。",
-      "spokenZh": "纽约港，自由岛。也可接受：新泽西州、纽约市附近、哈德逊河上。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "自由女神像在哪里？",
+          "answer": "纽约港，自由岛。也可接受：新泽西州、纽约市附近、哈德逊河上。",
+          "spoken": "纽约港，自由岛。也可接受：新泽西州、纽约市附近、哈德逊河上。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Dónde está la Estatua de la Libertad?",
+          "answer": "En el puerto de Nueva York, en la Isla de la Libertad. También se acepta: Nueva Jersey, cerca de la ciudad de Nueva York, o en el río Hudson.",
+          "spoken": "En el puerto de Nueva York, en la Isla de la Libertad. También se acepta: Nueva Jersey, cerca de la ciudad de Nueva York, o en el río Hudson.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "自由女神像在哪裡？",
+          "answer": "紐約港，自由島。也可接受：新澤西州、紐約市附近、哈德遜河上。",
+          "spoken": "紐約港，自由島。也可接受：新澤西州、紐約市附近、哈德遜河上。",
+          "note": null
+        }
+      }
     },
     {
       "n": 121,
@@ -1570,10 +3490,26 @@
       "spoken": "Because there were 13 original colonies.",
       "dynamic": false,
       "note": null,
-      "questionZh": "国旗上为什么有13道条纹？",
-      "answerZh": "因为最初有13个殖民地。",
-      "spokenZh": "因为最初有13个殖民地。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "国旗上为什么有13道条纹？",
+          "answer": "因为最初有13个殖民地。",
+          "spoken": "因为最初有13个殖民地。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué la bandera tiene 13 franjas?",
+          "answer": "Porque había 13 colonias originales.",
+          "spoken": "Porque había 13 colonias originales.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "國旗上為什麼有13道條紋？",
+          "answer": "因為最初有13個殖民地。",
+          "spoken": "因為最初有13個殖民地。",
+          "note": null
+        }
+      }
     },
     {
       "n": 122,
@@ -1583,10 +3519,26 @@
       "spoken": "Because there are 50 states.",
       "dynamic": false,
       "note": null,
-      "questionZh": "国旗上为什么有50颗星？",
-      "answerZh": "因为有50个州。",
-      "spokenZh": "因为有50个州。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "国旗上为什么有50颗星？",
+          "answer": "因为有50个州。",
+          "spoken": "因为有50个州。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Por qué la bandera tiene 50 estrellas?",
+          "answer": "Porque hay 50 estados.",
+          "spoken": "Porque hay 50 estados.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "國旗上為什麼有50顆星？",
+          "answer": "因為有50個州。",
+          "spoken": "因為有50個州。",
+          "note": null
+        }
+      }
     },
     {
       "n": 123,
@@ -1596,10 +3548,26 @@
       "spoken": "The Star-Spangled Banner.",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国国歌的名字是什么？",
-      "answerZh": "《星条旗》。",
-      "spokenZh": "《星条旗》。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国国歌的名字是什么？",
+          "answer": "《星条旗》。",
+          "spoken": "《星条旗》。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Cómo se llama el himno nacional?",
+          "answer": "La Bandera Estrellada.",
+          "spoken": "La Bandera Estrellada.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國國歌的名字是什麼？",
+          "answer": "《星條旗》。",
+          "spoken": "《星條旗》。",
+          "note": null
+        }
+      }
     },
     {
       "n": 124,
@@ -1609,10 +3577,26 @@
       "spoken": "\"Out of many, one\".",
       "dynamic": false,
       "note": null,
-      "questionZh": "美国第一句国家格言是“E Pluribus Unum”。它是什么意思？",
-      "answerZh": "“合众为一”。",
-      "spokenZh": "“合众为一”。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "美国第一句国家格言是“E Pluribus Unum”。它是什么意思？",
+          "answer": "“合众为一”。",
+          "spoken": "“合众为一”。",
+          "note": null
+        },
+        "es": {
+          "question": "El primer lema de la nación fue «E Pluribus Unum». ¿Qué significa?",
+          "answer": "«De muchos, uno».",
+          "spoken": "«De muchos, uno».",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "美國第一句國家格言是「E Pluribus Unum」。它是什麼意思？",
+          "answer": "「合眾為一」。",
+          "spoken": "「合眾為一」。",
+          "note": null
+        }
+      }
     },
     {
       "n": 125,
@@ -1622,10 +3606,26 @@
       "spoken": "A holiday celebrating the country's birthday: the adoption of the Declaration of Independence, the Fourth of July.",
       "dynamic": false,
       "note": null,
-      "questionZh": "什么是独立日？",
-      "answerZh": "庆祝国家生日的节日——《独立宣言》的通过，即七月四日。",
-      "spokenZh": "庆祝国家生日的节日——《独立宣言》的通过，即七月四日。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "什么是独立日？",
+          "answer": "庆祝国家生日的节日——《独立宣言》的通过，即七月四日。",
+          "spoken": "庆祝国家生日的节日——《独立宣言》的通过，即七月四日。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué es el Día de la Independencia?",
+          "answer": "Una fiesta que celebra el cumpleaños del país: la adopción de la Declaración de Independencia, el Cuatro de Julio.",
+          "spoken": "Una fiesta que celebra el cumpleaños del país: la adopción de la Declaración de Independencia, el Cuatro de Julio.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "什麼是獨立日？",
+          "answer": "慶祝國家生日的節日——《獨立宣言》的通過，即七月四日。",
+          "spoken": "慶祝國家生日的節日——《獨立宣言》的通過，即七月四日。",
+          "note": null
+        }
+      }
     },
     {
       "n": 126,
@@ -1635,10 +3635,26 @@
       "spoken": "For example: Independence Day, Thanksgiving, and Christmas. Also acceptable: New Year's Day, Memorial Day, Labor Day, Veterans Day, Martin Luther King Jr. Day, Presidents' Day, Juneteenth, Columbus Day.",
       "dynamic": false,
       "note": null,
-      "questionZh": "说出三个美国全国性节日。",
-      "answerZh": "例如：独立日、感恩节和圣诞节。也可接受：元旦、阵亡将士纪念日、劳动节、退伍军人节、马丁·路德·金纪念日、总统日、六月节、哥伦布日。",
-      "spokenZh": "例如：独立日、感恩节和圣诞节。也可接受：元旦、阵亡将士纪念日、劳动节、退伍军人节、马丁·路德·金纪念日、总统日、六月节、哥伦布日。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "说出三个美国全国性节日。",
+          "answer": "例如：独立日、感恩节和圣诞节。也可接受：元旦、阵亡将士纪念日、劳动节、退伍军人节、马丁·路德·金纪念日、总统日、六月节、哥伦布日。",
+          "spoken": "例如：独立日、感恩节和圣诞节。也可接受：元旦、阵亡将士纪念日、劳动节、退伍军人节、马丁·路德·金纪念日、总统日、六月节、哥伦布日。",
+          "note": null
+        },
+        "es": {
+          "question": "Mencione tres fiestas nacionales de Estados Unidos.",
+          "answer": "Por ejemplo: el Día de la Independencia, el Día de Acción de Gracias y la Navidad. También se acepta: el Año Nuevo, el Día de los Caídos, el Día del Trabajo, el Día de los Veteranos, el Día de Martin Luther King Jr., el Día de los Presidentes, el Juneteenth, el Día de Colón.",
+          "spoken": "Por ejemplo: el Día de la Independencia, el Día de Acción de Gracias y la Navidad. También se acepta: el Año Nuevo, el Día de los Caídos, el Día del Trabajo, el Día de los Veteranos, el Día de Martin Luther King Jr., el Día de los Presidentes, el Juneteenth, el Día de Colón.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "說出三個美國全國性節日。",
+          "answer": "例如：獨立日、感恩節和聖誕節。也可接受：元旦、陣亡將士紀念日、勞動節、退伍軍人節、馬丁·路德·金紀念日、總統日、六月節、哥倫布日。",
+          "spoken": "例如：獨立日、感恩節和聖誕節。也可接受：元旦、陣亡將士紀念日、勞動節、退伍軍人節、馬丁·路德·金紀念日、總統日、六月節、哥倫布日。",
+          "note": null
+        }
+      }
     },
     {
       "n": 127,
@@ -1648,10 +3664,26 @@
       "spoken": "A holiday to honor soldiers who died in military service.",
       "dynamic": false,
       "note": null,
-      "questionZh": "什么是阵亡将士纪念日？",
-      "answerZh": "悼念在军队服役中牺牲士兵的节日。",
-      "spokenZh": "悼念在军队服役中牺牲士兵的节日。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "什么是阵亡将士纪念日？",
+          "answer": "悼念在军队服役中牺牲士兵的节日。",
+          "spoken": "悼念在军队服役中牺牲士兵的节日。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué es el Día de los Caídos?",
+          "answer": "Una fiesta para honrar a los soldados que murieron en el servicio militar.",
+          "spoken": "Una fiesta para honrar a los soldados que murieron en el servicio militar.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "什麼是陣亡將士紀念日？",
+          "answer": "悼念在軍隊服役中犧牲士兵的節日。",
+          "spoken": "悼念在軍隊服役中犧牲士兵的節日。",
+          "note": null
+        }
+      }
     },
     {
       "n": 128,
@@ -1661,10 +3693,26 @@
       "spoken": "A holiday to honor people who served in the U.S. military.",
       "dynamic": false,
       "note": null,
-      "questionZh": "什么是退伍军人节？",
-      "answerZh": "向曾在美国军队服役者致敬的节日。",
-      "spokenZh": "向曾在美国军队服役者致敬的节日。",
-      "noteZh": null
+      "translations": {
+        "zh-Hans": {
+          "question": "什么是退伍军人节？",
+          "answer": "向曾在美国军队服役者致敬的节日。",
+          "spoken": "向曾在美国军队服役者致敬的节日。",
+          "note": null
+        },
+        "es": {
+          "question": "¿Qué es el Día de los Veteranos?",
+          "answer": "Una fiesta para honrar a quienes sirvieron en las fuerzas armadas de Estados Unidos.",
+          "spoken": "Una fiesta para honrar a quienes sirvieron en las fuerzas armadas de Estados Unidos.",
+          "note": null
+        },
+        "zh-Hant": {
+          "question": "什麼是退伍軍人節？",
+          "answer": "向曾在美國軍隊服役者致敬的節日。",
+          "spoken": "向曾在美國軍隊服役者致敬的節日。",
+          "note": null
+        }
+      }
     }
   ]
 }

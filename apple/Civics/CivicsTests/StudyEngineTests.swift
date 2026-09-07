@@ -97,13 +97,14 @@ struct StudyEngineTests {
     private func makeEngine(
         settings: SettingsBox,
         scheduler: ManualScheduler = ManualScheduler(),
+        repo: QuestionRepository? = nil,
         onKnownChanged: @escaping (Int, Bool) -> Void = { _, _ in },
         onTestFinished: @escaping (TestRecord) -> Void = { _ in }
     ) -> (StudyEngine, FakeSpeechEngine) {
         let speech = FakeSpeechEngine()
         let engine = StudyEngine(
             speech: speech,
-            repo: repo,
+            repo: repo ?? self.repo,
             settings: settings,
             scheduler: scheduler,
             onKnownChanged: onKnownChanged,
@@ -262,67 +263,137 @@ struct StudyEngineTests {
         #expect(speech.spoken.last?.text == repo.byNumber(1)?.question)
     }
 
-    // MARK: - Speech modes
+    // MARK: - Spoken languages
 
-    @Test func bilingualModeSpeaksEnglishThenChineseInEachPhase() {
-        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(speechMode: .bilingual)))
+    @Test func bilingualModeSpeaksEnglishThenTheTranslationInEachPhase() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(spokenLanguage: .chineseSimplified, bilingual: true)))
         engine.primaryAction()
         #expect(speech.spoken.last?.utteranceID == "q-1")
-        speech.finishLast() // English question done -> Chinese question
+        speech.finishLast() // English question done -> translated question
         #expect(engine.state.phase == .speakingQuestion)
         #expect(speech.spoken.last?.utteranceID == "zq-1")
-        #expect(speech.spoken.last?.language == .chinese)
+        #expect(speech.spoken.last?.language == .chineseSimplified)
         #expect(speech.spoken.last?.text.hasPrefix("第 1 题。") == true)
-        speech.finishLast() // Chinese question done -> think pause
+        speech.finishLast() // translated question done -> think pause
         #expect(engine.state.phase == .thinking)
 
         engine.primaryAction() // reveal
         #expect(speech.spoken.last?.utteranceID == "a-1")
-        speech.finishLast() // English answer done -> Chinese answer
+        speech.finishLast() // English answer done -> translated answer
         #expect(speech.spoken.last?.utteranceID == "za-1")
-        #expect(speech.spoken.last?.language == .chinese)
-        speech.finishLast() // Chinese answer done -> awaiting
+        #expect(speech.spoken.last?.language == .chineseSimplified)
+        speech.finishLast() // translated answer done -> awaiting
         #expect(engine.state.phase == .awaitingAdvance)
 
         engine.primaryAction() // next
         #expect(speech.spoken.last?.utteranceID == "q-2")
     }
 
-    @Test func chineseModeSpeaksOnlyChinese() {
-        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(speechMode: .chinese)))
+    @Test func chineseOnlyModeSpeaksOnlyChinese() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(spokenLanguage: .chineseSimplified)))
         engine.primaryAction()
         #expect(speech.spoken.last?.utteranceID == "zq-1")
-        #expect(speech.spoken.last?.language == .chinese)
+        #expect(speech.spoken.last?.language == .chineseSimplified)
         speech.finishLast()
         #expect(engine.state.phase == .thinking)
         engine.primaryAction()
         #expect(speech.spoken.last?.utteranceID == "za-1")
-        #expect(speech.spoken.last?.text == repo.byNumber(1)?.spokenZh)
+        #expect(speech.spoken.last?.text == repo.byNumber(1)?.translation(.chineseSimplified)?.spoken)
         speech.finishLast()
         #expect(engine.state.phase == .awaitingAdvance)
     }
 
-    @Test func bilingualAnnounceMetaOffDropsTheZhPrefix() {
-        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(announceMeta: false, speechMode: .bilingual)))
+    @Test func bilingualSpanishSpeaksEnglishThenSpanishInEachPhase() {
+        let (engine, speech) = makeEngine(
+            settings: SettingsBox(StudySettings(spokenLanguage: .spanish, bilingual: true)),
+            repo: QuestionRepository(jsonSource: { Data(Self.esAndZhHantJson.utf8) })
+        )
+        engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "q-1")
+        #expect(speech.spoken.last?.language == .english)
+        speech.finishLast() // English question done -> Spanish question
+        #expect(speech.spoken.last?.utteranceID == "zq-1")
+        #expect(speech.spoken.last?.language == .spanish)
+        #expect(speech.spoken.last?.text.hasPrefix("Pregunta 1.") == true)
+        speech.finishLast()
+        #expect(engine.state.phase == .thinking)
+
+        engine.primaryAction() // reveal
+        #expect(speech.spoken.last?.utteranceID == "a-1")
+        speech.finishLast() // English answer done -> Spanish answer
+        #expect(speech.spoken.last?.utteranceID == "za-1")
+        #expect(speech.spoken.last?.language == .spanish)
+        speech.finishLast()
+        #expect(engine.state.phase == .awaitingAdvance)
+    }
+
+    @Test func traditionalChineseUsesTheHantAnnouncePrefix() {
+        let (engine, speech) = makeEngine(
+            settings: SettingsBox(StudySettings(spokenLanguage: .chineseTraditional)),
+            repo: QuestionRepository(jsonSource: { Data(Self.esAndZhHantJson.utf8) })
+        )
+        engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "zq-1")
+        #expect(speech.spoken.last?.language == .chineseTraditional)
+        #expect(speech.spoken.last?.text.hasPrefix("第 1 題。") == true)
+        speech.finishLast()
+        #expect(engine.state.phase == .thinking)
+        engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "za-1")
+        #expect(speech.spoken.last?.text == "繁體答案朗讀")
+    }
+
+    @Test func bilingualAnnounceMetaOffDropsTheTranslationPrefix() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(announceMeta: false, spokenLanguage: .chineseSimplified, bilingual: true)))
         engine.primaryAction()
         speech.finishLast()
-        #expect(speech.spoken.last?.text == repo.byNumber(1)?.questionZh)
+        #expect(speech.spoken.last?.text == repo.byNumber(1)?.translation(.chineseSimplified)?.question)
     }
 
     @Test func chineseModeWithoutTranslationFallsBackToEnglish() {
-        // A single-question repo without zh fields simulates untranslated data.
-        let json = """
-        {"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null}]}
-        """.data(using: .utf8)!
-        let single = QuestionRepository(jsonSource: { json })
-        let speech = FakeSpeechEngine()
-        let engine = StudyEngine(
-            speech: speech, repo: single, settings: SettingsBox(StudySettings(speechMode: .chinese)),
-            scheduler: ManualScheduler())
+        // A single-question repo without any translations simulates untranslated data.
+        let single = QuestionRepository(jsonSource: { Data(Self.noTranslationsJson.utf8) })
+        let (engine, speech) = makeEngine(
+            settings: SettingsBox(StudySettings(spokenLanguage: .chineseSimplified)),
+            repo: single
+        )
         engine.primaryAction()
-        #expect(speech.spoken.last?.utteranceID == "q-1") // no questionZh -> English fallback
+        #expect(speech.spoken.last?.utteranceID == "q-1") // no translation -> English fallback
         #expect(speech.spoken.last?.language == .english)
     }
+
+    @Test func spanishWithoutASpanishTranslationFallsBackToEnglish() {
+        // The repo has zh-Hans but not es: the selected language drives the fallback.
+        let single = QuestionRepository(jsonSource: { Data(Self.zhHansOnlyJson.utf8) })
+        let (engine, speech) = makeEngine(
+            settings: SettingsBox(StudySettings(spokenLanguage: .spanish, bilingual: true)),
+            repo: single
+        )
+        engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "q-1")
+        #expect(speech.spoken.last?.language == .english)
+        speech.finishLast() // no es translation -> think pause, no z-leg
+        #expect(engine.state.phase == .thinking)
+        engine.primaryAction() // reveal
+        #expect(speech.spoken.last?.utteranceID == "a-1")
+        #expect(speech.spoken.last?.language == .english)
+        speech.finishLast()
+        #expect(engine.state.phase == .awaitingAdvance)
+    }
+
+    // MARK: - Fixtures
+
+    private static let noTranslationsJson = """
+    {"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null}]}
+    """
+
+    private static let zhHansOnlyJson = """
+    {"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null,"translations":{"zh-Hans":{"question":"简体题目","answer":"简体答案","spoken":"简体答案朗读"}}}]}
+    """
+
+    private static let esAndZhHantJson = """
+    {"questions":[{"n":1,"category":"American Government","question":"Q?","answer":"A","spoken":"A spoken","dynamic":false,"note":null,"translations":{"es":{"question":"¿Pregunta de ejemplo?","answer":"Respuesta","spoken":"Respuesta hablada"},"zh-Hant":{"question":"繁體題目","answer":"繁體答案","spoken":"繁體答案朗讀"}}}]}
+    """
 
     // MARK: - Practice test mode
 
