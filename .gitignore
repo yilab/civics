@@ -12,6 +12,7 @@
 /android/build
 /android/captures
 /android/.idea/caches
+/android/.idea/deploymentTargetSelector.xml
 .externalNativeBuild
 .cxx
 local.properties
