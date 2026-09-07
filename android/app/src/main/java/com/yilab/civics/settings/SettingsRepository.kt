@@ -40,7 +40,7 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
         .map { prefs ->
             StudySettings(
                 speechRate = prefs[Keys.SPEECH_RATE] ?: 1.0f,
-                thinkSeconds = prefs[Keys.THINK_SECONDS] ?: StudySettings.THINK_WAIT_FOR_PRESS,
+                thinkSeconds = prefs[Keys.THINK_SECONDS] ?: 3,
                 autoAdvance = prefs[Keys.AUTO_ADVANCE] ?: false,
                 category = prefs[Keys.CATEGORY] ?: com.yilab.civics.data.Categories.ALL,
                 shuffle = prefs[Keys.SHUFFLE] ?: false,

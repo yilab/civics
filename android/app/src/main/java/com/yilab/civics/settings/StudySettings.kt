@@ -11,7 +11,7 @@ enum class UiLanguage { SYSTEM, ENGLISH, CHINESE }
 data class StudySettings(
     val speechRate: Float = 1.0f,
     /** Seconds to pause between question and answer. [THINK_WAIT_FOR_PRESS] = wait for a button press. */
-    val thinkSeconds: Int = THINK_WAIT_FOR_PRESS,
+    val thinkSeconds: Int = 3,
     /** Automatically move to the next question after the answer has been spoken. */
     val autoAdvance: Boolean = false,
     val category: String = Categories.ALL,

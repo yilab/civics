@@ -20,7 +20,7 @@ enum UiLanguage: Equatable, CaseIterable {
 struct StudySettings: Equatable {
     var speechRate: Float = 1.0
     /// Seconds to pause between question and answer. `thinkWaitForPress` = wait for a button press.
-    var thinkSeconds: Int = StudySettings.thinkWaitForPress
+    var thinkSeconds: Int = 3
     /// Automatically move to the next question after the answer has been spoken.
     var autoAdvance: Bool = false
     var category: String = Categories.all

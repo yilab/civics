@@ -24,11 +24,12 @@ enum AppDestination: Hashable {
 
 struct RootView: View {
     @Environment(AppModel.self) private var model
+    @State private var selected: AppDestination = .listen
 
     var body: some View {
         let zhPrimary = model.settingsRepo.settings.uiLanguage == .chinese
-        TabView {
-            Tab(L10n.t(AppDestination.listen.labelKey), systemImage: AppDestination.listen.icon) {
+        TabView(selection: $selected) {
+            Tab(L10n.t(AppDestination.listen.labelKey), systemImage: AppDestination.listen.icon, value: .listen) {
                 // Transport is routed through the playback coordinator so on-screen
                 // and AirPod presses behave identically.
                 ListenScreen(
@@ -42,7 +43,7 @@ struct RootView: View {
                     onToggleKnown: { model.engine.toggleKnown($0) }
                 )
             }
-            Tab(L10n.t(AppDestination.questions.labelKey), systemImage: AppDestination.questions.icon) {
+            Tab(L10n.t(AppDestination.questions.labelKey), systemImage: AppDestination.questions.icon, value: .questions) {
                 QuestionsScreen(
                     questions: model.questionRepo.questions,
                     known: model.engine.state.known,
@@ -51,7 +52,7 @@ struct RootView: View {
                     onJump: { model.engine.jumpTo($0) }
                 )
             }
-            Tab(L10n.t(AppDestination.test.labelKey), systemImage: AppDestination.test.icon) {
+            Tab(L10n.t(AppDestination.test.labelKey), systemImage: AppDestination.test.icon, value: .test) {
                 TestScreen(
                     state: model.engine.state,
                     history: model.settingsRepo.testHistory,
@@ -62,7 +63,7 @@ struct RootView: View {
                     onBackToStudy: { model.engine.startStudy() }
                 )
             }
-            Tab(L10n.t(AppDestination.settings.labelKey), systemImage: AppDestination.settings.icon) {
+            Tab(L10n.t(AppDestination.settings.labelKey), systemImage: AppDestination.settings.icon, value: .settings) {
                 SettingsScreen(
                     settings: model.settingsRepo.settings,
                     onChange: { transform in model.settingsRepo.update(transform) }
@@ -70,7 +71,7 @@ struct RootView: View {
             }
         }
         // Rebuild the whole tree when the in-app language changes so every
-        // string re-resolves against the new bundle.
+        // string re-resolves against the new bundle. Selection is preserved.
         .id(model.settingsRepo.settings.uiLanguage)
     }
 }

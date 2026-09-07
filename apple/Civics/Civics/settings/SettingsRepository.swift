@@ -61,7 +61,7 @@ final class SettingsRepository: SettingsSource {
             speechRate: defaults.object(forKey: Keys.speechRate) == nil
                 ? 1.0 : Float(defaults.double(forKey: Keys.speechRate)),
             thinkSeconds: defaults.object(forKey: Keys.thinkSeconds) == nil
-                ? StudySettings.thinkWaitForPress : defaults.integer(forKey: Keys.thinkSeconds),
+                ? 3 : defaults.integer(forKey: Keys.thinkSeconds),
             autoAdvance: bool(Keys.autoAdvance, false),
             category: defaults.string(forKey: Keys.category) ?? Categories.all,
             shuffle: bool(Keys.shuffle, false),
