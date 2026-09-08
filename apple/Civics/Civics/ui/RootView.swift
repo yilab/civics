@@ -29,8 +29,8 @@ struct RootView: View {
     var body: some View {
         let settings = model.settingsRepo.settings
         let spoken = settings.spokenLanguage
-        // The translation takes visual precedence when the UI language matches it.
-        let translationPrimary = settings.uiLanguage.speechLanguage == spoken && spoken != .english
+        // The translation takes visual precedence when a non-English language is chosen.
+        let translationPrimary = settings.translationPrimary
         TabView(selection: $selected) {
             Tab(L10n.t(AppDestination.listen.labelKey), systemImage: AppDestination.listen.icon, value: .listen) {
                 // Transport is routed through the playback coordinator so on-screen
@@ -54,7 +54,8 @@ struct RootView: View {
                     currentNumber: model.engine.state.current?.n,
                     language: spoken,
                     translationPrimary: translationPrimary,
-                    onJump: { model.engine.jumpTo($0) }
+                    onJump: { model.engine.jumpTo($0) },
+                    onToggleKnown: { model.engine.toggleKnown($0) }
                 )
             }
             Tab(L10n.t(AppDestination.test.labelKey), systemImage: AppDestination.test.icon, value: .test) {
@@ -78,6 +79,6 @@ struct RootView: View {
         }
         // Rebuild the whole tree when the in-app language changes so every
         // string re-resolves against the new bundle. Selection is preserved.
-        .id(model.settingsRepo.settings.uiLanguage)
+        .id(model.settingsRepo.settings.language)
     }
 }

@@ -99,7 +99,7 @@ const questions = Q.map((item) => {
   const translations = {
     'zh-Hans': { question: zh.q, answer: zh.a, spoken: zh.a, note: zh.note ?? null },
   };
-  for (const code of ['es', 'zh-Hant']) {
+  for (const code of ['es', 'zh-Hant', 'vi', 'tl', 'ko', 'ar', 'hi', 'pt', 'ru']) {
     const t = extra[code]?.[item.n];
     if (!t || !t.q || !t.a) throw new Error(`missing ${code} translation for question ${item.n}`);
     translations[code] = { question: t.q, answer: t.a, spoken: t.a, note: t.note ?? null };

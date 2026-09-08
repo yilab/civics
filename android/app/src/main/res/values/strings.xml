@@ -45,6 +45,10 @@
     <string name="listen_known">Known</string>
     <string name="questions_playing_suffix"> · playing</string>
     <string name="questions_known">Known</string>
+    <string name="questions_known_only">Show known only</string>
+    <string name="questions_unmark">Unmark as known</string>
+    <string name="questions_mark">Mark as known</string>
+
 
     <string name="settings_voice">Voice</string>
     <string name="settings_language">Language</string>

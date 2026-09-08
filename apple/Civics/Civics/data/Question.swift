@@ -10,11 +10,19 @@ struct Translation: Hashable, Decodable {
 }
 
 /// A language the study loop can speak, with its TTS locale and translation key.
+/// This is the single language list shared by speech and the UI.
 enum SpeechLanguage: CaseIterable {
     case english
     case chineseSimplified
     case chineseTraditional
     case spanish
+    case vietnamese
+    case tagalog
+    case korean
+    case arabic
+    case hindi
+    case portuguese
+    case russian
 
     /// Key into `Question.translations`; English has no entry (it is the canonical text).
     var translationKey: String {
@@ -23,6 +31,13 @@ enum SpeechLanguage: CaseIterable {
         case .chineseSimplified: "zh-Hans"
         case .chineseTraditional: "zh-Hant"
         case .spanish: "es"
+        case .vietnamese: "vi"
+        case .tagalog: "tl"
+        case .korean: "ko"
+        case .arabic: "ar"
+        case .hindi: "hi"
+        case .portuguese: "pt"
+        case .russian: "ru"
         }
     }
 
@@ -33,6 +48,13 @@ enum SpeechLanguage: CaseIterable {
         case .chineseSimplified: "zh-CN"
         case .chineseTraditional: "zh-TW"
         case .spanish: "es-US"
+        case .vietnamese: "vi-VN"
+        case .tagalog: "fil-PH"
+        case .korean: "ko-KR"
+        case .arabic: "ar-SA"
+        case .hindi: "hi-IN"
+        case .portuguese: "pt-BR"
+        case .russian: "ru-RU"
         }
     }
 
@@ -43,6 +65,30 @@ enum SpeechLanguage: CaseIterable {
         case .chineseSimplified: "第 \(n) 题。"
         case .chineseTraditional: "第 \(n) 題。"
         case .spanish: "Pregunta \(n)."
+        case .vietnamese: "Câu \(n)."
+        case .tagalog: "Tanong \(n)."
+        case .korean: "질문 \(n)."
+        case .arabic: "السؤال \(n)."
+        case .hindi: "प्रश्न \(n)."
+        case .portuguese: "Pergunta \(n)."
+        case .russian: "Вопрос \(n)."
+        }
+    }
+
+    /// Self-name shown in the language picker (autonym).
+    var displayName: String {
+        switch self {
+        case .english: "English"
+        case .chineseSimplified: "简体中文"
+        case .chineseTraditional: "繁體中文"
+        case .spanish: "Español"
+        case .vietnamese: "Tiếng Việt"
+        case .tagalog: "Tagalog"
+        case .korean: "한국어"
+        case .arabic: "العربية"
+        case .hindi: "हिन्दी"
+        case .portuguese: "Português"
+        case .russian: "Русский"
         }
     }
 }

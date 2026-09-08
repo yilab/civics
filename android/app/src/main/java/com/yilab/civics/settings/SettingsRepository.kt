@@ -32,20 +32,43 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
         val SHUFFLE = booleanPreferencesKey("shuffle")
         val ANNOUNCE_META = booleanPreferencesKey("announce_meta")
         val KNOWN = stringSetPreferencesKey("known")
+        /** The single merged language setting. */
+        val LANGUAGE = stringPreferencesKey("language")
+        /** Legacy keys read once for migration, never written. */
         val SPOKEN_LANGUAGE = stringPreferencesKey("spoken_language")
         val BILINGUAL = booleanPreferencesKey("bilingual")
         val UI_LANGUAGE = stringPreferencesKey("ui_language")
-        /** Pre-N-language key, read once for migration and never written. */
         val LEGACY_SPEECH_MODE = stringPreferencesKey("speech_mode")
         val TEST_HISTORY = stringPreferencesKey("test_history")
     }
 
+    private fun languageFor(raw: String?): SpeechLanguage? = when (raw) {
+        "english" -> SpeechLanguage.ENGLISH
+        "zh-Hans", "chinese" -> SpeechLanguage.CHINESE_SIMPLIFIED
+        "zh-Hant" -> SpeechLanguage.CHINESE_TRADITIONAL
+        "es" -> SpeechLanguage.SPANISH
+        "vi" -> SpeechLanguage.VIETNAMESE
+        "tl" -> SpeechLanguage.TAGALOG
+        "ko" -> SpeechLanguage.KOREAN
+        "ar" -> SpeechLanguage.ARABIC
+        "hi" -> SpeechLanguage.HINDI
+        "pt" -> SpeechLanguage.PORTUGUESE
+        "ru" -> SpeechLanguage.RUSSIAN
+        else -> null
+    }
+
+    private fun languageName(language: SpeechLanguage?): String? =
+        language?.let { if (it.translationKey == "en") "english" else it.translationKey }
+
     val settings: StateFlow<StudySettings> = store.data
         .map { prefs ->
-            // Migrate the old speech_mode (english/chinese/bilingual) into
-            // spoken_language + bilingual when the new key has never been written.
-            val legacyMode = prefs[Keys.LEGACY_SPEECH_MODE]
-            val hasSpokenLanguage = prefs[Keys.SPOKEN_LANGUAGE] != null
+            // Resolve the merged language, migrating from the older split keys:
+            // language, then ui_language, then spoken_language, then speech_mode.
+            val resolvedLanguage = languageFor(prefs[Keys.LANGUAGE])
+                ?: languageFor(prefs[Keys.UI_LANGUAGE])
+                ?: languageFor(prefs[Keys.SPOKEN_LANGUAGE])
+                ?: prefs[Keys.LEGACY_SPEECH_MODE]
+                    ?.let { languageFor(if (it == "english") "english" else "zh-Hans") }
             StudySettings(
                 speechRate = prefs[Keys.SPEECH_RATE] ?: 1.0f,
                 thinkSeconds = prefs[Keys.THINK_SECONDS] ?: 3,
@@ -54,24 +77,7 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
                 shuffle = prefs[Keys.SHUFFLE] ?: false,
                 announceMeta = prefs[Keys.ANNOUNCE_META] ?: true,
                 known = prefs[Keys.KNOWN].orEmpty().mapNotNull { it.toIntOrNull() }.toSet(),
-                spokenLanguage = when (prefs[Keys.SPOKEN_LANGUAGE]) {
-                    "zh-Hans" -> SpeechLanguage.CHINESE_SIMPLIFIED
-                    "zh-Hant" -> SpeechLanguage.CHINESE_TRADITIONAL
-                    "es" -> SpeechLanguage.SPANISH
-                    "english" -> SpeechLanguage.ENGLISH
-                    else -> when (legacyMode) {
-                        "bilingual", "chinese" -> SpeechLanguage.CHINESE_SIMPLIFIED
-                        else -> SpeechLanguage.ENGLISH
-                    }
-                },
-                bilingual = prefs[Keys.BILINGUAL] ?: (!hasSpokenLanguage && legacyMode == "bilingual"),
-                uiLanguage = when (prefs[Keys.UI_LANGUAGE]) {
-                    "english" -> UiLanguage.ENGLISH
-                    "zh-Hans", "chinese" -> UiLanguage.CHINESE_SIMPLIFIED // "chinese" is the pre-N-language value
-                    "zh-Hant" -> UiLanguage.CHINESE_TRADITIONAL
-                    "es" -> UiLanguage.SPANISH
-                    else -> UiLanguage.SYSTEM
-                },
+                language = resolvedLanguage,
             )
         }
         .stateIn(scope, SharingStarted.Eagerly, StudySettings())
@@ -86,20 +92,8 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
             prefs[Keys.SHUFFLE] = s.shuffle
             prefs[Keys.ANNOUNCE_META] = s.announceMeta
             prefs[Keys.KNOWN] = s.known.map { it.toString() }.toSet()
-            prefs[Keys.SPOKEN_LANGUAGE] = when (s.spokenLanguage) {
-                SpeechLanguage.ENGLISH -> "english"
-                SpeechLanguage.CHINESE_SIMPLIFIED -> "zh-Hans"
-                SpeechLanguage.CHINESE_TRADITIONAL -> "zh-Hant"
-                SpeechLanguage.SPANISH -> "es"
-            }
-            prefs[Keys.BILINGUAL] = s.bilingual
-            prefs[Keys.UI_LANGUAGE] = when (s.uiLanguage) {
-                UiLanguage.SYSTEM -> "system"
-                UiLanguage.ENGLISH -> "english"
-                UiLanguage.CHINESE_SIMPLIFIED -> "zh-Hans"
-                UiLanguage.CHINESE_TRADITIONAL -> "zh-Hant"
-                UiLanguage.SPANISH -> "es"
-            }
+            val name = languageName(s.language)
+            if (name == null) prefs.remove(Keys.LANGUAGE) else prefs[Keys.LANGUAGE] = name
         }
     }
 

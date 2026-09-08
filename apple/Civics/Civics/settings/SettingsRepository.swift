@@ -21,31 +21,36 @@ final class SettingsRepository: SettingsSource {
         static let shuffle = "shuffle"
         static let announceMeta = "announce_meta"
         static let known = "known"
+        /// The single merged language setting.
+        static let language = "language"
+        /// Legacy keys read once for migration, never written.
         static let spokenLanguage = "spoken_language"
         static let bilingual = "bilingual"
         static let uiLanguage = "ui_language"
-        /// Pre-N-language keys, read once for migration and never written.
         static let legacySpeechMode = "speech_mode"
         static let testHistory = "test_history"
     }
 
-    private static func spokenLanguage(_ raw: String?) -> SpeechLanguage {
+    private static func language(_ raw: String?) -> SpeechLanguage? {
         switch raw {
-        case "zh-Hans": return .chineseSimplified
+        case "english": return .english
+        case "zh-Hans", "chinese": return .chineseSimplified
         case "zh-Hant": return .chineseTraditional
         case "es": return .spanish
-        default: return .english
+        case "vi": return .vietnamese
+        case "tl": return .tagalog
+        case "ko": return .korean
+        case "ar": return .arabic
+        case "hi": return .hindi
+        case "pt": return .portuguese
+        case "ru": return .russian
+        default: return nil
         }
     }
 
-    private static func uiLanguage(_ raw: String?) -> UiLanguage {
-        switch raw {
-        case "english": return .english
-        case "zh-Hans", "chinese": return .chineseSimplified // "chinese" is the pre-N-language value
-        case "zh-Hant": return .chineseTraditional
-        case "es": return .spanish
-        default: return .system
-        }
+    private static func languageName(_ language: SpeechLanguage?) -> String? {
+        guard let language else { return nil }
+        return language.translationKey == "en" ? "english" : language.translationKey
     }
 
     private let defaults: UserDefaults
@@ -64,18 +69,14 @@ final class SettingsRepository: SettingsSource {
         // UserDefaults returns zero-values for absent keys, so presence is checked explicitly
         // to keep the StudySettings defaults, like DataStore's null-means-default.
 
-        // Migrate the old speech_mode (english/chinese/bilingual) into
-        // spoken_language + bilingual when the new key has never been written.
-        var spokenLanguage = Self.spokenLanguage(defaults.string(forKey: Keys.spokenLanguage))
-        var bilingual = bool(Keys.bilingual, false)
-        if defaults.object(forKey: Keys.spokenLanguage) == nil,
-           let legacy = defaults.string(forKey: Keys.legacySpeechMode) {
-            switch legacy {
-            case "bilingual": spokenLanguage = .chineseSimplified; bilingual = true
-            case "chinese": spokenLanguage = .chineseSimplified; bilingual = false
-            default: spokenLanguage = .english; bilingual = false
-            }
-        }
+        // Resolve the merged language, migrating from the older split keys.
+        // Priority: new `language` key, then ui_language, then spoken_language,
+        // then the oldest speech_mode.
+        let resolvedLanguage = Self.language(defaults.string(forKey: Keys.language))
+            ?? Self.language(defaults.string(forKey: Keys.uiLanguage))
+            ?? Self.language(defaults.string(forKey: Keys.spokenLanguage))
+            ?? (defaults.string(forKey: Keys.legacySpeechMode).map { $0 == "english" ? "english" : "zh-Hans" }
+                .flatMap(Self.language))
 
         settings = StudySettings(
             speechRate: defaults.object(forKey: Keys.speechRate) == nil
@@ -87,9 +88,7 @@ final class SettingsRepository: SettingsSource {
             shuffle: bool(Keys.shuffle, false),
             announceMeta: bool(Keys.announceMeta, true),
             known: Set((defaults.stringArray(forKey: Keys.known) ?? []).compactMap(Int.init)),
-            spokenLanguage: spokenLanguage,
-            bilingual: bilingual,
-            uiLanguage: Self.uiLanguage(defaults.string(forKey: Keys.uiLanguage))
+            language: resolvedLanguage
         )
     }
 
@@ -108,30 +107,10 @@ final class SettingsRepository: SettingsSource {
         defaults.set(s.shuffle, forKey: Keys.shuffle)
         defaults.set(s.announceMeta, forKey: Keys.announceMeta)
         defaults.set(s.known.map(String.init), forKey: Keys.known)
-        defaults.set(Self.spokenLanguageName(s.spokenLanguage), forKey: Keys.spokenLanguage)
-        defaults.set(s.bilingual, forKey: Keys.bilingual)
-        defaults.set(Self.uiLanguageName(s.uiLanguage), forKey: Keys.uiLanguage)
+        // The merged language is written under the single `language` key; nil clears it (system).
+        defaults.set(Self.languageName(s.language), forKey: Keys.language)
         settings = s
         observers.forEach { $0(s) }
-    }
-
-    private static func spokenLanguageName(_ language: SpeechLanguage) -> String {
-        switch language {
-        case .english: "english"
-        case .chineseSimplified: "zh-Hans"
-        case .chineseTraditional: "zh-Hant"
-        case .spanish: "es"
-        }
-    }
-
-    private static func uiLanguageName(_ language: UiLanguage) -> String {
-        switch language {
-        case .system: "system"
-        case .english: "english"
-        case .chineseSimplified: "zh-Hans"
-        case .chineseTraditional: "zh-Hant"
-        case .spanish: "es"
-        }
     }
 
     // MARK: - Test history

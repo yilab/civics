@@ -25,7 +25,6 @@ import com.yilab.civics.R
 import com.yilab.civics.data.Categories
 import com.yilab.civics.data.SpeechLanguage
 import com.yilab.civics.settings.StudySettings
-import com.yilab.civics.settings.UiLanguage
 import java.util.Locale
 import kotlin.math.round
 
@@ -43,6 +42,27 @@ fun SettingsScreen(
             .padding(horizontal = 20.dp, vertical = 16.dp),
         verticalArrangement = Arrangement.spacedBy(20.dp),
     ) {
+        SettingsSection(R.string.settings_language) {
+            Text(
+                stringResource(R.string.settings_ui_language),
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                FilterChip(
+                    selected = settings.language == null,
+                    onClick = { onChange { it.copy(language = null) } },
+                    label = { Text(stringResource(R.string.ui_system)) },
+                )
+                SpeechLanguage.entries.forEach { lang ->
+                    FilterChip(
+                        selected = settings.language == lang,
+                        onClick = { onChange { it.copy(language = lang) } },
+                        label = { Text(lang.displayName) },
+                    )
+                }
+            }
+        }
+
         SettingsSection(R.string.settings_voice) {
             Text(
                 stringResource(
@@ -61,51 +81,6 @@ fun SettingsScreen(
                 checked = settings.announceMeta,
                 onCheckedChange = { v -> onChange { it.copy(announceMeta = v) } },
             )
-            Text(
-                stringResource(R.string.settings_speech_language),
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                listOf(
-                    SpeechLanguage.ENGLISH to R.string.ui_english,
-                    SpeechLanguage.CHINESE_SIMPLIFIED to R.string.ui_zh_hans,
-                    SpeechLanguage.CHINESE_TRADITIONAL to R.string.ui_zh_hant,
-                    SpeechLanguage.SPANISH to R.string.ui_spanish,
-                ).forEach { (lang, labelRes) ->
-                    FilterChip(
-                        selected = settings.spokenLanguage == lang,
-                        onClick = { onChange { it.copy(spokenLanguage = lang) } },
-                        label = { Text(stringResource(labelRes)) },
-                    )
-                }
-            }
-            SwitchRow(
-                label = stringResource(R.string.settings_bilingual),
-                checked = settings.bilingual,
-                onCheckedChange = { v -> onChange { it.copy(bilingual = v) } },
-            )
-        }
-
-        SettingsSection(R.string.settings_language) {
-            Text(
-                stringResource(R.string.settings_ui_language),
-                style = MaterialTheme.typography.bodyLarge,
-            )
-            FlowRow(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                listOf(
-                    UiLanguage.SYSTEM to R.string.ui_system,
-                    UiLanguage.ENGLISH to R.string.ui_english,
-                    UiLanguage.CHINESE_SIMPLIFIED to R.string.ui_zh_hans,
-                    UiLanguage.CHINESE_TRADITIONAL to R.string.ui_zh_hant,
-                    UiLanguage.SPANISH to R.string.ui_spanish,
-                ).forEach { (lang, labelRes) ->
-                    FilterChip(
-                        selected = settings.uiLanguage == lang,
-                        onClick = { onChange { it.copy(uiLanguage = lang) } },
-                        label = { Text(stringResource(labelRes)) },
-                    )
-                }
-            }
         }
 
         SettingsSection(R.string.settings_playback) {

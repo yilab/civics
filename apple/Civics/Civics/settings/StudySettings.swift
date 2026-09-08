@@ -1,25 +1,7 @@
 import Foundation
 
-/// The app chrome language, independent of the system language.
-enum UiLanguage: Equatable, CaseIterable {
-    case system
-    case english
-    case chineseSimplified
-    case chineseTraditional
-    case spanish
-
-    /// The spoken language this UI language corresponds to, if any.
-    var speechLanguage: SpeechLanguage? {
-        switch self {
-        case .system: nil
-        case .english: .english
-        case .chineseSimplified: .chineseSimplified
-        case .chineseTraditional: .chineseTraditional
-        case .spanish: .spanish
-        }
-    }
-}
-
+/// One language drives both the spoken loop and the app chrome.
+/// `nil` (system) means: follow the device language for the UI, and speak English.
 struct StudySettings: Equatable {
     var speechRate: Float = 1.0
     /// Seconds to pause between question and answer. `thinkWaitForPress` = wait for a button press.
@@ -31,14 +13,21 @@ struct StudySettings: Equatable {
     /// Speak "Question N" before the question text.
     var announceMeta: Bool = true
     var known: Set<Int> = []
-    /// The language the study loop speaks.
-    var spokenLanguage: SpeechLanguage = .english
-    /// Also speak the English original before the translation.
-    var bilingual: Bool = false
-    /// App chrome language (menus, buttons, labels).
-    var uiLanguage: UiLanguage = .system
+    /// The single language choice: spoken language and app UI language.
+    /// `nil` = system UI + English speech.
+    var language: SpeechLanguage? = nil
 
     static let thinkWaitForPress = -1
+
+    /// The language actually spoken (English when following the system).
+    var spokenLanguage: SpeechLanguage { language ?? .english }
+
+    /// English is always spoken first; the translation follows when a
+    /// non-English language is selected. This replaces the old bilingual toggle.
+    var bilingual: Bool { spokenLanguage != .english }
+
+    /// True when the translation takes visual precedence over English.
+    var translationPrimary: Bool { bilingual }
 
     /// Kotlin-style copy so call sites read like the Android app.
     func copy(
@@ -49,9 +38,7 @@ struct StudySettings: Equatable {
         shuffle: Bool? = nil,
         announceMeta: Bool? = nil,
         known: Set<Int>? = nil,
-        spokenLanguage: SpeechLanguage? = nil,
-        bilingual: Bool? = nil,
-        uiLanguage: UiLanguage? = nil
+        language: SpeechLanguage?? = nil
     ) -> StudySettings {
         StudySettings(
             speechRate: speechRate ?? self.speechRate,
@@ -61,9 +48,7 @@ struct StudySettings: Equatable {
             shuffle: shuffle ?? self.shuffle,
             announceMeta: announceMeta ?? self.announceMeta,
             known: known ?? self.known,
-            spokenLanguage: spokenLanguage ?? self.spokenLanguage,
-            bilingual: bilingual ?? self.bilingual,
-            uiLanguage: uiLanguage ?? self.uiLanguage
+            language: language ?? self.language
         )
     }
 }

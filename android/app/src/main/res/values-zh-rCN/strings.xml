@@ -45,6 +45,10 @@
     <string name="listen_known">已掌握</string>
     <string name="questions_playing_suffix"> · 播放中</string>
     <string name="questions_known">已掌握</string>
+    <string name="questions_known_only">只看已掌握</string>
+    <string name="questions_unmark">取消已掌握标记</string>
+    <string name="questions_mark">标记为已掌握</string>
+
 
     <string name="settings_voice">语音</string>
     <string name="settings_language">语言</string>

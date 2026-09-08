@@ -18,19 +18,13 @@ enum L10n {
     }
 
     /// Points the resolver at the chosen language; call before re-rendering.
-    static func apply(_ language: UiLanguage) {
-        switch language {
-        case .system:
+    /// `nil` (system) uses the main bundle, which follows the device language.
+    static func apply(_ language: SpeechLanguage?) {
+        guard let language, language != .english else {
             bundle = .main
-        case .english:
-            bundle = lproj("en") ?? .main
-        case .chineseSimplified:
-            bundle = lproj("zh-Hans") ?? .main
-        case .chineseTraditional:
-            bundle = lproj("zh-Hant") ?? .main
-        case .spanish:
-            bundle = lproj("es") ?? .main
+            return
         }
+        bundle = lproj(language.translationKey) ?? .main
     }
 
     private static func lproj(_ name: String) -> Bundle? {

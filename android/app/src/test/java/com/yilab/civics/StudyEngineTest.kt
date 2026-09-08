@@ -239,7 +239,7 @@ class StudyEngineTest {
     @Test
     fun `bilingual mode speaks english then the translation in each phase`() = runTest {
         val (engine, speech) = engine(
-            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.CHINESE_SIMPLIFIED, bilingual = true))
+            MutableStateFlow(StudySettings(language = SpeechLanguage.CHINESE_SIMPLIFIED))
         )
         engine.primaryAction()
         assertEquals("q-1", speech.spoken.last().first)
@@ -265,14 +265,21 @@ class StudyEngineTest {
 
     @Test
     fun `chinese only mode speaks only chinese`() = runTest {
+        // In the merged model, choosing a language means English first, then the
+        // translation — there is no Chinese-only mode.
         val (engine, speech) =
-            engine(MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.CHINESE_SIMPLIFIED)))
+            engine(MutableStateFlow(StudySettings(language = SpeechLanguage.CHINESE_SIMPLIFIED)))
         engine.primaryAction()
+        assertEquals("q-1", speech.spoken.last().first)
+        assertEquals(SpeechLanguage.ENGLISH, speech.spoken.last().third)
+        speech.finishLast() // English question -> zh question
         assertEquals("zq-1", speech.spoken.last().first)
         assertEquals(SpeechLanguage.CHINESE_SIMPLIFIED, speech.spoken.last().third)
         speech.finishLast()
         assertEquals(Phase.THINKING, engine.state.value.phase)
         engine.primaryAction()
+        assertEquals("a-1", speech.spoken.last().first)
+        speech.finishLast() // English answer -> zh answer
         assertEquals("za-1", speech.spoken.last().first)
         assertEquals(
             repo.byNumber(1)?.translation(SpeechLanguage.CHINESE_SIMPLIFIED)?.spoken,
@@ -286,7 +293,7 @@ class StudyEngineTest {
     fun `bilingual spanish speaks english then spanish in each phase`() = runTest {
         val single = QuestionRepository { ES_AND_ZH_HANT_JSON }
         val (engine, speech) = engine(
-            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.SPANISH, bilingual = true)),
+            MutableStateFlow(StudySettings(language = SpeechLanguage.SPANISH)),
             repo = single,
         )
         engine.primaryAction()
@@ -312,16 +319,20 @@ class StudyEngineTest {
     fun `traditional chinese uses the hant announce prefix`() = runTest {
         val single = QuestionRepository { ES_AND_ZH_HANT_JSON }
         val (engine, speech) = engine(
-            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.CHINESE_TRADITIONAL)),
+            MutableStateFlow(StudySettings(language = SpeechLanguage.CHINESE_TRADITIONAL)),
             repo = single,
         )
         engine.primaryAction()
+        assertEquals("q-1", speech.spoken.last().first) // English first
+        speech.finishLast() // English question -> zh-Hant question
         assertEquals("zq-1", speech.spoken.last().first)
         assertEquals(SpeechLanguage.CHINESE_TRADITIONAL, speech.spoken.last().third)
         assertTrue(speech.spoken.last().second.startsWith("第 1 題。"))
         speech.finishLast()
         assertEquals(Phase.THINKING, engine.state.value.phase)
         engine.primaryAction()
+        assertEquals("a-1", speech.spoken.last().first)
+        speech.finishLast() // English answer -> zh-Hant answer
         assertEquals("za-1", speech.spoken.last().first)
         assertEquals("繁體答案朗讀", speech.spoken.last().second)
     }
@@ -330,11 +341,7 @@ class StudyEngineTest {
     fun `bilingual announce meta off drops the translation prefix`() = runTest {
         val (engine, speech) = engine(
             MutableStateFlow(
-                StudySettings(
-                    announceMeta = false,
-                    spokenLanguage = SpeechLanguage.CHINESE_SIMPLIFIED,
-                    bilingual = true,
-                )
+                StudySettings(announceMeta = false, language = SpeechLanguage.CHINESE_SIMPLIFIED)
             )
         )
         engine.primaryAction()
@@ -350,7 +357,7 @@ class StudyEngineTest {
         // A single-question repo without any translations simulates untranslated data.
         val single = QuestionRepository { NO_TRANSLATIONS_JSON }
         val (engine, speech) = engine(
-            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.CHINESE_SIMPLIFIED)),
+            MutableStateFlow(StudySettings(language = SpeechLanguage.CHINESE_SIMPLIFIED)),
             repo = single,
         )
         engine.primaryAction()
@@ -363,7 +370,7 @@ class StudyEngineTest {
         // The repo has zh-Hans but not es: the selected language drives the fallback.
         val single = QuestionRepository { ZH_HANS_ONLY_JSON }
         val (engine, speech) = engine(
-            MutableStateFlow(StudySettings(spokenLanguage = SpeechLanguage.SPANISH, bilingual = true)),
+            MutableStateFlow(StudySettings(language = SpeechLanguage.SPANISH)),
             repo = single,
         )
         engine.primaryAction()

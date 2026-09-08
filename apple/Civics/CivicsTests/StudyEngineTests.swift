@@ -266,7 +266,7 @@ struct StudyEngineTests {
     // MARK: - Spoken languages
 
     @Test func bilingualModeSpeaksEnglishThenTheTranslationInEachPhase() {
-        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(spokenLanguage: .chineseSimplified, bilingual: true)))
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(language: .chineseSimplified)))
         engine.primaryAction()
         #expect(speech.spoken.last?.utteranceID == "q-1")
         speech.finishLast() // English question done -> translated question
@@ -290,13 +290,20 @@ struct StudyEngineTests {
     }
 
     @Test func chineseOnlyModeSpeaksOnlyChinese() {
-        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(spokenLanguage: .chineseSimplified)))
+        // In the merged model, choosing a language means English first, then the
+        // translation — there is no Chinese-only mode.
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(language: .chineseSimplified)))
         engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "q-1")
+        #expect(speech.spoken.last?.language == .english)
+        speech.finishLast() // English question -> zh question
         #expect(speech.spoken.last?.utteranceID == "zq-1")
         #expect(speech.spoken.last?.language == .chineseSimplified)
         speech.finishLast()
         #expect(engine.state.phase == .thinking)
-        engine.primaryAction()
+        engine.primaryAction() // reveal
+        #expect(speech.spoken.last?.utteranceID == "a-1")
+        speech.finishLast() // English answer -> zh answer
         #expect(speech.spoken.last?.utteranceID == "za-1")
         #expect(speech.spoken.last?.text == repo.byNumber(1)?.translation(.chineseSimplified)?.spoken)
         speech.finishLast()
@@ -305,7 +312,7 @@ struct StudyEngineTests {
 
     @Test func bilingualSpanishSpeaksEnglishThenSpanishInEachPhase() {
         let (engine, speech) = makeEngine(
-            settings: SettingsBox(StudySettings(spokenLanguage: .spanish, bilingual: true)),
+            settings: SettingsBox(StudySettings(language: .spanish)),
             repo: QuestionRepository(jsonSource: { Data(Self.esAndZhHantJson.utf8) })
         )
         engine.primaryAction()
@@ -329,22 +336,26 @@ struct StudyEngineTests {
 
     @Test func traditionalChineseUsesTheHantAnnouncePrefix() {
         let (engine, speech) = makeEngine(
-            settings: SettingsBox(StudySettings(spokenLanguage: .chineseTraditional)),
+            settings: SettingsBox(StudySettings(language: .chineseTraditional)),
             repo: QuestionRepository(jsonSource: { Data(Self.esAndZhHantJson.utf8) })
         )
         engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "q-1") // English first
+        speech.finishLast() // English question -> zh-Hant question
         #expect(speech.spoken.last?.utteranceID == "zq-1")
         #expect(speech.spoken.last?.language == .chineseTraditional)
         #expect(speech.spoken.last?.text.hasPrefix("第 1 題。") == true)
         speech.finishLast()
         #expect(engine.state.phase == .thinking)
         engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "a-1")
+        speech.finishLast() // English answer -> zh-Hant answer
         #expect(speech.spoken.last?.utteranceID == "za-1")
         #expect(speech.spoken.last?.text == "繁體答案朗讀")
     }
 
     @Test func bilingualAnnounceMetaOffDropsTheTranslationPrefix() {
-        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(announceMeta: false, spokenLanguage: .chineseSimplified, bilingual: true)))
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(announceMeta: false, language: .chineseSimplified)))
         engine.primaryAction()
         speech.finishLast()
         #expect(speech.spoken.last?.text == repo.byNumber(1)?.translation(.chineseSimplified)?.question)
@@ -354,11 +365,16 @@ struct StudyEngineTests {
         // A single-question repo without any translations simulates untranslated data.
         let single = QuestionRepository(jsonSource: { Data(Self.noTranslationsJson.utf8) })
         let (engine, speech) = makeEngine(
-            settings: SettingsBox(StudySettings(spokenLanguage: .chineseSimplified)),
+            settings: SettingsBox(StudySettings(language: .chineseSimplified)),
             repo: single
         )
         engine.primaryAction()
         #expect(speech.spoken.last?.utteranceID == "q-1") // no translation -> English fallback
+        #expect(speech.spoken.last?.language == .english)
+        speech.finishLast() // no zh translation -> think pause, no z-leg
+        #expect(engine.state.phase == .thinking)
+        engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "a-1")
         #expect(speech.spoken.last?.language == .english)
     }
 
@@ -366,7 +382,7 @@ struct StudyEngineTests {
         // The repo has zh-Hans but not es: the selected language drives the fallback.
         let single = QuestionRepository(jsonSource: { Data(Self.zhHansOnlyJson.utf8) })
         let (engine, speech) = makeEngine(
-            settings: SettingsBox(StudySettings(spokenLanguage: .spanish, bilingual: true)),
+            settings: SettingsBox(StudySettings(language: .spanish)),
             repo: single
         )
         engine.primaryAction()

@@ -2148,6 +2148,54 @@
           }
         }
       }
+    },
+    "questions.knownOnly": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show known only"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "只看已掌握"
+          }
+        }
+      }
+    },
+    "questions.unmark": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Unmark as known"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "取消已掌握标记"
+          }
+        }
+      }
+    },
+    "questions.mark": {
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mark as known"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "标记为已掌握"
+          }
+        }
+      }
     }
   },
   "version": "1.0"

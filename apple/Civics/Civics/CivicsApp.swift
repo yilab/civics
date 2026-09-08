@@ -52,9 +52,9 @@ final class AppModel {
 
         // Point the string resolver at the chosen language before the first
         // render, and keep it current as the setting changes.
-        L10n.apply(settingsRepo.settings.uiLanguage)
+        L10n.apply(settingsRepo.settings.language)
         settingsRepo.observe { s in
-            L10n.apply(s.uiLanguage)
+            L10n.apply(s.language)
         }
 
         // Wires remote commands, now-playing info, and the audio session.

@@ -8,6 +8,25 @@ struct SettingsScreen: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                SettingsSection("settings.language") {
+                    Text(L10n.t("settings.uiLanguage"))
+                        .font(.body)
+                    FlowRow(spacing: 8) {
+                        Chip(
+                            label: L10n.t("ui.system"),
+                            selected: settings.language == nil,
+                            action: { onChange { $0.copy(language: .some(nil)) } }
+                        )
+                        ForEach(SpeechLanguage.allCases, id: \.self) { lang in
+                            Chip(
+                                label: lang.displayName,
+                                selected: settings.language == lang,
+                                action: { onChange { $0.copy(language: .some(lang)) } }
+                            )
+                        }
+                    }
+                }
+
                 SettingsSection("settings.voice") {
                     Text(L10n.t("settings.speechRate", String(format: "%.2f", settings.speechRate)))
                         .font(.body)
@@ -23,36 +42,6 @@ struct SettingsScreen: View {
                         checked: settings.announceMeta,
                         onChange: { v in onChange { $0.copy(announceMeta: v) } }
                     )
-                    Text(L10n.t("settings.speechLanguage"))
-                        .font(.body)
-                    FlowRow(spacing: 8) {
-                        ForEach(SpeechLanguage.allCases, id: \.self) { lang in
-                            Chip(
-                                label: languageLabel(lang),
-                                selected: settings.spokenLanguage == lang,
-                                action: { onChange { $0.copy(spokenLanguage: lang) } }
-                            )
-                        }
-                    }
-                    SwitchRow(
-                        label: L10n.t("settings.bilingual"),
-                        checked: settings.bilingual,
-                        onChange: { v in onChange { $0.copy(bilingual: v) } }
-                    )
-                }
-
-                SettingsSection("settings.language") {
-                    Text(L10n.t("settings.uiLanguage"))
-                        .font(.body)
-                    FlowRow(spacing: 8) {
-                        ForEach(UiLanguage.allCases, id: \.self) { lang in
-                            Chip(
-                                label: uiLanguageLabel(lang),
-                                selected: settings.uiLanguage == lang,
-                                action: { onChange { $0.copy(uiLanguage: lang) } }
-                            )
-                        }
-                    }
                 }
 
                 SettingsSection("settings.playback") {
@@ -102,26 +91,6 @@ struct SettingsScreen: View {
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
-        }
-    }
-
-    /// Language autonyms are the same in every UI language.
-    private func languageLabel(_ lang: SpeechLanguage) -> String {
-        switch lang {
-        case .english: L10n.t("ui.english")
-        case .chineseSimplified: L10n.t("ui.zhHans")
-        case .chineseTraditional: L10n.t("ui.zhHant")
-        case .spanish: L10n.t("ui.spanish")
-        }
-    }
-
-    private func uiLanguageLabel(_ lang: UiLanguage) -> String {
-        switch lang {
-        case .system: L10n.t("ui.system")
-        case .english: L10n.t("ui.english")
-        case .chineseSimplified: L10n.t("ui.zhHans")
-        case .chineseTraditional: L10n.t("ui.zhHant")
-        case .spanish: L10n.t("ui.spanish")
         }
     }
 

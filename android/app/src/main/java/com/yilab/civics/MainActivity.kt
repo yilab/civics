@@ -35,7 +35,6 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.yilab.civics.audio.CivicsAudioService
-import com.yilab.civics.settings.UiLanguage
 import com.yilab.civics.ui.ListenScreen
 import com.yilab.civics.ui.QuestionsScreen
 import com.yilab.civics.ui.SettingsScreen
@@ -47,7 +46,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         // Apply the persisted in-app language before the first composition.
-        applyUiLanguage((applicationContext as CivicsApp).settingsRepo.settings.value.uiLanguage)
+        applyUiLanguage((applicationContext as CivicsApp).settingsRepo.settings.value.language)
         enableEdgeToEdge()
         setContent {
             CivicsTheme {
@@ -58,13 +57,10 @@ class MainActivity : AppCompatActivity() {
 }
 
 /** Applies the in-app language; recreates the activity when it actually changes. */
-fun applyUiLanguage(language: UiLanguage) {
+fun applyUiLanguage(language: com.yilab.civics.data.SpeechLanguage?) {
     val locales = when (language) {
-        UiLanguage.SYSTEM -> LocaleListCompat.getEmptyLocaleList()
-        UiLanguage.ENGLISH -> LocaleListCompat.forLanguageTags("en")
-        UiLanguage.CHINESE_SIMPLIFIED -> LocaleListCompat.forLanguageTags("zh-CN")
-        UiLanguage.CHINESE_TRADITIONAL -> LocaleListCompat.forLanguageTags("zh-TW")
-        UiLanguage.SPANISH -> LocaleListCompat.forLanguageTags("es")
+        null, com.yilab.civics.data.SpeechLanguage.ENGLISH -> LocaleListCompat.getEmptyLocaleList()
+        else -> LocaleListCompat.forLanguageTags(language.translationKey)
     }
     if (AppCompatDelegate.getApplicationLocales() != locales) {
         AppCompatDelegate.setApplicationLocales(locales)
@@ -113,13 +109,12 @@ fun CivicsRoot() {
 
     // Keep the activity locale in sync with the uiLanguage setting.
     LaunchedEffect(Unit) {
-        app.settingsRepo.settings.collect { applyUiLanguage(it.uiLanguage) }
+        app.settingsRepo.settings.collect { applyUiLanguage(it.language) }
     }
 
     val spoken = settings.spokenLanguage
     // The translation takes visual precedence when the UI language matches it.
-    val translationPrimary = settings.uiLanguage.speechLanguage == spoken &&
-        spoken != com.yilab.civics.data.SpeechLanguage.ENGLISH
+    val translationPrimary = settings.translationPrimary
 
     // Route transport through the session so on-screen and AirPod presses behave identically.
     val primary = { controller?.play() ?: engine.primaryAction() }
@@ -163,6 +158,7 @@ fun CivicsRoot() {
                     language = spoken,
                     translationPrimary = translationPrimary,
                     onJump = engine::jumpTo,
+                    onToggleKnown = engine::toggleKnown,
                     modifier = Modifier.padding(innerPadding),
                 )
 

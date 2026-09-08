@@ -22,6 +22,13 @@ enum class SpeechLanguage(
     CHINESE_SIMPLIFIED("zh-Hans", Locale.SIMPLIFIED_CHINESE),
     CHINESE_TRADITIONAL("zh-Hant", Locale.TRADITIONAL_CHINESE),
     SPANISH("es", Locale("es", "US")),
+    VIETNAMESE("vi", Locale("vi", "VN")),
+    TAGALOG("tl", Locale("fil", "PH")),
+    KOREAN("ko", Locale.KOREA),
+    ARABIC("ar", Locale("ar", "SA")),
+    HINDI("hi", Locale("hi", "IN")),
+    PORTUGUESE("pt", Locale("pt", "BR")),
+    RUSSIAN("ru", Locale("ru", "RU")),
     ;
 
     /** The "Question N." announcement prefix in this language. */
@@ -30,7 +37,30 @@ enum class SpeechLanguage(
         CHINESE_SIMPLIFIED -> "第 $n 题。"
         CHINESE_TRADITIONAL -> "第 $n 題。"
         SPANISH -> "Pregunta $n."
+        VIETNAMESE -> "Câu $n."
+        TAGALOG -> "Tanong $n."
+        KOREAN -> "질문 $n."
+        ARABIC -> "السؤال $n."
+        HINDI -> "प्रश्न $n."
+        PORTUGUESE -> "Pergunta $n."
+        RUSSIAN -> "Вопрос $n."
     }
+
+    /** Self-name shown in the language picker (autonym). */
+    val displayName: String
+        get() = when (this) {
+            ENGLISH -> "English"
+            CHINESE_SIMPLIFIED -> "简体中文"
+            CHINESE_TRADITIONAL -> "繁體中文"
+            SPANISH -> "Español"
+            VIETNAMESE -> "Tiếng Việt"
+            TAGALOG -> "Tagalog"
+            KOREAN -> "한국어"
+            ARABIC -> "العربية"
+            HINDI -> "हिन्दी"
+            PORTUGUESE -> "Português"
+            RUSSIAN -> "Русский"
+        }
 }
 
 data class Question(
