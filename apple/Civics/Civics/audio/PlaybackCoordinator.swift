@@ -19,7 +19,11 @@ final class PlaybackCoordinator {
     }
 
     func start() {
+        // AVAudioSession is iOS-only; macOS keeps playing in the background
+        // without a session and routes interruptions itself.
+        #if !os(macOS)
         try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .spokenAudio, options: [])
+        #endif
 
         let center = MPRemoteCommandCenter.shared()
         center.playCommand.addTarget { [weak self] _ in self?.play(); return .success }
@@ -28,6 +32,7 @@ final class PlaybackCoordinator {
         center.nextTrackCommand.addTarget { [weak self] _ in self?.next(); return .success }
         center.previousTrackCommand.addTarget { [weak self] _ in self?.previous(); return .success }
 
+        #if !os(macOS)
         // Audio focus analog: a call or other app taking the audio session pauses
         // the study session; there is no auto-resume, matching Android.
         NotificationCenter.default.addObserver(
@@ -52,6 +57,7 @@ final class PlaybackCoordinator {
                 self?.engine.pause()
             }
         }
+        #endif
 
         engine.observeState { [weak self] state in
             guard let self else { return }
@@ -94,10 +100,13 @@ final class PlaybackCoordinator {
 
     private func activateSession() {
         // Activate before the first utterance so speech is never gated.
+        #if !os(macOS)
         try? AVAudioSession.sharedInstance().setActive(true)
+        #endif
     }
 
     private func updatePlaybackResources(playing: Bool) {
+        #if !os(macOS)
         let session = AVAudioSession.sharedInstance()
         if playing {
             // Held through the silent phases (thinking / awaiting advance) too —
@@ -107,6 +116,7 @@ final class PlaybackCoordinator {
             // Released on pause so other audio can resume, like abandoning focus.
             try? session.setActive(false)
         }
+        #endif
     }
 
     private func updateNowPlaying(_ state: StudyState) {
