@@ -170,8 +170,8 @@ def write_ios():
     dark = render_master(1024, FIELD, PAPER, ARC_COLORS_DARK)
     base.save(os.path.join(IOS_ICONSET, "icon-1024.png"))
     dark.save(os.path.join(IOS_ICONSET, "icon-1024-dark.png"))
-    mac_sizes = {16: 1, 32: 2, 128: 1, 256: 2, 512: 1}  # logical: scale variants
-    for logical in (16, 32, 128, 512):
+    # Must match the logical sizes declared in Contents.json below.
+    for logical in (16, 32, 128, 256, 512):
         for scale in (1, 2):
             px = logical * scale
             render_master(px, PAPER, NAVY, ARC_COLORS, supersample=max(1, 1024 // px * 2)).save(
