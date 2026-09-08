@@ -151,7 +151,7 @@ private struct Chip: View {
                 .padding(.vertical, 7)
                 .foregroundStyle(selected ? Color.accentColor : .primary)
                 .background(
-                    Capsule().fill(selected ? Color.accentColor.opacity(0.15) : Color(.secondarySystemBackground))
+                    Capsule().fill(selected ? Color.accentColor.opacity(0.15) : Color.secondary.opacity(0.15))
                 )
                 .overlay(
                     Capsule().strokeBorder(selected ? Color.accentColor : .clear)
