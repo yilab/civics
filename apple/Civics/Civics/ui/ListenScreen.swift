@@ -54,27 +54,18 @@ struct ListenScreen: View {
                 .controlSize(.large)
                 .accessibilityIdentifier("primaryAction")
 
-                HStack(spacing: 8) {
-                    Button(action: onPrevious) {
-                        Image(systemName: "backward.end.fill")
-                    }
-                    .accessibilityLabel(L10n.t("listen.previousQuestion"))
-
-                    Button(action: onPause) {
-                        Image(systemName: "stop.fill")
-                    }
-                    .accessibilityLabel(L10n.t("listen.stop"))
-
-                    Button(action: onNext) {
-                        Image(systemName: "forward.end.fill")
-                    }
-                    .accessibilityLabel(L10n.t("button.nextQuestion"))
+                HStack(spacing: 12) {
+                    transportButton(action: onPrevious, systemImage: "backward.end.fill",
+                                    label: L10n.t("listen.previousQuestion"))
+                    transportButton(action: onPause, systemImage: "stop.fill",
+                                    label: L10n.t("listen.stop"))
+                    transportButton(action: onNext, systemImage: "forward.end.fill",
+                                    label: L10n.t("button.nextQuestion"))
 
                     Spacer()
 
                     knownButton
                 }
-                .buttonStyle(.borderless)
                 .padding(.top, 12)
             }
             .padding(.horizontal, 20)
@@ -184,6 +175,17 @@ struct ListenScreen: View {
         case .awaitingGrade: L10n.t("button.gotIt")
         case .finished: L10n.t("button.start")
         }
+    }
+
+    /// Large bordered transport button for previous/stop/next.
+    private func transportButton(action: @escaping () -> Void, systemImage: String, label: String) -> some View {
+        Button(action: action) {
+            Image(systemName: systemImage)
+        }
+        .font(.title2)
+        .buttonStyle(.bordered)
+        .controlSize(.large)
+        .accessibilityLabel(label)
     }
 
     private var knownButton: some View {

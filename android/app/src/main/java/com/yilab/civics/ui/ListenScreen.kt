@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
@@ -19,9 +20,9 @@ import androidx.compose.material.icons.outlined.StarOutline
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.FilledTonalButton
+import androidx.compose.material3.FilledTonalIconButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -190,14 +191,26 @@ fun ListenScreen(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            IconButton(onClick = onPrevious) {
-                Icon(Icons.Filled.SkipPrevious, contentDescription = stringResource(R.string.listen_previous_question))
+            FilledTonalIconButton(onClick = onPrevious, modifier = Modifier.size(64.dp)) {
+                Icon(
+                    Icons.Filled.SkipPrevious,
+                    contentDescription = stringResource(R.string.listen_previous_question),
+                    modifier = Modifier.size(32.dp),
+                )
             }
-            IconButton(onClick = onPause) {
-                Icon(Icons.Filled.Stop, contentDescription = stringResource(R.string.listen_stop))
+            FilledTonalIconButton(onClick = onPause, modifier = Modifier.size(64.dp)) {
+                Icon(
+                    Icons.Filled.Stop,
+                    contentDescription = stringResource(R.string.listen_stop),
+                    modifier = Modifier.size(32.dp),
+                )
             }
-            IconButton(onClick = onNext) {
-                Icon(Icons.Filled.SkipNext, contentDescription = stringResource(R.string.button_next_question))
+            FilledTonalIconButton(onClick = onNext, modifier = Modifier.size(64.dp)) {
+                Icon(
+                    Icons.Filled.SkipNext,
+                    contentDescription = stringResource(R.string.button_next_question),
+                    modifier = Modifier.size(32.dp),
+                )
             }
             Spacer(Modifier.weight(1f))
             val q = state.current
