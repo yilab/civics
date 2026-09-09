@@ -13,6 +13,8 @@ struct StudySettings: Equatable {
     /// Speak "Question N" before the question text.
     var announceMeta: Bool = true
     var known: Set<Int> = []
+    /// Which questions the study deck includes by known status.
+    var knownFilter: KnownFilter = .all
     /// The single language choice: spoken language and app UI language.
     /// `nil` = system UI + English speech.
     var language: SpeechLanguage? = nil
@@ -38,6 +40,7 @@ struct StudySettings: Equatable {
         shuffle: Bool? = nil,
         announceMeta: Bool? = nil,
         known: Set<Int>? = nil,
+        knownFilter: KnownFilter? = nil,
         language: SpeechLanguage?? = nil
     ) -> StudySettings {
         StudySettings(
@@ -48,6 +51,7 @@ struct StudySettings: Equatable {
             shuffle: shuffle ?? self.shuffle,
             announceMeta: announceMeta ?? self.announceMeta,
             known: known ?? self.known,
+            knownFilter: knownFilter ?? self.knownFilter,
             language: language ?? self.language
         )
     }

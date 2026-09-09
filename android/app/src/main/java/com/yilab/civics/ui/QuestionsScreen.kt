@@ -1,6 +1,7 @@
 package com.yilab.civics.ui
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -18,7 +19,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Switch
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
+import com.yilab.civics.data.KnownFilter
 import com.yilab.civics.data.Question
 import com.yilab.civics.data.SpeechLanguage
 
@@ -47,21 +49,31 @@ fun QuestionsScreen(
     modifier: Modifier = Modifier,
 ) {
     val playingSuffix = stringResource(R.string.questions_playing_suffix)
-    // When on, only the questions marked known are listed, for review.
-    var showKnownOnly by remember { mutableStateOf(false) }
-    val shown = if (showKnownOnly) questions.filter { it.n in known } else questions
+    // View-local filter over the list: all / only known / only not known.
+    var filter by remember { mutableStateOf(KnownFilter.ALL) }
+    val shown = when (filter) {
+        KnownFilter.ALL -> questions
+        KnownFilter.KNOWN -> questions.filter { it.n in known }
+        KnownFilter.NOT_KNOWN -> questions.filter { it.n !in known }
+    }
 
     Column(modifier = modifier.fillMaxSize()) {
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(
-                stringResource(R.string.questions_known_only),
-                style = MaterialTheme.typography.bodyMedium,
-                modifier = Modifier.weight(1f),
-            )
-            Switch(checked = showKnownOnly, onCheckedChange = { showKnownOnly = it })
+            listOf(
+                KnownFilter.ALL to R.string.filter_all,
+                KnownFilter.KNOWN to R.string.filter_known,
+                KnownFilter.NOT_KNOWN to R.string.filter_not_known,
+            ).forEach { (f, labelRes) ->
+                FilterChip(
+                    selected = filter == f,
+                    onClick = { filter = f },
+                    label = { Text(stringResource(labelRes)) },
+                )
+            }
         }
         LazyColumn {
             items(shown, key = { it.n }) { q ->

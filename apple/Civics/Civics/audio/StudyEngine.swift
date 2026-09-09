@@ -184,7 +184,12 @@ final class StudyEngine {
         cancelTimer()
         expectedUtterance = nil
         speech.stop()
-        deck = repo.deck(category: settings.value.category, shuffle: settings.value.shuffle)
+        deck = repo.deck(
+            category: settings.value.category,
+            shuffle: settings.value.shuffle,
+            knownFilter: settings.value.knownFilter,
+            known: settings.value.known
+        )
         emit(state.copy(phase: .idle, deck: deck, position: 0, mode: .study, testOutcome: .none))
     }
 
@@ -353,7 +358,7 @@ final class StudyEngine {
 
     private func applySettings(_ s: StudySettings) {
         speech.speechRate = s.speechRate
-        let newDeck = repo.deck(category: s.category, shuffle: s.shuffle)
+        let newDeck = repo.deck(category: s.category, shuffle: s.shuffle, knownFilter: s.knownFilter, known: s.known)
         if deck.map(\.n) != newDeck.map(\.n) {
             deck = newDeck
             let pos = state.current.flatMap { c in deck.firstIndex { $0.n == c.n } } ?? 0

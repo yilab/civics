@@ -21,6 +21,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.FilledTonalIconButton
+import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LinearProgressIndicator
@@ -35,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
 import com.yilab.civics.audio.Phase
 import com.yilab.civics.audio.StudyState
+import com.yilab.civics.data.KnownFilter
 import com.yilab.civics.data.Question
 import com.yilab.civics.data.SpeechLanguage
 
@@ -51,6 +53,9 @@ fun ListenScreen(
     onNext: () -> Unit,
     onPrevious: () -> Unit,
     onToggleKnown: (Int) -> Unit,
+    /** Which questions the study deck includes by known status. */
+    knownFilter: KnownFilter,
+    onFilterChange: (KnownFilter) -> Unit,
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -92,6 +97,21 @@ fun ListenScreen(
             progress = { if (state.deckSize == 0) 0f else (state.position + 1) / state.deckSize.toFloat() },
             modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
         )
+        // Which questions to listen to: all, only known, only not known.
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            listOf(
+                KnownFilter.ALL to R.string.filter_all,
+                KnownFilter.KNOWN to R.string.filter_known,
+                KnownFilter.NOT_KNOWN to R.string.filter_not_known,
+            ).forEach { (filter, labelRes) ->
+                FilterChip(
+                    selected = knownFilter == filter,
+                    onClick = { onFilterChange(filter) },
+                    label = { Text(stringResource(labelRes)) },
+                )
+            }
+        }
+        Spacer(Modifier.height(4.dp))
 
         Card(modifier = Modifier.fillMaxWidth().padding(vertical = 12.dp)) {
             Column(modifier = Modifier.padding(20.dp)) {

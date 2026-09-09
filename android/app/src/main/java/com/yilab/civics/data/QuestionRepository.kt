@@ -7,9 +7,19 @@ class QuestionRepository(private val jsonSource: () -> String) {
 
     val questions: List<Question> by lazy { parse(jsonSource()) }
 
-    fun deck(category: String, shuffle: Boolean): List<Question> {
-        val filtered =
+    fun deck(
+        category: String,
+        shuffle: Boolean,
+        knownFilter: KnownFilter = KnownFilter.ALL,
+        known: Set<Int> = emptySet(),
+    ): List<Question> {
+        var filtered =
             if (category == Categories.ALL) questions else questions.filter { it.category == category }
+        filtered = when (knownFilter) {
+            KnownFilter.ALL -> filtered
+            KnownFilter.KNOWN -> filtered.filter { it.n in known }
+            KnownFilter.NOT_KNOWN -> filtered.filter { it.n !in known }
+        }
         return if (shuffle) filtered.shuffled() else filtered
     }
 

@@ -148,6 +148,10 @@ fun CivicsRoot() {
                     onNext = next,
                     onPrevious = previous,
                     onToggleKnown = engine::toggleKnown,
+                    knownFilter = settings.knownFilter,
+                    onFilterChange = { filter ->
+                        app.appScope.launch { app.settingsRepo.update { it.copy(knownFilter = filter) } }
+                    },
                     modifier = Modifier.padding(innerPadding),
                 )
 

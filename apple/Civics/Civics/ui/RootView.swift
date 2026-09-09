@@ -40,11 +40,13 @@ struct RootView: View {
                     ttsAvailable: model.ttsAvailable,
                     language: spoken,
                     translationPrimary: translationPrimary,
+                    knownFilter: model.settingsRepo.settings.knownFilter,
                     onPrimary: { model.playback.play() },
                     onPause: { model.playback.pause() },
                     onNext: { model.playback.next() },
                     onPrevious: { model.playback.previous() },
-                    onToggleKnown: { model.engine.toggleKnown($0) }
+                    onToggleKnown: { model.engine.toggleKnown($0) },
+                    onFilterChange: { filter in model.settingsRepo.update { $0.copy(knownFilter: filter) } }
                 )
             }
             Tab(L10n.t(AppDestination.questions.labelKey), systemImage: AppDestination.questions.icon, value: .questions) {

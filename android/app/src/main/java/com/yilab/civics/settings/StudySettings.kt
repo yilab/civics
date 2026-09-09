@@ -1,6 +1,7 @@
 package com.yilab.civics.settings
 
 import com.yilab.civics.data.Categories
+import com.yilab.civics.data.KnownFilter
 import com.yilab.civics.data.SpeechLanguage
 
 data class StudySettings(
@@ -14,6 +15,8 @@ data class StudySettings(
     /** Speak "Question N" before the question text. */
     val announceMeta: Boolean = true,
     val known: Set<Int> = emptySet(),
+    /** Which questions the study deck includes by known status. */
+    val knownFilter: KnownFilter = KnownFilter.ALL,
     /** The single language choice: spoken language and app UI language.
      * `null` = system UI + English speech. */
     val language: SpeechLanguage? = null,

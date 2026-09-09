@@ -11,18 +11,24 @@ struct QuestionsScreen: View {
     let onJump: (Int) -> Void
     let onToggleKnown: (Int) -> Void
 
-    /// When on, only the questions marked known are listed, for review.
-    @State private var showKnownOnly = false
+    /// View-local filter over the list: all / only known / only not known.
+    @State private var filter: KnownFilter = .all
 
     private var shown: [Question] {
-        showKnownOnly ? questions.filter { known.contains($0.n) } : questions
+        switch filter {
+        case .all: questions
+        case .known: questions.filter { known.contains($0.n) }
+        case .notKnown: questions.filter { !known.contains($0.n) }
+        }
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            Toggle(isOn: $showKnownOnly) {
-                Text(L10n.t("questions.knownOnly"))
-                    .font(.subheadline)
+            HStack(spacing: 8) {
+                ForEach(KnownFilter.allCases, id: \.self) { f in
+                    Chip(label: filterLabel(f), selected: filter == f, action: { filter = f })
+                }
+                Spacer()
             }
             .padding(.horizontal, 20)
             .padding(.vertical, 8)
@@ -78,6 +84,14 @@ struct QuestionsScreen: View {
                 }
             }
             .listStyle(.plain)
+        }
+    }
+
+    private func filterLabel(_ filter: KnownFilter) -> String {
+        switch filter {
+        case .all: L10n.t("filter.all")
+        case .known: L10n.t("filter.known")
+        case .notKnown: L10n.t("filter.notKnown")
         }
     }
 }

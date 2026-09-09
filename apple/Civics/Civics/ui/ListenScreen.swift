@@ -7,11 +7,14 @@ struct ListenScreen: View {
     var language: SpeechLanguage = .english
     /// True when the translation takes visual precedence (UI language matches it).
     var translationPrimary: Bool = false
+    /// Which questions the study deck includes by known status.
+    var knownFilter: KnownFilter = .all
     let onPrimary: () -> Void
     let onPause: () -> Void
     let onNext: () -> Void
     let onPrevious: () -> Void
     let onToggleKnown: (Int) -> Void
+    let onFilterChange: (KnownFilter) -> Void
 
     var body: some View {
         ScrollView {
@@ -36,6 +39,18 @@ struct ListenScreen: View {
 
                 ProgressView(value: progress)
                     .padding(.vertical, 8)
+
+                // Which questions to listen to: all, only known, only not known.
+                HStack(spacing: 8) {
+                    ForEach(KnownFilter.allCases, id: \.self) { filter in
+                        Chip(
+                            label: filterLabel(filter),
+                            selected: knownFilter == filter,
+                            action: { onFilterChange(filter) }
+                        )
+                    }
+                }
+                .padding(.bottom, 4)
 
                 card
                     .padding(.vertical, 12)
@@ -174,6 +189,14 @@ struct ListenScreen: View {
         case .speakingAnswer, .awaitingAdvance: L10n.t("button.nextQuestion")
         case .awaitingGrade: L10n.t("button.gotIt")
         case .finished: L10n.t("button.start")
+        }
+    }
+
+    private func filterLabel(_ filter: KnownFilter) -> String {
+        switch filter {
+        case .all: L10n.t("filter.all")
+        case .known: L10n.t("filter.known")
+        case .notKnown: L10n.t("filter.notKnown")
         }
     }
 

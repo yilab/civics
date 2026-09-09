@@ -231,6 +231,28 @@ struct StudyEngineTests {
         #expect(engine.state.position == 0)
     }
 
+    @Test func knownFilterLimitsTheDeck() {
+        let settings = SettingsBox(StudySettings(known: [1, 2]))
+        let (engine, _) = makeEngine(settings: settings)
+        settings.value = settings.value.copy(knownFilter: .notKnown)
+        #expect(engine.state.deckSize == 126)
+        settings.value = settings.value.copy(knownFilter: .known)
+        #expect(engine.state.deckSize == 2)
+        // Marking a question known under the not-known filter shrinks the deck.
+        settings.value = settings.value.copy(known: [1, 2, 5], knownFilter: .notKnown)
+        #expect(engine.state.deckSize == 125)
+    }
+
+    @Test func emptyFilteredDeckIsSafe() {
+        let settings = SettingsBox(StudySettings(knownFilter: .known)) // nothing known yet
+        let (engine, speech) = makeEngine(settings: settings)
+        #expect(engine.state.deckSize == 0)
+        engine.primaryAction()
+        engine.next()
+        #expect(engine.state.phase == .idle)
+        #expect(speech.spoken.isEmpty)
+    }
+
     @Test func speechRateChangesAreAppliedToTheSpeechEngine() {
         let settings = SettingsBox(StudySettings())
         let (_, speech) = makeEngine(settings: settings)

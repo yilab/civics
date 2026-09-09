@@ -42,6 +42,14 @@ struct QuestionRepositoryTests {
         #expect(ordered != shuffled)
     }
 
+    @Test func deckFiltersByKnownStatus() {
+        let known: Set<Int> = [1, 2, 3]
+        #expect(repo.deck(category: Categories.all, shuffle: false, knownFilter: .known, known: known).map(\.n) == [1, 2, 3])
+        let notKnown = repo.deck(category: Categories.all, shuffle: false, knownFilter: .notKnown, known: known)
+        #expect(notKnown.count == 125)
+        #expect(notKnown.allSatisfy { !known.contains($0.n) })
+    }
+
     @Test func everyQuestionHasASimplifiedChineseTranslation() {
         for q in repo.questions {
             guard let t = q.translation(.chineseSimplified) else {

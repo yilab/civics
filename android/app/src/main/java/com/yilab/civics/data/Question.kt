@@ -85,3 +85,6 @@ object Categories {
     const val ALL = "All"
     val values = listOf(ALL, "American Government", "American History", "Symbols & Holidays")
 }
+
+/** Filters a deck by whether questions are marked known. */
+enum class KnownFilter { ALL, KNOWN, NOT_KNOWN }

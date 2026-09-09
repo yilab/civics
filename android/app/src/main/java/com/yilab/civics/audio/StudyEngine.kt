@@ -180,7 +180,12 @@ class StudyEngine(
         cancelTimer()
         expectedUtterance = null
         speech.stop()
-        deck = repo.deck(settingsFlow.value.category, settingsFlow.value.shuffle)
+        deck = repo.deck(
+            settingsFlow.value.category,
+            settingsFlow.value.shuffle,
+            settingsFlow.value.knownFilter,
+            settingsFlow.value.known,
+        )
         emit(
             state.value.copy(
                 phase = Phase.IDLE,
@@ -369,7 +374,7 @@ class StudyEngine(
 
     private fun applySettings(s: StudySettings) {
         speech.speechRate = s.speechRate
-        val newDeck = repo.deck(s.category, s.shuffle)
+        val newDeck = repo.deck(s.category, s.shuffle, s.knownFilter, s.known)
         if (deck.map { it.n } != newDeck.map { it.n }) {
             deck = newDeck
             val pos = state.value.current?.let { c -> deck.indexOfFirst { it.n == c.n } }

@@ -146,3 +146,10 @@ enum Categories {
     static let all = "All"
     static let values = [all, "American Government", "American History", "Symbols & Holidays"]
 }
+
+/// Filters a deck by whether questions are marked known.
+enum KnownFilter: CaseIterable {
+    case all
+    case known
+    case notKnown
+}

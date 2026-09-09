@@ -9,6 +9,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.core.stringSetPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
 import com.yilab.civics.audio.TestRecord
+import com.yilab.civics.data.KnownFilter
 import com.yilab.civics.data.SpeechLanguage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -32,6 +33,7 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
         val SHUFFLE = booleanPreferencesKey("shuffle")
         val ANNOUNCE_META = booleanPreferencesKey("announce_meta")
         val KNOWN = stringSetPreferencesKey("known")
+        val KNOWN_FILTER = stringPreferencesKey("known_filter")
         /** The single merged language setting. */
         val LANGUAGE = stringPreferencesKey("language")
         /** Legacy keys read once for migration, never written. */
@@ -77,6 +79,11 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
                 shuffle = prefs[Keys.SHUFFLE] ?: false,
                 announceMeta = prefs[Keys.ANNOUNCE_META] ?: true,
                 known = prefs[Keys.KNOWN].orEmpty().mapNotNull { it.toIntOrNull() }.toSet(),
+                knownFilter = when (prefs[Keys.KNOWN_FILTER]) {
+                    "known" -> KnownFilter.KNOWN
+                    "notKnown" -> KnownFilter.NOT_KNOWN
+                    else -> KnownFilter.ALL
+                },
                 language = resolvedLanguage,
             )
         }
@@ -92,6 +99,11 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
             prefs[Keys.SHUFFLE] = s.shuffle
             prefs[Keys.ANNOUNCE_META] = s.announceMeta
             prefs[Keys.KNOWN] = s.known.map { it.toString() }.toSet()
+            prefs[Keys.KNOWN_FILTER] = when (s.knownFilter) {
+                KnownFilter.KNOWN -> "known"
+                KnownFilter.NOT_KNOWN -> "notKnown"
+                KnownFilter.ALL -> "all"
+            }
             val name = languageName(s.language)
             if (name == null) prefs.remove(Keys.LANGUAGE) else prefs[Keys.LANGUAGE] = name
         }

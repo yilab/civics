@@ -45,7 +45,6 @@
     <string name="listen_known">Known</string>
     <string name="questions_playing_suffix"> · playing</string>
     <string name="questions_known">Known</string>
-    <string name="questions_known_only">Show known only</string>
     <string name="questions_unmark">Unmark as known</string>
     <string name="questions_mark">Mark as known</string>
 
@@ -78,4 +77,7 @@
     <string name="category_american_government">American Government</string>
     <string name="category_american_history">American History</string>
     <string name="category_symbols_holidays">Symbols &amp; Holidays</string>
+    <string name="filter_all">All</string>
+    <string name="filter_known">Known</string>
+    <string name="filter_not_known">Not known</string>
 </resources>

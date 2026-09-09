@@ -4,6 +4,7 @@ import com.yilab.civics.audio.Phase
 import com.yilab.civics.audio.SpeechEngine
 import com.yilab.civics.audio.StudyEngine
 import com.yilab.civics.audio.TestRecord
+import com.yilab.civics.data.KnownFilter
 import com.yilab.civics.data.QuestionRepository
 import com.yilab.civics.data.SpeechLanguage
 import com.yilab.civics.settings.StudySettings
@@ -196,6 +197,33 @@ class StudyEngineTest {
         runCurrent()
         assertEquals(46, engine.state.value.deckSize)
         assertEquals(0, engine.state.value.position)
+    }
+
+    @Test
+    fun `known filter limits the deck`() = runTest {
+        val settings = MutableStateFlow(StudySettings(known = setOf(1, 2)))
+        val (engine) = engine(settings)
+        settings.value = settings.value.copy(knownFilter = KnownFilter.NOT_KNOWN)
+        runCurrent()
+        assertEquals(126, engine.state.value.deckSize)
+        settings.value = settings.value.copy(knownFilter = KnownFilter.KNOWN)
+        runCurrent()
+        assertEquals(2, engine.state.value.deckSize)
+        settings.value = settings.value.copy(knownFilter = KnownFilter.NOT_KNOWN, known = setOf(1, 2, 5))
+        runCurrent()
+        assertEquals(125, engine.state.value.deckSize)
+    }
+
+    @Test
+    fun `empty filtered deck is safe`() = runTest {
+        val settings = MutableStateFlow(StudySettings(knownFilter = KnownFilter.KNOWN)) // nothing known yet
+        val (engine, speech) = engine(settings)
+        runCurrent()
+        assertEquals(0, engine.state.value.deckSize)
+        engine.primaryAction()
+        engine.next()
+        assertEquals(Phase.IDLE, engine.state.value.phase)
+        assertTrue(speech.spoken.isEmpty())
     }
 
     @Test

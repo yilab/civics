@@ -21,6 +21,7 @@ final class SettingsRepository: SettingsSource {
         static let shuffle = "shuffle"
         static let announceMeta = "announce_meta"
         static let known = "known"
+        static let knownFilter = "known_filter"
         /// The single merged language setting.
         static let language = "language"
         /// Legacy keys read once for migration, never written.
@@ -51,6 +52,14 @@ final class SettingsRepository: SettingsSource {
     private static func languageName(_ language: SpeechLanguage?) -> String? {
         guard let language else { return nil }
         return language.translationKey == "en" ? "english" : language.translationKey
+    }
+
+    private static func knownFilter(_ raw: String?) -> KnownFilter {
+        switch raw {
+        case "known": return .known
+        case "notKnown": return .notKnown
+        default: return .all
+        }
     }
 
     private let defaults: UserDefaults
@@ -88,6 +97,7 @@ final class SettingsRepository: SettingsSource {
             shuffle: bool(Keys.shuffle, false),
             announceMeta: bool(Keys.announceMeta, true),
             known: Set((defaults.stringArray(forKey: Keys.known) ?? []).compactMap(Int.init)),
+            knownFilter: Self.knownFilter(defaults.string(forKey: Keys.knownFilter)),
             language: resolvedLanguage
         )
     }
@@ -107,6 +117,8 @@ final class SettingsRepository: SettingsSource {
         defaults.set(s.shuffle, forKey: Keys.shuffle)
         defaults.set(s.announceMeta, forKey: Keys.announceMeta)
         defaults.set(s.known.map(String.init), forKey: Keys.known)
+        defaults.set(s.knownFilter == .known ? "known" : s.knownFilter == .notKnown ? "notKnown" : "all",
+                     forKey: Keys.knownFilter)
         // The merged language is written under the single `language` key; nil clears it (system).
         defaults.set(Self.languageName(s.language), forKey: Keys.language)
         settings = s

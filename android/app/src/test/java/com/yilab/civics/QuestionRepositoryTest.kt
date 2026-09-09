@@ -1,6 +1,7 @@
 package com.yilab.civics
 
 import com.yilab.civics.data.Categories
+import com.yilab.civics.data.KnownFilter
 import com.yilab.civics.data.QuestionRepository
 import com.yilab.civics.data.SpeechLanguage
 import org.junit.Assert.assertEquals
@@ -53,6 +54,15 @@ class QuestionRepositoryTest {
         val shuffled = repo.deck(Categories.ALL, shuffle = true).map { it.n }
         assertEquals(ordered.toSet(), shuffled.toSet())
         assertNotEquals(ordered, shuffled)
+    }
+
+    @Test
+    fun `deck filters by known status`() {
+        val known = setOf(1, 2, 3)
+        assertEquals(listOf(1, 2, 3), repo.deck(Categories.ALL, shuffle = false, knownFilter = KnownFilter.KNOWN, known = known).map { it.n })
+        val notKnown = repo.deck(Categories.ALL, shuffle = false, knownFilter = KnownFilter.NOT_KNOWN, known = known)
+        assertEquals(125, notKnown.size)
+        assertTrue(notKnown.all { it.n !in known })
     }
 
     @Test
