@@ -3,6 +3,7 @@
     <string name="app_name">Civics Audio Prep</string>
 
     <string name="tab_listen">Listen</string>
+    <string name="tab_flashcards">Flashcards</string>
     <string name="tab_questions">Questions</string>
     <string name="tab_settings">Settings</string>
 
@@ -47,6 +48,10 @@
     <string name="questions_known">Known</string>
     <string name="questions_unmark">Unmark as known</string>
     <string name="questions_mark">Mark as known</string>
+
+    <string name="flashcards_tap_to_reveal">Tap to reveal</string>
+    <string name="flashcards_tap_for_question">Tap for question</string>
+    <string name="flashcards_shuffle">Shuffle</string>
 
 
     <string name="settings_voice">Voice</string>

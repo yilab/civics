@@ -35,6 +35,7 @@ import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaController
 import androidx.media3.session.SessionToken
 import com.yilab.civics.audio.CivicsAudioService
+import com.yilab.civics.ui.FlashcardsScreen
 import com.yilab.civics.ui.ListenScreen
 import com.yilab.civics.ui.QuestionsScreen
 import com.yilab.civics.ui.SettingsScreen
@@ -69,6 +70,7 @@ fun applyUiLanguage(language: com.yilab.civics.data.SpeechLanguage?) {
 
 enum class AppDestinations(val labelRes: Int, val icon: Int) {
     LISTEN(R.string.tab_listen, R.drawable.ic_headset),
+    FLASHCARDS(R.string.tab_flashcards, R.drawable.ic_cards),
     QUESTIONS(R.string.tab_questions, R.drawable.ic_list),
     TEST(R.string.tab_test, R.drawable.ic_list),
     SETTINGS(R.string.tab_settings, R.drawable.ic_settings),
@@ -152,6 +154,15 @@ fun CivicsRoot() {
                     onFilterChange = { filter ->
                         app.appScope.launch { app.settingsRepo.update { it.copy(knownFilter = filter) } }
                     },
+                    modifier = Modifier.padding(innerPadding),
+                )
+
+                AppDestinations.FLASHCARDS -> FlashcardsScreen(
+                    questions = app.questionRepo.questions,
+                    known = state.known,
+                    language = spoken,
+                    translationPrimary = translationPrimary,
+                    onToggleKnown = engine::toggleKnown,
                     modifier = Modifier.padding(innerPadding),
                 )
 

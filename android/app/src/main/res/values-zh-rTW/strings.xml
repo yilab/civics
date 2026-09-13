@@ -3,6 +3,7 @@
     <string name="app_name">公民入籍听力备考</string>
 
     <string name="tab_listen">听题</string>
+    <string name="tab_flashcards">抽認卡</string>
     <string name="tab_questions">题库</string>
     <string name="tab_settings">设置</string>
 
@@ -45,6 +46,10 @@
     <string name="listen_known">已掌握</string>
     <string name="questions_playing_suffix"> · 播放中</string>
     <string name="questions_known">已掌握</string>
+
+    <string name="flashcards_tap_to_reveal">點按顯示答案</string>
+    <string name="flashcards_tap_for_question">點按看題目</string>
+    <string name="flashcards_shuffle">隨機排序</string>
 
     <string name="settings_voice">语音</string>
     <string name="settings_language">语言</string>

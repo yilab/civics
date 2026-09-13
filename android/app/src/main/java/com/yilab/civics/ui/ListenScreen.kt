@@ -252,7 +252,7 @@ fun ListenScreen(
 
 /** Both languages are always shown; emphasis follows the UI language. */
 @Composable
-private fun QuestionAnswerText(
+fun QuestionAnswerText(
     english: String,
     translated: String?,
     translationPrimary: Boolean,
