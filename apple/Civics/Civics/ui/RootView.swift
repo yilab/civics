@@ -1,11 +1,12 @@
 import SwiftUI
 
 enum AppDestination: Hashable {
-    case listen, questions, test, settings
+    case listen, flashcards, questions, test, settings
 
     var labelKey: String {
         switch self {
         case .listen: "tab.listen"
+        case .flashcards: "tab.flashcards"
         case .questions: "tab.questions"
         case .test: "tab.test"
         case .settings: "tab.settings"
@@ -15,6 +16,7 @@ enum AppDestination: Hashable {
     var icon: String {
         switch self {
         case .listen: "headphones"
+        case .flashcards: "rectangle.portrait.on.rectangle.portrait"
         case .questions: "list.bullet"
         case .test: "checkmark.circle"
         case .settings: "gearshape"
@@ -47,6 +49,16 @@ struct RootView: View {
                     onPrevious: { model.playback.previous() },
                     onToggleKnown: { model.engine.toggleKnown($0) },
                     onFilterChange: { filter in model.settingsRepo.update { $0.copy(knownFilter: filter) } }
+                )
+            }
+            Tab(L10n.t(AppDestination.flashcards.labelKey), systemImage: AppDestination.flashcards.icon, value: .flashcards) {
+                // Deck state is view-local; only the shared known set persists.
+                FlashcardsScreen(
+                    questions: model.questionRepo.questions,
+                    known: model.engine.state.known,
+                    language: spoken,
+                    translationPrimary: translationPrimary,
+                    onToggleKnown: { model.engine.toggleKnown($0) }
                 )
             }
             Tab(L10n.t(AppDestination.questions.labelKey), systemImage: AppDestination.questions.icon, value: .questions) {
