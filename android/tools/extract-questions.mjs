@@ -1,5 +1,7 @@
 // Extracts the 128-question civics bank from civics-test-study-tool.html into
-// app/src/main/assets/questions.json, adding a TTS-friendly "spoken" field.
+// app/src/main/assets/questions.json and apple/Civics/Civics/Resources/questions.json,
+// adding a TTS-friendly "spoken" field. Also splices the same bank, minified, into
+// the web tool itself between its GENERATED QUESTION BANK marker comments.
 // Usage: node tools/extract-questions.mjs
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 
@@ -139,3 +141,24 @@ for (const target of targets) {
   writeFileSync(target, json);
 }
 console.log(`wrote ${questions.length} questions to ${targets.length} targets`);
+
+// Splice the same bank, minified, into the web tool between its marker comments.
+const webUrl = new URL('../../web/civics-test-study-tool.html', import.meta.url);
+const BANK_OPEN =
+  '// >>> GENERATED QUESTION BANK — do not edit by hand; run: node android/tools/extract-questions.mjs >>>';
+const BANK_CLOSE = '// <<< GENERATED QUESTION BANK <<<';
+const openIdx = html.indexOf(BANK_OPEN);
+const closeIdx = html.indexOf(BANK_CLOSE);
+if (openIdx < 0 || closeIdx < 0 || closeIdx < openIdx) {
+  throw new Error(
+    'GENERATED QUESTION BANK markers not found in web/civics-test-study-tool.html — ' +
+    'the web tool must contain both marker comments',
+  );
+}
+// Escape "<" so a "</script>" in the data could never terminate the inline script.
+const bankLine = `const BANK = ${JSON.stringify(out).replace(/</g, '\\u003c')};`;
+writeFileSync(
+  webUrl,
+  html.slice(0, openIdx + BANK_OPEN.length) + '\n' + bankLine + '\n' + html.slice(closeIdx),
+);
+console.log('spliced minified bank into web/civics-test-study-tool.html');
