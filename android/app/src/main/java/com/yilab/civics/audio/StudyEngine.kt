@@ -341,8 +341,10 @@ class StudyEngine(
 
     private fun onUtteranceError(utteranceId: String) {
         if (utteranceId != expectedUtterance) return
-        // A speech failure should not cascade through the deck; stop where we are.
-        pause()
+        // A flaky speech failure must not stall the deck: skip the utterance,
+        // advancing exactly as if it had been spoken to completion. Intentional
+        // stops (pause/skip) never reach here — they clear expectedUtterance first.
+        onUtteranceDone(utteranceId)
     }
 
     private fun beginThinkPause() {

@@ -25,11 +25,20 @@ private class FakeSpeechEngine : SpeechEngine {
     val spoken = mutableListOf<Triple<String, String, SpeechLanguage>>()
     var stopCount = 0
 
+    /** Languages without an installed voice. */
+    val unavailable = mutableSetOf<SpeechLanguage>()
+
     override fun speak(utteranceId: String, text: String, language: SpeechLanguage) {
+        if (language in unavailable) {
+            // Mirrors AndroidSpeechEngine's missing-voice gate: nothing is spoken
+            // and the utterance completes immediately.
+            callback?.onDone(utteranceId)
+            return
+        }
         spoken += Triple(utteranceId, text, language)
     }
 
-    override fun isAvailable(language: SpeechLanguage) = true
+    override fun isAvailable(language: SpeechLanguage) = language !in unavailable
 
     override fun stop() {
         stopCount++
@@ -248,11 +257,40 @@ class StudyEngineTest {
     }
 
     @Test
-    fun `a speech error stops the engine instead of cascading`() = runTest {
+    fun `a speech error skips the utterance instead of stalling the deck`() = runTest {
         val (engine, speech) = engine(MutableStateFlow(StudySettings(autoAdvance = true, thinkSeconds = 0)))
         engine.primaryAction()
-        speech.callback?.onError("q-1")
-        assertEquals(Phase.IDLE, engine.state.value.phase)
+        speech.callback?.onError("q-1") // flaky error -> treated as done -> think 0 -> answer
+        assertEquals(Phase.SPEAKING_ANSWER, engine.state.value.phase)
+        assertEquals("a-1", speech.spoken.last().first)
+
+        speech.callback?.onError("a-1") // error on the answer too -> awaiting advance
+        assertEquals(Phase.AWAITING_ADVANCE, engine.state.value.phase)
+
+        speech.callback?.onError("q-99") // unknown utterance id -> ignored
+        assertEquals(Phase.AWAITING_ADVANCE, engine.state.value.phase)
+    }
+
+    @Test
+    fun `missing translation voice skips the translated utterances but keeps english playing`() = runTest {
+        val settings = MutableStateFlow(StudySettings(language = SpeechLanguage.CHINESE_SIMPLIFIED))
+        val (engine, speech) = engine(settings)
+        speech.unavailable += SpeechLanguage.CHINESE_SIMPLIFIED
+
+        engine.primaryAction()
+        assertEquals("q-1", speech.spoken.last().first) // English question plays
+        speech.finishLast() // -> translated question skipped instantly -> think pause
+        assertEquals(Phase.THINKING, engine.state.value.phase)
+        assertEquals("q-1", speech.spoken.last().first) // zq-1 was never spoken
+
+        engine.primaryAction() // reveal -> English answer plays
+        assertEquals("a-1", speech.spoken.last().first)
+        speech.finishLast() // -> translated answer skipped instantly -> awaiting advance
+        assertEquals(Phase.AWAITING_ADVANCE, engine.state.value.phase)
+        assertEquals("a-1", speech.spoken.last().first) // za-1 was never spoken
+
+        engine.primaryAction() // the deck still advances
+        assertEquals("q-2", speech.spoken.last().first)
     }
 
     @Test
