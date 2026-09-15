@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">公民入籍听力备考</string>
+    <string name="app_name">Civics Audio Prep</string>
 
     <string name="tab_listen">听题</string>
     <string name="tab_flashcards">Tarjetas</string>
@@ -11,7 +11,7 @@
     <string name="listen_no_questions">暂无题目</string>
     <string name="listen_question_of">第 %1$d 题 / 共 %2$d 题</string>
     <string name="listen_known_count">已掌握 %1$d</string>
-    <string name="listen_app_title">公民入籍听力备考</string>
+    <string name="listen_app_title">Civics Audio Prep</string>
     <string name="listen_onboarding">点击开始，把手机放到一边，大声回答每道题。AirPods：按一下听答案或继续，按两下下一题，按三下重复本题。</string>
     <string name="listen_acceptable_answer">可接受的答案</string>
     <string name="phase_speaking_question">正在读题——按一下听答案</string>

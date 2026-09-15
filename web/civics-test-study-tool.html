@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>2025 Civics Test — Study Tool</title>
+<title>Civics Audio Prep</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -364,7 +364,7 @@
 <div class="wrap">
   <header>
     <p class="eyebrow">U.S. Naturalization · 2025 Version · 128 Questions</p>
-    <h1>Civics Test Study Tool</h1>
+    <h1>Civics Audio Prep</h1>
     <p class="sub" id="header-sub">The officer asks up to 20 of these questions. You need 12 correct to pass. Listen hands-free, flip cards to learn, then take a practice test that stops the moment you pass — or fail — just like the real one.</p>
   </header>
 
@@ -1715,7 +1715,7 @@ function updateMediaSession() {
     if (state.current) {
       navigator.mediaSession.metadata = new MediaMetadata({
         title: 'Q' + state.current.n + ' · ' + state.current.category,
-        artist: 'Civics Test Study Tool',
+        artist: 'Civics Audio Prep',
       });
     }
     navigator.mediaSession.playbackState = state.phase === Phase.IDLE ? 'paused' : 'playing';
