@@ -10,8 +10,18 @@ private final class FakeSpeechEngine: SpeechEngine {
     private(set) var spoken: [(utteranceID: String, text: String, language: SpeechLanguage)] = []
     private(set) var stopCount = 0
 
+    /// Languages with no installed voice: their utterances are reported done via
+    /// `skipScheduler` instead of playing, mirroring SystemSpeechEngine's skip.
+    var unavailable: Set<SpeechLanguage> = []
+    var skipScheduler: ManualScheduler?
+
     func speak(utteranceID: String, text: String, language: SpeechLanguage) {
         spoken.append((utteranceID, text, language))
+        if unavailable.contains(language), let skipScheduler {
+            skipScheduler.run(after: 0) { [weak self] in
+                self?.callback?.onDone(utteranceID: utteranceID)
+            }
+        }
     }
 
     func stop() {
@@ -212,6 +222,8 @@ struct StudyEngineTests {
         #expect(speech.stopCount == 1)
         speech.finishLast() // stale callback after pause
         #expect(engine.state.phase == .idle)
+        speech.callback?.onError(utteranceID: "q-1") // stale cancel/error after pause
+        #expect(engine.state.phase == .idle)
     }
 
     @Test func jumpingToAQuestionOutsideTheFilteredDeckUsesTheFullDeck() {
@@ -272,11 +284,40 @@ struct StudyEngineTests {
         #expect(events[1].0 == 7 && events[1].1 == true)
     }
 
-    @Test func aSpeechErrorStopsTheEngineInsteadOfCascading() {
+    @Test func aSpeechErrorSkipsTheUtteranceAndKeepsTheDeckMoving() {
         let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(thinkSeconds: 0, autoAdvance: true)))
         engine.primaryAction()
         speech.callback?.onError(utteranceID: "q-1")
-        #expect(engine.state.phase == .idle)
+        // The failed question counts as done: think 0 -> the answer is spoken.
+        #expect(engine.state.phase == .speakingAnswer)
+        #expect(speech.spoken.last?.utteranceID == "a-1")
+        speech.callback?.onError(utteranceID: "a-1")
+        #expect(engine.state.phase == .awaitingAdvance)
+    }
+
+    @Test func missingTranslationVoiceSkipsTranslatedUtterancesWithoutWedging() {
+        // No zh voice on the device: the fake reports translated utterances done
+        // immediately, like SystemSpeechEngine's missing-voice skip.
+        let scheduler = ManualScheduler()
+        let box = SettingsBox(StudySettings(thinkSeconds: 0, autoAdvance: true, language: .chineseSimplified))
+        let speech = FakeSpeechEngine()
+        speech.unavailable = [.chineseSimplified]
+        speech.skipScheduler = scheduler
+        let engine = StudyEngine(speech: speech, repo: repo, settings: box, scheduler: scheduler)
+
+        engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "q-1") // English question plays
+        speech.finishLast() // English done -> zh question requested but skipped
+        #expect(speech.spoken.last?.utteranceID == "zq-1")
+        scheduler.advance(by: 0) // skip callback -> think 0 -> English answer
+        #expect(engine.state.phase == .speakingAnswer)
+        #expect(speech.spoken.last?.utteranceID == "a-1")
+        speech.finishLast() // English done -> zh answer requested but skipped
+        #expect(speech.spoken.last?.utteranceID == "za-1")
+        scheduler.advance(by: 0)
+        #expect(engine.state.phase == .awaitingAdvance)
+        scheduler.advance(by: StudyEngine.autoAdvanceDelaySeconds)
+        #expect(speech.spoken.last?.utteranceID == "q-2") // the deck kept moving
     }
 
     @Test func announceMetaSettingDropsTheQuestionNumberPrefix() {

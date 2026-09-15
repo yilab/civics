@@ -4,8 +4,9 @@ import AVFoundation
 ///
 /// Unlike Android's TextToSpeech there is no async initialization step: voice
 /// availability is known synchronously at construction, so no pending-utterance
-/// slot is needed. There is also no error delegate callback — `onError` exists
-/// on the protocol purely for engine-logic parity and tests.
+/// slot is needed. There is no error delegate callback either — `didCancel`
+/// stands in for it (user stops are filtered out by StudyEngine's
+/// expectedUtterance guard, so only flaky system-side cancels reach it).
 @MainActor
 final class SystemSpeechEngine: NSObject, SpeechEngine {
 
@@ -49,8 +50,17 @@ final class SystemSpeechEngine: NSObject, SpeechEngine {
     }
 
     func speak(utteranceID: String, text: String, language: SpeechLanguage) {
+        // No voice for this language: don't attempt the utterance — a default
+        // voice would read it as gibberish. Report it done instead (async, like
+        // a natural finish) so the study loop advances as if it had been spoken.
+        guard let voice = voices[language] else {
+            Task { @MainActor in
+                self.callback?.onDone(utteranceID: utteranceID)
+            }
+            return
+        }
         let u = TaggedUtterance(utteranceID: utteranceID, text: text)
-        u.voice = voices[language]
+        u.voice = voice
         // Linear scaling around the default rate, mirroring Android's speech-rate multiplier.
         u.rate = AVSpeechUtteranceDefaultSpeechRate * speechRate
         // AVSpeechSynthesizer enqueues by default; flush first for QUEUE_FLUSH parity.
@@ -79,7 +89,14 @@ extension SystemSpeechEngine: AVSpeechSynthesizerDelegate {
         }
     }
 
-    // Interrupted speech (pause/skip/flush) is expected; StudyEngine's expectedUtterance
-    // guard ignores stale ids — the analog of Android's ignored onStop.
-    nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {}
+    // Reached for user stops (pause/skip/flush — those ids are stale by delivery
+    // time and ignored by StudyEngine) and for system-side cancellations. Reported
+    // as an error so a flaky cancel skips the utterance instead of wedging the deck.
+    nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
+        guard let tagged = utterance as? TaggedUtterance else { return }
+        let id = tagged.utteranceID
+        Task { @MainActor in
+            self.callback?.onError(utteranceID: id)
+        }
+    }
 }

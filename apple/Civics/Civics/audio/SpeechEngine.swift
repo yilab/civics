@@ -10,7 +10,8 @@ protocol SpeechEngineCallback: AnyObject {
 protocol SpeechEngine: AnyObject {
     var callback: (any SpeechEngineCallback)? { get set }
     var speechRate: Float { get set }
-    /// Speaks `text`, replacing anything queued or playing.
+    /// Speaks `text`, replacing anything queued or playing. When no voice exists
+    /// for `language`, nothing is spoken and the utterance is reported done.
     func speak(utteranceID: String, text: String, language: SpeechLanguage)
     /// Stops speech; callbacks may still fire for the interrupted utterance.
     func stop()

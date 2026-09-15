@@ -195,6 +195,7 @@ final class StudyEngine {
 
     private func finishTest(passed: Bool, correct: Int, wrong: Int) {
         cancelTimer()
+        expectedUtterance = nil
         let record = TestRecord(correct: correct, wrong: wrong, passed: passed, date: Date())
         emit(state.copy(
             phase: .finished,
@@ -330,8 +331,9 @@ final class StudyEngine {
 
     private func onUtteranceError(_ utteranceID: String) {
         guard utteranceID == expectedUtterance else { return }
-        // A speech failure should not cascade through the deck; stop where we are.
-        pause()
+        // A flaky speech failure must not stall the deck: skip the utterance as
+        // if it had finished.
+        onUtteranceDone(utteranceID)
     }
 
     private func beginThinkPause() {
