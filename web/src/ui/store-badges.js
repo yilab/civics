@@ -24,6 +24,7 @@ export function renderStore() {
   setText('store-eyebrow', t('store_eyebrow'));
   setText('store-heading', t('store_heading'));
   setText('store-sub', t('store_sub'));
+  setText('store-note', t('store_note'));
   const rec = platformRec();
   const wrap = el('store-badges');
   wrap.innerHTML = '';

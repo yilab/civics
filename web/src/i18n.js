@@ -36,7 +36,8 @@ const CHROME = {
   en: {
     tab_listen: 'Listen', tab_cards: 'Flashcards', tab_questions: 'Questions', tab_test: 'Test', tab_settings: 'Settings',
     header_sub: 'The officer asks up to 20 of these questions. You need 12 correct to pass. Listen hands-free, flip cards to learn, then take a practice test that stops the moment you pass — or fail — just like the real one.',
-    no_tts: 'No text-to-speech voice is available for the selected language. Install or enable a matching voice in your browser or system settings to hear questions read aloud.',
+    no_tts: 'No text-to-speech voice is available for the selected language in this browser. Voice coverage depends on the browser and device — for all 11 languages, try Microsoft Edge or the Civics Audio Prep mobile app.',
+    store_note: 'Spoken audio uses your device\'s built-in voices, so language coverage varies by browser — Safari, Chrome, and Firefox may be missing some languages. The mobile app includes clear voices for all 11 languages, plus offline use and lock-screen controls.',
     no_questions: 'No questions',
     question_of: 'Question {a} of {b}',
     known_count: '{a} known',
@@ -101,7 +102,8 @@ const CHROME = {
   es: {
     tab_listen: 'Escuchar', tab_cards: 'Tarjetas', tab_questions: 'Preguntas', tab_test: 'Examen', tab_settings: 'Ajustes',
     header_sub: 'El oficial hace hasta 20 de estas preguntas. Necesita 12 correctas para aprobar. Escuche con manos libres, practique con tarjetas y haga un examen de práctica que termina en el momento en que aprueba — o reprueba — igual que el real.',
-    no_tts: 'No hay ninguna voz de texto a voz disponible para el idioma seleccionado. Instale o active una voz correspondiente en la configuración del navegador o del sistema para escuchar las preguntas.',
+    no_tts: 'No hay ninguna voz de texto a voz disponible para el idioma seleccionado en este navegador. La cobertura de voces depende del navegador y del dispositivo: para los 11 idiomas, pruebe Microsoft Edge o la app móvil Civics Audio Prep.',
+    store_note: 'El audio usa las voces integradas de su dispositivo, por lo que la cobertura de idiomas varía según el navegador: Safari, Chrome y Firefox pueden no tener algunos idiomas. La app móvil incluye voces claras para los 11 idiomas, funciona sin conexión y tiene controles en la pantalla de bloqueo.',
     no_questions: 'No hay preguntas',
     question_of: 'Pregunta {a} de {b}',
     known_count: '{a} aprendidas',
@@ -166,7 +168,8 @@ const CHROME = {
   'zh-Hans': {
     tab_listen: '听题', tab_cards: '抽认卡', tab_questions: '题库', tab_test: '测试', tab_settings: '设置',
     header_sub: '移民官最多会问其中 20 道题，答对 12 题即通过。可免提听题、用抽认卡学习，再做模拟测试——一旦通过或失败立即结束，与真实面试相同。',
-    no_tts: '没有可用于所选语言的语音合成声音。请在系统或浏览器设置中安装或启用相应语音以收听题目。',
+    no_tts: '当前浏览器没有所选语言的语音合成声音。语音支持因浏览器和设备而异——如需全部 11 种语言，请使用 Microsoft Edge 浏览器或 Civics Audio Prep 移动应用。',
+    store_note: '朗读使用设备内置语音，语言覆盖因浏览器而异——Safari、Chrome 和 Firefox 可能缺少部分语言的语音。移动应用提供全部 11 种语言的清晰语音，支持离线使用和锁屏控制。',
     no_questions: '暂无题目',
     question_of: '第 {a} 题 / 共 {b} 题',
     known_count: '已掌握 {a}',
@@ -231,7 +234,8 @@ const CHROME = {
   'zh-Hant': {
     tab_listen: '聽題', tab_cards: '抽認卡', tab_questions: '題庫', tab_test: '測試', tab_settings: '設定',
     header_sub: '移民官最多會問其中 20 道題，答對 12 題即通過。可免提聽題、用抽認卡學習，再做模擬測試——一旦通過或失敗立即結束，與真實面試相同。',
-    no_tts: '沒有可用於所選語言的語音合成聲音。請在系統或瀏覽器設定中安裝或啟用相應語音以收聽題目。',
+    no_tts: '此瀏覽器沒有所選語言的語音合成聲音。語音支援因瀏覽器與裝置而異——如需全部 11 種語言，請使用 Microsoft Edge 瀏覽器或 Civics Audio Prep 行動應用程式。',
+    store_note: '朗讀使用裝置內建語音，語言覆蓋因瀏覽器而異——Safari、Chrome 和 Firefox 可能缺少部分語言的語音。行動應用程式提供全部 11 種語言的清晰語音，支援離線使用與鎖定畫面控制。',
     no_questions: '暫無題目',
     question_of: '第 {a} 題 / 共 {b} 題',
     known_count: '已掌握 {a}',
