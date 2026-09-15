@@ -9,7 +9,6 @@ export const speech = {
   voices: [],
   currentId: null,
   ondone: null,
-  onerror: null,
   /** Called after the voice list (re)loads so the UI can refresh the TTS warning. */
   onvoiceschanged: null,
   init() {
@@ -32,9 +31,20 @@ export const speech = {
     const want = norm(lang);
     const base = want.split('-')[0];
     const vs = this.voices;
-    return vs.find(v => norm(v.lang) === want)
-      || vs.find(v => norm(v.lang).startsWith(want + '-'))
-      || vs.find(v => norm(v.lang) === base || norm(v.lang).startsWith(base + '-'))
+    const exact = v => norm(v.lang) === want;
+    const region = v => norm(v.lang).startsWith(want + '-');
+    const anyBase = v => norm(v.lang) === base || norm(v.lang).startsWith(base + '-');
+    // Prefer OS-local voices: desktop Chrome lists Google's network voices first,
+    // and when one of those fails Chrome silently falls back to the default voice,
+    // which reads non-Latin text as punctuation ("dot dot"). localService is
+    // undefined on Safari — treat it as local.
+    const local = v => v.localService !== false;
+    return vs.find(v => local(v) && exact(v))
+      || vs.find(exact)
+      || vs.find(v => local(v) && region(v))
+      || vs.find(region)
+      || vs.find(v => local(v) && anyBase(v))
+      || vs.find(anyBase)
       || null;
   },
   available(lang) { return this.supported && !!this.voiceFor(lang); },
@@ -59,14 +69,17 @@ export const speech = {
       if (err === 'interrupted' || err === 'canceled') return; // expected from cancel()
       if (this.currentId !== id) return;
       this.currentId = null;
-      if (this.onerror) this.onerror(id);
+      // Skip a failed utterance rather than wedging the session (a flaky network
+      // voice must not stall the deck); the flow continues as if it had ended.
+      try { console.warn('speech: utterance failed (' + err + '), skipping', id); } catch (e2) {}
+      done();
     };
     try { window.speechSynthesis.cancel(); } catch (e) {} // QUEUE_FLUSH
     const self = this;
     // Safari needs a tick between cancel() and speak()
     setTimeout(() => {
       if (self.currentId !== id) return;
-      try { window.speechSynthesis.speak(u); } catch (e) { if (self.onerror) self.onerror(id); }
+      try { window.speechSynthesis.speak(u); } catch (e) { self.currentId = null; done(); }
     }, 0);
   },
   stop() {

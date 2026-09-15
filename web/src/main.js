@@ -6,7 +6,7 @@ import './styles.css';
 import { t, chromeLang, CHROME_LOCALE } from './i18n.js';
 import { speech, updateMediaSession } from './speech.js';
 import {
-  onEngineUpdate, onUtteranceDone, onUtteranceError, initDeck,
+  onEngineUpdate, onUtteranceDone, initDeck,
   primaryAction, pause,
 } from './engine.js';
 import { el, setText } from './ui/dom.js';
@@ -113,7 +113,6 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) pause
 
 /* ---------- init ---------- */
 speech.ondone = onUtteranceDone;
-speech.onerror = onUtteranceError;
 speech.onvoiceschanged = updateTtsWarning;
 speech.init();
 onEngineUpdate(update);

@@ -234,11 +234,6 @@ function translationQuestionText(q, language) {
   if (!tr) return q.question;
   return (settings.announceMeta ? Q_PREFIX[language](q.n) + ' ' : '') + tr.question;
 }
-export function onUtteranceError(utteranceId) {
-  if (utteranceId !== expectedUtterance) return;
-  // A speech failure should not cascade through the deck; stop where we are.
-  pause();
-}
 function beginThinkPause() {
   const think = settings.thinkSeconds;
   if (think === 0) { revealAnswer(); return; }
