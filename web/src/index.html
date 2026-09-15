@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Civics Audio Prep</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/*__BUILD_CSS__*/
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">U.S. Naturalization · 2025 Version · 128 Questions</p>
+    <h1>Civics Audio Prep</h1>
+    <p class="sub" id="header-sub">The officer asks up to 20 of these questions. You need 12 correct to pass. Listen hands-free, flip cards to learn, then take a practice test that stops the moment you pass — or fail — just like the real one.</p>
+  </header>
+
+  <div class="modes five" role="tablist" aria-label="Sections">
+    <button id="tab-listen" role="tab" aria-selected="true" aria-controls="panel-listen">Listen</button>
+    <button id="tab-cards" role="tab" aria-selected="false" aria-controls="panel-cards">Flashcards</button>
+    <button id="tab-questions" role="tab" aria-selected="false" aria-controls="panel-questions">Questions</button>
+    <button id="tab-test" role="tab" aria-selected="false" aria-controls="panel-test">Test</button>
+    <button id="tab-settings" role="tab" aria-selected="false" aria-controls="panel-settings">Settings</button>
+  </div>
+
+  <!-- ============ LISTEN ============ -->
+  <section id="panel-listen" class="panel active" role="tabpanel" aria-labelledby="tab-listen">
+    <div class="warn-card" id="tts-warning" hidden></div>
+    <div class="meta-row">
+      <span id="l-counter">Question 1 of 128</span>
+      <span class="progress"><span id="l-known">0 known</span></span>
+    </div>
+    <div class="bar full"><i id="l-bar"></i></div>
+    <div class="chips" id="l-filters"></div>
+
+    <div class="panel-card">
+      <div id="l-idle">
+        <p class="l-title" id="l-title">Civics Audio Prep</p>
+        <p class="l-onboarding" id="l-onboarding"></p>
+      </div>
+      <div id="l-active" hidden>
+        <div class="q-top"><span class="q-num" id="l-num">Q1</span><span class="q-cat" id="l-cat"></span></div>
+        <div class="q-text static" id="l-q">…</div>
+        <div class="q-sub" id="l-q2" hidden></div>
+        <div id="l-answer" hidden>
+          <hr class="a-divider">
+          <div class="a-label" id="l-a-label">ACCEPTABLE ANSWER</div>
+          <div class="a-text" id="l-a">…</div>
+          <div class="a-sub" id="l-a2" hidden></div>
+          <div class="note-red" id="l-note" hidden></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="phase-cap" id="l-phase"></p>
+    <button class="btn-primary block" id="l-primary">Start listening</button>
+    <div class="transport">
+      <button class="tbtn" id="l-prev" aria-label="Previous question">⏮</button>
+      <button class="tbtn" id="l-stop" aria-label="Stop">⏹</button>
+      <button class="tbtn" id="l-next" aria-label="Next question">⏭</button>
+      <span class="spacer"></span>
+      <button class="btn-star" id="l-star" aria-pressed="false"><span class="star-ic" id="l-star-ic">☆</span><span id="l-star-label">Mark known</span></button>
+    </div>
+  </section>
+
+  <!-- ============ FLASHCARDS ============ -->
+  <section id="panel-cards" class="panel" role="tabpanel" aria-labelledby="tab-cards">
+    <div class="chips" id="chips"></div>
+    <div class="meta-row">
+      <span id="card-counter">Question 1 of 128</span>
+      <span class="progress">
+        <span id="known-count">0 known</span>
+        <span class="bar"><i id="known-bar"></i></span>
+      </span>
+    </div>
+
+    <div class="card" id="card" tabindex="0" role="button" aria-label="Flashcard. Activate to reveal the answer.">
+      <div class="card-inner">
+        <div class="face front">
+          <div class="q-top"><span class="q-num" id="f-num">Q1</span><span class="q-cat" id="f-cat">American Government</span></div>
+          <div class="q-text" id="f-q">…</div>
+          <div class="q-sub" id="f-q2" hidden></div>
+          <span class="flip-hint" id="hint-front">tap to reveal ↻</span>
+        </div>
+        <div class="face back">
+          <div class="q-top"><span class="q-num" id="b-num">Q1</span><span class="q-cat" id="back-cat">Answer</span></div>
+          <div class="a-label" id="a-label">Acceptable answer</div>
+          <div class="a-text" id="b-a">…</div>
+          <div class="a-sub" id="b-a2" hidden></div>
+          <div class="a-note" id="b-note" hidden></div>
+          <span class="flip-hint" id="hint-back">tap for question ↻</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="nav">
+      <button class="btn-nav" id="prev" aria-label="Previous question">‹</button>
+      <button class="btn-known" id="known" aria-pressed="false"><span id="known-check">○</span> <span id="known-label">Mark as known</span></button>
+      <button class="btn-icon" id="shuffle" aria-label="Shuffle deck" title="Shuffle">⤮</button>
+      <button class="btn-nav" id="next" aria-label="Next question">›</button>
+    </div>
+  </section>
+
+  <!-- ============ QUESTIONS ============ -->
+  <section id="panel-questions" class="panel" role="tabpanel" aria-labelledby="tab-questions">
+    <div class="chips" id="q-filters"></div>
+    <div id="q-list"></div>
+  </section>
+
+  <!-- ============ TEST ============ -->
+  <section id="panel-test" class="panel" role="tabpanel" aria-labelledby="tab-test">
+    <!-- start -->
+    <div class="start-card" id="test-start">
+      <h2 id="test-h2">Practice test</h2>
+      <ul class="rules" id="test-rules"><li></li><li></li><li></li></ul>
+      <button class="btn-primary" id="start-test">Start practice test</button>
+      <div id="test-history"></div>
+    </div>
+
+    <!-- running -->
+    <div id="test-run" hidden>
+      <div class="test-head">
+        <span id="t-progress">Question 1 of 20</span>
+        <span class="tally">
+          <span><i class="dot g"></i><span id="t-correct">0</span> <span id="t-correct-label">correct</span></span>
+          <span><i class="dot r"></i><span id="t-wrong">0</span> <span id="t-wrong-label">missed</span></span>
+        </span>
+      </div>
+      <div class="testbar"><i id="t-bar"></i></div>
+
+      <div class="panel-card">
+        <div class="q-top"><span class="q-num" id="t-num">Q1</span><span class="q-cat" id="t-cat">—</span></div>
+        <div class="q-text static" id="t-q">…</div>
+        <div class="q-sub" id="t-q2" hidden></div>
+        <div id="t-answer" hidden>
+          <hr class="a-divider">
+          <div class="a-label" id="t-a-label">ACCEPTABLE ANSWER</div>
+          <div class="a-text" id="t-a">…</div>
+          <div class="a-sub" id="t-a2" hidden></div>
+          <div class="note-red" id="t-note" hidden></div>
+        </div>
+      </div>
+
+      <p class="phase-cap" id="t-phase"></p>
+      <button class="reveal-btn" id="t-reveal">Hear the answer</button>
+      <div class="grade" id="t-grade" hidden>
+        <button class="wrong" id="t-miss">✗ I missed it</button>
+        <button class="right" id="t-got">✓ I got it</button>
+      </div>
+      <button class="btn-primary ghost block" id="t-stop" style="margin-top:12px;">Stop</button>
+    </div>
+
+    <!-- result -->
+    <div id="test-result" hidden>
+      <div class="score">
+        <div class="stamp" id="r-stamp">Passed</div>
+        <div class="big"><span id="r-score">0</span><span class="of"> / <span id="r-total">20</span></span></div>
+        <div class="verdict" id="r-verdict">…</div>
+        <button class="btn-primary green block" id="r-again" style="margin-bottom:10px;">Take another test</button>
+        <button class="btn-primary ghost block" id="r-back">Back to listening</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SETTINGS ============ -->
+  <section id="panel-settings" class="panel" role="tabpanel" aria-labelledby="tab-settings">
+    <div class="s-section">
+      <p class="s-title" id="s-lang-title">Language</p>
+      <p class="s-label" id="s-lang-label">App language</p>
+      <div class="chips" id="s-lang-chips"></div>
+    </div>
+    <div class="s-section">
+      <p class="s-title" id="s-voice-title">Voice</p>
+      <p class="s-label" id="s-rate-label">Speech rate: 1.00×</p>
+      <input type="range" class="slider" id="s-rate" min="0.75" max="1.5" step="0.05" value="1">
+      <label class="s-row"><span id="s-announce-label">Announce question number</span>
+        <span class="switch"><input type="checkbox" id="s-announce" checked><span class="track"></span></span>
+      </label>
+    </div>
+    <div class="s-section">
+      <p class="s-title" id="s-playback-title">Playback</p>
+      <p class="s-label" id="s-think-label">Pause before revealing the answer</p>
+      <div class="chips" id="s-think-chips"></div>
+      <label class="s-row"><span id="s-auto-label">Auto-advance after the answer</span>
+        <span class="switch"><input type="checkbox" id="s-auto"><span class="track"></span></span>
+      </label>
+    </div>
+    <div class="s-section">
+      <p class="s-title" id="s-deck-title">Deck</p>
+      <div class="chips" id="s-cat-chips"></div>
+      <label class="s-row"><span id="s-shuffle-label">Shuffle</span>
+        <span class="switch"><input type="checkbox" id="s-shuffle"><span class="track"></span></span>
+      </label>
+    </div>
+    <div class="s-section">
+      <p class="s-title" id="s-progress-title">Progress</p>
+      <p class="s-label" id="s-known-label">0 of 128 marked as known</p>
+      <button class="btn-primary ghost" id="s-clear">Clear known marks</button>
+    </div>
+  </section>
+
+  <!-- ============ MOBILE APP ============ -->
+  <section id="store-section" class="store-section" aria-labelledby="store-heading">
+    <div class="store-card">
+      <p class="store-eyebrow" id="store-eyebrow">iOS · MAC · ANDROID</p>
+      <h2 class="store-heading" id="store-heading">Get the mobile app</h2>
+      <p class="store-sub" id="store-sub">Hands-free listening with lock-screen controls and headset buttons — and it works offline.</p>
+      <div class="store-badges" id="store-badges"></div>
+    </div>
+  </section>
+
+  <footer>
+    <p><span class="dyn-tag">Changes</span> Eight questions (current officials and your state) have answers that change — Q23, Q29, Q30, Q38, Q39, Q57, Q61, Q62. For state questions, look up your own governor, U.S. senators, U.S. representative, and state capital. Always confirm current-official answers before your interview at <a href="https://www.uscis.gov/citizenship/testupdates" target="_blank" rel="noopener">uscis.gov/citizenship/testupdates</a>.</p>
+    <p style="margin-top:10px;">Many questions have several acceptable answers — you only need to give the number asked. The complete official list is the <a href="https://www.uscis.gov/citizenship/find-study-materials-and-resources/study-for-the-test" target="_blank" rel="noopener">USCIS 128 Civics Questions and Answers</a>. This tool is a study aid, not legal advice.</p>
+  </footer>
+</div>
+<script>
+/*__BUILD_JS__*/
+</script>
+</body>
+</html>
