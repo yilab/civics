@@ -91,6 +91,20 @@ struct RootView: View {
                 )
             }
         }
+        // Persistent brand mark in the upper left. The .bar background keeps the
+        // logo legible over scrolling content without navigation-bar chrome.
+        .safeAreaInset(edge: .top, spacing: 0) {
+            Image("Logo")
+                .resizable()
+                .scaledToFit()
+                .frame(height: 25)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading, 16)
+                .padding(.vertical, 7)
+                .opacity(0.9)
+                .accessibilityHidden(true)
+                .background(.bar)
+        }
         // Rebuild the whole tree when the in-app language changes so every
         // string re-resolves against the new bundle. Selection is preserved.
         .id(model.settingsRepo.settings.language)

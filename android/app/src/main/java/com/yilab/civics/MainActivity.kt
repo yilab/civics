@@ -10,11 +10,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.adaptive.navigationsuite.NavigationSuiteScaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -26,9 +31,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat
 import androidx.core.os.LocaleListCompat
 import androidx.media3.common.util.UnstableApi
@@ -138,7 +145,10 @@ fun CivicsRoot() {
             }
         }
     ) {
-        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+            topBar = { BrandingTopBar() },
+        ) { innerPadding ->
             when (currentDestination) {
                 AppDestinations.LISTEN -> ListenScreen(
                     state = state,
@@ -203,6 +213,26 @@ fun CivicsRoot() {
             }
         }
     }
+}
+
+/** Persistent brand mark: a small Starwave logo pinned to the upper left of every tab. */
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+private fun BrandingTopBar() {
+    TopAppBar(
+        title = {},
+        navigationIcon = {
+            Image(
+                painter = painterResource(R.drawable.ic_logo),
+                contentDescription = null,
+                alpha = 0.9f,
+                modifier = Modifier
+                    .padding(start = 12.dp)
+                    .size(26.dp),
+            )
+        },
+        colors = TopAppBarDefaults.topAppBarColors(containerColor = Color.Transparent),
+    )
 }
 
 @Composable

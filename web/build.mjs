@@ -32,6 +32,11 @@ const js = result.outputFiles
 const css = result.outputFiles.find(f => f.path.endsWith('.css')).text;
 
 let html = readFileSync(here('./src/index.html'), 'utf8');
+for (const [token, file] of [['__FAVICON_DATA_URI__', './icons/favicon-32.png'], ['__TOUCH_ICON_DATA_URI__', './icons/apple-touch-icon.png']]) {
+  if (!html.includes(token)) throw new Error(`placeholder ${token} not found in src/index.html`);
+  if (!existsSync(here(file))) throw new Error(`${file} missing — regenerate it: python3 ../assets/generate_icons.py`);
+  html = html.split(token).join('data:image/png;base64,' + readFileSync(here(file)).toString('base64'));
+}
 for (const [token, content] of [['/*__BUILD_CSS__*/', css], ['/*__BUILD_JS__*/', js]]) {
   if (!html.includes(token)) throw new Error(`placeholder ${token} not found in src/index.html`);
   html = html.split(token).join(content);

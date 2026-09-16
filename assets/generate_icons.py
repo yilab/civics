@@ -6,6 +6,11 @@ Rebuilds the Starwave logo as clean vector geometry and exports:
   - Android legacy webp mipmaps (unused at minSdk 30, kept consistent)
   - iOS AppIcon.appiconset PNGs (base + dark appearance, mac sizes)
   - Play Store 512px icon and preview composites
+  - In-app branding marks: Android drawable(+night) ic_logo vectors and
+    iOS Logo.imageset transparent PNGs (light + dark appearances)
+  - Web browser icons (web/icons/): favicon + apple-touch-icon, inlined as
+    data URIs by web/build.mjs (paper background — dark browser chrome would
+    swallow the navy mark on transparency)
 """
 import math
 import os
@@ -209,10 +214,108 @@ def write_store_and_previews():
     canvas.save(os.path.join(OUT, "starwave-preview.png"))
 
 
+# ---- In-app branding mark (small logo shown in screen headers) ----
+
+LOGO_PAD = 2.0  # breathing room around the artwork bbox, in viewport units
+IOS_LOGO_SET = os.path.join(ROOT, "apple/Civics/Civics/Assets.xcassets/Logo.imageset")
+ARC_COLORS_HEX = [NAVY_HEX, NAVY_HEX, BRASS_HEX]
+ARC_COLORS_DARK_HEX = [PAPER_HEX, PAPER_HEX, BRASS_HEX]
+
+
+def logo_viewbox():
+    """Square viewbox tightly framing the artwork (bbox + pad, centered)."""
+    x0, y0, x1, y1 = artwork_bbox()
+    x0, y0, x1, y1 = x0 - LOGO_PAD, y0 - LOGO_PAD, x1 + LOGO_PAD, y1 + LOGO_PAD
+    w, h = x1 - x0, y1 - y0
+    side = max(w, h)
+    return x0 - (side - w) / 2, y0 - (side - h) / 2, side
+
+
+def android_logo_xml(star_color, arc_colors):
+    """Vector of just the mark; the launcher foreground keeps its adaptive-icon padding."""
+    vx, vy, side = logo_viewbox()
+    lines = ['<vector xmlns:android="http://schemas.android.com/apk/res/android"',
+             f'    android:width="{side:.0f}dp"',
+             f'    android:height="{side:.0f}dp"',
+             f'    android:viewportWidth="{side:.2f}"',
+             f'    android:viewportHeight="{side:.2f}">',
+             f'    <group android:translateX="{-vx:.2f}" android:translateY="{-vy:.2f}">',
+             f'        <path android:fillColor="{star_color}" android:pathData="{star_path_data()}" />']
+    for (r, _), color in zip(ARCS, arc_colors):
+        lines += [f'        <path android:pathData="{arc_path_data(r)}"',
+                  f'            android:strokeColor="{color}"',
+                  f'            android:strokeWidth="{STROKE}"',
+                  '            android:strokeLineCap="round"',
+                  f'            android:fillColor="{star_color}" android:fillAlpha="0" />']
+    lines.append('    </group>')
+    lines.append('</vector>')
+    return "\n".join(lines) + "\n"
+
+
+def render_logo_rgba(px, star_color, arc_colors, art_frac=0.94, supersample=4):
+    """Transparent-background render of just the mark, tightly framed."""
+    big = px * supersample
+    img = Image.new("RGBA", (big, big), (0, 0, 0, 0))
+    draw = ImageDraw.Draw(img)
+
+    x0, y0, x1, y1 = artwork_bbox()
+    w, h = x1 - x0, y1 - y0
+    s = big * art_frac / max(w, h)
+    ox = big / 2 - (x0 + w / 2) * s
+    oy = big / 2 - (y0 + h / 2) * s
+
+    star = [(p[0] * s + ox, p[1] * s + oy) for p in star_points(CX, CY, R_OUT, R_IN)]
+    draw.polygon(star, fill=star_color + (255,))
+    for (r, _), color in zip(ARCS, arc_colors):
+        bbox = [CX * s + ox - r * s, CY * s + oy - r * s,
+                CX * s + ox + r * s, CY * s + oy + r * s]
+        draw.arc(bbox, start=ARC_SPAN[0], end=ARC_SPAN[1], fill=color + (255,),
+                 width=int(STROKE * s))
+    return img.resize((px, px), Image.LANCZOS)
+
+
+def write_branding():
+    with open(os.path.join(ANDROID_RES, "drawable/ic_logo.xml"), "w") as f:
+        f.write(android_logo_xml(NAVY_HEX, ARC_COLORS_HEX))
+    night_dir = os.path.join(ANDROID_RES, "drawable-night")
+    os.makedirs(night_dir, exist_ok=True)
+    with open(os.path.join(night_dir, "ic_logo.xml"), "w") as f:
+        f.write(android_logo_xml(PAPER_HEX, ARC_COLORS_DARK_HEX))
+
+    os.makedirs(IOS_LOGO_SET, exist_ok=True)
+    import json
+    images = []
+    for scale in (1, 2, 3):
+        render_logo_rgba(64 * scale, NAVY, ARC_COLORS).save(
+            os.path.join(IOS_LOGO_SET, f"logo-light@{scale}x.png"))
+        render_logo_rgba(64 * scale, PAPER, ARC_COLORS_DARK).save(
+            os.path.join(IOS_LOGO_SET, f"logo-dark@{scale}x.png"))
+        images.append({"filename": f"logo-light@{scale}x.png",
+                       "idiom": "universal", "scale": f"{scale}x"})
+        images.append({"appearances": [{"appearance": "luminosity", "value": "dark"}],
+                       "filename": f"logo-dark@{scale}x.png",
+                       "idiom": "universal", "scale": f"{scale}x"})
+    with open(os.path.join(IOS_LOGO_SET, "Contents.json"), "w") as f:
+        json.dump({"images": images, "info": {"author": "xcode", "version": 1}}, f, indent=2)
+
+
+def write_web():
+    """Browser icons for the web app; web/build.mjs inlines them as data URIs."""
+    web_icons = os.path.join(ROOT, "web/icons")
+    os.makedirs(web_icons, exist_ok=True)
+    # Favicon shows at 16px: art fills more of the canvas than an app icon.
+    render_master(32, PAPER, NAVY, ARC_COLORS, art_frac=0.78).save(
+        os.path.join(web_icons, "favicon-32.png"))
+    render_master(180, PAPER, NAVY, ARC_COLORS, art_frac=0.66).save(
+        os.path.join(web_icons, "apple-touch-icon.png"))
+
+
 if __name__ == "__main__":
     write_android_vectors()
     write_android_webp()
     write_ios()
     write_store_and_previews()
+    write_branding()
+    write_web()
     print("bbox:", artwork_bbox())
     print("done")

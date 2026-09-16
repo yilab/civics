@@ -42,6 +42,8 @@
     font-weight:600;font-size:30px;line-height:1.08;margin:0;
     letter-spacing:-.01em;
   }
+  .brand{display:flex;align-items:center;gap:12px;}
+  .brand-mark{width:38px;height:38px;flex:none;}
   header p.sub{margin:10px 0 0;font-size:13.5px;color:#c7d0dd;max-width:52ch;}
 
   /* ---------- Tab switch ---------- */
@@ -110,6 +112,10 @@
   .a-note b{color:var(--red);font-weight:700;}
   .note-red{margin-top:12px;font-size:12.5px;color:var(--red);font-weight:500;line-height:1.45;}
   .phase-cap{min-height:21px;font-size:13.5px;color:var(--slate);margin:0 0 14px;}
+  .spoken-word{
+    background:rgba(169,128,47,.28);border-radius:3px;
+    -webkit-box-decoration-break:clone;box-decoration-break:clone;
+  }
 
   .warn-card{
     background:#fbf1ee;border:1px solid #dfb7ae;border-radius:12px;
@@ -339,6 +345,7 @@
 
   @media (max-width:430px){
     header h1{font-size:25px;}
+    .brand-mark{width:31px;height:31px;}
     .q-text{font-size:21px;}
     .q-text.static{font-size:19px;}
     .a-text{font-size:18px;}
