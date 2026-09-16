@@ -2,12 +2,28 @@
 export function el(id) { return document.getElementById(id); }
 export function setText(id, txt) { const n = el(id); if (n) n.textContent = txt; }
 export function show(id, on) { const n = el(id); if (n) n.hidden = !on; }
+/* Offset of the occurrence of display inside spoken that the spoken range
+   start..end overlaps most, so a display text repeated in the spoken text
+   lights the copy actually being read. Falls back to the first occurrence
+   when none overlap; -1 when display never occurs. */
+function bestOccurrence(spoken, display, start, end) {
+  if (!display) return -1;
+  let best = -1, bestOverlap = -1, from = 0;
+  while (from <= spoken.length) {
+    const at = spoken.indexOf(display, from);
+    if (at < 0) break;
+    const overlap = Math.max(0, Math.min(at + display.length, end) - Math.max(at, start));
+    if (overlap > bestOverlap) { best = at; bestOverlap = overlap; }
+    from = at + 1;
+  }
+  return best;
+}
 /* Splits a line's text around the spoken range for karaoke highlighting.
    display is the line's normal text; hl = {text, start, end} over the spoken
    string. When display isn't a substring of the spoken text (verbose English
    answer), the spoken text is shown instead. Pure — no DOM access. */
 export function spokenSlices(display, hl) {
-  const base = hl.text.indexOf(display);
+  const base = bestOccurrence(hl.text, display, hl.start, hl.end);
   const text = base >= 0 ? display : hl.text;
   const off = base >= 0 ? base : 0;
   const start = Math.min(Math.max(hl.start - off, 0), text.length);

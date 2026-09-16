@@ -315,7 +315,7 @@ private fun spokenLine(
     if (h == null || h.block != block || h.translation != translation || !h.hasRange) {
         return AnnotatedString(display)
     }
-    val base = h.text.indexOf(display)
+    val base = bestOccurrence(h.text, display, h.start, h.end)
     if (base >= 0) {
         return buildAnnotatedString {
             append(display)

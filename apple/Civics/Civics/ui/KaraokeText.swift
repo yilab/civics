@@ -24,19 +24,45 @@ enum KaraokeText {
         let spoken = highlight.text
         // The displayed line usually sits inside the spoken text (an announce
         // prefix may precede it): light the matching slice of the display.
-        let base = (spoken as NSString).range(of: display)
-        if base.location != NSNotFound {
+        if let base = occurrence(of: display, in: spoken, near: range) {
             guard range.upperBound > base.location else {
                 // The spoken word is inside the prefix: nothing to light yet.
                 return Text(display)
             }
             let lower = max(range.lowerBound - base.location, 0)
             let upper = min(range.upperBound - base.location, display.utf16.count)
+            guard lower < upper else {
+                // The spoken word sits outside the matched slice: nothing to light.
+                return Text(display)
+            }
             return Text(highlighted(display, utf16: lower..<upper))
         }
         // Not a substring — the English answer speaks a longer TTS-friendly
         // text: show the spoken text itself while it is being read.
         return Text(highlighted(spoken, utf16: range))
+    }
+
+    /// The slice of `spoken` matching `display` that the spoken word range
+    /// overlaps most, so a display text repeated in the spoken text lights the
+    /// copy actually being read. Falls back to the first occurrence when none
+    /// overlap; nil when `display` never occurs.
+    static func occurrence(of display: String, in spoken: String, near range: Range<Int>) -> NSRange? {
+        let haystack = spoken as NSString
+        guard !display.isEmpty else { return nil }
+        var best: NSRange?
+        var bestOverlap = -1
+        var search = NSRange(location: 0, length: haystack.length)
+        while search.location <= haystack.length {
+            let found = haystack.range(of: display, options: [], range: search)
+            guard found.location != NSNotFound else { break }
+            let overlap = max(0, min(found.location + found.length, range.upperBound) - max(found.location, range.lowerBound))
+            if overlap > bestOverlap {
+                best = found
+                bestOverlap = overlap
+            }
+            search = NSRange(location: found.location + 1, length: haystack.length - found.location - 1)
+        }
+        return best
     }
 
     /// `string` with the accent wash over a UTF-16 range, clamped to the string.
