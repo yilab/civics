@@ -1,8 +1,8 @@
 // Listen tab: warning card, progress, question card, phase caption, transport row.
-import { el, setText, show, makeChips } from './dom.js';
+import { el, setText, show, makeChips, setSpokenText } from './dom.js';
 import { t, catLabel, translationFor, displayPair, spokenLanguage, translationPrimary } from '../i18n.js';
 import { settings } from '../settings.js';
-import { state, Phase, Mode, deckSize, primaryAction, pause, next, previous, toggleKnown, applySettings } from '../engine.js';
+import { state, Phase, Mode, deckSize, primaryAction, pause, next, previous, toggleKnown, applySettings, activeHighlight } from '../engine.js';
 import { ttsAvailable } from '../speech.js';
 
 export function updateTtsWarning() {
@@ -25,16 +25,10 @@ export function renderListen() {
     setText('l-num', 'Q' + q.n);
     setText('l-cat', catLabel(q.category).toUpperCase());
     const tr = translationFor(q, spokenLanguage());
-    const qp = displayPair(q.question, tr ? tr.question : null);
-    setText('l-q', qp.primary);
-    show('l-q2', qp.secondary != null);
-    if (qp.secondary != null) setText('l-q2', qp.secondary);
+    renderSpokenPair('l-q', 'l-q2', q.question, tr ? tr.question : null, 'question');
     show('l-answer', state.answerRevealed);
     if (state.answerRevealed) {
-      const ap = displayPair(q.answer, tr ? tr.answer : null);
-      setText('l-a', ap.primary);
-      show('l-a2', ap.secondary != null);
-      if (ap.secondary != null) setText('l-a2', ap.secondary);
+      renderSpokenPair('l-a', 'l-a2', q.answer, tr ? tr.answer : null, 'answer');
       const note = translationPrimary() && tr ? (tr.note || q.note) : q.note;
       show('l-note', !!note);
       if (note) setText('l-note', note);
@@ -75,6 +69,27 @@ export function renderListen() {
   setText('l-star-label', isKnown ? t('known_label') : t('mark_known'));
 
   renderListenFilters();
+}
+
+/* Renders one primary/secondary line pair; while TTS speaks, the line matching
+   the utterance's block and language carries the moving word highlight. */
+function renderSpokenPair(primaryId, secondaryId, english, translated, block) {
+  const qp = displayPair(english, translated);
+  const hl = activeHighlight(block);
+  const onPrimary = !!hl && hl.translation === translationPrimary();
+  setSpokenText(primaryId, qp.primary, onPrimary ? hl : null);
+  show(secondaryId, qp.secondary != null);
+  if (qp.secondary != null) setSpokenText(secondaryId, qp.secondary, onPrimary ? null : hl);
+}
+
+/* Per-word refresh for TTS boundary events: only the four text lines, never
+   the chips/buttons/captions the full render also touches. */
+export function renderListenHighlight() {
+  const q = state.current;
+  if (!q) return;
+  const tr = translationFor(q, spokenLanguage());
+  renderSpokenPair('l-q', 'l-q2', q.question, tr ? tr.question : null, 'question');
+  if (state.answerRevealed) renderSpokenPair('l-a', 'l-a2', q.answer, tr ? tr.answer : null, 'answer');
 }
 
 function renderListenFilters() {

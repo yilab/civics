@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
 import com.yilab.civics.audio.Phase
+import com.yilab.civics.audio.SpokenBlock
 import com.yilab.civics.audio.StudyState
 import com.yilab.civics.audio.TestOutcome
 import com.yilab.civics.audio.TestRecord
@@ -136,12 +137,26 @@ private fun Running(
                     Text(categoryLabel(q.category).uppercase(), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
                 Spacer(Modifier.height(12.dp))
-                BilingualText(q.question, q.translation(language)?.question, translationPrimary, MaterialTheme.typography.headlineSmall)
+                QuestionAnswerText(
+                    q.question,
+                    q.translation(language)?.question,
+                    translationPrimary,
+                    MaterialTheme.typography.headlineSmall,
+                    block = SpokenBlock.QUESTION,
+                    highlight = state.activeHighlight,
+                )
                 if (state.answerRevealed) {
                     HorizontalDivider(Modifier.padding(vertical = 16.dp))
                     Text(stringResource(R.string.listen_acceptable_answer), style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.tertiary)
                     Spacer(Modifier.height(6.dp))
-                    BilingualText(q.answer, q.translation(language)?.answer, translationPrimary, MaterialTheme.typography.titleLarge)
+                    QuestionAnswerText(
+                        q.answer,
+                        q.translation(language)?.answer,
+                        translationPrimary,
+                        MaterialTheme.typography.titleLarge,
+                        block = SpokenBlock.ANSWER,
+                        highlight = state.activeHighlight,
+                    )
                     val note = if (translationPrimary) q.translation(language)?.note ?: q.note else q.note
                     note?.let {
                         Spacer(Modifier.height(10.dp))
@@ -210,26 +225,6 @@ private fun Finished(state: StudyState, onStart: () -> Unit, onBackToStudy: () -
         Spacer(Modifier.height(8.dp))
         TextButton(onClick = onBackToStudy, modifier = Modifier.fillMaxWidth()) {
             Text(stringResource(R.string.test_back_to_study))
-        }
-    }
-}
-
-@Composable
-private fun BilingualText(english: String, translated: String?, translationPrimary: Boolean, style: androidx.compose.ui.text.TextStyle) {
-    val secondary = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-    if (translationPrimary && translated != null) {
-        Column {
-            Text(translated, style = style)
-            Spacer(Modifier.height(4.dp))
-            Text(english, style = secondary)
-        }
-    } else {
-        Column {
-            Text(english, style = style)
-            translated?.let {
-                Spacer(Modifier.height(4.dp))
-                Text(it, style = secondary)
-            }
         }
     }
 }

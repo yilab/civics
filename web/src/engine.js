@@ -26,6 +26,7 @@ export const TEST_TOTAL = 20, TEST_PASS_AT = 12, TEST_FAIL_AT = 9, AUTO_ADVANCE_
 export const state = {
   phase: Phase.IDLE, position: 0, current: null, answerRevealed: false,
   mode: Mode.STUDY, testIndex: 0, testCorrect: 0, testWrong: 0, testOutcome: Outcome.NONE,
+  highlight: null, // {id, block, translation, text, start, end} — set by speak(), ranged by boundary events
 };
 let deck = [];
 let timer = null;
@@ -35,6 +36,9 @@ let expectedUtterance = null;
 let updateFn = () => {};
 export function onEngineUpdate(fn) { updateFn = fn; }
 function update() { updateFn(); }
+/* Per-word path for boundary events — skips the chip/button rebuilds of update(). */
+let highlightFn = () => {};
+export function onHighlightUpdate(fn) { highlightFn = fn; }
 
 export function deckSize() { return deck.length; }
 export function initDeck() {
@@ -63,6 +67,12 @@ function cancelTimer() { if (timer !== null) { clearTimeout(timer); timer = null
 
 function speak(id, text, lang) {
   expectedUtterance = id;
+  state.highlight = {
+    id: id,
+    block: id.indexOf('q-') === 0 || id.indexOf('zq-') === 0 ? 'question' : 'answer',
+    translation: id.charAt(0) === 'z',
+    text: text, start: null, end: null,
+  };
   speech.speak({ id: id, text: text, lang: TTS_LOCALE[lang], rate: settings.speechRate });
 }
 
@@ -80,12 +90,14 @@ export function primaryAction() {
 export function pause() {
   cancelTimer();
   expectedUtterance = null;
+  state.highlight = null;
   speech.stop();
   if (state.phase !== Phase.IDLE) { state.phase = Phase.IDLE; update(); }
 }
 export function startTest() {
   cancelTimer();
   expectedUtterance = null;
+  state.highlight = null;
   speech.stop();
   deck = shuffleArr(QUESTIONS.slice()).slice(0, TEST_TOTAL);
   state.position = 0;
@@ -117,6 +129,7 @@ export function grade(correct) {
 export function startStudy() {
   cancelTimer();
   expectedUtterance = null;
+  state.highlight = null;
   speech.stop();
   deck = repoDeck(settings.category, settings.shuffle, settings.knownFilter, settings.known);
   state.phase = Phase.IDLE;
@@ -132,6 +145,7 @@ function finishTest(passed, correct, wrong) {
   state.testCorrect = correct;
   state.testWrong = wrong;
   state.testOutcome = passed ? Outcome.PASSED : Outcome.FAILED;
+  state.highlight = null;
   speech.stop();
   recordTest({ c: correct, w: wrong, p: passed ? 1 : 0, ts: Date.now() });
   update();
@@ -212,6 +226,7 @@ function afterAnswerSpoken() {
 }
 export function onUtteranceDone(utteranceId) {
   if (utteranceId !== expectedUtterance) return;
+  state.highlight = null; // a fresh one is set if a follow-up utterance chains
   const lang = spokenLanguage();
   if (utteranceId.indexOf('zq-') === 0) { beginThinkPause(); return; }
   if (utteranceId.indexOf('za-') === 0) { afterAnswerSpoken(); return; }
@@ -228,6 +243,20 @@ export function onUtteranceDone(utteranceId) {
     if (bilingual() && q && tr) speak('za-' + q.n, tr.spoken, lang);
     else afterAnswerSpoken();
   }
+}
+export function onUtteranceBoundary(id, start, end) {
+  const h = state.highlight;
+  if (!h || h.id !== id || id !== expectedUtterance) return;
+  h.start = start;
+  h.end = end;
+  highlightFn();
+}
+/* The highlight to render on a block's line, or null unless speech is in flight. */
+export function activeHighlight(block) {
+  const h = state.highlight;
+  if (!h || h.block !== block || h.start == null || h.end == null) return null;
+  if (state.phase !== Phase.SPEAKING_QUESTION && state.phase !== Phase.SPEAKING_ANSWER) return null;
+  return h;
 }
 function translationQuestionText(q, language) {
   const tr = translationFor(q, language);

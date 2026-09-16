@@ -82,10 +82,16 @@ class CivicsAudioService : MediaSessionService() {
             .build()
         createNotificationChannel()
         serviceScope.launch {
+            // Word-range highlight updates arrive several times per second; the media
+            // session, notification, and playback resources only care about the rest.
+            var lastNotified: StudyState? = null
             engine.state.collect { st ->
-                player.refresh()
-                updatePlaybackResources(st.playing)
-                updateNotification(st)
+                if (lastNotified?.copy(highlight = null) != st.copy(highlight = null)) {
+                    player.refresh()
+                    updatePlaybackResources(st.playing)
+                    updateNotification(st)
+                    lastNotified = st
+                }
             }
         }
     }

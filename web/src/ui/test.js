@@ -1,8 +1,8 @@
 // Test tab: start screen + history, TTS-driven running view, result stamp.
-import { el, setText, show } from './dom.js';
+import { el, setText, show, setSpokenText } from './dom.js';
 import { t, catLabel, translationFor, displayPair, spokenLanguage, translationPrimary, CHROME_LOCALE, chromeLang } from '../i18n.js';
 import { getHistory } from '../settings.js';
-import { state, Phase, Mode, Outcome, TEST_TOTAL, startTest, primaryAction, grade, startStudy } from '../engine.js';
+import { state, Phase, Mode, Outcome, TEST_TOTAL, startTest, primaryAction, grade, startStudy, activeHighlight } from '../engine.js';
 import { selectTab } from '../main.js';
 
 export function renderTest() {
@@ -53,16 +53,10 @@ function renderTestRun() {
     setText('t-num', 'Q' + q.n);
     setText('t-cat', catLabel(q.category).toUpperCase());
     const tr = translationFor(q, spokenLanguage());
-    const qp = displayPair(q.question, tr ? tr.question : null);
-    setText('t-q', qp.primary);
-    show('t-q2', qp.secondary != null);
-    if (qp.secondary != null) setText('t-q2', qp.secondary);
+    renderSpokenPair('t-q', 't-q2', q.question, tr ? tr.question : null, 'question');
     show('t-answer', state.answerRevealed);
     if (state.answerRevealed) {
-      const ap = displayPair(q.answer, tr ? tr.answer : null);
-      setText('t-a', ap.primary);
-      show('t-a2', ap.secondary != null);
-      if (ap.secondary != null) setText('t-a2', ap.secondary);
+      renderSpokenPair('t-a', 't-a2', q.answer, tr ? tr.answer : null, 'answer');
       const note = translationPrimary() && tr ? (tr.note || q.note) : q.note;
       show('t-note', !!note);
       if (note) setText('t-note', note);
@@ -87,6 +81,26 @@ function renderTestResult() {
   setText('r-score', state.testCorrect);
   setText('r-total', state.testCorrect + state.testWrong);
   setText('r-verdict', passed ? t('test_verdict_pass') : t('test_verdict_fail'));
+}
+
+/* Same pair logic as the Listen tab: the line matching the utterance's block
+   and language carries the moving word highlight while TTS speaks. */
+function renderSpokenPair(primaryId, secondaryId, english, translated, block) {
+  const qp = displayPair(english, translated);
+  const hl = activeHighlight(block);
+  const onPrimary = !!hl && hl.translation === translationPrimary();
+  setSpokenText(primaryId, qp.primary, onPrimary ? hl : null);
+  show(secondaryId, qp.secondary != null);
+  if (qp.secondary != null) setSpokenText(secondaryId, qp.secondary, onPrimary ? null : hl);
+}
+
+/* Per-word refresh for TTS boundary events (see renderListenHighlight). */
+export function renderTestHighlight() {
+  const q = state.current;
+  if (!q || state.mode !== Mode.TEST) return;
+  const tr = translationFor(q, spokenLanguage());
+  renderSpokenPair('t-q', 't-q2', q.question, tr ? tr.question : null, 'question');
+  if (state.answerRevealed) renderSpokenPair('t-a', 't-a2', q.answer, tr ? tr.answer : null, 'answer');
 }
 
 el('start-test').onclick = () => startTest();

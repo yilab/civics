@@ -24,6 +24,27 @@ enum class Phase {
 /** What the engine is doing: free-form study, or a scored practice test. */
 enum class EngineMode { STUDY, TEST }
 
+/** Which on-screen text block a spoken utterance belongs to. */
+enum class SpokenBlock { QUESTION, ANSWER }
+
+/**
+ * The utterance currently in flight and, once the TTS engine reports word
+ * boundaries, the character range of the word being spoken. [start]/[end] are
+ * offsets into [text]; -1 until the first range event arrives.
+ */
+data class SpokenHighlight(
+    val block: SpokenBlock,
+    /** True when the utterance is the translated (z-prefixed) rendering. */
+    val translation: Boolean,
+    /** The exact text passed to the speech engine. */
+    val text: String,
+    val start: Int = -1,
+    val end: Int = -1,
+) {
+    /** False until the engine reports its first word range (some never do). */
+    val hasRange: Boolean get() = start >= 0 && end > start
+}
+
 /** The outcome of a finished practice test. */
 enum class TestOutcome { NONE, PASSED, FAILED }
 
@@ -57,6 +78,8 @@ data class StudyState(
     val current: Question? = null,
     val answerRevealed: Boolean = false,
     val known: Set<Int> = emptySet(),
+    /** The in-flight utterance and its spoken-word range, for karaoke highlighting. */
+    val highlight: SpokenHighlight? = null,
     // Practice-test fields; inert in study mode.
     val mode: EngineMode = EngineMode.STUDY,
     val testIndex: Int = 0,
@@ -66,6 +89,10 @@ data class StudyState(
 ) {
     val deckSize: Int get() = deck.size
     val playing: Boolean get() = phase != Phase.IDLE
+
+    /** The highlight to render, and only while speech is actually in flight. */
+    val activeHighlight: SpokenHighlight?
+        get() = highlight?.takeIf { phase == Phase.SPEAKING_QUESTION || phase == Phase.SPEAKING_ANSWER }
 
     companion object {
         const val TEST_TOTAL = 20
@@ -98,6 +125,8 @@ class StudyEngine(
         speech.callback = object : SpeechEngine.Callback {
             override fun onDone(utteranceId: String) = onUtteranceDone(utteranceId)
             override fun onError(utteranceId: String) = onUtteranceError(utteranceId)
+            override fun onRangeStart(utteranceId: String, start: Int, end: Int) =
+                onSpeechRange(utteranceId, start, end)
         }
         scope.launch {
             settingsFlow.collect { applySettings(it) }
@@ -124,7 +153,7 @@ class StudyEngine(
         cancelTimer()
         expectedUtterance = null
         speech.stop()
-        emit(state.value.copy(phase = Phase.IDLE))
+        emit(state.value.copy(phase = Phase.IDLE, highlight = null))
     }
 
     /** Starts a scored practice test: 20 random questions, pass at 12, fail at 9. */
@@ -137,6 +166,7 @@ class StudyEngine(
             state.value.copy(
                 deck = deck,
                 position = 0,
+                highlight = null,
                 mode = EngineMode.TEST,
                 testIndex = 0,
                 testCorrect = 0,
@@ -191,6 +221,7 @@ class StudyEngine(
                 phase = Phase.IDLE,
                 deck = deck,
                 position = 0,
+                highlight = null,
                 mode = EngineMode.STUDY,
                 testOutcome = TestOutcome.NONE,
             )
@@ -204,6 +235,7 @@ class StudyEngine(
             state.value.copy(
                 phase = Phase.FINISHED,
                 answerRevealed = true,
+                highlight = null,
                 testCorrect = correct,
                 testWrong = wrong,
                 testOutcome = if (passed) TestOutcome.PASSED else TestOutcome.FAILED,
@@ -300,7 +332,7 @@ class StudyEngine(
     /** After the answer is spoken: study mode awaits advance; test mode awaits a grade. */
     private fun afterAnswerSpoken() {
         if (state.value.mode == EngineMode.TEST) {
-            emit(state.value.copy(phase = Phase.AWAITING_GRADE))
+            emit(state.value.copy(phase = Phase.AWAITING_GRADE, highlight = null))
         } else {
             beginAwaitingAdvance()
         }
@@ -347,23 +379,30 @@ class StudyEngine(
         onUtteranceDone(utteranceId)
     }
 
+    /** Word-range events from the TTS engine; stale ids and idle phases are ignored. */
+    private fun onSpeechRange(utteranceId: String, start: Int, end: Int) {
+        if (utteranceId != expectedUtterance) return
+        val h = state.value.highlight ?: return
+        emit(state.value.copy(highlight = h.copy(start = start, end = end)))
+    }
+
     private fun beginThinkPause() {
         val think = settingsFlow.value.thinkSeconds
         when {
             think == 0 -> revealAnswer()
             think > 0 -> {
-                emit(state.value.copy(phase = Phase.THINKING))
+                emit(state.value.copy(phase = Phase.THINKING, highlight = null))
                 timerJob = scope.launch {
                     delay(think * 1000L)
                     revealAnswer()
                 }
             }
-            else -> emit(state.value.copy(phase = Phase.THINKING)) // wait for press
+            else -> emit(state.value.copy(phase = Phase.THINKING, highlight = null)) // wait for press
         }
     }
 
     private fun beginAwaitingAdvance() {
-        emit(state.value.copy(phase = Phase.AWAITING_ADVANCE))
+        emit(state.value.copy(phase = Phase.AWAITING_ADVANCE, highlight = null))
         if (settingsFlow.value.autoAdvance) {
             timerJob = scope.launch {
                 delay(AUTO_ADVANCE_DELAY_MS)
@@ -392,7 +431,19 @@ class StudyEngine(
 
     private fun speak(utteranceId: String, text: String, language: SpeechLanguage) {
         expectedUtterance = utteranceId
+        // Emitted before speech.speak(): an engine without a voice for [language]
+        // reports the utterance done synchronously, and that completion path must
+        // overwrite this highlight (or clear it), never the other way around.
+        emit(state.value.copy(highlight = highlightFor(utteranceId, text)))
         speech.speak(utteranceId, text, language)
+    }
+
+    /** Maps an utterance id ("q-N", "zq-N", "a-N", "za-N") to its on-screen target. */
+    private fun highlightFor(utteranceId: String, text: String): SpokenHighlight {
+        val translation = utteranceId.startsWith("z")
+        val bare = if (translation) utteranceId.substring(1) else utteranceId
+        val block = if (bare.startsWith("q-")) SpokenBlock.QUESTION else SpokenBlock.ANSWER
+        return SpokenHighlight(block, translation, text)
     }
 
     private fun cancelTimer() {

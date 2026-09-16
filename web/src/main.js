@@ -6,14 +6,14 @@ import './styles.css';
 import { t, chromeLang, CHROME_LOCALE } from './i18n.js';
 import { speech, updateMediaSession } from './speech.js';
 import {
-  onEngineUpdate, onUtteranceDone, initDeck,
+  onEngineUpdate, onUtteranceDone, onUtteranceBoundary, onHighlightUpdate, initDeck,
   primaryAction, pause,
 } from './engine.js';
 import { el, setText } from './ui/dom.js';
-import { updateTtsWarning, renderListen } from './ui/listen.js';
+import { updateTtsWarning, renderListen, renderListenHighlight } from './ui/listen.js';
 import { fcBuild, fcDeck, renderCardChips, renderCard, updateKnownMeter } from './ui/flashcards.js';
 import { enterQuestionsTab, renderQuestions, updateQuestionsPlaying } from './ui/questions.js';
-import { renderTest } from './ui/test.js';
+import { renderTest, renderTestHighlight } from './ui/test.js';
 import { renderSettings } from './ui/settings.js';
 import { renderStore } from './ui/store-badges.js';
 
@@ -81,6 +81,11 @@ function update() {
   updateKnownMeter();
   updateMediaSession();
 }
+/* Per-word path for TTS boundary events — skips chips, buttons, media session. */
+function renderHighlight() {
+  renderListenHighlight();
+  renderTestHighlight();
+}
 export function renderAll() {
   applyChrome();
   renderStore();
@@ -113,9 +118,11 @@ document.addEventListener('visibilitychange', () => { if (document.hidden) pause
 
 /* ---------- init ---------- */
 speech.ondone = onUtteranceDone;
+speech.onboundary = onUtteranceBoundary;
 speech.onvoiceschanged = updateTtsWarning;
 speech.init();
 onEngineUpdate(update);
+onHighlightUpdate(renderHighlight);
 initDeck();
 fcBuild(false);
 renderAll();

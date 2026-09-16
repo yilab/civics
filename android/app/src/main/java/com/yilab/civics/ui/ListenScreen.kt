@@ -31,10 +31,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
 import com.yilab.civics.audio.Phase
+import com.yilab.civics.audio.SpokenBlock
+import com.yilab.civics.audio.SpokenHighlight
 import com.yilab.civics.audio.StudyState
 import com.yilab.civics.data.KnownFilter
 import com.yilab.civics.data.Question
@@ -150,6 +155,8 @@ fun ListenScreen(
                         translated = q.translation(language)?.question,
                         translationPrimary = translationPrimary,
                         style = MaterialTheme.typography.headlineSmall,
+                        block = SpokenBlock.QUESTION,
+                        highlight = state.activeHighlight,
                     )
                     if (state.answerRevealed) {
                         HorizontalDivider(Modifier.padding(vertical = 16.dp))
@@ -164,6 +171,8 @@ fun ListenScreen(
                             translated = q.translation(language)?.answer,
                             translationPrimary = translationPrimary,
                             style = MaterialTheme.typography.titleLarge,
+                            block = SpokenBlock.ANSWER,
+                            highlight = state.activeHighlight,
                         )
                         val note = if (translationPrimary) q.translation(language)?.note ?: q.note else q.note
                         note?.let {
@@ -257,22 +266,71 @@ fun QuestionAnswerText(
     translated: String?,
     translationPrimary: Boolean,
     style: androidx.compose.ui.text.TextStyle,
+    /** Which block these lines belong to, for matching [highlight]. */
+    block: SpokenBlock = SpokenBlock.QUESTION,
+    /** The in-flight spoken-word range ([StudyState.activeHighlight]), when set. */
+    highlight: SpokenHighlight? = null,
 ) {
     val secondary = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
-    if (translationPrimary && translated != null) {
+    val wordStyle = SpanStyle(
+        background = MaterialTheme.colorScheme.secondaryContainer,
+        fontWeight = FontWeight.SemiBold,
+    )
+    val englishLine = spokenLine(english, block, translation = false, highlight = highlight, wordStyle = wordStyle)
+    val translatedLine = translated?.let {
+        spokenLine(it, block, translation = true, highlight = highlight, wordStyle = wordStyle)
+    }
+    if (translationPrimary && translatedLine != null) {
         Column {
-            Text(translated, style = style)
+            Text(translatedLine, style = style)
             Spacer(Modifier.height(4.dp))
-            Text(english, style = secondary)
+            Text(englishLine, style = secondary)
         }
     } else {
         Column {
-            Text(english, style = style)
-            translated?.let {
+            Text(englishLine, style = style)
+            translatedLine?.let {
                 Spacer(Modifier.height(4.dp))
                 Text(it, style = secondary)
             }
         }
+    }
+}
+
+/**
+ * [display] with the currently-spoken word highlighted when [highlight] targets this
+ * line (same block, same language, known range). [display] is normally a substring of
+ * the spoken text (the "Question N." announcement prefix is not shown); the English
+ * answer is the exception — its spoken form differs, so the spoken text itself is
+ * shown while it is being read, reverting to [display] when speech moves on.
+ */
+private fun spokenLine(
+    display: String,
+    block: SpokenBlock,
+    translation: Boolean,
+    highlight: SpokenHighlight?,
+    wordStyle: SpanStyle,
+): AnnotatedString {
+    val h = highlight
+    if (h == null || h.block != block || h.translation != translation || !h.hasRange) {
+        return AnnotatedString(display)
+    }
+    val base = h.text.indexOf(display)
+    if (base >= 0) {
+        return buildAnnotatedString {
+            append(display)
+            // Shift spoken offsets back past the announcement prefix; a range that
+            // ends at or before [base] lies inside the prefix and highlights nothing.
+            val s = (h.start - base).coerceIn(0, display.length)
+            val e = (h.end - base).coerceIn(0, display.length)
+            if (e > s) addStyle(wordStyle, s, e)
+        }
+    }
+    return buildAnnotatedString {
+        append(h.text)
+        val s = h.start.coerceIn(0, h.text.length)
+        val e = h.end.coerceIn(s, h.text.length)
+        if (e > s) addStyle(wordStyle, s, e)
     }
 }
 

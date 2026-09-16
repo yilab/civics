@@ -27,12 +27,47 @@ struct TestRecord: Equatable, Codable {
     let date: Date
 }
 
+/// The word currently being spoken, for karaoke-style highlighting in the UI.
+struct SpokenHighlight: Equatable {
+    /// Which on-screen text block the utterance belongs to.
+    enum Block: Equatable {
+        case question, answer
+    }
+    let block: Block
+    /// True for translated (`z`-prefixed) utterances, false for English.
+    let isTranslation: Bool
+    /// The exact text handed to the speech engine.
+    let text: String
+    /// UTF-16 offsets of the word being spoken; nil until the first range event.
+    var range: Range<Int>?
+
+    /// Derives the highlight target from the utterance id; nil for unknown ids.
+    init?(utteranceID: String, text: String) {
+        // z-prefixed ids must be checked before their English counterparts.
+        if utteranceID.hasPrefix("zq-") {
+            block = .question; isTranslation = true
+        } else if utteranceID.hasPrefix("za-") {
+            block = .answer; isTranslation = true
+        } else if utteranceID.hasPrefix("q-") {
+            block = .question; isTranslation = false
+        } else if utteranceID.hasPrefix("a-") {
+            block = .answer; isTranslation = false
+        } else {
+            return nil
+        }
+        self.text = text
+        range = nil
+    }
+}
+
 struct StudyState: Equatable {
     var phase: Phase = .idle
     var deck: [Question] = []
     var position: Int = 0
     var current: Question?
     var answerRevealed = false
+    /// Karaoke highlight for the utterance in flight; nil when nothing is spoken.
+    var highlight: SpokenHighlight?
     var known: Set<Int> = []
     // Practice-test fields; inert in study mode.
     var mode: EngineMode = .study
@@ -68,6 +103,8 @@ struct StudyState: Equatable {
             position: position ?? self.position,
             current: current ?? self.current,
             answerRevealed: answerRevealed ?? self.answerRevealed,
+            // Always carried over; emit() clears it when the phase leaves speech.
+            highlight: self.highlight,
             known: known ?? self.known,
             mode: mode ?? self.mode,
             testIndex: testIndex ?? self.testIndex,
@@ -375,6 +412,7 @@ final class StudyEngine {
 
     private func speak(_ utteranceID: String, text: String, language: SpeechLanguage) {
         expectedUtterance = utteranceID
+        state.highlight = SpokenHighlight(utteranceID: utteranceID, text: text)
         speech.speak(utteranceID: utteranceID, text: text, language: language)
     }
 
@@ -384,6 +422,12 @@ final class StudyEngine {
     }
 
     private func emit(_ s: StudyState) {
+        var s = s
+        // The karaoke highlight only lives while speech is in flight; a new
+        // speak() installs the next one before the speaking phase is emitted.
+        if s.phase != .speakingQuestion && s.phase != .speakingAnswer {
+            s.highlight = nil
+        }
         state = s
         stateObservers.forEach { $0(s) }
     }
@@ -392,4 +436,12 @@ final class StudyEngine {
 extension StudyEngine: SpeechEngineCallback {
     func onDone(utteranceID: String) { onUtteranceDone(utteranceID) }
     func onError(utteranceID: String) { onUtteranceError(utteranceID) }
+
+    func onRange(utteranceID: String, range: NSRange) {
+        // Stale ids (paused/replaced utterances) and cleared highlights are ignored.
+        guard utteranceID == expectedUtterance, state.highlight != nil,
+              let word = Range(range) else { return }
+        state.highlight?.range = word
+        stateObservers.forEach { $0(state) }
+    }
 }

@@ -9,6 +9,8 @@ export const speech = {
   voices: [],
   currentId: null,
   ondone: null,
+  /** Word-boundary callback(id, start, end); never fires on some platforms. */
+  onboundary: null,
   /** Called after the voice list (re)loads so the UI can refresh the TTS warning. */
   onvoiceschanged: null,
   init() {
@@ -73,6 +75,17 @@ export const speech = {
       // voice must not stall the deck); the flow continues as if it had ended.
       try { console.warn('speech: utterance failed (' + err + '), skipping', id); } catch (e2) {}
       done();
+    };
+    u.onboundary = e => {
+      if (this.currentId !== id) return; // stale
+      if (e.name && e.name !== 'word') return;
+      const start = e.charIndex;
+      if (typeof start !== 'number') return;
+      // charLength is undefined on some browsers — scan to the next whitespace.
+      let end = start;
+      if (typeof e.charLength === 'number') end = start + e.charLength;
+      else while (end < opts.text.length && !/\s/.test(opts.text.charAt(end))) end++;
+      if (this.onboundary) this.onboundary(id, start, end);
     };
     try { window.speechSynthesis.cancel(); } catch (e) {} // QUEUE_FLUSH
     const self = this;

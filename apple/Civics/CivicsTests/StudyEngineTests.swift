@@ -326,6 +326,90 @@ struct StudyEngineTests {
         #expect(speech.spoken.last?.text == repo.byNumber(1)?.question)
     }
 
+    // MARK: - Karaoke highlighting
+
+    @Test func speakSetsTheHighlightTargetWithoutARange() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings()))
+        engine.primaryAction()
+        let h = engine.state.highlight
+        #expect(h?.block == .question)
+        #expect(h?.isTranslation == false)
+        #expect(h?.text == speech.spoken.last?.text)
+        #expect(h?.range == nil)
+    }
+
+    @Test func rangeEventsUpdateTheHighlightWhenTheIdMatches() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings()))
+        engine.primaryAction()
+        speech.callback?.onRange(utteranceID: "q-1", range: NSRange(location: 10, length: 4))
+        #expect(engine.state.highlight?.range == 10..<14)
+        speech.callback?.onRange(utteranceID: "q-1", range: NSRange(location: 15, length: 2))
+        #expect(engine.state.highlight?.range == 15..<17)
+    }
+
+    @Test func staleRangeEventsAreIgnored() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings()))
+        engine.primaryAction()
+        speech.callback?.onRange(utteranceID: "q-2", range: NSRange(location: 0, length: 3))
+        #expect(engine.state.highlight?.range == nil)
+    }
+
+    @Test func pauseClearsTheHighlight() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings()))
+        engine.primaryAction()
+        speech.callback?.onRange(utteranceID: "q-1", range: NSRange(location: 0, length: 7))
+        #expect(engine.state.highlight?.range != nil)
+        engine.pause()
+        #expect(engine.state.highlight == nil)
+        // A late range event for the paused utterance is ignored too.
+        speech.callback?.onRange(utteranceID: "q-1", range: NSRange(location: 8, length: 3))
+        #expect(engine.state.highlight == nil)
+    }
+
+    @Test func theHighlightClearsWhenTheQuestionEndsWithoutAFollowUp() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings()))
+        engine.primaryAction()
+        speech.callback?.onRange(utteranceID: "q-1", range: NSRange(location: 0, length: 7))
+        speech.finishLast() // question done -> think pause: nothing being spoken
+        #expect(engine.state.phase == .thinking)
+        #expect(engine.state.highlight == nil)
+    }
+
+    @Test func followUpSpeechOverwritesTheHighlight() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(thinkSeconds: 0)))
+        engine.primaryAction()
+        speech.callback?.onRange(utteranceID: "q-1", range: NSRange(location: 0, length: 7))
+        speech.finishLast() // question done -> think 0 -> the answer is spoken
+        let h = engine.state.highlight
+        #expect(h?.block == .answer)
+        #expect(h?.isTranslation == false)
+        #expect(h?.text == speech.spoken.last?.text)
+        #expect(h?.range == nil)
+        speech.callback?.onRange(utteranceID: "a-1", range: NSRange(location: 0, length: 2))
+        #expect(engine.state.highlight?.range == 0..<2)
+        speech.finishLast() // answer done -> awaiting advance: highlight cleared
+        #expect(engine.state.phase == .awaitingAdvance)
+        #expect(engine.state.highlight == nil)
+    }
+
+    @Test func translatedUtterancesTargetTheTranslation() {
+        let (engine, speech) = makeEngine(settings: SettingsBox(StudySettings(language: .chineseSimplified)))
+        engine.primaryAction()
+        speech.finishLast() // English question done -> translated question
+        var h = engine.state.highlight
+        #expect(h?.block == .question)
+        #expect(h?.isTranslation == true)
+        speech.callback?.onRange(utteranceID: "zq-1", range: NSRange(location: 0, length: 2))
+        #expect(engine.state.highlight?.range == 0..<2)
+        speech.finishLast()
+        engine.primaryAction() // reveal -> English answer
+        speech.finishLast() // English answer done -> translated answer
+        h = engine.state.highlight
+        #expect(h?.block == .answer)
+        #expect(h?.isTranslation == true)
+        #expect(h?.text == repo.byNumber(1)?.translation(.chineseSimplified)?.spoken)
+    }
+
     // MARK: - Spoken languages
 
     @Test func bilingualModeSpeaksEnglishThenTheTranslationInEachPhase() {

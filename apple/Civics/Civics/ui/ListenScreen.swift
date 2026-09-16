@@ -115,7 +115,7 @@ struct ListenScreen: View {
                 }
                 .padding(.bottom, 12)
 
-                primaryText(q.question, q.translation(language)?.question)
+                primaryText(q.question, q.translation(language)?.question, block: .question)
                     .font(.title3.weight(.medium))
 
                 if state.answerRevealed {
@@ -125,7 +125,7 @@ struct ListenScreen: View {
                         .font(.caption2)
                         .foregroundStyle(.tint)
                         .padding(.bottom, 6)
-                    primaryText(q.answer, q.translation(language)?.answer)
+                    primaryText(q.answer, q.translation(language)?.answer, block: .answer)
                         .font(.title2)
                     let note = translationPrimary ? (q.translation(language)?.note ?? q.note) : q.note
                     if let note {
@@ -150,24 +150,31 @@ struct ListenScreen: View {
 
     /// Primary language in the emphasis style, the other as a muted secondary line.
     @ViewBuilder
-    private func primaryText(_ english: String, _ translated: String?) -> some View {
+    private func primaryText(_ english: String, _ translated: String?, block: SpokenHighlight.Block) -> some View {
         if translationPrimary, let translated {
             VStack(alignment: .leading, spacing: 8) {
-                Text(translated)
-                Text(english)
+                karaokeLine(translated, block: block, isTranslation: true)
+                karaokeLine(english, block: block, isTranslation: false)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
         } else {
             VStack(alignment: .leading, spacing: 8) {
-                Text(english)
+                karaokeLine(english, block: block, isTranslation: false)
                 if let translated {
-                    Text(translated)
+                    karaokeLine(translated, block: block, isTranslation: true)
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
             }
         }
+    }
+
+    /// One text line, karaoke-highlighted while it is the line being spoken.
+    private func karaokeLine(_ display: String, block: SpokenHighlight.Block, isTranslation: Bool) -> Text {
+        let speaking = state.phase == .speakingQuestion || state.phase == .speakingAnswer
+        return KaraokeText.text(display: display, highlight: state.highlight, block: block,
+                                isTranslation: isTranslation, speaking: speaking)
     }
 
     private var phaseCaption: String {

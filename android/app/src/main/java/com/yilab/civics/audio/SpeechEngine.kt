@@ -13,6 +13,13 @@ interface SpeechEngine {
 
         /** A speech failure on an in-flight utterance; the study engine treats it as completion. */
         fun onError(utteranceId: String)
+
+        /**
+         * The engine reached a word or phrase: [start]..[end] are character offsets into
+         * the text of [utteranceId]. Engines without range support simply never call this;
+         * the study engine then leaves the text unhighlighted.
+         */
+        fun onRangeStart(utteranceId: String, start: Int, end: Int) {}
     }
 
     var callback: Callback?

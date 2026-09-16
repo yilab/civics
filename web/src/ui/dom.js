@@ -2,6 +2,32 @@
 export function el(id) { return document.getElementById(id); }
 export function setText(id, txt) { const n = el(id); if (n) n.textContent = txt; }
 export function show(id, on) { const n = el(id); if (n) n.hidden = !on; }
+/* Splits a line's text around the spoken range for karaoke highlighting.
+   display is the line's normal text; hl = {text, start, end} over the spoken
+   string. When display isn't a substring of the spoken text (verbose English
+   answer), the spoken text is shown instead. Pure — no DOM access. */
+export function spokenSlices(display, hl) {
+  const base = hl.text.indexOf(display);
+  const text = base >= 0 ? display : hl.text;
+  const off = base >= 0 ? base : 0;
+  const start = Math.min(Math.max(hl.start - off, 0), text.length);
+  const end = Math.min(Math.max(hl.end - off, 0), text.length);
+  return { text: text, start: start, end: Math.max(end, start) };
+}
+export function setSpokenText(id, display, hl) {
+  const n = el(id);
+  if (!n) return;
+  if (!hl || hl.start == null || hl.end == null) { n.textContent = display; return; }
+  const s = spokenSlices(display, hl);
+  if (s.end <= s.start) { n.textContent = s.text; return; } // range inside the announce prefix
+  n.textContent = '';
+  n.appendChild(document.createTextNode(s.text.slice(0, s.start)));
+  const mark = document.createElement('span');
+  mark.className = 'spoken-word';
+  mark.textContent = s.text.slice(s.start, s.end);
+  n.appendChild(mark);
+  n.appendChild(document.createTextNode(s.text.slice(s.end)));
+}
 export function makeChips(container, items, selected, onSelect) {
   const wrap = el(container);
   const key = JSON.stringify([items.map(it => it.label), selected]);

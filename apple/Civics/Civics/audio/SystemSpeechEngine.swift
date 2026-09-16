@@ -89,6 +89,16 @@ extension SystemSpeechEngine: AVSpeechSynthesizerDelegate {
         }
     }
 
+    // Word-level progress, delivered just before each word is spoken; the range
+    // holds UTF-16 offsets into the utterance string.
+    nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
+        guard let tagged = utterance as? TaggedUtterance else { return }
+        let id = tagged.utteranceID
+        Task { @MainActor in
+            self.callback?.onRange(utteranceID: id, range: characterRange)
+        }
+    }
+
     // Reached for user stops (pause/skip/flush — those ids are stale by delivery
     // time and ignored by StudyEngine) and for system-side cancellations. Reported
     // as an error so a flaky cancel skips the utterance instead of wedging the deck.

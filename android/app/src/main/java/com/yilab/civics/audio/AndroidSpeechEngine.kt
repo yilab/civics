@@ -69,6 +69,12 @@ class AndroidSpeechEngine(
                         mainHandler.post { callback?.onError(utteranceId) }
                     }
 
+                    override fun onRangeStart(utteranceId: String?, start: Int, end: Int, frame: Int) {
+                        utteranceId ?: return
+                        // Fires on a binder thread; hop to main like the other callbacks.
+                        mainHandler.post { callback?.onRangeStart(utteranceId, start, end) }
+                    }
+
                     override fun onStop(utteranceId: String?, interrupted: Boolean) {
                         // interrupted speech is expected (pause/skip); StudyEngine ignores stale ids
                     }

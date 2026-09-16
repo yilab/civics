@@ -4,6 +4,14 @@ import Foundation
 protocol SpeechEngineCallback: AnyObject {
     func onDone(utteranceID: String)
     func onError(utteranceID: String)
+    /// Delivers the UTF-16 range of each word just before it is spoken,
+    /// for karaoke-style highlighting.
+    func onRange(utteranceID: String, range: NSRange)
+}
+
+extension SpeechEngineCallback {
+    /// Optional: callbacks without on-screen highlighting can ignore word ranges.
+    func onRange(utteranceID: String, range: NSRange) {}
 }
 
 @MainActor

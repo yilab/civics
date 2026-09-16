@@ -2,6 +2,7 @@ package com.yilab.civics
 
 import com.yilab.civics.audio.Phase
 import com.yilab.civics.audio.SpeechEngine
+import com.yilab.civics.audio.SpokenBlock
 import com.yilab.civics.audio.StudyEngine
 import com.yilab.civics.audio.TestRecord
 import com.yilab.civics.data.KnownFilter
@@ -15,6 +16,7 @@ import kotlinx.coroutines.test.runCurrent
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
+import org.junit.Assert.assertNull
 import org.junit.Assert.assertTrue
 import org.junit.Test
 import java.io.File
@@ -49,6 +51,11 @@ private class FakeSpeechEngine : SpeechEngine {
     /** Simulates the TTS finishing the most recent utterance. */
     fun finishLast() {
         callback?.onDone(spoken.last().first)
+    }
+
+    /** Simulates the TTS reaching a word: [start]..[end] are offsets into the spoken text. */
+    fun rangeLast(start: Int, end: Int) {
+        callback?.onRangeStart(spoken.last().first, start, end)
     }
 }
 
@@ -298,6 +305,136 @@ class StudyEngineTest {
         val (engine, speech) = engine(MutableStateFlow(StudySettings(announceMeta = false)))
         engine.primaryAction()
         assertEquals(repo.byNumber(1)?.question, speech.spoken.last().second)
+    }
+
+    // ----------------------------------------------------------- word highlight
+
+    @Test
+    fun `speaking publishes a highlight for the utterance, range unknown at first`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.primaryAction()
+        val h = engine.state.value.highlight
+        assertEquals(SpokenBlock.QUESTION, h?.block)
+        assertFalse(h?.translation ?: true)
+        assertEquals(speech.spoken.last().second, h?.text)
+        assertFalse(h?.hasRange ?: true) // no word range reported yet
+        assertEquals(h, engine.state.value.activeHighlight)
+    }
+
+    @Test
+    fun `word ranges update the highlight while the question is spoken`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.primaryAction()
+        speech.rangeLast(9, 15)
+        val h = engine.state.value.highlight
+        assertEquals(9, h?.start)
+        assertEquals(15, h?.end)
+        assertTrue(h?.hasRange == true)
+        speech.rangeLast(16, 18) // the next word moves the range
+        assertEquals(16, engine.state.value.highlight?.start)
+        assertEquals(18, engine.state.value.highlight?.end)
+    }
+
+    @Test
+    fun `word ranges with stale utterance ids are ignored`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.primaryAction()
+        speech.rangeLast(9, 15)
+        speech.callback?.onRangeStart("q-99", 0, 4) // unknown id
+        assertEquals(9, engine.state.value.highlight?.start)
+        speech.callback?.onRangeStart("a-1", 0, 4) // right question, wrong block
+        assertEquals(9, engine.state.value.highlight?.start)
+        engine.pause()
+        speech.rangeLast(0, 4) // everything is stale after a pause
+        assertNull(engine.state.value.highlight)
+    }
+
+    @Test
+    fun `the highlight clears when speech ends without a follow-up utterance`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.primaryAction()
+        speech.rangeLast(9, 15)
+        speech.finishLast() // question done -> think pause
+        assertNull(engine.state.value.highlight)
+        assertNull(engine.state.value.activeHighlight)
+
+        engine.primaryAction() // reveal -> answer spoken
+        speech.rangeLast(0, 5)
+        speech.finishLast() // answer done -> awaiting advance
+        assertNull(engine.state.value.highlight)
+    }
+
+    @Test
+    fun `the answer highlight tracks the verbose spoken answer text`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.primaryAction()
+        engine.primaryAction() // skip straight to the answer
+        val h = engine.state.value.highlight
+        assertEquals(SpokenBlock.ANSWER, h?.block)
+        assertFalse(h?.translation ?: true)
+        assertEquals(repo.byNumber(1)?.spoken, h?.text)
+    }
+
+    @Test
+    fun `a new utterance replaces the previous highlight`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.primaryAction()
+        speech.rangeLast(9, 15)
+        engine.next() // speaks q-2
+        val h = engine.state.value.highlight
+        assertEquals(SpokenBlock.QUESTION, h?.block)
+        assertEquals(speech.spoken.last().second, h?.text)
+        assertFalse(h?.hasRange ?: true) // range resets until the engine reports one
+    }
+
+    @Test
+    fun `translated utterances highlight the translated block`() = runTest {
+        val (engine, speech) = engine(
+            MutableStateFlow(StudySettings(language = SpeechLanguage.CHINESE_SIMPLIFIED))
+        )
+        engine.primaryAction() // English question
+        speech.finishLast() // -> translated question
+        val question = engine.state.value.highlight
+        assertEquals(SpokenBlock.QUESTION, question?.block)
+        assertTrue(question?.translation == true)
+        assertEquals(speech.spoken.last().second, question?.text)
+        speech.rangeLast(0, 2)
+        assertEquals(0, engine.state.value.highlight?.start)
+
+        engine.primaryAction() // reveal -> English answer
+        speech.finishLast() // -> translated answer
+        val answer = engine.state.value.highlight
+        assertEquals(SpokenBlock.ANSWER, answer?.block)
+        assertTrue(answer?.translation == true)
+        assertEquals(
+            repo.byNumber(1)?.translation(SpeechLanguage.CHINESE_SIMPLIFIED)?.spoken,
+            answer?.text,
+        )
+    }
+
+    @Test
+    fun `pause clears the highlight`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.primaryAction()
+        speech.rangeLast(9, 15)
+        engine.pause()
+        assertNull(engine.state.value.highlight)
+        assertNull(engine.state.value.activeHighlight)
+    }
+
+    @Test
+    fun `finishing a test clears the highlight`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        repeat(com.yilab.civics.audio.StudyState.TEST_PASS_AT) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.rangeLast(0, 3)
+            speech.finishLast()
+            engine.grade(true)
+        }
+        assertEquals(Phase.FINISHED, engine.state.value.phase)
+        assertNull(engine.state.value.highlight)
     }
 
     // ------------------------------------------------------------- spoken languages
