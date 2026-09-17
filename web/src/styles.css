@@ -46,6 +46,23 @@
   .brand-mark{width:38px;height:38px;flex:none;}
   header p.sub{margin:10px 0 0;font-size:13.5px;color:#c7d0dd;max-width:52ch;}
 
+  /* ---------- Header feature tags ---------- */
+  .feature-tags{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;}
+  .feature-tag{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:11.5px;font-weight:600;letter-spacing:.02em;color:#dfe6f0;
+    background:rgba(247,244,236,.05);border:1px solid rgba(247,244,236,.25);
+    border-radius:999px;padding:5px 11px;
+  }
+  .feature-tag svg{
+    width:13px;height:13px;flex:none;fill:none;stroke:var(--brass);
+    stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  }
+  .feature-tag svg rect{fill:var(--brass);stroke:none;}
+  a.feature-tag{color:#dfe6f0;text-decoration:none;}
+  a.feature-tag:hover,a.feature-tag:focus-visible{border-color:var(--brass);background:rgba(169,128,47,.14);}
+  a.feature-tag:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+
   /* ---------- Tab switch ---------- */
   .modes{
     display:flex;gap:6px;background:#e9e3d4;border:1px solid var(--hair-strong);
@@ -346,6 +363,7 @@
   @media (max-width:430px){
     header h1{font-size:25px;}
     .brand-mark{width:31px;height:31px;}
+    .feature-tag{font-size:11px;padding:4px 10px;}
     .q-text{font-size:21px;}
     .q-text.static{font-size:19px;}
     .a-text{font-size:18px;}

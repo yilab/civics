@@ -35,6 +35,10 @@ export function applyChrome() {
   document.documentElement.lang = CHROME_LOCALE[chromeLang()];
   TABS.forEach(k => setText('tab-' + k, t('tab_' + k)));
   setText('header-sub', t('header_sub'));
+  setText('ft-no-ads', t('feat_no_ads'));
+  setText('ft-no-data', t('feat_no_data'));
+  setText('ft-readalong', t('feat_readalong'));
+  setText('ft-open-source', t('feat_open_source'));
   updateTtsWarning();
   setText('l-title', t('app_title'));
   setText('l-onboarding', t('onboarding'));
