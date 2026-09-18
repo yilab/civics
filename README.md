@@ -128,5 +128,5 @@ redistribution under the Apache-2.0 terms; forks should pick their own name.
 
 This project is not affiliated with or endorsed by USCIS or any government agency.
 It is an independent study aid; always check the
-[official USCIS study materials](https://www.uscis.gov/citizenship/find-study-materials-and-resources)
+[official USCIS 2025 civics test page](https://www.uscis.gov/citizenship-resource-center/naturalization-test-and-study-resources/2025-civics-test)
 for the current test.
