@@ -154,8 +154,9 @@ struct ListenScreen: View {
         if translationPrimary, let translated {
             VStack(alignment: .leading, spacing: 8) {
                 karaokeLine(translated, block: block, isTranslation: true)
+                // No font override: the secondary line inherits the primary font,
+                // so English reads at full size; only the color is muted.
                 karaokeLine(english, block: block, isTranslation: false)
-                    .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
         } else {
@@ -163,7 +164,6 @@ struct ListenScreen: View {
                 karaokeLine(english, block: block, isTranslation: false)
                 if let translated {
                     karaokeLine(translated, block: block, isTranslation: true)
-                        .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
             }

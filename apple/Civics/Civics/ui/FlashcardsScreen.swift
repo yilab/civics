@@ -187,8 +187,8 @@ struct FlashcardsScreen: View {
         if translationPrimary, let translated {
             VStack(alignment: .leading, spacing: 8) {
                 Text(translated)
+                // No font override: the secondary line inherits the primary font.
                 Text(english)
-                    .font(.subheadline)
                     .foregroundStyle(.secondary)
             }
         } else {
@@ -196,7 +196,6 @@ struct FlashcardsScreen: View {
                 Text(english)
                 if let translated {
                     Text(translated)
-                        .font(.subheadline)
                         .foregroundStyle(.secondary)
                 }
             }

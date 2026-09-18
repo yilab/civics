@@ -95,7 +95,7 @@ fun QuestionsScreen(
                                 Spacer(Modifier.height(2.dp))
                                 Text(
                                     q.question,
-                                    style = MaterialTheme.typography.bodySmall,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                             } else {
@@ -104,7 +104,7 @@ fun QuestionsScreen(
                                     Spacer(Modifier.height(2.dp))
                                     Text(
                                         it,
-                                        style = MaterialTheme.typography.bodySmall,
+                                        style = MaterialTheme.typography.bodyLarge,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
                                 }

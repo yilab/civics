@@ -271,7 +271,9 @@ fun QuestionAnswerText(
     /** The in-flight spoken-word range ([StudyState.activeHighlight]), when set. */
     highlight: SpokenHighlight? = null,
 ) {
-    val secondary = MaterialTheme.typography.bodySmall.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
+    // The secondary line matches the primary style's size/weight (same as when
+    // English is shown alone); only the color is muted.
+    val secondary = style.copy(color = MaterialTheme.colorScheme.onSurfaceVariant)
     val wordStyle = SpanStyle(
         background = MaterialTheme.colorScheme.secondaryContainer,
         fontWeight = FontWeight.SemiBold,

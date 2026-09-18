@@ -52,7 +52,7 @@ struct QuestionsScreen: View {
                                         .foregroundStyle(.primary)
                                         .multilineTextAlignment(.leading)
                                     Text(q.question)
-                                        .font(.footnote)
+                                        .font(.body)
                                         .foregroundStyle(.secondary)
                                         .multilineTextAlignment(.leading)
                                 } else {
@@ -62,7 +62,7 @@ struct QuestionsScreen: View {
                                         .multilineTextAlignment(.leading)
                                     if let translated {
                                         Text(translated)
-                                            .font(.footnote)
+                                            .font(.body)
                                             .foregroundStyle(.secondary)
                                             .multilineTextAlignment(.leading)
                                     }

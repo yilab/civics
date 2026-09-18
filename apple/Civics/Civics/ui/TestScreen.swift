@@ -169,14 +169,14 @@ struct TestScreen: View {
             VStack(alignment: .leading, spacing: 8) {
                 karaokeLine(translated, block: block, isTranslation: true)
                 karaokeLine(english, block: block, isTranslation: false)
-                    .font(.subheadline).foregroundStyle(.secondary)
+                    .foregroundStyle(.secondary)
             }
         } else {
             VStack(alignment: .leading, spacing: 8) {
                 karaokeLine(english, block: block, isTranslation: false)
                 if let translated {
                     karaokeLine(translated, block: block, isTranslation: true)
-                        .font(.subheadline).foregroundStyle(.secondary)
+                        .foregroundStyle(.secondary)
                 }
             }
         }
