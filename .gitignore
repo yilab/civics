@@ -13,6 +13,8 @@
 /android/captures
 /android/.idea/caches
 /android/.idea/deploymentTargetSelector.xml
+/android/.idea/misc.xml
 .externalNativeBuild
 .cxx
 local.properties
+/.claude/launch.json
