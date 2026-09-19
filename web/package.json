@@ -4,7 +4,7 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "build": "node build.mjs && rm -rf dist && mkdir -p dist && cp civics-test-study-tool.html dist/index.html",
+    "build": "node build.mjs",
     "sync": "node ../android/tools/extract-questions.mjs && node build.mjs",
     "dev": "npm run build && wrangler dev",
     "deploy": "npm run build && wrangler deploy"

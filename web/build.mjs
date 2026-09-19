@@ -1,11 +1,15 @@
 // Builds the single-file artifact web/civics-test-study-tool.html from web/src
 // (template, styles, JS modules) and web/data (generated question bank).
-// The artifact is checked into git, deployable via `cp` to dist/, and openable
-// from file:// — everything is inlined, no runtime fetches or module loads.
+// The artifact is checked into git and openable from file:// — everything is
+// inlined, no runtime fetches or module loads.
+//
+// It also rebuilds dist/, wrangler's static-assets directory: the artifact as
+// index.html, and src/privacy.html as privacy.html — served at /privacy, the
+// privacy-policy URL for the App Store and Google Play listings.
 //
 // Run: npm run build   (in web/)
 // Data refresh + build: npm run sync
-import { readFileSync, writeFileSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, existsSync, mkdirSync, rmSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 
@@ -31,12 +35,18 @@ const js = result.outputFiles
   .replace(/<\/script/gi, '<\\/script'); // never terminate the inline script tag early
 const css = result.outputFiles.find(f => f.path.endsWith('.css')).text;
 
-let html = readFileSync(here('./src/index.html'), 'utf8');
-for (const [token, file] of [['__FAVICON_DATA_URI__', './icons/favicon-32.png'], ['__TOUCH_ICON_DATA_URI__', './icons/apple-touch-icon.png']]) {
-  if (!html.includes(token)) throw new Error(`placeholder ${token} not found in src/index.html`);
-  if (!existsSync(here(file))) throw new Error(`${file} missing — regenerate it: python3 ../assets/generate_icons.py`);
-  html = html.split(token).join('data:image/png;base64,' + readFileSync(here(file)).toString('base64'));
+// Reads a src/ page and inlines the favicon + touch icon as data URIs.
+function readPageWithIcons(src) {
+  let page = readFileSync(here(src), 'utf8');
+  for (const [token, file] of [['__FAVICON_DATA_URI__', './icons/favicon-32.png'], ['__TOUCH_ICON_DATA_URI__', './icons/apple-touch-icon.png']]) {
+    if (!page.includes(token)) throw new Error(`placeholder ${token} not found in ${src}`);
+    if (!existsSync(here(file))) throw new Error(`${file} missing — regenerate it: python3 ../assets/generate_icons.py`);
+    page = page.split(token).join('data:image/png;base64,' + readFileSync(here(file)).toString('base64'));
+  }
+  return page;
 }
+
+let html = readPageWithIcons('./src/index.html');
 for (const [token, content] of [['/*__BUILD_CSS__*/', css], ['/*__BUILD_JS__*/', js]]) {
   if (!html.includes(token)) throw new Error(`placeholder ${token} not found in src/index.html`);
   html = html.split(token).join(content);
@@ -50,3 +60,9 @@ console.log(
   `wrote web/civics-test-study-tool.html (${(html.length / 1024).toFixed(0)} KB total, ` +
   `${(js.length / 1024).toFixed(0)} KB js, ${(css.length / 1024).toFixed(0)} KB css)`,
 );
+
+rmSync(here('./dist'), { recursive: true, force: true });
+mkdirSync(here('./dist'));
+writeFileSync(here('./dist/index.html'), html);
+writeFileSync(here('./dist/privacy.html'), readPageWithIcons('./src/privacy.html'));
+console.log('wrote web/dist/ (index.html, privacy.html → /privacy)');

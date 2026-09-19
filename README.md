@@ -67,6 +67,10 @@ npm run sync      # regenerate the question bank from sources + rebuild
 artifact `web/civics-test-study-tool.html`, then copies it to `dist/index.html` for
 wrangler. Edit `web/src/`, never the artifact.
 
+The privacy policy (`web/src/privacy.html`) is written to `dist/privacy.html` and served
+at `/privacy` — that's the privacy-policy URL for the App Store and Google Play. Update
+it whenever the apps' data handling changes.
+
 The web app has no test suite; a clean build is its smoke test. Android and Apple
 have unit tests for the engine, karaoke highlighting, and question repository.
 

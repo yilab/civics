@@ -62,7 +62,7 @@ Same file layout on each platform — `audio/`, `data/`, `settings/`, `ui/` (Kot
 
 ### Web build specifics
 
-`web/build.mjs` esbuild-bundles `src/main.js` + styles + icons and inlines everything (JS, CSS, icons as data URIs) into the checked-in single-file artifact `web/civics-test-study-tool.html` — no runtime fetches, openable from `file://`. Deploy copies it to `dist/index.html` for wrangler static assets. Edit `web/src/`, never the artifact.
+`web/build.mjs` esbuild-bundles `src/main.js` + styles + icons and inlines everything (JS, CSS, icons as data URIs) into the checked-in single-file artifact `web/civics-test-study-tool.html` — no runtime fetches, openable from `file://`. The build also rewrites `dist/` (wrangler static assets): the artifact as `index.html`, plus `src/privacy.html` → `privacy.html`, served at `/privacy` as the App Store / Google Play privacy-policy URL. Edit `web/src/`, never the artifact. If an app starts storing, sending, or requesting anything new (network, permissions, SDKs), update `src/privacy.html` in the same change.
 
 ### Icons and brand marks
 
