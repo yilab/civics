@@ -30,7 +30,11 @@ class CivicsPlayer(
     private var hasStarted = false
 
     /** Called by the service whenever the engine state changes. */
-    fun refresh() = invalidateState()
+    fun refresh() {
+        // Sessions also start outside this player (media buttons, Questions and Test tabs).
+        if (engine.state.value.playing) hasStarted = true
+        invalidateState()
+    }
 
     override fun getState(): State {
         val st = engine.state.value

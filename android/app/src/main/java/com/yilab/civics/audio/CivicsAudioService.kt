@@ -20,6 +20,7 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.ServiceCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.IntentCompat
 import androidx.media3.common.util.UnstableApi
 import androidx.media3.session.MediaSession
 import androidx.media3.session.MediaSessionService
@@ -34,7 +35,8 @@ import kotlinx.coroutines.launch
 
 /**
  * Keeps TTS playback alive with the screen off and routes Bluetooth/headset media
- * buttons (AirPods stem presses) into the study engine via [CivicsPlayer].
+ * buttons (AirPods stem presses) into the study engine. The notification, lock
+ * screen, and in-app transport reach the engine through [CivicsPlayer].
  *
  * The media notification is managed by this service itself (Media3's automatic
  * notification only follows player timelines that ExoPlayer-style players produce,
@@ -51,6 +53,7 @@ class CivicsAudioService : MediaSessionService() {
     private lateinit var audioManager: AudioManager
 
     private var wakeLock: PowerManager.WakeLock? = null
+    private val silence = SilenceKeepAlive()
     private var focusRequest: AudioFocusRequest? = null
     private var noisyReceiverRegistered = false
     private var inForeground = false
@@ -70,13 +73,30 @@ class CivicsAudioService : MediaSessionService() {
         player = CivicsPlayer(engine, mainLooper)
         session = MediaSession.Builder(this, player)
             .setCallback(object : MediaSession.Callback {
+                // Headset buttons drive the study loop, not a music player: one press is
+                // the phase's primary action (hear the answer / continue), never pause;
+                // two presses (NEXT) skip; three (PREVIOUS) go back. AirPods send PLAY or
+                // PAUSE for a single press depending on the state they last saw, so every
+                // play/pause key means the same thing here.
                 override fun onMediaButtonEvent(
                     session: MediaSession,
                     controllerInfo: MediaSession.ControllerInfo,
                     intent: Intent,
                 ): Boolean {
-                    Log.d(TAG, "onMediaButtonEvent: ${intent.action} ${intent.getParcelableExtra<KeyEvent>(Intent.EXTRA_KEY_EVENT)}")
-                    return super.onMediaButtonEvent(session, controllerInfo, intent)
+                    val event = IntentCompat.getParcelableExtra(intent, Intent.EXTRA_KEY_EVENT, KeyEvent::class.java)
+                        ?: return false
+                    Log.d(TAG, "onMediaButtonEvent: $event")
+                    val action: () -> Unit = when (event.keyCode) {
+                        KeyEvent.KEYCODE_MEDIA_PLAY,
+                        KeyEvent.KEYCODE_MEDIA_PAUSE,
+                        KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE,
+                        KeyEvent.KEYCODE_HEADSETHOOK -> engine::primaryAction
+                        KeyEvent.KEYCODE_MEDIA_NEXT -> engine::next
+                        KeyEvent.KEYCODE_MEDIA_PREVIOUS -> engine::previous
+                        else -> return super.onMediaButtonEvent(session, controllerInfo, intent)
+                    }
+                    if (event.action == KeyEvent.ACTION_DOWN && event.repeatCount == 0) action()
+                    return true
                 }
             })
             .build()
@@ -229,7 +249,8 @@ class CivicsAudioService : MediaSessionService() {
 
     // -------------------------------------------------- wake lock / audio focus
 
-    // Keeps the CPU awake for TTS, ducks other audio, and pauses when headphones unplug.
+    // Keeps the CPU awake for TTS, ducks other audio, claims the media buttons, and
+    // pauses when headphones unplug.
     private fun updatePlaybackResources(playing: Boolean) {
         if (playing) {
             if (wakeLock == null) {
@@ -257,6 +278,7 @@ class CivicsAudioService : MediaSessionService() {
                     .build()
             }
             focusRequest?.let { audioManager.requestAudioFocus(it) }
+            silence.start()
 
             if (!noisyReceiverRegistered) {
                 ContextCompat.registerReceiver(
@@ -269,6 +291,7 @@ class CivicsAudioService : MediaSessionService() {
             }
         } else {
             wakeLock?.let { if (it.isHeld) it.release() }
+            silence.stop()
             focusRequest?.let { audioManager.abandonAudioFocusRequest(it) }
             if (noisyReceiverRegistered) {
                 unregisterReceiver(noisyReceiver)
