@@ -2,8 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Keep TTS playback alive with the screen off; remaining Info.plist keys
-	     merge from INFOPLIST_KEY_* build settings (GENERATE_INFOPLIST_FILE). -->
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>
