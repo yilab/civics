@@ -1,0 +1,19 @@
+{
+  "name": "civics-desktop",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "tauri": "tauri",
+    "dev": "node build.mjs && tauri dev",
+    "app": "node build.mjs && tauri build"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "^2",
+    "esbuild": "^0.28.2"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2"
+  }
+}

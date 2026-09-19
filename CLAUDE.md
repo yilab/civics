@@ -4,15 +4,16 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Is
 
-Civics Audio Prep — a hands-free audio study tool for the US naturalization civics test (128 questions, 2025 version), branded "Starwave". One app, three parallel implementations kept in behavioral parity:
+Civics Audio Prep — a hands-free audio study tool for the US naturalization civics test (128 questions, 2025 version), branded "Starwave". One app, four parallel implementations kept in behavioral parity:
 
 - **android/** — Kotlin + Jetpack Compose (`com.yilab.civics`), minSdk 30 / targetSdk 36. Reference implementation.
 - **apple/Civics/** — SwiftUI (Xcode project, scheme `Civics`), iOS/iPadOS (deployment target 26.5), also builds/runs on macOS Apple Silicon.
 - **web/** — vanilla JS ES modules bundled by esbuild into a single-file HTML, deployed as static assets on Cloudflare Workers.
+- **desktop/** — Tauri 2 (Windows + Linux) wrapping the shared web sources: `build.mjs` bundles `web/src` with `web/src/speech.js` swapped for `desktop/src/native-speech.js`, which drives OS TTS (Windows SAPI, Linux speech-dispatcher) and OS media keys (SMTC/MPRIS) from `src-tauri/`.
 
 The app speaks each question, pauses for you to answer aloud, then speaks the answer (karaoke-highlighting the spoken word). Tabs: Listen, Flashcards, Questions, Test (hands-free practice test), Settings. 11 study languages.
 
-**Android is the behavioral reference**: `web/src/engine.js` is a stated port of `StudyEngine.kt`, `web/src/i18n.js` mirrors `SpeechLanguage.kt`. Engine/settings/i18n behavior changes must land on all three platforms — check the other two whenever you touch one.
+**Android is the behavioral reference**: `web/src/engine.js` is a stated port of `StudyEngine.kt`, `web/src/i18n.js` mirrors `SpeechLanguage.kt`. Engine/settings/i18n behavior changes must land on all platforms — the desktop build shares the web engine by construction, but check android/apple whenever you touch one.
 
 ## Commands
 
@@ -31,9 +32,14 @@ npm run sync      # regenerate question bank from sources + rebuild artifact
 npm run build     # rebuild web/civics-test-study-tool.html from web/src/
 npm run dev       # build + wrangler dev (local Cloudflare Workers)
 npm run deploy    # build + wrangler deploy
+
+# Desktop (from desktop/, npm install once)
+npm run dev       # rebuild web bundle + tauri dev
+npm run app       # rebuild web bundle + tauri build (release installers)
+(cd src-tauri && cargo test)   # SAPI voice/karaoke tests (Windows)
 ```
 
-Web has no test suite — a clean `npm run build` is its smoke test. Android unit tests use JUnit + `kotlinx-coroutines-test` (`StudyEngineTest` drives the engine via a `FakeSpeechEngine` with virtual time). Apple unit tests are in `CivicsTests` (StudyEngine, KaraokeText, QuestionRepository).
+Web has no test suite — a clean `npm run build` is its smoke test. Android unit tests use JUnit + `kotlinx-coroutines-test` (`StudyEngineTest` drives the engine via a `FakeSpeechEngine` with virtual time). Apple unit tests are in `CivicsTests` (StudyEngine, KaraokeText, QuestionRepository). Desktop: `cargo test` in `desktop/src-tauri/` exercises the SAPI backend live (voice enumeration, word-boundary events).
 
 ## Question-Bank Data Pipeline
 
@@ -48,11 +54,11 @@ Never edit a generated file by hand. The chain:
    - `apple/Civics/Civics/Resources/questions.json`
    - `web/data/bank.generated.js` (ESM module the web app imports)
 
-The web app renders only from `BANK`, never from `questions-source.js`.
+The web app renders only from `BANK`, never from `questions-source.js`. The desktop app gets the bank the same way — `desktop/build.mjs` bundles `web/data/bank.generated.js`.
 
 ## Architecture (shared across platforms)
 
-Same file layout on each platform — `audio/`, `data/`, `settings/`, `ui/` (Kotlin), or same-named `.swift` files, or `web/src/{engine,speech,i18n,settings}.js` + `web/src/ui/*.js`:
+Same file layout on each platform — `audio/`, `data/`, `settings/`, `ui/` (Kotlin), or same-named `.swift` files, or `web/src/{engine,speech,i18n,settings}.js` + `web/src/ui/*.js`. **Desktop shares the web files wholesale** — only the speech engine and media-session integration live in `desktop/` (`src/native-speech.js` + `src-tauri/src/`).
 
 - **StudyEngine** (`audio/StudyEngine.kt` | `.swift` | `src/engine.js`) — the core state machine: speak question → think pause (default 3 s) → speak answer → advance. `Phase`: IDLE, SPEAKING_QUESTION, THINKING, SPEAKING_ANSWER, AWAITING_ADVANCE, AWAITING_GRADE, FINISHED. `Mode`: STUDY vs TEST — the practice test asks 20 questions and stops the moment you reach 12 correct (pass) or 9 wrong (fail), like the real interview. The engine never touches the UI; screens observe state (Compose state flows / observable `AppModel` / `onEngineUpdate` callback).
 - **SpeechEngine** abstraction per platform — Android `TextToSpeech` (run by `CivicsAudioService`, a foreground service with media3/MediaSession lock-screen controls), Apple `AVSpeechSynthesizer`, web `SpeechSynthesis`. All skip utterances whose language has no installed voice rather than garbling.

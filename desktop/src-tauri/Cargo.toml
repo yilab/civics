@@ -1,0 +1,31 @@
+[package]
+name = "civics-desktop"
+version = "0.1.0"
+description = "Civics Audio Prep — hands-free naturalization test study app"
+edition = "2021"
+rust-version = "1.80"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# OS media session: SMTC on Windows, MPRIS on Linux (headset / lock-screen buttons).
+souvlaki = "0.8"
+
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.62", features = [
+  "Win32_Media_Speech",
+  "Win32_System_Com",
+  "Win32_Globalization",
+  "Win32_Foundation",
+] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+libloading = "0.8"
+
+[profile.release]
+strip = true
+lto = true
