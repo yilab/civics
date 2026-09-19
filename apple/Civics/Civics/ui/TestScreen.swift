@@ -47,6 +47,7 @@ struct TestScreen: View {
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)
+            .accessibilityIdentifier("startTest")
 
             if !history.isEmpty {
                 Text(L10n.t("test.history").uppercased())
@@ -103,12 +104,14 @@ struct TestScreen: View {
                     }
                     .buttonStyle(.bordered)
                     .tint(.red)
+                    .accessibilityIdentifier("gradeMissed")
                     Button { onGrade(true) } label: {
                         Label(L10n.t("button.gotIt"), systemImage: "checkmark")
                             .frame(maxWidth: .infinity).frame(height: 24)
                     }
                     .buttonStyle(.borderedProminent)
                     .tint(.green)
+                    .accessibilityIdentifier("gradeCorrect")
                 }
                 .controlSize(.large)
             } else {
@@ -119,6 +122,7 @@ struct TestScreen: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .controlSize(.large)
+                .accessibilityIdentifier("revealAnswer")
             }
         }
     }

@@ -5,6 +5,7 @@
 //  Created by Yi Wang on 9/6/26.
 //
 
+#if os(iOS)
 import XCTest
 
 final class CivicsUITestsLaunchTests: XCTestCase {
@@ -33,3 +34,4 @@ final class CivicsUITestsLaunchTests: XCTestCase {
         add(attachment)
     }
 }
+#endif

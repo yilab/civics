@@ -27,6 +27,29 @@ The app speaks each question, pauses for you to answer aloud, then speaks the an
 xcodebuild -project Civics.xcodeproj -scheme Civics \
   -destination 'platform=iOS Simulator,name=<installed iPhone sim>' test
 
+# Apple App Store screenshots (from repo root) — captures en + zh-Hans UI sets
+# on the given simulator into assets/screenshots/apple/<size>/{en,zh-Hans}/
+apple/tools/capture-screenshots.sh "iPhone 17 Pro Max" assets/screenshots/apple/iphone-6.9
+apple/tools/capture-screenshots.sh "iPad Air 13-inch (M4)" assets/screenshots/apple/ipad-13
+# Note: the iPad Pro 13-inch (M5) sim renders a blank screen in the iOS 26.5
+# runtime on this machine — use the iPad Air 13-inch (M4) sim instead.
+
+# Mac App Store screenshots (from repo root) — builds the macOS app and runs it
+# with -renderScreenshots; ScreenshotRenderer (DEBUG-only, ui/ScreenshotRenderer.swift)
+# snapshots the five screens in offscreen windows at 2560x1600 into
+# assets/screenshots/apple/mac/{en,zh-Hans}/ — no Accessibility grant needed.
+# The script temporarily re-signs the debug build without the sandbox so the
+# shots can be written outside the app container (a rebuild restores it).
+apple/tools/capture-screenshots-mac.sh assets/screenshots/apple/mac
+
+# Google Play screenshots — boots the profile's emulator headless if needed and
+# captures en + zh-Hans sets into assets/screenshots/android/<profile>/ —
+# no test code, pure adb/uiautomator driving. phone = 1080x2160 (Play's max
+# 2:1 aspect), tablet-10 = native 1600x2560, tablet-7 = native 1200x1920.
+python3 android/tools/capture-screenshots.py            # phone (Pixel_10)
+python3 android/tools/capture-screenshots.py tablet-10  # 10" tablet (HP_Tablet)
+python3 android/tools/capture-screenshots.py tablet-7   # 7" tablet (Nexus_7)
+
 # Web (from web/, npm install once)
 npm run sync      # regenerate question bank from sources + rebuild artifact
 npm run build     # rebuild web/civics-test-study-tool.html from web/src/

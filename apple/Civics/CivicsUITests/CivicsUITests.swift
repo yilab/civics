@@ -5,6 +5,7 @@
 //  Created by Yi Wang on 9/6/26.
 //
 
+#if os(iOS)
 import XCTest
 
 final class CivicsUITests: XCTestCase {
@@ -72,3 +73,4 @@ final class CivicsUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Question 2 of 20"].waitForExistence(timeout: 10))
     }
 }
+#endif

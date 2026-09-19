@@ -59,6 +59,12 @@ final class AppModel {
 
         // Wires remote commands, now-playing info, and the audio session.
         playback.start()
+
+        #if DEBUG && os(macOS)
+        // Mac App Store screenshots: renders and returns immediately unless
+        // -renderScreenshots <dir> was passed (see ScreenshotRenderer).
+        ScreenshotRenderer.renderIfRequested(model: self)
+        #endif
     }
 }
 
@@ -71,5 +77,10 @@ struct CivicsApp: App {
             RootView()
                 .environment(model)
         }
+        #if os(macOS)
+        // 16:10 default window — also the Mac App Store screenshot content size
+        // (1280 × 800 pt → 2560 × 1600 px on Retina).
+        .defaultSize(CGSize(width: 1280, height: 800))
+        #endif
     }
 }
