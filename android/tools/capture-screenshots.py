@@ -96,7 +96,7 @@ def setup_display():
     adb("shell", "settings", "put", "global", "sysui_demo_allowed", "1")
     adb("shell", "am", "broadcast", "-a", "com.android.systemui.demo", "-e", "command", "enter")
     for extra in (["clock", "-e", "hhmm", "0941"],
-                  ["battery", "-e", "level", "100", "-e", "plugged", "true"],
+                  ["battery", "-e", "level", "100", "-e", "plugged", "false"],
                   ["network", "-e", "wifi", "show", "-e", "level", "4"],
                   ["network", "-e", "mobile", "hide"],
                   ["notifications", "-e", "visible", "false"],
@@ -107,6 +107,14 @@ def setup_display():
     adb("shell", "settings", "put", "global", "transition_animation_scale", "0")
     adb("shell", "settings", "put", "global", "animator_duration_scale", "0")
     adb("shell", "pm", "grant", PKG, "android.permission.POST_NOTIFICATIONS")
+    # Fresh boots post a Safety Center "no screen lock" nag whose shield icon
+    # bypasses demo mode's notification toggle; snooze whatever is posted so
+    # the status bar stays clean.
+    for key in sh([ADB, "exec-out", "cmd", "notification", "list"],
+                  capture=True).decode().splitlines():
+        if key.strip():
+            sh([ADB, "exec-out", "cmd", "notification", "snooze",
+                "--for", "14400000", key.strip()], check=False)
 
 
 def dump_nodes():

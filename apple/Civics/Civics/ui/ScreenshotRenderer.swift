@@ -31,12 +31,26 @@ enum ScreenshotRenderer {
         // The capture script re-signs the debug build without the sandbox so
         // the requested path (e.g. /tmp/...) is writable from inside the app.
         let out = URL(fileURLWithPath: requested)
-        // Called from AppModel.init, before the app is active — defer the
-        // work until after launch so windows can become key and paint their
-        // active appearance.
+        // Called from AppModel.init — NSApplication.shared doesn't exist yet,
+        // so don't touch NSApp here. Once it does, force activation and wait
+        // for it: controls only paint their active look (blue
+        // .borderedProminent, colored traffic lights) when the app is
+        // frontmost and windows can become key. activate() alone is ignored
+        // for a background-launched process.
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-            NSApp.activate()
-            renderAll(model: model, to: out)
+            NSApp.setActivationPolicy(.regular)
+            NSApp.activate(ignoringOtherApps: true)
+            DispatchQueue.global().async {
+                var activated = false
+                for _ in 0..<100 where !activated {
+                    activated = DispatchQueue.main.sync { NSApp.isActive }
+                    if !activated { Thread.sleep(forTimeInterval: 0.1) }
+                }
+                DispatchQueue.main.async {
+                    trace("app active: \(NSApp.isActive)")
+                    renderAll(model: model, to: out)
+                }
+            }
         }
     }
 
@@ -159,7 +173,7 @@ enum ScreenshotRenderer {
         let hosting = NSHostingView(rootView: view)
         let window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 1280, height: 800),
-            styleMask: [.titled, .closable, .resizable],
+            styleMask: [.titled, .closable, .miniaturizable, .resizable],
             backing: .buffered,
             defer: false
         )
@@ -170,8 +184,11 @@ enum ScreenshotRenderer {
         // status so accent-styled controls (e.g. .borderedProminent) paint
         // in their active look rather than the washed-out inactive one.
         window.appearance = NSAppearance(named: .aqua)
-        NSApp.activate()
+        NSApp.activate(ignoringOtherApps: true)
         window.makeKeyAndOrderFront(nil)
+        // Becoming key takes effect on the next runloop turn.
+        RunLoop.current.run(until: Date().addingTimeInterval(0.05))
+        trace("\(locale)/\(name) key: \(window.isKeyWindow) active: \(NSApp.isActive)")
         guard let frameView = window.contentView?.superview else {
             trace("render failed \(locale)/\(name): no frame view")
             return
@@ -206,6 +223,8 @@ enum ScreenshotRenderer {
         } catch {
             trace("write failed \(locale)/\(name): \(error)")
         }
+        window.orderOut(nil)
+        window.close()
     }
 }
 #endif
