@@ -2,7 +2,7 @@
 // integration (headset / lock-screen buttons). Imports engine bindings only for
 // media-session handlers and metadata; those run after both modules are live.
 import { spokenLanguage, bilingual, TTS_LOCALE } from './i18n.js';
-import { state, Phase, primaryAction, pause, next, previous } from './engine.js';
+import { state, Phase, primaryAction, next, previous } from './engine.js';
 
 export const speech = {
   supported: typeof window !== 'undefined' && 'speechSynthesis' in window,
@@ -109,6 +109,36 @@ export function ttsAvailable() {
 }
 
 /* ---------- media session (headset / lock-screen buttons) ---------- */
+
+// Browsers only route hardware media buttons (AirPods presses) to a page that
+// holds audio focus, and speechSynthesis doesn't count. An inaudible WebAudio
+// tone running for the duration of a session makes the tab the media-key
+// target, so the OS delivers the presses to the handlers below. Web equivalent
+// of Android's SilenceKeepAlive.
+let keepAlive = null; // { ctx, osc }
+function startKeepAlive() {
+  if (keepAlive) return;
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    const ctx = new Ctx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = 20; // infrasonic: a real signal with no audible output
+    gain.gain.value = 0.01;
+    osc.connect(gain).connect(ctx.destination);
+    osc.start();
+    if (ctx.state === 'suspended') ctx.resume().catch(() => {});
+    keepAlive = { ctx, osc };
+  } catch (e) {}
+}
+function stopKeepAlive() {
+  if (!keepAlive) return;
+  try { keepAlive.osc.stop(); } catch (e) {}
+  try { keepAlive.ctx.close(); } catch (e) {}
+  keepAlive = null;
+}
+
 export function updateMediaSession() {
   if (!('mediaSession' in navigator)) return;
   try {
@@ -120,11 +150,15 @@ export function updateMediaSession() {
     }
     navigator.mediaSession.playbackState = state.phase === Phase.IDLE ? 'paused' : 'playing';
   } catch (e) {}
+  if (state.phase === Phase.IDLE) stopKeepAlive(); else startKeepAlive();
 }
 if ('mediaSession' in navigator) {
   const handle = (action, fn) => { try { navigator.mediaSession.setActionHandler(action, fn); } catch (e) {} };
+  // One headset press arrives as 'play' or 'pause' depending on playbackState;
+  // both mean the phase's primary action (hear the answer / continue), never
+  // pause — matching Android and iOS. Pausing stays on the on-screen Stop.
   handle('play', () => primaryAction());
-  handle('pause', () => pause());
+  handle('pause', () => primaryAction());
   handle('nexttrack', () => next());
   handle('previoustrack', () => previous());
 }
