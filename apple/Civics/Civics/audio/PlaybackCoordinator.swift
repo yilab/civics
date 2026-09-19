@@ -27,8 +27,14 @@ final class PlaybackCoordinator {
 
         let center = MPRemoteCommandCenter.shared()
         center.playCommand.addTarget { [weak self] _ in self?.play(); return .success }
-        center.pauseCommand.addTarget { [weak self] _ in self?.pause(); return .success }
-        center.togglePlayPauseCommand.addTarget { [weak self] _ in self?.togglePlayPause(); return .success }
+        // Headset presses (AirPods stem) arrive as togglePlayPause — or as
+        // pauseCommand on iPadOS/macOS — and mean the phase's primary action
+        // (hear the answer / continue), never pause, matching Android. Remote
+        // events carry no source, so a headset press can't be told apart from
+        // a lock-screen pause tap; pausing stays on the on-screen Stop and
+        // interruption handling (calls, headphones disconnected).
+        center.togglePlayPauseCommand.addTarget { [weak self] _ in self?.play(); return .success }
+        center.pauseCommand.addTarget { [weak self] _ in self?.play(); return .success }
         center.nextTrackCommand.addTarget { [weak self] _ in self?.next(); return .success }
         center.previousTrackCommand.addTarget { [weak self] _ in self?.previous(); return .success }
 
@@ -69,7 +75,7 @@ final class PlaybackCoordinator {
 
     // MARK: - Transport funnel (the MediaController analog)
 
-    /// The primary screen button and headset play both land here.
+    /// The primary screen button and headset presses (play, pause, toggle) land here.
     func play() {
         hasStarted = true
         activateSession()
@@ -90,10 +96,6 @@ final class PlaybackCoordinator {
         hasStarted = true
         activateSession()
         engine.previous()
-    }
-
-    func togglePlayPause() {
-        if engine.state.playing { pause() } else { play() }
     }
 
     // MARK: - Audio session / now playing
