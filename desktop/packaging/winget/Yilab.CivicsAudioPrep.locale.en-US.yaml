@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.defaultLocale.1.10.0.schema.json
+PackageIdentifier: Yilab.CivicsAudioPrep
+PackageVersion: 0.1.0
+PackageLocale: en-US
+Publisher: Yilab
+PublisherUrl: https://github.com/yilab
+PackageName: Civics Audio Prep
+PackageUrl: https://github.com/yilab/civics
+License: Apache-2.0
+LicenseUrl: https://github.com/yilab/civics/blob/main/LICENSE
+Moniker: civics-audio-prep
+ShortDescription: Hands-free audio study tool for the US naturalization civics test
+Description: |-
+  Civics Audio Prep is a hands-free study tool for the US naturalization
+  civics test (128 questions, 2025 version). The app speaks each question,
+  pauses for you to answer aloud, then speaks the answer — highlighting the
+  spoken word karaoke-style. Includes listen mode, flashcards, a question
+  browser, a hands-free practice test that ends the moment you pass or fail
+  (like the real interview), and 11 study languages. No ads, no data
+  collection, works offline; headset and media-key controls supported.
+Tags:
+  - civics
+  - naturalization
+  - citizenship
+  - uscis
+  - study
+  - education
+  - text-to-speech
+ManifestType: defaultLocale
+ManifestVersion: 1.10.0

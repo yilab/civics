@@ -4,3 +4,11 @@ src-tauri/target/
 src-tauri/gen/
 src-tauri/icons/android/
 src-tauri/icons/ios/
+
+# packaging build outputs (regenerable; never committed)
+packaging/msix/layout/
+packaging/msix/*.msix
+packaging/flatpak/cargo-sources.json
+packaging/flatpak/node-sources.json
+packaging/flatpak/build-dir/
+packaging/flatpak/.flatpak-builder/

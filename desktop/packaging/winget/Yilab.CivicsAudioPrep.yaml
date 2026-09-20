@@ -1,0 +1,10 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.version.1.10.0.schema.json
+# winget version manifest. Submit the whole Yilab/CivicsAudioPrep/0.1.0/
+# folder to microsoft/winget-pkgs (one PR per release) — validate first with:
+#   winget validate --manifest <this dir>
+#   winget install --manifest <this dir>
+PackageIdentifier: Yilab.CivicsAudioPrep
+PackageVersion: 0.1.0
+DefaultLocale: en-US
+ManifestType: version
+ManifestVersion: 1.10.0

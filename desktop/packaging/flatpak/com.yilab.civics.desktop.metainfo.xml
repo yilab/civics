@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.yilab.civics.desktop</id>
+  <name>Civics Audio Prep</name>
+  <summary>Hands-free audio study for the US naturalization civics test</summary>
+  <developer id="com.yilab">
+    <name>Yilab</name>
+  </developer>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>Apache-2.0</project_license>
+  <launchable type="desktop-id">com.yilab.civics.desktop.desktop</launchable>
+
+  <description>
+    <p>
+      Civics Audio Prep is a hands-free study tool for the US naturalization
+      civics test (128 questions, 2025 version). The app speaks each question,
+      pauses for you to answer aloud, then speaks the answer — highlighting
+      the spoken word karaoke-style so you can glance at the screen anytime.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>Listen mode: start a session, put the window aside, answer out loud</li>
+      <li>Practice test that stops the moment you pass (12 correct) or fail (9 missed) — like the real interview</li>
+      <li>Flashcards and a browsable question list with known-question tracking</li>
+      <li>11 study languages with bilingual read-along</li>
+      <li>Headset and media-key controls via MPRIS</li>
+      <li>No ads, no data collection, no network access</li>
+    </ul>
+    <p>
+      Spoken audio uses your system's speech-dispatcher voices; install voice
+      data for your study language for best coverage.
+    </p>
+  </description>
+
+  <url type="homepage">https://github.com/yilab/civics</url>
+  <url type="bugtracker">https://github.com/yilab/civics/issues</url>
+
+  <!-- Flathub quality review expects screenshots. Add before submission:
+       capture Listen / Flashcards / Test on Linux and publish at a stable URL.
+  <screenshots>
+    <screenshot type="default">
+      <image>https://raw.githubusercontent.com/yilab/civics/main/assets/screenshots/desktop/listen.png</image>
+      <caption>Listen mode with read-along highlighting</caption>
+    </screenshot>
+  </screenshots>
+  -->
+
+  <content_rating type="oars-1.1" />
+  <supports>
+    <control>pointing</control>
+    <control>keyboard</control>
+  </supports>
+
+  <releases>
+    <release version="0.1.0" date="2026-09-19">
+      <description>
+        <p>First desktop release: Windows and Linux.</p>
+      </description>
+    </release>
+  </releases>
+</component>

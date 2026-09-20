@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://aka.ms/winget-manifest.installer.1.10.0.schema.json
+# winget installer manifest. Both installers come from the GitHub release the
+# desktop-release workflow drafts for tag desktop-vX.Y.Z.
+# TODO after each release: fill InstallerSha256 (both) and ProductCode (MSI)
+# from the built artifacts:
+#   Get-FileHash .\*.msi, .\*-setup.exe
+#   MSI ProductCode: Properties -> Details, or `winget show` after a draft PR.
+PackageIdentifier: Yilab.CivicsAudioPrep
+PackageVersion: 0.1.0
+InstallerLocale: en-US
+MinimumOSVersion: 10.0.17763.0
+InstallModes:
+  - interactive
+  - silent
+Installers:
+  - Architecture: x64
+    InstallerType: wix
+    # Tauri names it "Civics Audio Prep_0.1.0_x64_en-US.msi"; GitHub encodes
+    # the spaces as %20 in the download URL.
+    InstallerUrl: https://github.com/yilab/civics/releases/download/desktop-v0.1.0/Civics%20Audio%20Prep_0.1.0_x64_en-US.msi
+    InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000
+    ProductCode: '{00000000-0000-0000-0000-000000000000}'
+    UpgradeBehavior: install
+  - Architecture: x64
+    InstallerType: nullsoft
+    InstallerUrl: https://github.com/yilab/civics/releases/download/desktop-v0.1.0/Civics%20Audio%20Prep_0.1.0_x64-setup.exe
+    InstallerSha256: 0000000000000000000000000000000000000000000000000000000000000000
+    InstallerSwitches:
+      Silent: /S
+      SilentWithProgress: /S
+    UpgradeBehavior: install
+ManifestType: installer
+ManifestVersion: 1.10.0

@@ -1,0 +1,64 @@
+# Builds the Tauri desktop app (desktop/) and attaches the installers to a
+# DRAFT GitHub release. Trigger: push a tag like `desktop-v0.1.0` — keep it in
+# sync with desktop/src-tauri/tauri.conf.json and Cargo.toml.
+#   git tag desktop-v0.1.0 && git push --tags
+# Review the draft release, then publish. The published assets are what the
+# winget and Flathub manifests point at.
+name: desktop-release
+
+on:
+  push:
+    tags: ["desktop-v*"]
+
+permissions:
+  contents: write # create releases + upload assets
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            args: --bundles msi,nsis
+          - os: ubuntu-24.04
+            args: --bundles appimage,deb
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: desktop/src-tauri
+
+      - name: Linux system deps (WebKitGTK + AppImage tooling)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev \
+            libayatana-appindicator3-dev librsvg2-dev patchelf libfuse2
+
+      - name: Install frontend deps
+        working-directory: desktop
+        run: npm ci
+
+      # tauri-action runs `tauri build` (beforeBuildCommand rebuilds the
+      # frontend from web/src), then creates a draft release on the tag and
+      # uploads the bundles from both matrix jobs.
+      - uses: tauri-apps/tauri-action@v0
+        with:
+          projectPath: desktop
+          tagName: ${{ github.ref_name }}
+          releaseName: "Civics Audio Prep desktop ${{ github.ref_name }}"
+          releaseBody: "Windows: `.msi` / `-setup.exe` · Linux: `.AppImage` / `.deb`"
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}

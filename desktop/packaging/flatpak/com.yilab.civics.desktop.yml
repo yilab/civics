@@ -1,0 +1,96 @@
+# Flathub manifest for Civics Audio Prep (Tauri 2, Rust backend + WebKitGTK).
+#
+# This is the DRAFT kept in the app repo; the Flathub submission copies it
+# (plus the generated sources below) into the flathub/com.yilab.civics.desktop
+# repo. See desktop/README.md -> Distribution for the full submission flow.
+#
+# Offline-build sources to generate BEFORE submitting (Flathub builds offline):
+#   pipx run flatpak-cargo-generator ../src-tauri/Cargo.lock -o cargo-sources.json
+#   flatpak-node-generator npm ../package-lock.json -o node-sources.json
+# Regenerate whenever Cargo.lock / package-lock.json changes.
+#
+# KNOWN LIMITATION to verify on a Linux box: TTS talks to the HOST speech-
+# dispatcher through its runtime socket (finish-args below). If a distro keeps
+# the socket elsewhere or runs speech-dispatcher in a different session, speech
+# silently disables itself (the UI shows the standard no-TTS warning). The
+# bundled libspeechd module below provides the client library the app dlopens.
+app-id: com.yilab.civics.desktop
+runtime: org.gnome.Platform
+runtime-version: '49' # includes WebKitGTK 4.1; bump when Flathub asks
+sdk: org.gnome.Sdk
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+  - org.freedesktop.Sdk.Extension.node24
+command: civics-desktop
+finish-args:
+  # WebKitGTK rendering
+  - --share=ipc
+  - --socket=wayland
+  - --socket=fallback-x11
+  # TTS audio output
+  - --socket=pulseaudio
+  # host speech-dispatcher socket (TTS engine itself)
+  - --filesystem=xdg-run/speech-dispatcher:ro
+  # MPRIS media keys (souvlaki registers this name on the session bus)
+  - --own-name=org.mpris.MediaPlayer2.civics
+  # Deliberately NO --share=network: the app makes no network requests.
+build-options:
+  append-path: /usr/lib/sdk/rust-stable/bin:/usr/lib/sdk/node24/bin
+  env:
+    CARGO_HOME: /run/build/civics/cargo
+modules:
+  # libspeechd (client library the app dlopens at runtime). Only the client
+  # lib is needed — the daemon runs on the host.
+  - name: speech-dispatcher
+    buildsystem: autotools
+    config-opts:
+      - --disable-python
+      - --with-espeak=no
+      - --with-flite=no
+      - --with-ivona=no
+      - --with-pulse=no
+      - --with-alsa=no
+      - --with-oss=no
+      - --with-libao=no
+      - --with-nas=no
+    cleanup:
+      - /bin
+      - /etc
+      - /include
+      - /lib/pkgconfig
+      - /share
+      - '*.la'
+    sources:
+      - type: archive
+        url: https://github.com/brailcom/speechd/releases/download/0.11.5/speech-dispatcher-0.11.5.tar.gz
+        # TODO: fill after downloading (sha256sum speech-dispatcher-0.11.5.tar.gz)
+        sha256: 0000000000000000000000000000000000000000000000000000000000000000
+      # dotconf is speech-dispatcher's only non-runtime dependency
+      - type: archive
+        url: https://github.com/williamh/dotconf/archive/refs/tags/v1.4.1.tar.gz
+        dest: dotconf
+        # TODO: fill after downloading
+        sha256: 0000000000000000000000000000000000000000000000000000000000000000
+
+  - name: civics
+    buildsystem: simple
+    build-commands:
+      # frontend: shared web sources -> single-file dist (esbuild, offline)
+      - npm ci --offline --cache="$FLATPAK_BUILDER_BUILDDIR/flatpak-node/npm-cache"
+      - node build.mjs
+      # backend: vendored cargo sources
+      - cargo build --release --offline --manifest-path src-tauri/Cargo.toml
+      - install -Dm755 src-tauri/target/release/civics-desktop /app/bin/civics-desktop
+      # desktop integration
+      - install -Dm644 com.yilab.civics.desktop.desktop /app/share/applications/com.yilab.civics.desktop.desktop
+      - install -Dm644 com.yilab.civics.desktop.metainfo.xml /app/share/metainfo/com.yilab.civics.desktop.metainfo.xml
+      - install -Dm644 src-tauri/icons/128x128.png /app/share/icons/hicolor/128x128/apps/com.yilab.civics.desktop.png
+      - install -Dm644 src-tauri/icons/64x64.png /app/share/icons/hicolor/64x64/apps/com.yilab.civics.desktop.png
+      - install -Dm644 src-tauri/icons/32x32.png /app/share/icons/hicolor/32x32/apps/com.yilab.civics.desktop.png
+    sources:
+      - type: dir
+        path: ../.. # the app repo root (desktop/ + web/)
+      - cargo-sources.json
+      - node-sources.json
+      - com.yilab.civics.desktop.desktop
+      - com.yilab.civics.desktop.metainfo.xml

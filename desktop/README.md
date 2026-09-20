@@ -47,3 +47,59 @@ cargo test         # in src-tauri/ — includes live SAPI voice + karaoke tests
 - `SPEVENT` packing and `SPFEI_FLAGCHECK` bits are handled in `sapi.rs` —
   SAPI's `SetInterest` rejects masks without bits 30|33, and word-boundary
   events carry length in `wParam`, position in `lParam` (verified by tests).
+
+## Distribution
+
+Channels: **Microsoft Store** (primary Windows), **Flathub** (primary Linux),
+**GitHub Releases + winget** (secondary both). Everything is wired in this
+repo; the pieces below are the operator runbook.
+
+### Cutting a release (GitHub)
+
+`.github/workflows/desktop-release.yml` builds MSI+NSIS on Windows and
+AppImage+deb on Linux, then drafts a release. To cut one:
+
+```bash
+# 1. bump version in desktop/src-tauri/tauri.conf.json, Cargo.toml,
+#    packaging/msix/AppxManifest.xml (4-part), and packaging/winget/ (paths)
+git tag desktop-v0.1.0 && git push --tags
+# 2. review the drafted release on GitHub, publish it
+```
+
+### Microsoft Store (packaging/msix/)
+
+1. Partner Center ($19 one-time): reserve the app name, then copy **Product
+   identity** values into `msix/AppxManifest.xml` (replacing the two
+   `PARTNER-CENTER-*` placeholders).
+2. `powershell -File packaging/msix/make-msix.ps1` — builds the release exe
+   and packs `CivicsAudioPrep.msix` (unsigned is fine for the Store;
+   `-Sign` makes a sideload-testable package).
+3. Upload the .msix to the submission; Microsoft signs it after certification.
+   Privacy policy URL: the web app's `/privacy` page.
+
+### Flathub (packaging/flatpak/)
+
+1. Generate the offline sources (required, Flathub builds offline):
+   ```bash
+   pipx run flatpak-cargo-generator src-tauri/Cargo.lock \
+     -o packaging/flatpak/cargo-sources.json
+   flatpak-node-generator npm package-lock.json \
+     -o packaging/flatpak/node-sources.json
+   ```
+2. Fill the two `TODO` sha256 placeholders in the manifest (speech-dispatcher
+   and dotconf archives).
+3. Capture Linux screenshots and uncomment the `<screenshots>` block in the
+   metainfo XML (Flathub quality review asks for them).
+4. Test locally: `flatpak-builder --force-clean build-dir packaging/flatpak/com.yilab.civics.desktop.yml`,
+   then PR the manifest + generated sources to `flathub/flathub` as
+   `com.yilab.civics.desktop`.
+5. **Verify TTS inside the sandbox** on a real Linux box before submitting —
+   the app reaches the host speech-dispatcher via its runtime socket; if word
+   callbacks misbehave, speech still works but karaoke degrades.
+
+### winget (packaging/winget/)
+
+After publishing the GitHub release: fill the two `InstallerSha256` values and
+the MSI `ProductCode` from the built artifacts, then PR the folder to
+`microsoft/winget-pkgs` under `manifests/y/Yilab/CivicsAudioPrep/0.1.0/`.
+Validate locally first: `winget validate --manifest packaging/winget`.

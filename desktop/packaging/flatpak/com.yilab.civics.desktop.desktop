@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Civics Audio Prep
+Comment=Hands-free audio study for the US naturalization civics test
+Exec=civics-desktop
+Icon=com.yilab.civics.desktop
+Type=Application
+Categories=Education;Languages;
+Keywords=civics;naturalization;citizenship;USCIS;test;study;
+Terminal=false
+StartupNotify=true
