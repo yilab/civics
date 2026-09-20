@@ -60,10 +60,12 @@ repo; the pieces below are the operator runbook.
 AppImage+deb on Linux, then drafts a release. To cut one:
 
 ```bash
-# 1. bump version in desktop/src-tauri/tauri.conf.json, Cargo.toml,
-#    packaging/msix/AppxManifest.xml (4-part), and packaging/winget/ (paths)
-git tag desktop-v0.1.0 && git push --tags
-# 2. review the drafted release on GitHub, publish it
+# 1. set the version everywhere (tauri.conf.json, Cargo.toml/.lock, MSIX,
+#    winget) and prepend a Flathub metainfo <release> entry:
+npm run bump -- 0.2.0
+# 2. write real release notes into the new metainfo entry, then:
+git tag desktop-v0.2.0 && git push --tags
+# 3. review the drafted release on GitHub, publish it
 ```
 
 ### Microsoft Store (packaging/msix/)

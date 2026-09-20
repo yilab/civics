@@ -5,6 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
+    "bump": "node tools/bump-version.mjs",
     "tauri": "tauri",
     "dev": "node build.mjs && tauri dev",
     "app": "node build.mjs && tauri build"
