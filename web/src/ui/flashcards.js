@@ -3,14 +3,15 @@
 import { el, setText, show, makeChips } from './dom.js';
 import { t, catLabel, translationFor, displayPair, spokenLanguage, translationPrimary } from '../i18n.js';
 import { settings, CATS } from '../settings.js';
-import { QUESTIONS, TOTAL, shuffleArr, toggleKnown } from '../engine.js';
+import { QUESTIONS, TOTAL, shuffleArr, toggleKnown, personalizedQuestions } from '../engine.js';
 
 let fcFilter = 'All';
 export let fcDeck = [];
 let fcPos = 0;
 
 export function fcBuild(shuffleIt) {
-  fcDeck = fcFilter === 'All' ? QUESTIONS.slice() : QUESTIONS.filter(q => q.category === fcFilter);
+  const personalized = personalizedQuestions();
+  fcDeck = fcFilter === 'All' ? personalized : personalized.filter(q => q.category === fcFilter);
   if (shuffleIt) shuffleArr(fcDeck);
   fcPos = 0;
 }

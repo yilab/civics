@@ -206,6 +206,17 @@
       <div class="chips" id="s-lang-chips"></div>
     </div>
     <div class="s-section">
+      <p class="s-title" id="s-loc-title">Location</p>
+      <p class="s-label" id="s-loc-label">Your state or territory</p>
+      <select class="s-select" id="s-place"></select>
+      <div id="s-dist-wrap" hidden>
+        <p class="s-label" id="s-dist-label">Congressional district</p>
+        <select class="s-select" id="s-dist"></select>
+        <p class="s-hint"><a href="https://www.house.gov/representatives/find-your-representative" target="_blank" rel="noopener" id="s-find-dist">Find my district (house.gov)</a></p>
+      </div>
+      <p class="s-hint" id="s-loc-hint">Used for the four questions about your state (Q23, Q29, Q61, Q62). Saved only on this device.</p>
+    </div>
+    <div class="s-section">
       <p class="s-title" id="s-voice-title">Voice</p>
       <p class="s-label" id="s-rate-label">Speech rate: 1.00×</p>
       <input type="range" class="slider" id="s-rate" min="0.75" max="1.5" step="0.05" value="1">

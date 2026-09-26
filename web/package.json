@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "build": "node build.mjs",
-    "sync": "node ../android/tools/extract-questions.mjs && node build.mjs",
+    "sync": "node ../android/tools/extract-questions.mjs && node ../android/tools/extract-officials.mjs && node build.mjs",
     "dev": "npm run build && wrangler dev",
     "deploy": "npm run build && wrangler deploy"
   },

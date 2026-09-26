@@ -6,6 +6,7 @@
 import { BANK } from '../data/bank.generated.js';
 import { settings, persistSettings, persistKnown, recordTest } from './settings.js';
 import { spokenLanguage, bilingual, translationFor, Q_PREFIX, TTS_LOCALE } from './i18n.js';
+import { personalize, unresolvedStateQuestions } from './officials.js';
 import { speech } from './speech.js';
 
 if (!BANK || !Array.isArray(BANK.questions) || BANK.questions.length !== 128) {
@@ -13,6 +14,10 @@ if (!BANK || !Array.isArray(BANK.questions) || BANK.questions.length !== 128) {
 }
 export const QUESTIONS = BANK.questions;
 export const TOTAL = QUESTIONS.length;
+/* The bank with the four state questions filled in for the chosen place/district. */
+export function personalizedQuestions() {
+  return personalize(QUESTIONS, settings.jurisdiction, settings.district);
+}
 
 export const Phase = {
   IDLE: 'IDLE', SPEAKING_QUESTION: 'SPEAKING_QUESTION', THINKING: 'THINKING',
@@ -53,7 +58,8 @@ export function shuffleArr(a) {
   return a;
 }
 export function repoDeck(category, shuffle, knownFilter, known) {
-  let list = category === 'All' ? QUESTIONS.slice() : QUESTIONS.filter(q => q.category === category);
+  const personalized = personalize(QUESTIONS, settings.jurisdiction, settings.district);
+  let list = category === 'All' ? personalized : personalized.filter(q => q.category === category);
   if (knownFilter === 'known') list = list.filter(q => known.has(q.n));
   else if (knownFilter === 'notKnown') list = list.filter(q => !known.has(q.n));
   return shuffle ? shuffleArr(list) : list;
@@ -99,7 +105,12 @@ export function startTest() {
   expectedUtterance = null;
   state.highlight = null;
   speech.stop();
-  deck = shuffleArr(QUESTIONS.slice()).slice(0, TEST_TOTAL);
+  // State questions the user can't answer yet (no place/district set) are left out —
+  // they can't be graded on "choose your state in Settings".
+  const unresolved = unresolvedStateQuestions(settings.jurisdiction, settings.district);
+  const pool = personalize(QUESTIONS, settings.jurisdiction, settings.district)
+    .filter(q => !unresolved.has(q.n));
+  deck = shuffleArr(pool).slice(0, TEST_TOTAL);
   state.position = 0;
   state.mode = Mode.TEST;
   state.testIndex = 0;

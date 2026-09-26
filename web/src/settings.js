@@ -8,7 +8,7 @@ export const CATS = ['All', 'American Government', 'American History', 'Symbols 
 const DEFAULTS = {
   speech_rate: 1.0, think_seconds: 3, auto_advance: false, category: 'All',
   shuffle: false, announce_meta: true, known: [], known_filter: 'all',
-  language: 'system', test_history: [],
+  language: 'system', test_history: [], jurisdiction: null, district: null,
 };
 export const store = {
   get(k) {
@@ -43,6 +43,10 @@ export const settings = {
   known: new Set((Array.isArray(store.get('known')) ? store.get('known') : []).filter(n => Number.isInteger(n))),
   knownFilter: ['all', 'known', 'notKnown'].includes(store.get('known_filter')) ? store.get('known_filter') : 'all',
   language: store.get('language') === 'system' || LANGS.includes(store.get('language')) ? store.get('language') : 'system',
+  /* Two-letter place code (50 states, DC, 5 territories) personalizing Q23/29/61/62. */
+  jurisdiction: /^[A-Z]{2}$/.test(store.get('jurisdiction') || '') ? store.get('jurisdiction') : null,
+  /* Congressional district for Q29; null = not chosen (only needed in multi-seat states). */
+  district: Number.isInteger(store.get('district')) && store.get('district') >= 1 ? store.get('district') : null,
 };
 function clampNum(v, lo, hi, dflt) {
   const n = parseFloat(v);
@@ -59,6 +63,16 @@ export function persistSettings() {
   store.set('language', settings.language);
 }
 export function persistKnown() { store.set('known', Array.from(settings.known).sort((a, b) => a - b)); }
+
+/* The place/district answers change Q23/29/61/62, so their known marks reset. */
+export function setLocation(placeCode, district) {
+  settings.jurisdiction = placeCode;
+  settings.district = placeCode ? district : null;
+  store.set('jurisdiction', settings.jurisdiction);
+  store.set('district', settings.district);
+  for (const n of [23, 29, 61, 62]) settings.known.delete(n);
+  persistKnown();
+}
 
 /* ---------- test history ---------- */
 export function getHistory() {

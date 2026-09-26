@@ -1,10 +1,53 @@
-// Settings tab: five sections (language, voice, playback, deck, progress).
-import { el, setText, makeChips } from './dom.js';
-import { t, catLabel, AUTONYM } from '../i18n.js';
-import { settings, persistKnown, store, CATS, LANGS } from '../settings.js';
+// Settings tab: six sections (language, location, voice, playback, deck, progress).
+import { el, setText, show, makeChips } from './dom.js';
+import { t, catLabel, AUTONYM, chromeLang } from '../i18n.js';
+import { settings, persistKnown, store, CATS, LANGS, setLocation } from '../settings.js';
 import { applySettings } from '../engine.js';
+import { PLACES, districtOptions } from '../officials.js';
 import { renderCard } from './flashcards.js';
 import { applyChrome, renderAll } from '../main.js';
+
+/* Place names show in the UI language (4 chrome languages); everything else English. */
+function placeName(p) {
+  const cl = chromeLang();
+  return p.name[cl === 'en' ? 'english' : cl] || p.name.english;
+}
+
+function fillSelect(sel, items, current, key) {
+  if (sel.dataset.key !== key) {
+    sel.dataset.key = key;
+    sel.innerHTML = '';
+    for (const it of items) {
+      const o = document.createElement('option');
+      o.value = it.value;
+      o.textContent = it.label;
+      sel.appendChild(o);
+    }
+  }
+  sel.value = current;
+}
+
+function renderLocation() {
+  const code = settings.jurisdiction || '';
+  fillSelect('s-place',
+    [{ value: '', label: t('settings_not_set') }]
+      .concat(PLACES.map(p => ({ value: p.code, label: placeName(p) }))),
+    code, code + '|' + chromeLang());
+  const place = code ? PLACES.find(p => p.code === code) : null;
+  const multi = !!place && place.seats > 1;
+  show('s-dist-wrap', multi);
+  if (multi) {
+    const opts = districtOptions(code);
+    fillSelect('s-dist',
+      [{ value: '', label: t('settings_not_set') }]
+        .concat(opts.map(o => ({
+          value: String(o.district),
+          label: t('settings_district') + ' ' + o.district + (o.name ? ' · ' + o.name : ''),
+        }))),
+      settings.district != null ? String(settings.district) : '',
+      code + '|' + chromeLang() + '|' + opts.map(o => o.name).join(','));
+  }
+}
 
 export function renderSettings() {
   makeChips('s-lang-chips',
@@ -15,6 +58,7 @@ export function renderSettings() {
       applyChrome();
       renderAll();
     });
+  renderLocation();
   setText('s-rate-label', t('speech_rate', settings.speechRate.toFixed(2)));
   el('s-rate').value = settings.speechRate;
   el('s-announce').checked = settings.announceMeta;
@@ -40,4 +84,15 @@ el('s-rate').addEventListener('input', () => {
 el('s-announce').addEventListener('change', () => { settings.announceMeta = el('s-announce').checked; applySettings(); });
 el('s-auto').addEventListener('change', () => { settings.autoAdvance = el('s-auto').checked; applySettings(); });
 el('s-shuffle').addEventListener('change', () => { settings.shuffle = el('s-shuffle').checked; applySettings(); });
+el('s-place').addEventListener('change', () => {
+  setLocation(el('s-place').value || null, null);
+  applySettings();
+  renderAll();
+});
+el('s-dist').addEventListener('change', () => {
+  const v = el('s-dist').value;
+  setLocation(settings.jurisdiction, v ? parseInt(v, 10) : null);
+  applySettings();
+  renderAll();
+});
 el('s-clear').onclick = () => { settings.known.clear(); persistKnown(); applySettings(); renderCard(); };

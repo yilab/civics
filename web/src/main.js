@@ -66,6 +66,11 @@ export function applyChrome() {
   setText('r-back', t('test_back'));
   setText('s-lang-title', t('settings_language'));
   setText('s-lang-label', t('settings_ui_language'));
+  setText('s-loc-title', t('settings_location'));
+  setText('s-loc-label', t('settings_your_state'));
+  setText('s-dist-label', t('settings_district'));
+  setText('s-find-dist', t('settings_find_district'));
+  setText('s-loc-hint', t('settings_location_hint'));
   setText('s-voice-title', t('settings_voice'));
   setText('s-announce-label', t('announce_meta'));
   setText('s-playback-title', t('settings_playback'));
@@ -94,6 +99,7 @@ export function renderAll() {
   applyChrome();
   renderStore();
   renderListen();
+  fcBuild(false);
   renderCardChips();
   if (fcDeck.length) renderCard();
   renderQuestions();

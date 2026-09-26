@@ -2,7 +2,7 @@
 import { el, makeChips } from './dom.js';
 import { t, catLabel, translationFor, displayPair, spokenLanguage } from '../i18n.js';
 import { settings } from '../settings.js';
-import { QUESTIONS, state, jumpTo, toggleKnown } from '../engine.js';
+import { personalizedQuestions, state, jumpTo, toggleKnown } from '../engine.js';
 import { selectTab } from '../main.js';
 
 let qFilter = 'all'; // view-local, reset to All on each visit
@@ -24,7 +24,7 @@ export function renderQuestions() {
   const list = el('q-list');
   list.innerHTML = '';
   const lang = spokenLanguage();
-  const shown = QUESTIONS.filter(q =>
+  const shown = personalizedQuestions().filter(q =>
     qFilter === 'all' || (qFilter === 'known') === settings.known.has(q.n));
   shown.forEach(q => {
     const row = document.createElement('div');

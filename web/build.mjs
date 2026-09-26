@@ -20,6 +20,11 @@ if (!existsSync(here('./data/bank.generated.js'))) {
   console.error('  node ../android/tools/extract-questions.mjs   (or: npm run sync)');
   process.exit(1);
 }
+if (!existsSync(here('./data/officials.generated.js'))) {
+  console.error('error: web/data/officials.generated.js is missing — generate it first:');
+  console.error('  node ../android/tools/extract-officials.mjs   (or: npm run sync)');
+  process.exit(1);
+}
 
 const result = await build({
   entryPoints: [here('./src/main.js')],
