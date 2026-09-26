@@ -30,6 +30,8 @@ final class SettingsRepository: SettingsSource {
         static let uiLanguage = "ui_language"
         static let legacySpeechMode = "speech_mode"
         static let testHistory = "test_history"
+        static let jurisdiction = "jurisdiction"
+        static let district = "district"
     }
 
     private static func language(_ raw: String?) -> SpeechLanguage? {
@@ -98,7 +100,11 @@ final class SettingsRepository: SettingsSource {
             announceMeta: bool(Keys.announceMeta, true),
             known: Set((defaults.stringArray(forKey: Keys.known) ?? []).compactMap(Int.init)),
             knownFilter: Self.knownFilter(defaults.string(forKey: Keys.knownFilter)),
-            language: resolvedLanguage
+            language: resolvedLanguage,
+            jurisdiction: defaults.string(forKey: Keys.jurisdiction)
+                .flatMap { $0.range(of: "^[A-Z]{2}$", options: .regularExpression) != nil ? $0 : nil },
+            district: defaults.object(forKey: Keys.district) == nil
+                ? nil : defaults.integer(forKey: Keys.district) >= 1 ? defaults.integer(forKey: Keys.district) : nil
         )
     }
 
@@ -108,7 +114,12 @@ final class SettingsRepository: SettingsSource {
     }
 
     func update(_ transform: (StudySettings) -> StudySettings) {
-        let s = transform(settings)
+        var s = transform(settings)
+        if s.jurisdiction != settings.jurisdiction || s.district != settings.district {
+            // The four state answers changed — their known marks must be re-earned.
+            s.known.subtract(OfficialsData.stateQuestions)
+            if s.jurisdiction == nil { s.district = nil }
+        }
         // All keys written in one pass, like DataStore's atomic edit.
         defaults.set(Double(s.speechRate), forKey: Keys.speechRate)
         defaults.set(s.thinkSeconds, forKey: Keys.thinkSeconds)
@@ -121,6 +132,8 @@ final class SettingsRepository: SettingsSource {
                      forKey: Keys.knownFilter)
         // The merged language is written under the single `language` key; nil clears it (system).
         defaults.set(Self.languageName(s.language), forKey: Keys.language)
+        defaults.set(s.jurisdiction, forKey: Keys.jurisdiction)
+        defaults.set(s.district, forKey: Keys.district)
         settings = s
         observers.forEach { $0(s) }
     }

@@ -1047,6 +1047,180 @@
         }
       }
     },
+    "settings.location": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "LOCATION"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "UBICACIÓN"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所在地区"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所在地區"
+          }
+        }
+      }
+    },
+    "settings.yourState": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your state or territory"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Su estado o territorio"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你所在的州或领地"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你所在的州或領地"
+          }
+        }
+      }
+    },
+    "settings.district": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Congressional district"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Distrito del Congreso"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "国会选区"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "國會選區"
+          }
+        }
+      }
+    },
+    "settings.notSet": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Not set"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin establecer"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未设置"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "未設定"
+          }
+        }
+      }
+    },
+    "settings.locationHint": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Used for the four questions about your state (Q23, Q29, Q61, Q62). Saved only on this device."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se usa para las cuatro preguntas sobre su estado (Q23, Q29, Q61, Q62). Se guarda solo en este dispositivo."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用于回答四道与你所在州相关的题目（第 23、29、61、62 题）。仅保存在本设备上。"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用於回答四道與你所在州相關的題目（第 23、29、61、62 題）。僅儲存在本裝置上。"
+          }
+        }
+      }
+    },
+    "settings.findDistrict": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Find my district (house.gov)"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Encontrar mi distrito (house.gov)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查询我的选区（house.gov）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "查詢我的選區（house.gov）"
+          }
+        }
+      }
+    },
     "settings.playback": {
       "extractionState": "stale",
       "localizations": {

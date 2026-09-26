@@ -3,6 +3,7 @@ import SwiftUI
 
 struct SettingsScreen: View {
     let settings: StudySettings
+    let officials: OfficialsData
     let onChange: ((StudySettings) -> StudySettings) -> Void
 
     var body: some View {
@@ -26,6 +27,8 @@ struct SettingsScreen: View {
                         }
                     }
                 }
+
+                locationSection
 
                 SettingsSection("settings.voice") {
                     Text(L10n.t("settings.speechRate", String(format: "%.2f", settings.speechRate)))
@@ -102,6 +105,72 @@ struct SettingsScreen: View {
             (5, L10n.t("think.seconds", 5)),
             (10, L10n.t("think.seconds", 10)),
         ]
+    }
+
+    private var locationSection: some View {
+        let place = officials.places.first { $0.code == settings.jurisdiction }
+        let districts = officials.districtOptions(placeCode: place?.code, today: OfficialsData.today())
+        return SettingsSection("settings.location") {
+            Text(L10n.t("settings.yourState"))
+                .font(.body)
+            Menu {
+                Button(L10n.t("settings.notSet")) {
+                    onChange { $0.copy(jurisdiction: .some(nil), district: .some(nil)) }
+                }
+                ForEach(officials.places, id: \.code) { p in
+                    Button(p.name(language: settings.spokenLanguage)) {
+                        onChange { $0.copy(jurisdiction: .some(p.code), district: .some(nil)) }
+                    }
+                }
+            } label: {
+                pickerLabel(place?.name(language: settings.spokenLanguage) ?? L10n.t("settings.notSet"))
+            }
+            if let place, place.seats > 1 {
+                Text(L10n.t("settings.district"))
+                    .font(.body)
+                Menu {
+                    Button(L10n.t("settings.notSet")) {
+                        onChange { $0.copy(district: .some(nil)) }
+                    }
+                    ForEach(districts, id: \.district) { option in
+                        Button(districtLabel(option.district, option.name)) {
+                            onChange { $0.copy(district: .some(option.district)) }
+                        }
+                    }
+                } label: {
+                    pickerLabel(
+                        settings.district.map { d in
+                            districtLabel(d, districts.first { $0.district == d }?.name)
+                        } ?? L10n.t("settings.notSet")
+                    )
+                }
+                Link(L10n.t("settings.findDistrict"),
+                     destination: URL(string: "https://www.house.gov/representatives/find-your-representative")!)
+                    .font(.callout)
+            }
+            Text(L10n.t("settings.locationHint"))
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+    }
+
+    private func districtLabel(_ district: Int, _ name: String?) -> String {
+        L10n.t("settings.district") + " \(district)" + (name.map { " · \($0)" } ?? "")
+    }
+
+    private func pickerLabel(_ text: String) -> some View {
+        HStack {
+            Text(text)
+            Image(systemName: "chevron.up.chevron.down")
+                .font(.footnote)
+                .foregroundStyle(.secondary)
+        }
+        .padding(.horizontal, 12)
+        .padding(.vertical, 8)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.secondary.opacity(0.35), lineWidth: 1)
+        )
     }
 }
 

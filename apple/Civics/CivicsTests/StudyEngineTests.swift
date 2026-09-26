@@ -103,6 +103,7 @@ private final class ManualScheduler: StudyScheduler {
 struct StudyEngineTests {
 
     private let repo = QuestionRepository.fromBundle()
+    private let officials = OfficialsRepository.fromBundle().data
 
     private func makeEngine(
         settings: SettingsBox,
@@ -115,6 +116,7 @@ struct StudyEngineTests {
         let engine = StudyEngine(
             speech: speech,
             repo: repo ?? self.repo,
+            officials: officials,
             settings: settings,
             scheduler: scheduler,
             onKnownChanged: onKnownChanged,
@@ -303,7 +305,7 @@ struct StudyEngineTests {
         let speech = FakeSpeechEngine()
         speech.unavailable = [.chineseSimplified]
         speech.skipScheduler = scheduler
-        let engine = StudyEngine(speech: speech, repo: repo, settings: box, scheduler: scheduler)
+        let engine = StudyEngine(speech: speech, repo: repo, officials: officials, settings: box, scheduler: scheduler)
 
         engine.primaryAction()
         #expect(speech.spoken.last?.utteranceID == "q-1") // English question plays
@@ -634,7 +636,7 @@ struct StudyEngineTests {
         var knownEvents: [(Int, Bool)] = []
         let speech = FakeSpeechEngine()
         let engine = StudyEngine(
-            speech: speech, repo: single, settings: SettingsBox(StudySettings(known: [1])),
+            speech: speech, repo: single, officials: officials, settings: SettingsBox(StudySettings(known: [1])),
             scheduler: ManualScheduler(),
             onKnownChanged: { n, known in knownEvents.append((n, known)) }
         )
@@ -659,5 +661,35 @@ struct StudyEngineTests {
         // No skipping: the spoken utterance is unchanged.
         #expect(speech.spoken.last?.utteranceID == before)
         #expect(engine.state.phase == .speakingQuestion)
+    }
+
+    // MARK: - State answers
+
+    @Test func testDeckExcludesStateQuestionsWhenNoPlaceIsSet() {
+        let (engine, _) = makeTestEngine()
+        engine.startTest()
+        #expect(!engine.state.deck.contains { OfficialsData.stateQuestions.contains($0.n) })
+        engine.startStudy()
+        // The study deck keeps them, speaking the choose-your-state prompt.
+        #expect(engine.state.deck.first { $0.n == 23 }?.spoken.contains("Choose your state in Settings") == true)
+    }
+
+    @Test func testDeckExcludesOnlyQ29WhenAMultiSeatStateHasNoDistrict() {
+        let (engine, _) = makeEngine(settings: SettingsBox(StudySettings(jurisdiction: "CA")))
+        engine.startTest()
+        #expect(!engine.state.deck.contains { $0.n == 29 })
+        engine.startStudy()
+        #expect(engine.state.deck.first { $0.n == 61 }?.answer == "Gavin Newsom.")
+        #expect(engine.state.deck.first { $0.n == 29 }?.spoken.contains("congressional district") == true)
+    }
+
+    @Test func stateQuestionsArePersonalizedOncePlaceAndDistrictAreSet() {
+        let (engine, _) = makeEngine(settings: SettingsBox(StudySettings(jurisdiction: "CA", district: 12)))
+        engine.startStudy()
+        let deck = engine.state.deck
+        #expect(deck.first { $0.n == 23 }?.answer.hasPrefix("Either one: ") == true)
+        #expect(deck.first { $0.n == 29 }?.answer == "Lateefah Simon.")
+        #expect(deck.first { $0.n == 61 }?.answer == "Gavin Newsom.")
+        #expect(deck.first { $0.n == 62 }?.answer == "Sacramento.")
     }
 }

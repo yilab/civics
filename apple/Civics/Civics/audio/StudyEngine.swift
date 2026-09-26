@@ -123,6 +123,7 @@ final class StudyEngine {
 
     private let speech: any SpeechEngine
     private let repo: QuestionRepository
+    private let officials: OfficialsData
     private let settings: any SettingsSource
     private let scheduler: any StudyScheduler
     private let onKnownChanged: (Int, Bool) -> Void
@@ -137,6 +138,7 @@ final class StudyEngine {
     init(
         speech: any SpeechEngine,
         repo: QuestionRepository,
+        officials: OfficialsData,
         settings: any SettingsSource,
         scheduler: any StudyScheduler,
         onKnownChanged: @escaping (Int, Bool) -> Void = { _, _ in },
@@ -144,6 +146,7 @@ final class StudyEngine {
     ) {
         self.speech = speech
         self.repo = repo
+        self.officials = officials
         self.settings = settings
         self.scheduler = scheduler
         self.onKnownChanged = onKnownChanged
@@ -181,7 +184,14 @@ final class StudyEngine {
         cancelTimer()
         expectedUtterance = nil
         speech.stop()
-        deck = Array(repo.questions.shuffled().prefix(StudyState.testTotal))
+        // State questions the user can't answer yet (no place/district set) are left
+        // out — they can't be graded on "choose your state in Settings".
+        let s = settings.value
+        let unresolved = officials.unresolvedStateQuestions(placeCode: s.jurisdiction, district: s.district)
+        deck = Array(personalized(repo.questions, s)
+            .filter { !unresolved.contains($0.n) }
+            .shuffled()
+            .prefix(StudyState.testTotal))
         emit(state.copy(
             deck: deck,
             position: 0,
@@ -221,12 +231,12 @@ final class StudyEngine {
         cancelTimer()
         expectedUtterance = nil
         speech.stop()
-        deck = repo.deck(
+        deck = personalized(repo.deck(
             category: settings.value.category,
             shuffle: settings.value.shuffle,
             knownFilter: settings.value.knownFilter,
             known: settings.value.known
-        )
+        ), settings.value)
         emit(state.copy(phase: .idle, deck: deck, position: 0, mode: .study, testOutcome: .none))
     }
 
@@ -268,7 +278,7 @@ final class StudyEngine {
     func jumpTo(_ questionNumber: Int) {
         var idx = deck.firstIndex { $0.n == questionNumber }
         if idx == nil {
-            deck = repo.deck(category: Categories.all, shuffle: false)
+            deck = personalized(repo.deck(category: Categories.all, shuffle: false), settings.value)
             emit(state.copy(deck: deck))
             idx = deck.firstIndex { $0.n == questionNumber }
         }
@@ -397,7 +407,7 @@ final class StudyEngine {
 
     private func applySettings(_ s: StudySettings) {
         speech.speechRate = s.speechRate
-        let newDeck = repo.deck(category: s.category, shuffle: s.shuffle, knownFilter: s.knownFilter, known: s.known)
+        let newDeck = personalized(repo.deck(category: s.category, shuffle: s.shuffle, knownFilter: s.knownFilter, known: s.known), s)
         if deck.map(\.n) != newDeck.map(\.n) {
             deck = newDeck
             let pos = state.current.flatMap { c in deck.firstIndex { $0.n == c.n } } ?? 0
@@ -409,6 +419,12 @@ final class StudyEngine {
     }
 
     // ------------------------------------------------------------------ helpers
+
+    /// The question list with the four state questions filled in for the chosen
+    /// place/district on today's date.
+    private func personalized(_ questions: [Question], _ s: StudySettings) -> [Question] {
+        officials.personalize(questions, placeCode: s.jurisdiction, district: s.district, today: OfficialsData.today())
+    }
 
     private func speak(_ utteranceID: String, text: String, language: SpeechLanguage) {
         expectedUtterance = utteranceID

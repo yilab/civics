@@ -11,6 +11,7 @@ import SwiftUI
 @MainActor @Observable
 final class AppModel {
     let questionRepo: QuestionRepository
+    let officialsRepo: OfficialsRepository
     let settingsRepo: SettingsRepository
     let engine: StudyEngine
     let playback: PlaybackCoordinator
@@ -28,11 +29,13 @@ final class AppModel {
 
     init() {
         let questionRepo = QuestionRepository.fromBundle()
+        let officialsRepo = OfficialsRepository.fromBundle()
         let settingsRepo = SettingsRepository()
         let speech = SystemSpeechEngine()
         let engine = StudyEngine(
             speech: speech,
             repo: questionRepo,
+            officials: officialsRepo.data,
             settings: settingsRepo,
             scheduler: MainTaskScheduler(),
             onKnownChanged: { n, known in
@@ -45,6 +48,7 @@ final class AppModel {
             }
         )
         self.questionRepo = questionRepo
+        self.officialsRepo = officialsRepo
         self.settingsRepo = settingsRepo
         self.engine = engine
         self.playback = PlaybackCoordinator(engine: engine)

@@ -33,6 +33,13 @@ struct RootView: View {
         let spoken = settings.spokenLanguage
         // The translation takes visual precedence when a non-English language is chosen.
         let translationPrimary = settings.translationPrimary
+        // The four state questions show the officials for the chosen place/district.
+        let personalized = model.officialsRepo.data.personalize(
+            model.questionRepo.questions,
+            placeCode: settings.jurisdiction,
+            district: settings.district,
+            today: OfficialsData.today()
+        )
         // Persistent brand mark in the upper left, laid out as a real row above
         // the tabs. Unlike .safeAreaInset (whose inset TabView content does not
         // reliably respect), a VStack row structurally guarantees tab content
@@ -68,7 +75,7 @@ struct RootView: View {
                 Tab(L10n.t(AppDestination.flashcards.labelKey), systemImage: AppDestination.flashcards.icon, value: .flashcards) {
                     // Deck state is view-local; only the shared known set persists.
                     FlashcardsScreen(
-                        questions: model.questionRepo.questions,
+                        questions: personalized,
                         known: model.engine.state.known,
                         language: spoken,
                         translationPrimary: translationPrimary,
@@ -77,7 +84,7 @@ struct RootView: View {
                 }
                 Tab(L10n.t(AppDestination.questions.labelKey), systemImage: AppDestination.questions.icon, value: .questions) {
                     QuestionsScreen(
-                        questions: model.questionRepo.questions,
+                        questions: personalized,
                         known: model.engine.state.known,
                         currentNumber: model.engine.state.current?.n,
                         language: spoken,
@@ -101,6 +108,7 @@ struct RootView: View {
                 Tab(L10n.t(AppDestination.settings.labelKey), systemImage: AppDestination.settings.icon, value: .settings) {
                     SettingsScreen(
                         settings: model.settingsRepo.settings,
+                        officials: model.officialsRepo.data,
                         onChange: { transform in model.settingsRepo.update(transform) }
                     )
                 }

@@ -18,6 +18,10 @@ struct StudySettings: Equatable {
     /// The single language choice: spoken language and app UI language.
     /// `nil` = system UI + English speech.
     var language: SpeechLanguage? = nil
+    /// Two-letter place code (50 states, DC, 5 territories) personalizing Q23/29/61/62.
+    var jurisdiction: String? = nil
+    /// Congressional district for Q29; nil = not chosen (only needed in multi-seat states).
+    var district: Int? = nil
 
     static let thinkWaitForPress = -1
 
@@ -41,7 +45,9 @@ struct StudySettings: Equatable {
         announceMeta: Bool? = nil,
         known: Set<Int>? = nil,
         knownFilter: KnownFilter? = nil,
-        language: SpeechLanguage?? = nil
+        language: SpeechLanguage?? = nil,
+        jurisdiction: String?? = nil,
+        district: Int?? = nil
     ) -> StudySettings {
         StudySettings(
             speechRate: speechRate ?? self.speechRate,
@@ -52,7 +58,9 @@ struct StudySettings: Equatable {
             announceMeta: announceMeta ?? self.announceMeta,
             known: known ?? self.known,
             knownFilter: knownFilter ?? self.knownFilter,
-            language: language ?? self.language
+            language: language ?? self.language,
+            jurisdiction: jurisdiction ?? self.jurisdiction,
+            district: district ?? self.district
         )
     }
 }

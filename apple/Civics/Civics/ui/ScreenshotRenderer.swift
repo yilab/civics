@@ -116,7 +116,7 @@ enum ScreenshotRenderer {
 
             // 5 — Settings (language grid, speech rate, think pause).
             render(chrome(.settings) {
-                SettingsScreen(settings: settings, onChange: { _ in })
+                SettingsScreen(settings: settings, officials: model.officialsRepo.data, onChange: { _ in })
             }, to: out, locale: locale, name: "05-settings")
         }
         print("ScreenshotRenderer: wrote 10 PNGs to \(out.path)")
