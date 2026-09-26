@@ -79,6 +79,21 @@ Never edit a generated file by hand. The chain:
 
 The web app renders only from `BANK`, never from `questions-source.js`. The desktop app gets the bank the same way — `desktop/build.mjs` bundles `web/data/bank.generated.js`.
 
+## Officials Data Pipeline (state-specific answers)
+
+Q23/29/61/62 depend on where the applicant lives. Design and refresh cadence: `docs/state-answers.md`.
+
+1. **Sources of truth**:
+   - `web/data/officials-source.json` — hand-maintained: the 56 places (50 states, D.C., 5 territories) with capitals and localized names, governors with term dates, and the answer-sentence templates in all 11 study languages. Officials' names stay in English in every language; only the surrounding sentence is translated.
+   - `web/data/officials-congress.json` — distilled from the CC0 unitedstates/congress-legislators roster by `node android/tools/fetch-officials.mjs` (checked in; re-run after elections or seat changes and review the diff).
+2. **Generator**: `node android/tools/extract-officials.mjs` (runs as part of `npm run sync` in web/). Merges both into per-seat timelines with `from`/`until` dates and **fails** on any coverage, seat-count, or template gap.
+3. **Generated, checked in**:
+   - `android/app/src/main/assets/officials.json`
+   - `apple/Civics/Civics/Resources/officials.json`
+   - `web/data/officials.generated.js`
+
+At runtime each platform's personalizer (`web/src/officials.js`, `data/Officials.kt`, `data/Officials.swift` — kept in parity) fills the four questions for the user's `jurisdiction`/`district` settings on today's date; the engines exclude state questions from the practice test until a state is set.
+
 ## Architecture (shared across platforms)
 
 Same file layout on each platform — `audio/`, `data/`, `settings/`, `ui/` (Kotlin), or same-named `.swift` files, or `web/src/{engine,speech,i18n,settings}.js` + `web/src/ui/*.js`. **Desktop shares the web files wholesale** — only the speech engine and media-session integration live in `desktop/` (`src/native-speech.js` + `src-tauri/src/`).

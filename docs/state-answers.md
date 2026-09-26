@@ -1,6 +1,6 @@
 # State-specific answers
 
-Status: v1 in progress (started 2026-09-26).
+Status: v1 shipped 2026-09-26 (web, desktop, Android, Apple).
 
 ## Problem
 
@@ -59,10 +59,27 @@ The 2026 midterms (Nov 3) change many answers in January 2027.
 - **Late Nov–Dec:** once results are certified, add the winners with their start dates and ship one release. Congress starts Jan 3; governors' start dates vary by state; special-election winners can be sworn in early.
 - **Jan 3, 2027:** the Speaker (Q30) is only known after the House votes — plan a quick update that week. At least six states (CA, MO, NC, OH, TX, UT) use new district maps from Jan 3, so district numbers change even for people who didn't move; those users need to pick their district again (not yet built).
 
+## What shipped in v1
+
+- Location section in Settings on all platforms: state/territory picker (56
+  places), district picker in multi-seat states with current member names and a
+  house.gov lookup link; `jurisdiction`/`district` settings under the same keys
+  everywhere.
+- Personalizers in parity (`web/src/officials.js`, `data/Officials.kt`,
+  `data/Officials.swift`): fill answer, spoken text, and note in all 11
+  languages; D.C./territory wording; vacant-seat wording; out-of-date flagging
+  past an entry's `until` date.
+- Practice test excludes the state questions the user can't answer yet
+  (all four with no state; Q29 with no district in a multi-seat state).
+- Changing the place or district resets the four questions' known marks.
+- Desktop gets the feature by construction (it bundles the web engine).
+
 ## Later (not in v1)
 
 - Let the user type a name themselves (vacancies, appointments, a recent move).
 - A one-time "your answer to Q29 changed" notice when a dated entry switches.
-- Re-ask the district in redistricted states after Jan 3, 2027.
+- Re-ask the district in redistricted states (CA, MO, NC, OH, TX, UT) after
+  Jan 3, 2027.
 - Date-switching for the national four (Q30/38/39/57), including their translated names.
 - ZIP-code district lookup, if the district list proves hard to use.
+- A "set your state" button directly on the four question cards.
