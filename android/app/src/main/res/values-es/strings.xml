@@ -62,6 +62,12 @@
     <string name="settings_bilingual">同时朗读英文原文</string>
     <string name="settings_ui_language">界面语言</string>
     <string name="ui_system">跟随系统</string>
+    <string name="settings_location">Ubicación</string>
+    <string name="settings_your_state">Su estado o territorio</string>
+    <string name="settings_district">Distrito del Congreso</string>
+    <string name="settings_not_set">Sin establecer</string>
+    <string name="settings_location_hint">Se usa para las cuatro preguntas sobre su estado (Q23, Q29, Q61, Q62). Se guarda solo en este dispositivo.</string>
+    <string name="settings_find_district">Encontrar mi distrito (house.gov)</string>
     <string name="ui_english">English</string>
     <string name="ui_zh_hans">简体</string>
     <string name="ui_zh_hant">繁體</string>

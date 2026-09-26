@@ -72,6 +72,9 @@ private const val ES_AND_ZH_HANT_JSON =
 class StudyEngineTest {
 
     private val repo = QuestionRepository { File("src/main/assets/questions.json").readText() }
+    private val officials = com.yilab.civics.data.OfficialsData(
+        org.json.JSONObject(File("src/main/assets/officials.json").readText()),
+    )
 
     private fun TestScope.engine(
         settings: MutableStateFlow<StudySettings>,
@@ -81,7 +84,7 @@ class StudyEngineTest {
     ): Pair<StudyEngine, FakeSpeechEngine> {
         val speech = FakeSpeechEngine()
         // backgroundScope: the engine's settings-collection coroutine never completes by design
-        val engine = StudyEngine(speech, repo, settings, backgroundScope, onKnownChanged, onTestFinished)
+        val engine = StudyEngine(speech, repo, officials, settings, backgroundScope, onKnownChanged, onTestFinished)
         return engine to speech
     }
 
@@ -654,7 +657,7 @@ class StudyEngineTest {
         val single = QuestionRepository { json }
         val events = mutableListOf<Pair<Int, Boolean>>()
         val speech = FakeSpeechEngine()
-        val engine = StudyEngine(speech, single, MutableStateFlow(StudySettings(known = setOf(1))), backgroundScope, { n, k -> events += n to k })
+        val engine = StudyEngine(speech, single, officials, MutableStateFlow(StudySettings(known = setOf(1))), backgroundScope, { n, k -> events += n to k })
         engine.startTest()
         assertEquals(1, engine.state.value.current?.n)
         assertTrue(engine.state.value.known.contains(1))
@@ -674,5 +677,40 @@ class StudyEngineTest {
         engine.previous()
         assertEquals(before, speech.spoken.last().first)
         assertEquals(Phase.SPEAKING_QUESTION, engine.state.value.phase)
+    }
+
+    // ------------------------------------------------------------- state answers
+
+    @Test
+    fun `test deck excludes state questions when no place is set`() = runTest {
+        val (engine) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        assertFalse(engine.state.value.deck.any { it.n in com.yilab.civics.data.OfficialsData.STATE_QUESTIONS })
+        engine.startStudy()
+        // the study deck keeps them, speaking the choose-your-state prompt
+        val q23 = engine.state.value.deck.first { it.n == 23 }
+        assertTrue(q23.spoken.contains("Choose your state in Settings"))
+    }
+
+    @Test
+    fun `test deck excludes only Q29 when a multi-seat state has no district`() = runTest {
+        val (engine) = engine(MutableStateFlow(StudySettings(jurisdiction = "CA")))
+        engine.startTest()
+        assertFalse(29 in engine.state.value.deck.map { it.n })
+        engine.startStudy()
+        val deck = engine.state.value.deck
+        assertEquals("Gavin Newsom.", deck.first { it.n == 61 }.answer)
+        assertTrue(deck.first { it.n == 29 }.spoken.contains("congressional district"))
+    }
+
+    @Test
+    fun `state questions are personalized once place and district are set`() = runTest {
+        val (engine) = engine(MutableStateFlow(StudySettings(jurisdiction = "CA", district = 12)))
+        engine.startStudy()
+        val deck = engine.state.value.deck
+        assertTrue(deck.first { it.n == 23 }.answer.startsWith("Either one: "))
+        assertEquals("Lateefah Simon.", deck.first { it.n == 29 }.answer)
+        assertEquals("Gavin Newsom.", deck.first { it.n == 61 }.answer)
+        assertEquals("Sacramento.", deck.first { it.n == 62 }.answer)
     }
 }

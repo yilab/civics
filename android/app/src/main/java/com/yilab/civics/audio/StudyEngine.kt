@@ -1,10 +1,12 @@
 package com.yilab.civics.audio
 
 import com.yilab.civics.data.Categories
+import com.yilab.civics.data.OfficialsData
 import com.yilab.civics.data.Question
 import com.yilab.civics.data.QuestionRepository
 import com.yilab.civics.data.SpeechLanguage
 import com.yilab.civics.settings.StudySettings
+import java.time.LocalDate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -108,6 +110,7 @@ data class StudyState(
 class StudyEngine(
     private val speech: SpeechEngine,
     private val repo: QuestionRepository,
+    private val officials: OfficialsData,
     private val settingsFlow: StateFlow<StudySettings>,
     private val scope: CoroutineScope,
     private val onKnownChanged: (Int, Boolean) -> Unit = { _, _ -> },
@@ -161,7 +164,14 @@ class StudyEngine(
         cancelTimer()
         expectedUtterance = null
         speech.stop()
-        deck = repo.questions.shuffled().take(StudyState.TEST_TOTAL)
+        // State questions the user can't answer yet (no place/district set) are left
+        // out — they can't be graded on "choose your state in Settings".
+        val s = settingsFlow.value
+        val unresolved = officials.unresolvedStateQuestions(s.jurisdiction, s.district)
+        deck = personalized(repo.questions, s)
+            .filter { it.n !in unresolved }
+            .shuffled()
+            .take(StudyState.TEST_TOTAL)
         emit(
             state.value.copy(
                 deck = deck,
@@ -210,11 +220,14 @@ class StudyEngine(
         cancelTimer()
         expectedUtterance = null
         speech.stop()
-        deck = repo.deck(
-            settingsFlow.value.category,
-            settingsFlow.value.shuffle,
-            settingsFlow.value.knownFilter,
-            settingsFlow.value.known,
+        deck = personalized(
+            repo.deck(
+                settingsFlow.value.category,
+                settingsFlow.value.shuffle,
+                settingsFlow.value.knownFilter,
+                settingsFlow.value.known,
+            ),
+            settingsFlow.value,
         )
         emit(
             state.value.copy(
@@ -268,7 +281,7 @@ class StudyEngine(
     fun jumpTo(questionNumber: Int) {
         var idx = deck.indexOfFirst { it.n == questionNumber }
         if (idx < 0) {
-            deck = repo.deck(Categories.ALL, shuffle = false)
+            deck = personalized(repo.deck(Categories.ALL, shuffle = false), settingsFlow.value)
             emit(state.value.copy(deck = deck))
             idx = deck.indexOfFirst { it.n == questionNumber }
         }
@@ -415,7 +428,7 @@ class StudyEngine(
 
     private fun applySettings(s: StudySettings) {
         speech.speechRate = s.speechRate
-        val newDeck = repo.deck(s.category, s.shuffle, s.knownFilter, s.known)
+        val newDeck = personalized(repo.deck(s.category, s.shuffle, s.knownFilter, s.known), s)
         if (deck.map { it.n } != newDeck.map { it.n }) {
             deck = newDeck
             val pos = state.value.current?.let { c -> deck.indexOfFirst { it.n == c.n } }
@@ -428,6 +441,11 @@ class StudyEngine(
     }
 
     // ------------------------------------------------------------------ helpers
+
+    /** The question list with the four state questions filled in for the chosen
+     * place/district on today's date. */
+    private fun personalized(questions: List<Question>, s: StudySettings): List<Question> =
+        officials.personalize(questions, s.jurisdiction, s.district, LocalDate.now().toString())
 
     private fun speak(utteranceId: String, text: String, language: SpeechLanguage) {
         expectedUtterance = utteranceId

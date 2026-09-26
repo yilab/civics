@@ -20,6 +20,10 @@ data class StudySettings(
     /** The single language choice: spoken language and app UI language.
      * `null` = system UI + English speech. */
     val language: SpeechLanguage? = null,
+    /** Two-letter place code (50 states, DC, 5 territories) personalizing Q23/29/61/62. */
+    val jurisdiction: String? = null,
+    /** Congressional district for Q29; null = not chosen (only needed in multi-seat states). */
+    val district: Int? = null,
 ) {
     /** The language actually spoken (English when following the system). */
     val spokenLanguage: SpeechLanguage get() = language ?: SpeechLanguage.ENGLISH

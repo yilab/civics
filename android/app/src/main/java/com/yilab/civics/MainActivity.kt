@@ -125,6 +125,16 @@ fun CivicsRoot() {
     // The translation takes visual precedence when the UI language matches it.
     val translationPrimary = settings.translationPrimary
 
+    // The four state questions show the officials for the chosen place/district.
+    val personalizedQuestions = remember(settings.jurisdiction, settings.district) {
+        app.officialsRepo.data.personalize(
+            app.questionRepo.questions,
+            settings.jurisdiction,
+            settings.district,
+            java.time.LocalDate.now().toString(),
+        )
+    }
+
     // Route transport through the session so on-screen and AirPod presses behave identically.
     val primary = { controller?.play() ?: engine.primaryAction() }
     val pause = { controller?.pause() ?: engine.pause() }
@@ -168,7 +178,7 @@ fun CivicsRoot() {
                 )
 
                 AppDestinations.FLASHCARDS -> FlashcardsScreen(
-                    questions = app.questionRepo.questions,
+                    questions = personalizedQuestions,
                     known = state.known,
                     language = spoken,
                     translationPrimary = translationPrimary,
@@ -177,7 +187,7 @@ fun CivicsRoot() {
                 )
 
                 AppDestinations.QUESTIONS -> QuestionsScreen(
-                    questions = app.questionRepo.questions,
+                    questions = personalizedQuestions,
                     known = state.known,
                     currentNumber = state.current?.n,
                     language = spoken,
@@ -189,6 +199,7 @@ fun CivicsRoot() {
 
                 AppDestinations.SETTINGS -> SettingsScreen(
                     settings = settings,
+                    officials = app.officialsRepo.data,
                     onChange = { transform -> app.appScope.launch { app.settingsRepo.update(transform) } },
                     modifier = Modifier.padding(innerPadding),
                 )

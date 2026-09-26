@@ -7,24 +7,36 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
 import com.yilab.civics.data.Categories
+import com.yilab.civics.data.OfficialsData
 import com.yilab.civics.data.SpeechLanguage
 import com.yilab.civics.settings.StudySettings
+import java.time.LocalDate
 import java.util.Locale
 import kotlin.math.round
 
@@ -32,6 +44,7 @@ import kotlin.math.round
 @Composable
 fun SettingsScreen(
     settings: StudySettings,
+    officials: OfficialsData,
     onChange: ((StudySettings) -> StudySettings) -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -62,6 +75,8 @@ fun SettingsScreen(
                 }
             }
         }
+
+        LocationSection(settings, officials, onChange)
 
         SettingsSection(R.string.settings_voice) {
             Text(
@@ -133,6 +148,103 @@ fun SettingsScreen(
                 Text(stringResource(R.string.settings_clear_known))
             }
         }
+    }
+}
+
+@Composable
+private fun LocationSection(
+    settings: StudySettings,
+    officials: OfficialsData,
+    onChange: ((StudySettings) -> StudySettings) -> Unit,
+) {
+    var showPlacePicker by remember { mutableStateOf(false) }
+    var showDistrictPicker by remember { mutableStateOf(false) }
+    val uriHandler = LocalUriHandler.current
+    val place = officials.places.firstOrNull { it.code == settings.jurisdiction }
+    val districts = remember(place?.code) {
+        place?.let { officials.districtOptions(it.code, LocalDate.now().toString()) } ?: emptyList()
+    }
+
+    SettingsSection(R.string.settings_location) {
+        Text(stringResource(R.string.settings_your_state), style = MaterialTheme.typography.bodyLarge)
+        OutlinedButton(onClick = { showPlacePicker = true }) {
+            Text(place?.name(settings.spokenLanguage) ?: stringResource(R.string.settings_not_set))
+        }
+        if (place != null && place.seats > 1) {
+            Text(stringResource(R.string.settings_district), style = MaterialTheme.typography.bodyLarge)
+            OutlinedButton(onClick = { showDistrictPicker = true }) {
+                Text(
+                    settings.district?.let { d ->
+                        val name = districts.firstOrNull { it.first == d }?.second
+                        stringResource(R.string.settings_district) + " " + d + (name?.let { " · $it" } ?: "")
+                    } ?: stringResource(R.string.settings_not_set),
+                )
+            }
+            TextButton(onClick = {
+                uriHandler.openUri("https://www.house.gov/representatives/find-your-representative")
+            }) {
+                Text(stringResource(R.string.settings_find_district))
+            }
+        }
+        Text(
+            stringResource(R.string.settings_location_hint),
+            style = MaterialTheme.typography.bodySmall,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
+    }
+
+    if (showPlacePicker) {
+        AlertDialog(
+            onDismissRequest = { showPlacePicker = false },
+            confirmButton = {},
+            text = {
+                LazyColumn(modifier = Modifier.heightIn(max = 480.dp)) {
+                    item {
+                        PickerRow(stringResource(R.string.settings_not_set)) {
+                            showPlacePicker = false
+                            onChange { it.copy(jurisdiction = null, district = null) }
+                        }
+                    }
+                    items(officials.places) { p ->
+                        PickerRow(p.name(settings.spokenLanguage)) {
+                            showPlacePicker = false
+                            onChange { it.copy(jurisdiction = p.code, district = null) }
+                        }
+                    }
+                }
+            },
+        )
+    }
+    if (showDistrictPicker) {
+        AlertDialog(
+            onDismissRequest = { showDistrictPicker = false },
+            confirmButton = {},
+            text = {
+                LazyColumn(modifier = Modifier.heightIn(max = 480.dp)) {
+                    item {
+                        PickerRow(stringResource(R.string.settings_not_set)) {
+                            showDistrictPicker = false
+                            onChange { it.copy(district = null) }
+                        }
+                    }
+                    items(districts) { (d, name) ->
+                        PickerRow(
+                            stringResource(R.string.settings_district) + " " + d + (name?.let { " · $it" } ?: ""),
+                        ) {
+                            showDistrictPicker = false
+                            onChange { it.copy(district = d) }
+                        }
+                    }
+                }
+            },
+        )
+    }
+}
+
+@Composable
+private fun PickerRow(label: String, onClick: () -> Unit) {
+    TextButton(onClick = onClick, modifier = Modifier.fillMaxWidth()) {
+        Text(label, modifier = Modifier.fillMaxWidth())
     }
 }
 

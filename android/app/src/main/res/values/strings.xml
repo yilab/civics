@@ -65,6 +65,12 @@
     <string name="settings_bilingual">Also hear the English original</string>
     <string name="settings_ui_language">App language</string>
     <string name="ui_system">System</string>
+    <string name="settings_location">Location</string>
+    <string name="settings_your_state">Your state or territory</string>
+    <string name="settings_district">Congressional district</string>
+    <string name="settings_not_set">Not set</string>
+    <string name="settings_location_hint">Used for the four questions about your state (Q23, Q29, Q61, Q62). Saved only on this device.</string>
+    <string name="settings_find_district">Find my district (house.gov)</string>
     <string name="ui_english">English</string>
     <string name="ui_zh_hans">简体</string>
     <string name="ui_zh_hant">繁體</string>

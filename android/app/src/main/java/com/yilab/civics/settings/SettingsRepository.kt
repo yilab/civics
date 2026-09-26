@@ -42,6 +42,8 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
         val UI_LANGUAGE = stringPreferencesKey("ui_language")
         val LEGACY_SPEECH_MODE = stringPreferencesKey("speech_mode")
         val TEST_HISTORY = stringPreferencesKey("test_history")
+        val JURISDICTION = stringPreferencesKey("jurisdiction")
+        val DISTRICT = intPreferencesKey("district")
     }
 
     private fun languageFor(raw: String?): SpeechLanguage? = when (raw) {
@@ -85,13 +87,21 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
                     else -> KnownFilter.ALL
                 },
                 language = resolvedLanguage,
+                jurisdiction = prefs[Keys.JURISDICTION]?.takeIf { it.matches(Regex("[A-Z]{2}")) },
+                district = prefs[Keys.DISTRICT]?.takeIf { it >= 1 },
             )
         }
         .stateIn(scope, SharingStarted.Eagerly, StudySettings())
 
     suspend fun update(transform: (StudySettings) -> StudySettings) {
         store.edit { prefs ->
-            val s = transform(settings.value)
+            val before = settings.value
+            var s = transform(before)
+            if (s.jurisdiction != before.jurisdiction || s.district != before.district) {
+                // The four state answers changed — their known marks must be re-earned.
+                s = s.copy(known = s.known - com.yilab.civics.data.OfficialsData.STATE_QUESTIONS)
+                if (s.jurisdiction == null) s = s.copy(district = null)
+            }
             prefs[Keys.SPEECH_RATE] = s.speechRate
             prefs[Keys.THINK_SECONDS] = s.thinkSeconds
             prefs[Keys.AUTO_ADVANCE] = s.autoAdvance
@@ -106,6 +116,8 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
             }
             val name = languageName(s.language)
             if (name == null) prefs.remove(Keys.LANGUAGE) else prefs[Keys.LANGUAGE] = name
+            if (s.jurisdiction == null) prefs.remove(Keys.JURISDICTION) else prefs[Keys.JURISDICTION] = s.jurisdiction
+            if (s.district == null) prefs.remove(Keys.DISTRICT) else prefs[Keys.DISTRICT] = s.district
         }
     }
 

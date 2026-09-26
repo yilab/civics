@@ -65,6 +65,12 @@
     <string name="settings_bilingual">同时朗读英文原文</string>
     <string name="settings_ui_language">界面语言</string>
     <string name="ui_system">跟随系统</string>
+    <string name="settings_location">所在地区</string>
+    <string name="settings_your_state">你所在的州或领地</string>
+    <string name="settings_district">国会选区</string>
+    <string name="settings_not_set">未设置</string>
+    <string name="settings_location_hint">用于回答四道与你所在州相关的题目（第 23、29、61、62 题）。仅保存在本设备上。</string>
+    <string name="settings_find_district">查询我的选区（house.gov）</string>
     <string name="ui_english">English</string>
     <string name="ui_zh_hans">简体</string>
     <string name="ui_zh_hant">繁體</string>

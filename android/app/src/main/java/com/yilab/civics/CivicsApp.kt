@@ -22,6 +22,8 @@ class CivicsApp : Application() {
 
     lateinit var questionRepo: QuestionRepository
         private set
+    lateinit var officialsRepo: com.yilab.civics.data.OfficialsRepository
+        private set
     lateinit var settingsRepo: SettingsRepository
         private set
     lateinit var studyEngine: StudyEngine
@@ -37,6 +39,7 @@ class CivicsApp : Application() {
     override fun onCreate() {
         super.onCreate()
         questionRepo = QuestionRepository.fromAssets(this)
+        officialsRepo = com.yilab.civics.data.OfficialsRepository.fromAssets(this)
         settingsRepo = SettingsRepository(this, appScope)
         speech = AndroidSpeechEngine(this) { ready -> speechReady.value = ready }
         ttsAvailable = combine(settingsRepo.settings, speechReady) { s, _ ->
@@ -50,6 +53,7 @@ class CivicsApp : Application() {
         studyEngine = StudyEngine(
             speech = speech,
             repo = questionRepo,
+            officials = officialsRepo.data,
             settingsFlow = settingsRepo.settings,
             scope = appScope,
             onKnownChanged = { n, known ->
