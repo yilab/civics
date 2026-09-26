@@ -1,0 +1,5468 @@
+{
+ "version": "congress 2026-09-26",
+ "places": [
+  {
+   "code": "AL",
+   "kind": "state",
+   "capital": "Montgomery",
+   "seats": 7,
+   "name": {
+    "english": "Alabama",
+    "zh-Hans": "亚拉巴马州",
+    "zh-Hant": "阿拉巴馬州",
+    "es": "Alabama",
+    "vi": "Alabama",
+    "tl": "Alabama",
+    "ko": "앨라배마",
+    "ar": "ألاباما",
+    "hi": "अलाबामा",
+    "pt": "Alabama",
+    "ru": "Алабама"
+   }
+  },
+  {
+   "code": "AK",
+   "kind": "state",
+   "capital": "Juneau",
+   "seats": 1,
+   "name": {
+    "english": "Alaska",
+    "zh-Hans": "阿拉斯加州",
+    "zh-Hant": "阿拉斯加州",
+    "es": "Alaska",
+    "vi": "Alaska",
+    "tl": "Alaska",
+    "ko": "알래스카",
+    "ar": "ألاسكا",
+    "hi": "अलास्का",
+    "pt": "Alasca",
+    "ru": "Аляска"
+   }
+  },
+  {
+   "code": "AZ",
+   "kind": "state",
+   "capital": "Phoenix",
+   "seats": 9,
+   "name": {
+    "english": "Arizona",
+    "zh-Hans": "亚利桑那州",
+    "zh-Hant": "亞利桑那州",
+    "es": "Arizona",
+    "vi": "Arizona",
+    "tl": "Arizona",
+    "ko": "애리조나",
+    "ar": "أريزونا",
+    "hi": "एरिज़ोना",
+    "pt": "Arizona",
+    "ru": "Аризона"
+   }
+  },
+  {
+   "code": "AR",
+   "kind": "state",
+   "capital": "Little Rock",
+   "seats": 4,
+   "name": {
+    "english": "Arkansas",
+    "zh-Hans": "阿肯色州",
+    "zh-Hant": "阿肯色州",
+    "es": "Arkansas",
+    "vi": "Arkansas",
+    "tl": "Arkansas",
+    "ko": "아칸소",
+    "ar": "أركنساس",
+    "hi": "आर्कांस",
+    "pt": "Arkansas",
+    "ru": "Арканзас"
+   }
+  },
+  {
+   "code": "CA",
+   "kind": "state",
+   "capital": "Sacramento",
+   "seats": 52,
+   "name": {
+    "english": "California",
+    "zh-Hans": "加利福尼亚州",
+    "zh-Hant": "加利福尼亞州",
+    "es": "California",
+    "vi": "California",
+    "tl": "California",
+    "ko": "캘리포니아",
+    "ar": "كاليفورنيا",
+    "hi": "कैलिफ़ोर्निया",
+    "pt": "Califórnia",
+    "ru": "Калифорния"
+   }
+  },
+  {
+   "code": "CO",
+   "kind": "state",
+   "capital": "Denver",
+   "seats": 8,
+   "name": {
+    "english": "Colorado",
+    "zh-Hans": "科罗拉多州",
+    "zh-Hant": "科羅拉多州",
+    "es": "Colorado",
+    "vi": "Colorado",
+    "tl": "Colorado",
+    "ko": "콜로라도",
+    "ar": "كولورادو",
+    "hi": "कोलोराडो",
+    "pt": "Colorado",
+    "ru": "Колорадо"
+   }
+  },
+  {
+   "code": "CT",
+   "kind": "state",
+   "capital": "Hartford",
+   "seats": 5,
+   "name": {
+    "english": "Connecticut",
+    "zh-Hans": "康涅狄格州",
+    "zh-Hant": "康乃狄克州",
+    "es": "Connecticut",
+    "vi": "Connecticut",
+    "tl": "Connecticut",
+    "ko": "코네티컷",
+    "ar": "كونيتيكت",
+    "hi": "कनेक्टिकट",
+    "pt": "Connecticut",
+    "ru": "Коннектикут"
+   }
+  },
+  {
+   "code": "DE",
+   "kind": "state",
+   "capital": "Dover",
+   "seats": 1,
+   "name": {
+    "english": "Delaware",
+    "zh-Hans": "特拉华州",
+    "zh-Hant": "德拉瓦州",
+    "es": "Delaware",
+    "vi": "Delaware",
+    "tl": "Delaware",
+    "ko": "델라웨어",
+    "ar": "ديلاوير",
+    "hi": "डेलावेयर",
+    "pt": "Delaware",
+    "ru": "Делавэр"
+   }
+  },
+  {
+   "code": "FL",
+   "kind": "state",
+   "capital": "Tallahassee",
+   "seats": 28,
+   "name": {
+    "english": "Florida",
+    "zh-Hans": "佛罗里达州",
+    "zh-Hant": "佛羅里達州",
+    "es": "Florida",
+    "vi": "Florida",
+    "tl": "Florida",
+    "ko": "플로리다",
+    "ar": "فلوريدا",
+    "hi": "फ़्लोरिडा",
+    "pt": "Flórida",
+    "ru": "Флорида"
+   }
+  },
+  {
+   "code": "GA",
+   "kind": "state",
+   "capital": "Atlanta",
+   "seats": 14,
+   "name": {
+    "english": "Georgia",
+    "zh-Hans": "佐治亚州",
+    "zh-Hant": "喬治亞州",
+    "es": "Georgia",
+    "vi": "Georgia",
+    "tl": "Georgia",
+    "ko": "조지아",
+    "ar": "جورجيا",
+    "hi": "जॉर्जिया",
+    "pt": "Geórgia",
+    "ru": "Джорджия"
+   }
+  },
+  {
+   "code": "HI",
+   "kind": "state",
+   "capital": "Honolulu",
+   "seats": 2,
+   "name": {
+    "english": "Hawaii",
+    "zh-Hans": "夏威夷州",
+    "zh-Hant": "夏威夷州",
+    "es": "Hawái",
+    "vi": "Hawaii",
+    "tl": "Hawaii",
+    "ko": "하와이",
+    "ar": "هاواي",
+    "hi": "हवाई",
+    "pt": "Havaí",
+    "ru": "Гавайи"
+   }
+  },
+  {
+   "code": "ID",
+   "kind": "state",
+   "capital": "Boise",
+   "seats": 2,
+   "name": {
+    "english": "Idaho",
+    "zh-Hans": "爱达荷州",
+    "zh-Hant": "愛達荷州",
+    "es": "Idaho",
+    "vi": "Idaho",
+    "tl": "Idaho",
+    "ko": "아이다호",
+    "ar": "أيداهو",
+    "hi": "आइडाहो",
+    "pt": "Idaho",
+    "ru": "Айдахо"
+   }
+  },
+  {
+   "code": "IL",
+   "kind": "state",
+   "capital": "Springfield",
+   "seats": 17,
+   "name": {
+    "english": "Illinois",
+    "zh-Hans": "伊利诺伊州",
+    "zh-Hant": "伊利諾州",
+    "es": "Illinois",
+    "vi": "Illinois",
+    "tl": "Illinois",
+    "ko": "일리노이",
+    "ar": "إلينوي",
+    "hi": "इलिनॉय",
+    "pt": "Illinois",
+    "ru": "Иллинойс"
+   }
+  },
+  {
+   "code": "IN",
+   "kind": "state",
+   "capital": "Indianapolis",
+   "seats": 9,
+   "name": {
+    "english": "Indiana",
+    "zh-Hans": "印第安纳州",
+    "zh-Hant": "印第安納州",
+    "es": "Indiana",
+    "vi": "Indiana",
+    "tl": "Indiana",
+    "ko": "인디애나",
+    "ar": "إنديانا",
+    "hi": "इंडियाना",
+    "pt": "Indiana",
+    "ru": "Индиана"
+   }
+  },
+  {
+   "code": "IA",
+   "kind": "state",
+   "capital": "Des Moines",
+   "seats": 4,
+   "name": {
+    "english": "Iowa",
+    "zh-Hans": "艾奥瓦州",
+    "zh-Hant": "愛荷華州",
+    "es": "Iowa",
+    "vi": "Iowa",
+    "tl": "Iowa",
+    "ko": "아이오와",
+    "ar": "آيوا",
+    "hi": "आयोवा",
+    "pt": "Iowa",
+    "ru": "Айова"
+   }
+  },
+  {
+   "code": "KS",
+   "kind": "state",
+   "capital": "Topeka",
+   "seats": 4,
+   "name": {
+    "english": "Kansas",
+    "zh-Hans": "堪萨斯州",
+    "zh-Hant": "堪薩斯州",
+    "es": "Kansas",
+    "vi": "Kansas",
+    "tl": "Kansas",
+    "ko": "캔자스",
+    "ar": "كانساس",
+    "hi": "कांसस",
+    "pt": "Kansas",
+    "ru": "Канзас"
+   }
+  },
+  {
+   "code": "KY",
+   "kind": "state",
+   "capital": "Frankfort",
+   "seats": 6,
+   "name": {
+    "english": "Kentucky",
+    "zh-Hans": "肯塔基州",
+    "zh-Hant": "肯塔基州",
+    "es": "Kentucky",
+    "vi": "Kentucky",
+    "tl": "Kentucky",
+    "ko": "켄터키",
+    "ar": "كنتاكي",
+    "hi": "केंटकी",
+    "pt": "Kentucky",
+    "ru": "Кентукки"
+   }
+  },
+  {
+   "code": "LA",
+   "kind": "state",
+   "capital": "Baton Rouge",
+   "seats": 6,
+   "name": {
+    "english": "Louisiana",
+    "zh-Hans": "路易斯安那州",
+    "zh-Hant": "路易斯安那州",
+    "es": "Luisiana",
+    "vi": "Louisiana",
+    "tl": "Louisiana",
+    "ko": "루이지애나",
+    "ar": "لويزيانا",
+    "hi": "लुइज़ियाना",
+    "pt": "Luisiana",
+    "ru": "Луизиана"
+   }
+  },
+  {
+   "code": "ME",
+   "kind": "state",
+   "capital": "Augusta",
+   "seats": 2,
+   "name": {
+    "english": "Maine",
+    "zh-Hans": "缅因州",
+    "zh-Hant": "緬因州",
+    "es": "Maine",
+    "vi": "Maine",
+    "tl": "Maine",
+    "ko": "메인",
+    "ar": "مين",
+    "hi": "मेन",
+    "pt": "Maine",
+    "ru": "Мэн"
+   }
+  },
+  {
+   "code": "MD",
+   "kind": "state",
+   "capital": "Annapolis",
+   "seats": 8,
+   "name": {
+    "english": "Maryland",
+    "zh-Hans": "马里兰州",
+    "zh-Hant": "馬里蘭州",
+    "es": "Maryland",
+    "vi": "Maryland",
+    "tl": "Maryland",
+    "ko": "메릴랜드",
+    "ar": "ماريلند",
+    "hi": "मैरीलैंड",
+    "pt": "Maryland",
+    "ru": "Мэриленд"
+   }
+  },
+  {
+   "code": "MA",
+   "kind": "state",
+   "capital": "Boston",
+   "seats": 9,
+   "name": {
+    "english": "Massachusetts",
+    "zh-Hans": "马萨诸塞州",
+    "zh-Hant": "麻薩諸塞州",
+    "es": "Massachusetts",
+    "vi": "Massachusetts",
+    "tl": "Massachusetts",
+    "ko": "매사추세츠",
+    "ar": "ماساتشوستس",
+    "hi": "मैसाचूसेट्स",
+    "pt": "Massachusetts",
+    "ru": "Массачусетс"
+   }
+  },
+  {
+   "code": "MI",
+   "kind": "state",
+   "capital": "Lansing",
+   "seats": 13,
+   "name": {
+    "english": "Michigan",
+    "zh-Hans": "密歇根州",
+    "zh-Hant": "密西根州",
+    "es": "Míchigan",
+    "vi": "Michigan",
+    "tl": "Michigan",
+    "ko": "미시간",
+    "ar": "ميشيغان",
+    "hi": "मिशिगन",
+    "pt": "Michigan",
+    "ru": "Мичиган"
+   }
+  },
+  {
+   "code": "MN",
+   "kind": "state",
+   "capital": "Saint Paul",
+   "seats": 8,
+   "name": {
+    "english": "Minnesota",
+    "zh-Hans": "明尼苏达州",
+    "zh-Hant": "明尼蘇達州",
+    "es": "Minnesota",
+    "vi": "Minnesota",
+    "tl": "Minnesota",
+    "ko": "미네소타",
+    "ar": "مينيسوتا",
+    "hi": "मिनेसोटा",
+    "pt": "Minnesota",
+    "ru": "Миннесота"
+   }
+  },
+  {
+   "code": "MS",
+   "kind": "state",
+   "capital": "Jackson",
+   "seats": 4,
+   "name": {
+    "english": "Mississippi",
+    "zh-Hans": "密西西比州",
+    "zh-Hant": "密西西比州",
+    "es": "Misisipi",
+    "vi": "Mississippi",
+    "tl": "Mississippi",
+    "ko": "미시시피",
+    "ar": "ميسيسيبي",
+    "hi": "मिसिसिपी",
+    "pt": "Mississippi",
+    "ru": "Миссисипи"
+   }
+  },
+  {
+   "code": "MO",
+   "kind": "state",
+   "capital": "Jefferson City",
+   "seats": 8,
+   "name": {
+    "english": "Missouri",
+    "zh-Hans": "密苏里州",
+    "zh-Hant": "密蘇里州",
+    "es": "Misuri",
+    "vi": "Missouri",
+    "tl": "Missouri",
+    "ko": "미주리",
+    "ar": "ميزوري",
+    "hi": "मिसौरी",
+    "pt": "Missouri",
+    "ru": "Миссури"
+   }
+  },
+  {
+   "code": "MT",
+   "kind": "state",
+   "capital": "Helena",
+   "seats": 2,
+   "name": {
+    "english": "Montana",
+    "zh-Hans": "蒙大拿州",
+    "zh-Hant": "蒙大拿州",
+    "es": "Montana",
+    "vi": "Montana",
+    "tl": "Montana",
+    "ko": "몬태나",
+    "ar": "مونتانا",
+    "hi": "मोंटाना",
+    "pt": "Montana",
+    "ru": "Монтана"
+   }
+  },
+  {
+   "code": "NE",
+   "kind": "state",
+   "capital": "Lincoln",
+   "seats": 3,
+   "name": {
+    "english": "Nebraska",
+    "zh-Hans": "内布拉斯加州",
+    "zh-Hant": "內布拉斯加州",
+    "es": "Nebraska",
+    "vi": "Nebraska",
+    "tl": "Nebraska",
+    "ko": "네브래스카",
+    "ar": "نبراسكا",
+    "hi": "नेब्रास्का",
+    "pt": "Nebraska",
+    "ru": "Небраска"
+   }
+  },
+  {
+   "code": "NV",
+   "kind": "state",
+   "capital": "Carson City",
+   "seats": 4,
+   "name": {
+    "english": "Nevada",
+    "zh-Hans": "内华达州",
+    "zh-Hant": "內華達州",
+    "es": "Nevada",
+    "vi": "Nevada",
+    "tl": "Nevada",
+    "ko": "네바다",
+    "ar": "نيفادا",
+    "hi": "नेवादा",
+    "pt": "Nevada",
+    "ru": "Невада"
+   }
+  },
+  {
+   "code": "NH",
+   "kind": "state",
+   "capital": "Concord",
+   "seats": 2,
+   "name": {
+    "english": "New Hampshire",
+    "zh-Hans": "新罕布什尔州",
+    "zh-Hant": "新罕布夏州",
+    "es": "Nuevo Hampshire",
+    "vi": "New Hampshire",
+    "tl": "New Hampshire",
+    "ko": "뉴햄프셔",
+    "ar": "نيوهامبشير",
+    "hi": "न्यू हैम्पशायर",
+    "pt": "Nova Hampshire",
+    "ru": "Нью-Гэмпшир"
+   }
+  },
+  {
+   "code": "NJ",
+   "kind": "state",
+   "capital": "Trenton",
+   "seats": 12,
+   "name": {
+    "english": "New Jersey",
+    "zh-Hans": "新泽西州",
+    "zh-Hant": "紐澤西州",
+    "es": "Nueva Jersey",
+    "vi": "New Jersey",
+    "tl": "New Jersey",
+    "ko": "뉴저지",
+    "ar": "نيوجيرسي",
+    "hi": "न्यू जर्सी",
+    "pt": "Nova Jersey",
+    "ru": "Нью-Джерси"
+   }
+  },
+  {
+   "code": "NM",
+   "kind": "state",
+   "capital": "Santa Fe",
+   "seats": 3,
+   "name": {
+    "english": "New Mexico",
+    "zh-Hans": "新墨西哥州",
+    "zh-Hant": "新墨西哥州",
+    "es": "Nuevo México",
+    "vi": "New Mexico",
+    "tl": "New Mexico",
+    "ko": "뉴멕시코",
+    "ar": "نيو مكسيكو",
+    "hi": "न्यू मैक्सिको",
+    "pt": "Novo México",
+    "ru": "Нью-Мексико"
+   }
+  },
+  {
+   "code": "NY",
+   "kind": "state",
+   "capital": "Albany",
+   "seats": 26,
+   "name": {
+    "english": "New York",
+    "zh-Hans": "纽约州",
+    "zh-Hant": "紐約州",
+    "es": "Nueva York",
+    "vi": "New York",
+    "tl": "New York",
+    "ko": "뉴욕",
+    "ar": "نيويورك",
+    "hi": "न्यूयॉर्क",
+    "pt": "Nova Iorque",
+    "ru": "Нью-Йорк"
+   }
+  },
+  {
+   "code": "NC",
+   "kind": "state",
+   "capital": "Raleigh",
+   "seats": 14,
+   "name": {
+    "english": "North Carolina",
+    "zh-Hans": "北卡罗来纳州",
+    "zh-Hant": "北卡羅來納州",
+    "es": "Carolina del Norte",
+    "vi": "North Carolina",
+    "tl": "North Carolina",
+    "ko": "노스캐롤라이나",
+    "ar": "كارولينا الشمالية",
+    "hi": "नॉर्थ कैरोलाइना",
+    "pt": "Carolina do Norte",
+    "ru": "Северная Каролина"
+   }
+  },
+  {
+   "code": "ND",
+   "kind": "state",
+   "capital": "Bismarck",
+   "seats": 1,
+   "name": {
+    "english": "North Dakota",
+    "zh-Hans": "北达科他州",
+    "zh-Hant": "北達科他州",
+    "es": "Dakota del Norte",
+    "vi": "North Dakota",
+    "tl": "North Dakota",
+    "ko": "노스다코타",
+    "ar": "داكوتا الشمالية",
+    "hi": "नॉर्थ डकोटा",
+    "pt": "Dakota do Norte",
+    "ru": "Северная Дакота"
+   }
+  },
+  {
+   "code": "OH",
+   "kind": "state",
+   "capital": "Columbus",
+   "seats": 15,
+   "name": {
+    "english": "Ohio",
+    "zh-Hans": "俄亥俄州",
+    "zh-Hant": "俄亥俄州",
+    "es": "Ohio",
+    "vi": "Ohio",
+    "tl": "Ohio",
+    "ko": "오하이오",
+    "ar": "أوهايو",
+    "hi": "ओहायो",
+    "pt": "Ohio",
+    "ru": "Огайо"
+   }
+  },
+  {
+   "code": "OK",
+   "kind": "state",
+   "capital": "Oklahoma City",
+   "seats": 5,
+   "name": {
+    "english": "Oklahoma",
+    "zh-Hans": "俄克拉何马州",
+    "zh-Hant": "奧克拉荷馬州",
+    "es": "Oklahoma",
+    "vi": "Oklahoma",
+    "tl": "Oklahoma",
+    "ko": "오클라호마",
+    "ar": "أوكلاهوما",
+    "hi": "ओक्लाहोमा",
+    "pt": "Oklahoma",
+    "ru": "Оклахома"
+   }
+  },
+  {
+   "code": "OR",
+   "kind": "state",
+   "capital": "Salem",
+   "seats": 6,
+   "name": {
+    "english": "Oregon",
+    "zh-Hans": "俄勒冈州",
+    "zh-Hant": "奧勒岡州",
+    "es": "Oregón",
+    "vi": "Oregon",
+    "tl": "Oregon",
+    "ko": "오리건",
+    "ar": "أوريغون",
+    "hi": "ओरेगॉन",
+    "pt": "Oregon",
+    "ru": "Орегон"
+   }
+  },
+  {
+   "code": "PA",
+   "kind": "state",
+   "capital": "Harrisburg",
+   "seats": 17,
+   "name": {
+    "english": "Pennsylvania",
+    "zh-Hans": "宾夕法尼亚州",
+    "zh-Hant": "賓夕法尼亞州",
+    "es": "Pensilvania",
+    "vi": "Pennsylvania",
+    "tl": "Pennsylvania",
+    "ko": "펜실베이니아",
+    "ar": "بنسلفانيا",
+    "hi": "पेंसिलवेनिया",
+    "pt": "Pensilvânia",
+    "ru": "Пенсильвания"
+   }
+  },
+  {
+   "code": "RI",
+   "kind": "state",
+   "capital": "Providence",
+   "seats": 2,
+   "name": {
+    "english": "Rhode Island",
+    "zh-Hans": "罗得岛州",
+    "zh-Hant": "羅德島州",
+    "es": "Rhode Island",
+    "vi": "Rhode Island",
+    "tl": "Rhode Island",
+    "ko": "로드아일랜드",
+    "ar": "رود آيلاند",
+    "hi": "रोड आइलैंड",
+    "pt": "Rhode Island",
+    "ru": "Род-Айленд"
+   }
+  },
+  {
+   "code": "SC",
+   "kind": "state",
+   "capital": "Columbia",
+   "seats": 7,
+   "name": {
+    "english": "South Carolina",
+    "zh-Hans": "南卡罗来纳州",
+    "zh-Hant": "南卡羅來納州",
+    "es": "Carolina del Sur",
+    "vi": "South Carolina",
+    "tl": "South Carolina",
+    "ko": "사우스캐롤라이나",
+    "ar": "كارولينا الجنوبية",
+    "hi": "साउथ कैरोलाइना",
+    "pt": "Carolina do Sul",
+    "ru": "Южная Каролина"
+   }
+  },
+  {
+   "code": "SD",
+   "kind": "state",
+   "capital": "Pierre",
+   "seats": 1,
+   "name": {
+    "english": "South Dakota",
+    "zh-Hans": "南达科他州",
+    "zh-Hant": "南達科他州",
+    "es": "Dakota del Sur",
+    "vi": "South Dakota",
+    "tl": "South Dakota",
+    "ko": "사우스다코타",
+    "ar": "داكوتا الجنوبية",
+    "hi": "साउथ डकोटा",
+    "pt": "Dakota do Sul",
+    "ru": "Южная Дакота"
+   }
+  },
+  {
+   "code": "TN",
+   "kind": "state",
+   "capital": "Nashville",
+   "seats": 9,
+   "name": {
+    "english": "Tennessee",
+    "zh-Hans": "田纳西州",
+    "zh-Hant": "田納西州",
+    "es": "Tennessee",
+    "vi": "Tennessee",
+    "tl": "Tennessee",
+    "ko": "테네시",
+    "ar": "تينيسي",
+    "hi": "टेनेसी",
+    "pt": "Tennessee",
+    "ru": "Теннесси"
+   }
+  },
+  {
+   "code": "TX",
+   "kind": "state",
+   "capital": "Austin",
+   "seats": 38,
+   "name": {
+    "english": "Texas",
+    "zh-Hans": "得克萨斯州",
+    "zh-Hant": "德克薩斯州",
+    "es": "Texas",
+    "vi": "Texas",
+    "tl": "Texas",
+    "ko": "텍사스",
+    "ar": "تكساس",
+    "hi": "टेक्सास",
+    "pt": "Texas",
+    "ru": "Техас"
+   }
+  },
+  {
+   "code": "UT",
+   "kind": "state",
+   "capital": "Salt Lake City",
+   "seats": 4,
+   "name": {
+    "english": "Utah",
+    "zh-Hans": "犹他州",
+    "zh-Hant": "猶他州",
+    "es": "Utah",
+    "vi": "Utah",
+    "tl": "Utah",
+    "ko": "유타",
+    "ar": "يوتا",
+    "hi": "यूटा",
+    "pt": "Utah",
+    "ru": "Юта"
+   }
+  },
+  {
+   "code": "VT",
+   "kind": "state",
+   "capital": "Montpelier",
+   "seats": 1,
+   "name": {
+    "english": "Vermont",
+    "zh-Hans": "佛蒙特州",
+    "zh-Hant": "佛蒙特州",
+    "es": "Vermont",
+    "vi": "Vermont",
+    "tl": "Vermont",
+    "ko": "버몬트",
+    "ar": "فيرمونت",
+    "hi": "वरमोंट",
+    "pt": "Vermont",
+    "ru": "Вермонт"
+   }
+  },
+  {
+   "code": "VA",
+   "kind": "state",
+   "capital": "Richmond",
+   "seats": 11,
+   "name": {
+    "english": "Virginia",
+    "zh-Hans": "弗吉尼亚州",
+    "zh-Hant": "維吉尼亞州",
+    "es": "Virginia",
+    "vi": "Virginia",
+    "tl": "Virginia",
+    "ko": "버지니아",
+    "ar": "فرجينيا",
+    "hi": "वर्जीनिया",
+    "pt": "Virgínia",
+    "ru": "Вирджиния"
+   }
+  },
+  {
+   "code": "WA",
+   "kind": "state",
+   "capital": "Olympia",
+   "seats": 10,
+   "name": {
+    "english": "Washington",
+    "zh-Hans": "华盛顿州",
+    "zh-Hant": "華盛頓州",
+    "es": "Washington",
+    "vi": "Washington",
+    "tl": "Washington",
+    "ko": "워싱턴",
+    "ar": "واشنطن",
+    "hi": "वॉशिंगटन",
+    "pt": "Washington",
+    "ru": "Вашингтон"
+   }
+  },
+  {
+   "code": "WV",
+   "kind": "state",
+   "capital": "Charleston",
+   "seats": 2,
+   "name": {
+    "english": "West Virginia",
+    "zh-Hans": "西弗吉尼亚州",
+    "zh-Hant": "西維吉尼亞州",
+    "es": "Virginia Occidental",
+    "vi": "West Virginia",
+    "tl": "West Virginia",
+    "ko": "웨스트버지니아",
+    "ar": "فرجينيا الغربية",
+    "hi": "पश्चिम वर्जीनिया",
+    "pt": "Virgínia Ocidental",
+    "ru": "Западная Вирджиния"
+   }
+  },
+  {
+   "code": "WI",
+   "kind": "state",
+   "capital": "Madison",
+   "seats": 8,
+   "name": {
+    "english": "Wisconsin",
+    "zh-Hans": "威斯康星州",
+    "zh-Hant": "威斯康辛州",
+    "es": "Wisconsin",
+    "vi": "Wisconsin",
+    "tl": "Wisconsin",
+    "ko": "위스콘신",
+    "ar": "ويسكونسن",
+    "hi": "विस्कॉन्सिन",
+    "pt": "Wisconsin",
+    "ru": "Висконсин"
+   }
+  },
+  {
+   "code": "WY",
+   "kind": "state",
+   "capital": "Cheyenne",
+   "seats": 1,
+   "name": {
+    "english": "Wyoming",
+    "zh-Hans": "怀俄明州",
+    "zh-Hant": "懷俄明州",
+    "es": "Wyoming",
+    "vi": "Wyoming",
+    "tl": "Wyoming",
+    "ko": "와이오밍",
+    "ar": "وايومنغ",
+    "hi": "वायोमिंग",
+    "pt": "Wyoming",
+    "ru": "Вайоминг"
+   }
+  },
+  {
+   "code": "DC",
+   "kind": "dc",
+   "capital": null,
+   "seats": 1,
+   "name": {
+    "english": "District of Columbia",
+    "zh-Hans": "哥伦比亚特区",
+    "zh-Hant": "哥倫比亞特區",
+    "es": "Distrito de Columbia",
+    "vi": "District of Columbia",
+    "tl": "District of Columbia",
+    "ko": "컬럼비아 특별구",
+    "ar": "مقاطعة كولومبيا",
+    "hi": "डिस्ट्रिक्ट ऑफ कोलंबिया",
+    "pt": "Distrito de Colúmbia",
+    "ru": "Округ Колумбия"
+   }
+  },
+  {
+   "code": "AS",
+   "kind": "territory",
+   "capital": "Pago Pago",
+   "seats": 1,
+   "name": {
+    "english": "American Samoa",
+    "zh-Hans": "美属萨摩亚",
+    "zh-Hant": "美屬薩摩亞",
+    "es": "Samoa Americana",
+    "vi": "American Samoa",
+    "tl": "American Samoa",
+    "ko": "아메리칸사모아",
+    "ar": "ساموا الأمريكية",
+    "hi": "अमेरिकी समोआ",
+    "pt": "Samoa Americana",
+    "ru": "Американское Самоа"
+   }
+  },
+  {
+   "code": "GU",
+   "kind": "territory",
+   "capital": "Hagåtña",
+   "seats": 1,
+   "name": {
+    "english": "Guam",
+    "zh-Hans": "关岛",
+    "zh-Hant": "關島",
+    "es": "Guam",
+    "vi": "Guam",
+    "tl": "Guam",
+    "ko": "괌",
+    "ar": "غوام",
+    "hi": "गुआम",
+    "pt": "Guam",
+    "ru": "Гуам"
+   }
+  },
+  {
+   "code": "MP",
+   "kind": "territory",
+   "capital": "Saipan",
+   "seats": 1,
+   "name": {
+    "english": "Northern Mariana Islands",
+    "zh-Hans": "北马里亚纳群岛",
+    "zh-Hant": "北馬里亞納群島",
+    "es": "Islas Marianas del Norte",
+    "vi": "Northern Mariana Islands",
+    "tl": "Northern Mariana Islands",
+    "ko": "북마리아나 제도",
+    "ar": "جزر ماريانا الشمالية",
+    "hi": "उत्तरी मारियाना द्वीपसमूह",
+    "pt": "Ilhas Marianas do Norte",
+    "ru": "Северные Марианские острова"
+   }
+  },
+  {
+   "code": "PR",
+   "kind": "territory",
+   "capital": "San Juan",
+   "seats": 1,
+   "name": {
+    "english": "Puerto Rico",
+    "zh-Hans": "波多黎各",
+    "zh-Hant": "波多黎各",
+    "es": "Puerto Rico",
+    "vi": "Puerto Rico",
+    "tl": "Puerto Rico",
+    "ko": "푸에르토리코",
+    "ar": "بورتوريكو",
+    "hi": "प्युएर्टो रिको",
+    "pt": "Porto Rico",
+    "ru": "Пуэрто-Рико"
+   }
+  },
+  {
+   "code": "VI",
+   "kind": "territory",
+   "capital": "Charlotte Amalie",
+   "seats": 1,
+   "name": {
+    "english": "U.S. Virgin Islands",
+    "zh-Hans": "美属维尔京群岛",
+    "zh-Hant": "美屬維爾京群島",
+    "es": "Islas Vírgenes de EE. UU.",
+    "vi": "U.S. Virgin Islands",
+    "tl": "U.S. Virgin Islands",
+    "ko": "미국령 버진아일랜드",
+    "ar": "جزر فيرجن الأمريكية",
+    "hi": "अमेरिकी वर्जिन द्वीपसमूह",
+    "pt": "Ilhas Virgens Americanas",
+    "ru": "Виргинские Острова"
+   }
+  }
+ ],
+ "governors": {
+  "AL": [
+   {
+    "name": "Kay Ivey",
+    "from": "2017-04-10",
+    "until": "2027-01-15"
+   }
+  ],
+  "AK": [
+   {
+    "name": "Mike Dunleavy",
+    "from": "2018-12-03",
+    "until": "2026-12-15"
+   }
+  ],
+  "AZ": [
+   {
+    "name": "Katie Hobbs",
+    "from": "2023-01-02",
+    "until": "2027-01-15"
+   }
+  ],
+  "AR": [
+   {
+    "name": "Sarah Huckabee Sanders",
+    "from": "2023-01-10",
+    "until": "2027-01-15"
+   }
+  ],
+  "CA": [
+   {
+    "name": "Gavin Newsom",
+    "from": "2019-01-07",
+    "until": "2027-01-15"
+   }
+  ],
+  "CO": [
+   {
+    "name": "Jared Polis",
+    "from": "2019-01-08",
+    "until": "2027-01-15"
+   }
+  ],
+  "CT": [
+   {
+    "name": "Ned Lamont",
+    "from": "2019-01-09",
+    "until": "2027-01-15"
+   }
+  ],
+  "DE": [
+   {
+    "name": "Matt Meyer",
+    "from": "2025-01-21",
+    "until": null
+   }
+  ],
+  "FL": [
+   {
+    "name": "Ron DeSantis",
+    "from": "2019-01-08",
+    "until": "2027-01-15"
+   }
+  ],
+  "GA": [
+   {
+    "name": "Brian Kemp",
+    "from": "2019-01-14",
+    "until": "2027-01-15"
+   }
+  ],
+  "HI": [
+   {
+    "name": "Josh Green",
+    "from": "2022-12-05",
+    "until": "2026-12-15"
+   }
+  ],
+  "ID": [
+   {
+    "name": "Brad Little",
+    "from": "2019-01-07",
+    "until": "2027-01-15"
+   }
+  ],
+  "IL": [
+   {
+    "name": "JB Pritzker",
+    "from": "2019-01-14",
+    "until": "2027-01-15"
+   }
+  ],
+  "IN": [
+   {
+    "name": "Mike Braun",
+    "from": "2025-01-13",
+    "until": null
+   }
+  ],
+  "IA": [
+   {
+    "name": "Kim Reynolds",
+    "from": "2017-05-24",
+    "until": "2027-01-15"
+   }
+  ],
+  "KS": [
+   {
+    "name": "Laura Kelly",
+    "from": "2019-01-14",
+    "until": "2027-01-15"
+   }
+  ],
+  "KY": [
+   {
+    "name": "Andy Beshear",
+    "from": "2019-12-10",
+    "until": "2027-12-15"
+   }
+  ],
+  "LA": [
+   {
+    "name": "Jeff Landry",
+    "from": "2024-01-08",
+    "until": "2028-01-15"
+   }
+  ],
+  "ME": [
+   {
+    "name": "Janet Mills",
+    "from": "2019-01-02",
+    "until": "2027-01-15"
+   }
+  ],
+  "MD": [
+   {
+    "name": "Wes Moore",
+    "from": "2023-01-18",
+    "until": "2027-01-15"
+   }
+  ],
+  "MA": [
+   {
+    "name": "Maura Healey",
+    "from": "2023-01-05",
+    "until": "2027-01-15"
+   }
+  ],
+  "MI": [
+   {
+    "name": "Gretchen Whitmer",
+    "from": "2019-01-01",
+    "until": "2027-01-15"
+   }
+  ],
+  "MN": [
+   {
+    "name": "Tim Walz",
+    "from": "2019-01-07",
+    "until": "2027-01-15"
+   }
+  ],
+  "MS": [
+   {
+    "name": "Tate Reeves",
+    "from": "2020-01-14",
+    "until": "2028-01-15"
+   }
+  ],
+  "MO": [
+   {
+    "name": "Mike Kehoe",
+    "from": "2025-01-13",
+    "until": null
+   }
+  ],
+  "MT": [
+   {
+    "name": "Greg Gianforte",
+    "from": "2021-01-04",
+    "until": null
+   }
+  ],
+  "NE": [
+   {
+    "name": "Jim Pillen",
+    "from": "2023-01-05",
+    "until": "2027-01-15"
+   }
+  ],
+  "NV": [
+   {
+    "name": "Joe Lombardo",
+    "from": "2023-01-02",
+    "until": "2027-01-15"
+   }
+  ],
+  "NH": [
+   {
+    "name": "Kelly Ayotte",
+    "from": "2025-01-09",
+    "until": "2027-01-15"
+   }
+  ],
+  "NJ": [
+   {
+    "name": "Mikie Sherrill",
+    "from": "2026-01-20",
+    "until": null
+   }
+  ],
+  "NM": [
+   {
+    "name": "Michelle Lujan Grisham",
+    "from": "2019-01-01",
+    "until": "2027-01-15"
+   }
+  ],
+  "NY": [
+   {
+    "name": "Kathy Hochul",
+    "from": "2021-08-24",
+    "until": "2027-01-01"
+   }
+  ],
+  "NC": [
+   {
+    "name": "Josh Stein",
+    "from": "2025-01-01",
+    "until": null
+   }
+  ],
+  "ND": [
+   {
+    "name": "Kelly Armstrong",
+    "from": "2024-12-15",
+    "until": null
+   }
+  ],
+  "OH": [
+   {
+    "name": "Mike DeWine",
+    "from": "2019-01-14",
+    "until": "2027-01-15"
+   }
+  ],
+  "OK": [
+   {
+    "name": "Kevin Stitt",
+    "from": "2019-01-14",
+    "until": "2027-01-15"
+   }
+  ],
+  "OR": [
+   {
+    "name": "Tina Kotek",
+    "from": "2023-01-09",
+    "until": "2027-01-15"
+   }
+  ],
+  "PA": [
+   {
+    "name": "Josh Shapiro",
+    "from": "2023-01-17",
+    "until": "2027-01-15"
+   }
+  ],
+  "RI": [
+   {
+    "name": "Dan McKee",
+    "from": "2021-03-02",
+    "until": "2027-01-15"
+   }
+  ],
+  "SC": [
+   {
+    "name": "Henry McMaster",
+    "from": "2017-01-24",
+    "until": "2027-01-15"
+   }
+  ],
+  "SD": [
+   {
+    "name": "Larry Rhoden",
+    "from": "2025-01-25",
+    "until": "2027-01-15"
+   }
+  ],
+  "TN": [
+   {
+    "name": "Bill Lee",
+    "from": "2019-01-19",
+    "until": "2027-01-15"
+   }
+  ],
+  "TX": [
+   {
+    "name": "Greg Abbott",
+    "from": "2015-01-20",
+    "until": "2027-01-15"
+   }
+  ],
+  "UT": [
+   {
+    "name": "Spencer Cox",
+    "from": "2021-01-04",
+    "until": null
+   }
+  ],
+  "VT": [
+   {
+    "name": "Phil Scott",
+    "from": "2017-01-05",
+    "until": "2027-01-15"
+   }
+  ],
+  "VA": [
+   {
+    "name": "Abigail Spanberger",
+    "from": "2026-01-17",
+    "until": null
+   }
+  ],
+  "WA": [
+   {
+    "name": "Bob Ferguson",
+    "from": "2025-01-15",
+    "until": null
+   }
+  ],
+  "WV": [
+   {
+    "name": "Patrick Morrisey",
+    "from": "2025-01-13",
+    "until": null
+   }
+  ],
+  "WI": [
+   {
+    "name": "Tony Evers",
+    "from": "2019-01-07",
+    "until": "2027-01-15"
+   }
+  ],
+  "WY": [
+   {
+    "name": "Mark Gordon",
+    "from": "2019-01-07",
+    "until": "2027-01-15"
+   }
+  ],
+  "AS": [
+   {
+    "name": "Pula'ali'i Nikolao Pula",
+    "from": "2025-01-03",
+    "until": null
+   }
+  ],
+  "GU": [
+   {
+    "name": "Lou Leon Guerrero",
+    "from": "2019-01-07",
+    "until": "2027-01-15"
+   }
+  ],
+  "MP": [
+   {
+    "name": "David M. Apatang",
+    "from": "2025-07-23",
+    "until": "2027-01-15"
+   }
+  ],
+  "PR": [
+   {
+    "name": "Jenniffer González-Colón",
+    "from": "2025-01-02",
+    "until": null
+   }
+  ],
+  "VI": [
+   {
+    "name": "Albert Bryan Jr.",
+    "from": "2019-01-07",
+    "until": "2027-01-15"
+   }
+  ]
+ },
+ "senators": {
+  "AL": [
+   {
+    "name": "Tommy Tuberville",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Katie Boyd Britt",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "AK": [
+   {
+    "name": "Dan Sullivan",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Lisa Murkowski",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "AZ": [
+   {
+    "name": "Ruben Gallego",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Mark Kelly",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "AR": [
+   {
+    "name": "Tom Cotton",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "John Boozman",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "CA": [
+   {
+    "name": "Adam B. Schiff",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Alex Padilla",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "CO": [
+   {
+    "name": "John W. Hickenlooper",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Michael F. Bennet",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "CT": [
+   {
+    "name": "Christopher Murphy",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Richard Blumenthal",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "DE": [
+   {
+    "name": "Lisa Blunt Rochester",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Christopher A. Coons",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "FL": [
+   {
+    "name": "Rick Scott",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Ashley Moody",
+    "from": "2025-01-21",
+    "until": "2026-11-03",
+    "seat": 3
+   }
+  ],
+  "GA": [
+   {
+    "name": "Jon Ossoff",
+    "from": "2021-01-20",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Raphael G. Warnock",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "HI": [
+   {
+    "name": "Mazie K. Hirono",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Brian Schatz",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "ID": [
+   {
+    "name": "James E. Risch",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Mike Crapo",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "IL": [
+   {
+    "name": "Richard J. Durbin",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Tammy Duckworth",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "IN": [
+   {
+    "name": "Jim Banks",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Todd Young",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "IA": [
+   {
+    "name": "Joni Ernst",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Chuck Grassley",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "KS": [
+   {
+    "name": "Roger Marshall",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Jerry Moran",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "KY": [
+   {
+    "name": "Mitch McConnell",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Rand Paul",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "LA": [
+   {
+    "name": "Bill Cassidy",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "John Kennedy",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "ME": [
+   {
+    "name": "Angus S. King",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Susan M. Collins",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "MD": [
+   {
+    "name": "Angela D. Alsobrooks",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Chris Van Hollen",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "MA": [
+   {
+    "name": "Elizabeth Warren",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Edward J. Markey",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "MI": [
+   {
+    "name": "Elissa Slotkin",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Gary C. Peters",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "MN": [
+   {
+    "name": "Amy Klobuchar",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Tina Smith",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "MS": [
+   {
+    "name": "Roger F. Wicker",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Cindy Hyde-Smith",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "MO": [
+   {
+    "name": "Josh Hawley",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Eric Schmitt",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "MT": [
+   {
+    "name": "Tim Sheehy",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Steve Daines",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "NE": [
+   {
+    "name": "Deb Fischer",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Pete Ricketts",
+    "from": "2024-11-05",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "NV": [
+   {
+    "name": "Jacky Rosen",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Catherine Cortez Masto",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "NH": [
+   {
+    "name": "Jeanne Shaheen",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Margaret Wood Hassan",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "NJ": [
+   {
+    "name": "Andy Kim",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Cory A. Booker",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "NM": [
+   {
+    "name": "Martin Heinrich",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Ben Ray Luján",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "NY": [
+   {
+    "name": "Kirsten E. Gillibrand",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Charles E. Schumer",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "NC": [
+   {
+    "name": "Thom Tillis",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Ted Budd",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "ND": [
+   {
+    "name": "Kevin Cramer",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "John Hoeven",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "OH": [
+   {
+    "name": "Bernie Moreno",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Jon Husted",
+    "from": "2025-01-21",
+    "until": "2026-11-03",
+    "seat": 3
+   }
+  ],
+  "OK": [
+   {
+    "name": "Alan Armstrong",
+    "from": "2026-03-24",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "James Lankford",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "OR": [
+   {
+    "name": "Jeff Merkley",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Ron Wyden",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "PA": [
+   {
+    "name": "David McCormick",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "John Fetterman",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "RI": [
+   {
+    "name": "Sheldon Whitehouse",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Jack Reed",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "SC": [
+   {
+    "name": "Darline Graham",
+    "from": "2026-07-14",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "Tim Scott",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "SD": [
+   {
+    "name": "Mike Rounds",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   },
+   {
+    "name": "John Thune",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "TN": [
+   {
+    "name": "Marsha Blackburn",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Bill Hagerty",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "TX": [
+   {
+    "name": "Ted Cruz",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "John Cornyn",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "UT": [
+   {
+    "name": "John R. Curtis",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Mike Lee",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "VT": [
+   {
+    "name": "Bernard Sanders",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Peter Welch",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "VA": [
+   {
+    "name": "Tim Kaine",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Mark R. Warner",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "WA": [
+   {
+    "name": "Maria Cantwell",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Patty Murray",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "WV": [
+   {
+    "name": "James C. Justice",
+    "from": "2025-01-14",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Shelley Moore Capito",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ],
+  "WI": [
+   {
+    "name": "Tammy Baldwin",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Ron Johnson",
+    "from": "2023-01-03",
+    "until": "2029-01-03",
+    "seat": 3
+   }
+  ],
+  "WY": [
+   {
+    "name": "John Barrasso",
+    "from": "2025-01-03",
+    "until": "2031-01-03",
+    "seat": 1
+   },
+   {
+    "name": "Cynthia M. Lummis",
+    "from": "2021-01-03",
+    "until": "2027-01-03",
+    "seat": 2
+   }
+  ]
+ },
+ "representatives": {
+  "AL": {
+   "1": [
+    {
+     "name": "Barry Moore",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Shomari Figures",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Mike Rogers",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Robert B. Aderholt",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Dale W. Strong",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Gary J. Palmer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Terri A. Sewell",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "AK": {
+   "0": [
+    {
+     "name": "Nicholas J. Begich III",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "AZ": {
+   "1": [
+    {
+     "name": "David Schweikert",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Elijah Crane",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Yassamin Ansari",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Greg Stanton",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Andy Biggs",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Juan Ciscomani",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Adelita S. Grijalva",
+     "from": "2025-11-12",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Abraham J. Hamadeh",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Paul A. Gosar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "AR": {
+   "1": [
+    {
+     "name": "Eric A. Crawford",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "J. French Hill",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Steve Womack",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Bruce Westerman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "CA": {
+   "1": [
+    {
+     "name": "James Gallagher",
+     "from": "2026-06-10",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jared Huffman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Kevin Kiley",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Mike Thompson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Tom McClintock",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Ami Bera",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Doris O. Matsui",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "John Garamendi",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Josh Harder",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Mark DeSaulnier",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Nancy Pelosi",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Lateefah Simon",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Adam Gray",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "Aisha Wahab",
+     "from": "2026-09-02",
+     "until": "2027-01-03"
+    }
+   ],
+   "15": [
+    {
+     "name": "Kevin Mullin",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "16": [
+    {
+     "name": "Sam T. Liccardo",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "17": [
+    {
+     "name": "Ro Khanna",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "18": [
+    {
+     "name": "Zoe Lofgren",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "19": [
+    {
+     "name": "Jimmy Panetta",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "20": [
+    {
+     "name": "Vince Fong",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "21": [
+    {
+     "name": "Jim Costa",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "22": [
+    {
+     "name": "David G. Valadao",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "23": [
+    {
+     "name": "Jay Obernolte",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "24": [
+    {
+     "name": "Salud O. Carbajal",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "25": [
+    {
+     "name": "Raul Ruiz",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "26": [
+    {
+     "name": "Julia Brownley",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "27": [
+    {
+     "name": "George Whitesides",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "28": [
+    {
+     "name": "Judy Chu",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "29": [
+    {
+     "name": "Luz M. Rivas",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "30": [
+    {
+     "name": "Laura Friedman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "31": [
+    {
+     "name": "Gilbert Ray Cisneros",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "32": [
+    {
+     "name": "Brad Sherman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "33": [
+    {
+     "name": "Pete Aguilar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "34": [
+    {
+     "name": "Jimmy Gomez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "35": [
+    {
+     "name": "Norma J. Torres",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "36": [
+    {
+     "name": "Ted Lieu",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "37": [
+    {
+     "name": "Sydney Kamlager-Dove",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "38": [
+    {
+     "name": "Linda T. Sánchez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "39": [
+    {
+     "name": "Mark Takano",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "40": [
+    {
+     "name": "Young Kim",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "41": [
+    {
+     "name": "Ken Calvert",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "42": [
+    {
+     "name": "Robert Garcia",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "43": [
+    {
+     "name": "Maxine Waters",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "44": [
+    {
+     "name": "Nanette Diaz Barragán",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "45": [
+    {
+     "name": "Derek Tran",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "46": [
+    {
+     "name": "J. Luis Correa",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "47": [
+    {
+     "name": "Dave Min",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "48": [
+    {
+     "name": "Darrell Issa",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "49": [
+    {
+     "name": "Mike Levin",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "50": [
+    {
+     "name": "Scott H. Peters",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "51": [
+    {
+     "name": "Sara Jacobs",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "52": [
+    {
+     "name": "Juan Vargas",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "CO": {
+   "1": [
+    {
+     "name": "Diana DeGette",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Joe Neguse",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Jeff Hurd",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Lauren Boebert",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Jeff Crank",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Jason Crow",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Brittany Pettersen",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Gabe Evans",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "CT": {
+   "1": [
+    {
+     "name": "John B. Larson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Joe Courtney",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Rosa L. DeLauro",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "James A. Himes",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Jahana Hayes",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "DE": {
+   "0": [
+    {
+     "name": "Sarah McBride",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "FL": {
+   "1": [
+    {
+     "name": "Jimmy Patronis",
+     "from": "2025-04-02",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Neal P. Dunn",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Kat Cammack",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Aaron Bean",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "John H. Rutherford",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Randy Fine",
+     "from": "2025-04-02",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Cory Mills",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Mike Haridopolos",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Darren Soto",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Maxwell Frost",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Daniel Webster",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Gus M. Bilirakis",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Anna Paulina Luna",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "Kathy Castor",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "15": [
+    {
+     "name": "Laurel M. Lee",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "16": [
+    {
+     "name": "Vern Buchanan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "17": [
+    {
+     "name": "W. Gregory Steube",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "18": [
+    {
+     "name": "Scott Franklin",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "19": [
+    {
+     "name": "Byron Donalds",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "21": [
+    {
+     "name": "Brian J. Mast",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "22": [
+    {
+     "name": "Lois Frankel",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "23": [
+    {
+     "name": "Jared Moskowitz",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "24": [
+    {
+     "name": "Frederica S. Wilson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "25": [
+    {
+     "name": "Debbie Wasserman Schultz",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "26": [
+    {
+     "name": "Mario Diaz-Balart",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "27": [
+    {
+     "name": "Maria Elvira Salazar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "28": [
+    {
+     "name": "Carlos A. Gimenez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "GA": {
+   "1": [
+    {
+     "name": "Earl L. Carter",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Sanford D. Bishop",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Brian Jack",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Henry C. Johnson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Nikema Williams",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Lucy McBath",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Richard McCormick",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Austin Scott",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Andrew S. Clyde",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Mike Collins",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Barry Loudermilk",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Rick W. Allen",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Everton Blair Jr.",
+     "from": "2026-09-01",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "Clay Fuller",
+     "from": "2026-04-14",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "HI": {
+   "1": [
+    {
+     "name": "Ed Case",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jill N. Tokuda",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "ID": {
+   "1": [
+    {
+     "name": "Russ Fulcher",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Michael K. Simpson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "IL": {
+   "1": [
+    {
+     "name": "Jonathan L. Jackson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Robin L. Kelly",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Delia C. Ramirez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Jesús G. García",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Mike Quigley",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Sean Casten",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Danny K. Davis",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Raja Krishnamoorthi",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Janice D. Schakowsky",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Bradley Scott Schneider",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Bill Foster",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Mike Bost",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Nikki Budzinski",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "Lauren Underwood",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "15": [
+    {
+     "name": "Mary E. Miller",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "16": [
+    {
+     "name": "Darin LaHood",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "17": [
+    {
+     "name": "Eric Sorensen",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "IN": {
+   "1": [
+    {
+     "name": "Frank J. Mrvan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Rudy Yakym III",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Marlin A. Stutzman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "James R. Baird",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Victoria Spartz",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Jefferson Shreve",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "André Carson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Mark B. Messmer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Erin Houchin",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "IA": {
+   "1": [
+    {
+     "name": "Mariannette Miller-Meeks",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Ashley Hinson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Zachary Nunn",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Randy Feenstra",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "KS": {
+   "1": [
+    {
+     "name": "Tracey Mann",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Derek Schmidt",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Sharice Davids",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Ron Estes",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "KY": {
+   "1": [
+    {
+     "name": "James Comer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Brett Guthrie",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Morgan McGarvey",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Thomas Massie",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Harold Rogers",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Andy Barr",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "LA": {
+   "1": [
+    {
+     "name": "Steve Scalise",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Troy A. Carter",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Clay Higgins",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Mike Johnson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Julia Letlow",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Cleo Fields",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "ME": {
+   "1": [
+    {
+     "name": "Chellie Pingree",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jared F. Golden",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "MD": {
+   "1": [
+    {
+     "name": "Andy Harris",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Johnny Olszewski",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Sarah Elfreth",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Glenn Ivey",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Steny H. Hoyer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "April McClain Delaney",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Kweisi Mfume",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Jamie Raskin",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "MA": {
+   "1": [
+    {
+     "name": "Richard E. Neal",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "James P. McGovern",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Lori Trahan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Jake Auchincloss",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Katherine M. Clark",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Seth Moulton",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Ayanna Pressley",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Stephen F. Lynch",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "William R. Keating",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "MI": {
+   "1": [
+    {
+     "name": "Jack Bergman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "John R. Moolenaar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Hillary J. Scholten",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Bill Huizenga",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Tim Walberg",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Debbie Dingell",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Tom Barrett",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Kristen McDonald Rivet",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Lisa C. McClain",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "John James",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Haley M. Stevens",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Rashida Tlaib",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Shri Thanedar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "MN": {
+   "1": [
+    {
+     "name": "Brad Finstad",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Angie Craig",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Kelly Morrison",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Betty McCollum",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Ilhan Omar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Tom Emmer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Michelle Fischbach",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Pete Stauber",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "MS": {
+   "1": [
+    {
+     "name": "Trent Kelly",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Bennie G. Thompson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Michael Guest",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Mike Ezell",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "MO": {
+   "1": [
+    {
+     "name": "Wesley Bell",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Ann Wagner",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Robert F. Onder",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Mark Alford",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Emanuel Cleaver",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Sam Graves",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Eric Burlison",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Jason Smith",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "MT": {
+   "1": [
+    {
+     "name": "Ryan K. Zinke",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Troy Downing",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "NE": {
+   "1": [
+    {
+     "name": "Mike Flood",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Don Bacon",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Adrian Smith",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "NV": {
+   "1": [
+    {
+     "name": "Dina Titus",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Mark E. Amodei",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Susie Lee",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Steven Horsford",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "NH": {
+   "1": [
+    {
+     "name": "Chris Pappas",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Maggie Goodlander",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "NJ": {
+   "1": [
+    {
+     "name": "Donald Norcross",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jefferson Van Drew",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Herbert C. Conaway",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Christopher H. Smith",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Josh Gottheimer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Frank Pallone",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Thomas H. Kean",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Robert Menendez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Nellie Pou",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "LaMonica McIver",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Analilia Mejia",
+     "from": "2026-04-20",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Bonnie Watson Coleman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "NM": {
+   "1": [
+    {
+     "name": "Melanie A. Stansbury",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Gabe Vasquez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Teresa Leger Fernandez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "NY": {
+   "1": [
+    {
+     "name": "Nick LaLota",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Andrew R. Garbarino",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Thomas R. Suozzi",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Laura Gillen",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Gregory W. Meeks",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Grace Meng",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Nydia M. Velázquez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Hakeem S. Jeffries",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Yvette D. Clarke",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Daniel S. Goldman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Nicole Malliotakis",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Jerrold Nadler",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Adriano Espaillat",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "Alexandria Ocasio-Cortez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "15": [
+    {
+     "name": "Ritchie Torres",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "16": [
+    {
+     "name": "George Latimer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "17": [
+    {
+     "name": "Michael Lawler",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "18": [
+    {
+     "name": "Patrick Ryan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "19": [
+    {
+     "name": "Josh Riley",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "20": [
+    {
+     "name": "Paul Tonko",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "21": [
+    {
+     "name": "Elise M. Stefanik",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "22": [
+    {
+     "name": "John W. Mannion",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "23": [
+    {
+     "name": "Nicholas A. Langworthy",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "24": [
+    {
+     "name": "Claudia Tenney",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "25": [
+    {
+     "name": "Joseph D. Morelle",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "26": [
+    {
+     "name": "Timothy M. Kennedy",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "NC": {
+   "1": [
+    {
+     "name": "Donald G. Davis",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Deborah K. Ross",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Gregory F. Murphy",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Valerie P. Foushee",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Virginia Foxx",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Addison P. McDowell",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "David Rouzer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Mark Harris",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Richard Hudson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Pat Harrigan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Chuck Edwards",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Alma S. Adams",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Brad Knott",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "Tim Moore",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "ND": {
+   "0": [
+    {
+     "name": "Julie Fedorchak",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "OH": {
+   "1": [
+    {
+     "name": "Greg Landsman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "David J. Taylor",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Joyce Beatty",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Jim Jordan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Robert E. Latta",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Michael A. Rulli",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Max L. Miller",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Warren Davidson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Marcy Kaptur",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Michael R. Turner",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Shontel M. Brown",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Troy Balderson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Emilia Strong Sykes",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "David P. Joyce",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "15": [
+    {
+     "name": "Mike Carey",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "OK": {
+   "1": [
+    {
+     "name": "Kevin Hern",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Josh Brecheen",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Frank D. Lucas",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Tom Cole",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Stephanie I. Bice",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "OR": {
+   "1": [
+    {
+     "name": "Suzanne Bonamici",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Cliff Bentz",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Maxine Dexter",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Val T. Hoyle",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Janelle S. Bynum",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Andrea Salinas",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "PA": {
+   "1": [
+    {
+     "name": "Brian K. Fitzpatrick",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Brendan F. Boyle",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Dwight Evans",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Madeleine Dean",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Mary Gay Scanlon",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Chrissy Houlahan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Ryan Mackenzie",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Robert P. Bresnahan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Daniel Meuser",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Scott Perry",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "Lloyd Smucker",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Summer L. Lee",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "John Joyce",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "Guy Reschenthaler",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "15": [
+    {
+     "name": "Glenn Thompson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "16": [
+    {
+     "name": "Mike Kelly",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "17": [
+    {
+     "name": "Christopher R. Deluzio",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "RI": {
+   "1": [
+    {
+     "name": "Gabe Amo",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Seth Magaziner",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "SC": {
+   "1": [
+    {
+     "name": "Nancy Mace",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Joe Wilson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Sheri Biggs",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "William R. Timmons IV",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Ralph Norman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "James E. Clyburn",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Russell Fry",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "SD": {
+   "0": [
+    {
+     "name": "Dusty Johnson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "TN": {
+   "1": [
+    {
+     "name": "Diana Harshbarger",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Tim Burchett",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Charles J. Fleischmann",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Scott DesJarlais",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Andrew Ogles",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "John W. Rose",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Matt Van Epps",
+     "from": "2025-12-04",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "David Kustoff",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Steve Cohen",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "TX": {
+   "1": [
+    {
+     "name": "Nathaniel Moran",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Dan Crenshaw",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Keith Self",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Pat Fallon",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Lance Gooden",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Jake Ellzey",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Lizzie Fletcher",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Morgan Luttrell",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Al Green",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Michael T. McCaul",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "August Pfluger",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "12": [
+    {
+     "name": "Craig A. Goldman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "13": [
+    {
+     "name": "Ronny Jackson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "14": [
+    {
+     "name": "Randy K. Weber",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "15": [
+    {
+     "name": "Monica De La Cruz",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "16": [
+    {
+     "name": "Veronica Escobar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "17": [
+    {
+     "name": "Pete Sessions",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "18": [
+    {
+     "name": "Christian D. Menefee",
+     "from": "2026-02-02",
+     "until": "2027-01-03"
+    }
+   ],
+   "19": [
+    {
+     "name": "Jodey C. Arrington",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "20": [
+    {
+     "name": "Joaquin Castro",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "21": [
+    {
+     "name": "Chip Roy",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "22": [
+    {
+     "name": "Troy E. Nehls",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "24": [
+    {
+     "name": "Beth Van Duyne",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "25": [
+    {
+     "name": "Roger Williams",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "26": [
+    {
+     "name": "Brandon Gill",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "27": [
+    {
+     "name": "Michael Cloud",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "28": [
+    {
+     "name": "Henry Cuellar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "29": [
+    {
+     "name": "Sylvia R. Garcia",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "30": [
+    {
+     "name": "Jasmine Crockett",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "31": [
+    {
+     "name": "John R. Carter",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "32": [
+    {
+     "name": "Julie Johnson",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "33": [
+    {
+     "name": "Marc A. Veasey",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "34": [
+    {
+     "name": "Vicente Gonzalez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "35": [
+    {
+     "name": "Greg Casar",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "36": [
+    {
+     "name": "Brian Babin",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "37": [
+    {
+     "name": "Lloyd Doggett",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "38": [
+    {
+     "name": "Wesley Hunt",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "UT": {
+   "1": [
+    {
+     "name": "Blake D. Moore",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Celeste Maloy",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Mike Kennedy",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Burgess Owens",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "VT": {
+   "0": [
+    {
+     "name": "Becca Balint",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "VA": {
+   "1": [
+    {
+     "name": "Robert J. Wittman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Jennifer A. Kiggans",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Robert C. Scott",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Jennifer L. McClellan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "John J. McGuire III",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Ben Cline",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Eugene Simon Vindman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Donald S. Beyer",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "H. Morgan Griffith",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Suhas Subramanyam",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "11": [
+    {
+     "name": "James R. Walkinshaw",
+     "from": "2025-09-10",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "WA": {
+   "1": [
+    {
+     "name": "Suzan K. DelBene",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Rick Larsen",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Marie Gluesenkamp Perez",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Dan Newhouse",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Michael Baumgartner",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Emily Randall",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Pramila Jayapal",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Kim Schrier",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "9": [
+    {
+     "name": "Adam Smith",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "10": [
+    {
+     "name": "Marilyn Strickland",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "WV": {
+   "1": [
+    {
+     "name": "Carol D. Miller",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Riley M. Moore",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "WI": {
+   "1": [
+    {
+     "name": "Bryan Steil",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "2": [
+    {
+     "name": "Mark Pocan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "3": [
+    {
+     "name": "Derrick Van Orden",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "4": [
+    {
+     "name": "Gwen Moore",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "5": [
+    {
+     "name": "Scott Fitzgerald",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "6": [
+    {
+     "name": "Glenn Grothman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "7": [
+    {
+     "name": "Thomas P. Tiffany",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ],
+   "8": [
+    {
+     "name": "Tony Wied",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "WY": {
+   "0": [
+    {
+     "name": "Harriet M. Hageman",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "DC": {
+   "0": [
+    {
+     "name": "Eleanor Holmes Norton",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "AS": {
+   "0": [
+    {
+     "name": "Aumua Amata Coleman Radewagen",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "GU": {
+   "0": [
+    {
+     "name": "James C. Moylan",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "MP": {
+   "0": [
+    {
+     "name": "Kimberlyn King-Hinds",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "PR": {
+   "0": [
+    {
+     "name": "Pablo José Hernández",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  },
+  "VI": {
+   "0": [
+    {
+     "name": "Stacey E. Plaskett",
+     "from": "2025-01-03",
+     "until": "2027-01-03"
+    }
+   ]
+  }
+ },
+ "templates": {
+  "english": {
+   "chooseState": "This answer depends on your state. Choose your state in Settings to hear your answer.",
+   "chooseDistrict": "Your answer depends on your congressional district. Choose your district in Settings to hear your answer.",
+   "senators": "Either one: {a}, or {b}.",
+   "senatorsNone": "There are no U.S. senators for {place}.",
+   "vacant": "This seat is vacant right now. Check house.gov before your interview.",
+   "governorNoneDc": "D.C. does not have a governor.",
+   "capitalNoneDc": "D.C. is not a state and does not have a capital.",
+   "outOfDate": "{text} This answer may be out of date. Check before your interview.",
+   "noteVerify": "Answer for {place}. Verify before your interview — officials can change."
+  },
+  "zh-Hans": {
+   "chooseState": "此答案取决于你所在的州。请在设置中选择你所在的州，即可听到你的答案。",
+   "chooseDistrict": "此答案取决于你所在的国会选区。请在设置中选择你的选区，即可听到你的答案。",
+   "senators": "两位中的任意一位：{a} 或 {b}。",
+   "senatorsNone": "{place}没有美国参议员。",
+   "vacant": "该席位目前空缺。面试前请查看 house.gov。",
+   "governorNoneDc": "哥伦比亚特区没有州长。",
+   "capitalNoneDc": "哥伦比亚特区不是一个州，没有首府。",
+   "outOfDate": "{text}此答案可能已过时，面试前请核实。",
+   "noteVerify": "这是{place}的答案。官员可能更替，面试前请核实。"
+  },
+  "zh-Hant": {
+   "chooseState": "此答案取決於你所在的州。請在設定中選擇你所在的州，即可聽到你的答案。",
+   "chooseDistrict": "此答案取決於你所在的國會選區。請在設定中選擇你的選區，即可聽到你的答案。",
+   "senators": "兩位中的任意一位：{a} 或 {b}。",
+   "senatorsNone": "{place}沒有美國參議員。",
+   "vacant": "該席位目前空缺。面試前請查看 house.gov。",
+   "governorNoneDc": "哥倫比亞特區沒有州長。",
+   "capitalNoneDc": "哥倫比亞特區不是一個州，沒有首府。",
+   "outOfDate": "{text}此答案可能已過時，面試前請核實。",
+   "noteVerify": "這是{place}的答案。官員可能更替，面試前請核實。"
+  },
+  "es": {
+   "chooseState": "Esta respuesta depende de su estado. Elija su estado en Ajustes para escuchar su respuesta.",
+   "chooseDistrict": "Esta respuesta depende de su distrito del Congreso. Elija su distrito en Ajustes para escuchar su respuesta.",
+   "senators": "Cualquiera de los dos: {a} o {b}.",
+   "senatorsNone": "{place} no tiene senadores de EE. UU.",
+   "vacant": "Este escaño está vacante en este momento. Consulte house.gov antes de su entrevista.",
+   "governorNoneDc": "El Distrito de Columbia no tiene gobernador.",
+   "capitalNoneDc": "El Distrito de Columbia no es un estado y no tiene capital.",
+   "outOfDate": "{text} Esta respuesta puede estar desactualizada. Verifíquela antes de su entrevista.",
+   "noteVerify": "Respuesta para {place}. Verifíquela antes de su entrevista — los funcionarios pueden cambiar."
+  },
+  "vi": {
+   "chooseState": "Câu trả lời này tùy thuộc vào bang của quý vị. Hãy chọn bang của quý vị trong phần Cài đặt để nghe câu trả lời.",
+   "chooseDistrict": "Câu trả lời này tùy thuộc vào khu vực bầu cử quốc hội của quý vị. Hãy chọn khu vực bầu cử trong phần Cài đặt để nghe câu trả lời.",
+   "senators": "Một trong hai người: {a} hoặc {b}.",
+   "senatorsNone": "{place} không có thượng nghị sĩ Hoa Kỳ.",
+   "vacant": "Ghế này hiện đang bỏ trống. Hãy xem house.gov trước buổi phỏng vấn.",
+   "governorNoneDc": "Đặc khu Columbia không có thống đốc.",
+   "capitalNoneDc": "Đặc khu Columbia không phải là một bang và không có thủ phủ.",
+   "outOfDate": "{text} Câu trả lời này có thể đã lỗi thời. Hãy xác minh trước buổi phỏng vấn.",
+   "noteVerify": "Câu trả lời cho {place}. Hãy xác minh trước buổi phỏng vấn — quan chức có thể thay đổi."
+  },
+  "tl": {
+   "chooseState": "Nakadepende ang sagot na ito sa inyong estado. Piliin ang inyong estado sa Settings upang marinig ang inyong sagot.",
+   "chooseDistrict": "Nakadepende ang sagot na ito sa inyong distrito ng Kongreso. Piliin ang inyong distrito sa Settings upang marinig ang inyong sagot.",
+   "senators": "Alinman sa dalawa: {a} o {b}.",
+   "senatorsNone": "Walang senador ng U.S. ang {place}.",
+   "vacant": "Bakante ang upuang ito sa ngayon. Tingnan ang house.gov bago ang inyong panayam.",
+   "governorNoneDc": "Walang gobernador ang District of Columbia.",
+   "capitalNoneDc": "Hindi isang estado ang District of Columbia at wala itong kabisera.",
+   "outOfDate": "{text} Maaaring luma na ang sagot na ito. Tiyakin bago ang inyong panayam.",
+   "noteVerify": "Sagot para sa {place}. Tiyakin bago ang inyong panayam — maaaring magbago ang mga opisyal."
+  },
+  "ko": {
+   "chooseState": "이 답은 귀하의 주에 따라 다릅니다. 설정에서 귀하의 주를 선택하면 답을 들을 수 있습니다.",
+   "chooseDistrict": "이 답은 귀하의 연방 하원 선거구에 따라 다릅니다. 설정에서 선거구를 선택하면 답을 들을 수 있습니다.",
+   "senators": "두 명 중 한 명: {a} 또는 {b}.",
+   "senatorsNone": "{place}에는 미국 상원의원이 없습니다.",
+   "vacant": "현재 이 의석은 공석입니다. 면접 전에 house.gov를 확인하십시오.",
+   "governorNoneDc": "컬럼비아 특별구에는 주지사가 없습니다.",
+   "capitalNoneDc": "컬럼비아 특별구는 주가 아니며 주도가 없습니다.",
+   "outOfDate": "{text} 이 답은 오래된 정보일 수 있습니다. 면접 전에 확인하십시오.",
+   "noteVerify": "{place}에 대한 답입니다. 관리는 바뀔 수 있으니 면접 전에 확인하십시오."
+  },
+  "ar": {
+   "chooseState": "تعتمد هذه الإجابة على ولايتك. اختر ولايتك في الإعدادات لسماع إجابتك.",
+   "chooseDistrict": "تعتمد هذه الإجابة على دائرتك الانتخابية في الكونغرس. اختر دائرتك في الإعدادات لسماع إجابتك.",
+   "senators": "أيّ واحد منهما: {a} أو {b}.",
+   "senatorsNone": "{place} لا يوجد لديها أعضاء في مجلس الشيوخ الأمريكي.",
+   "vacant": "هذا المقعد شاغر حاليًا. راجع house.gov قبل مقابلتك.",
+   "governorNoneDc": "ليس لدى مقاطعة كولومبيا حاكم.",
+   "capitalNoneDc": "مقاطعة كولومبيا ليست ولاية وليس لديها عاصمة.",
+   "outOfDate": "{text} قد تكون هذه الإجابة قديمة. تحقق قبل مقابلتك.",
+   "noteVerify": "إجابة خاصة بـ{place}. تحقق قبل مقابلتك — فالمسؤولون قد يتغيرون."
+  },
+  "hi": {
+   "chooseState": "यह उत्तर आपके राज्य पर निर्भर करता है। अपना उत्तर सुनने के लिए सेटिंग्स में अपना राज्य चुनें।",
+   "chooseDistrict": "यह उत्तर आपके कांग्रेस जिले पर निर्भर करता है। अपना उत्तर सुनने के लिए सेटिंग्स में अपना जिला चुनें।",
+   "senators": "दोनों में से कोई एक: {a} या {b}.",
+   "senatorsNone": "{place} के कोई अमेरिकी सीनेटर नहीं हैं।",
+   "vacant": "यह सीट अभी खाली है। अपने साक्षात्कार से पहले house.gov देखें।",
+   "governorNoneDc": "डिस्ट्रिक्ट ऑफ कोलंबिया का कोई राज्यपाल नहीं है।",
+   "capitalNoneDc": "डिस्ट्रिक्ट ऑफ कोलंबिया एक राज्य नहीं है और इसकी कोई राजधानी नहीं है।",
+   "outOfDate": "{text} यह उत्तर पुराना हो सकता है। अपने साक्षात्कार से पहले जाँच लें।",
+   "noteVerify": "{place} के लिए उत्तर। साक्षात्कार से पहले जाँच लें — अधिकारी बदल सकते हैं।"
+  },
+  "pt": {
+   "chooseState": "Esta resposta depende do seu estado. Escolha o seu estado em Configurações para ouvir a sua resposta.",
+   "chooseDistrict": "Esta resposta depende do seu distrito do Congresso. Escolha o seu distrito em Configurações para ouvir a sua resposta.",
+   "senators": "Qualquer um dos dois: {a} ou {b}.",
+   "senatorsNone": "{place} não tem senadores dos EUA.",
+   "vacant": "Esta vaga está desocupada no momento. Consulte house.gov antes da sua entrevista.",
+   "governorNoneDc": "O Distrito de Colúmbia não tem governador.",
+   "capitalNoneDc": "O Distrito de Colúmbia não é um estado e não tem capital.",
+   "outOfDate": "{text} Esta resposta pode estar desatualizada. Verifique antes da sua entrevista.",
+   "noteVerify": "Resposta para {place}. Verifique antes da sua entrevista — as autoridades podem mudar."
+  },
+  "ru": {
+   "chooseState": "Этот ответ зависит от вашего штата. Выберите свой штат в настройках, чтобы услышать ответ.",
+   "chooseDistrict": "Этот ответ зависит от вашего избирательного округа в Конгресс. Выберите свой округ в настройках, чтобы услышать ответ.",
+   "senators": "Любой из двух: {a} или {b}.",
+   "senatorsNone": "{place} не имеет сенаторов США.",
+   "vacant": "Это место сейчас вакантно. Проверьте house.gov перед собеседованием.",
+   "governorNoneDc": "У округа Колумбия нет губернатора.",
+   "capitalNoneDc": "Округ Колумбия не является штатом и не имеет столицы.",
+   "outOfDate": "{text} Этот ответ мог устареть. Проверьте перед собеседованием.",
+   "noteVerify": "{place}: проверьте перед собеседованием — чиновники могут смениться."
+  }
+ }
+}
