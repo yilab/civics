@@ -60,6 +60,7 @@ export function renderListen() {
   const noNav = state.mode === Mode.TEST || !size;
   el('l-prev').disabled = noNav;
   el('l-next').disabled = noNav;
+  el('l-stop').disabled = state.phase === Phase.IDLE || state.phase === Phase.FINISHED;
   const star = el('l-star');
   const isKnown = !!q && settings.known.has(q.n);
   star.disabled = !q;

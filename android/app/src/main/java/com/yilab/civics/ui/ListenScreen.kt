@@ -227,7 +227,11 @@ fun ListenScreen(
                     modifier = Modifier.size(32.dp),
                 )
             }
-            FilledTonalIconButton(onClick = onPause, modifier = Modifier.size(64.dp)) {
+            FilledTonalIconButton(
+                onClick = onPause,
+                modifier = Modifier.size(64.dp),
+                enabled = state.phase != Phase.IDLE && state.phase != Phase.FINISHED,
+            ) {
                 Icon(
                     Icons.Filled.Stop,
                     contentDescription = stringResource(R.string.listen_stop),

@@ -73,7 +73,8 @@ struct ListenScreen: View {
                     transportButton(action: onPrevious, systemImage: "backward.end.fill",
                                     label: L10n.t("listen.previousQuestion"))
                     transportButton(action: onPause, systemImage: "stop.fill",
-                                    label: L10n.t("listen.stop"))
+                                    label: L10n.t("listen.stop"),
+                                    disabled: state.phase == .idle || state.phase == .finished)
                     transportButton(action: onNext, systemImage: "forward.end.fill",
                                     label: L10n.t("button.nextQuestion"))
 
@@ -208,7 +209,7 @@ struct ListenScreen: View {
     }
 
     /// Large bordered transport button for previous/stop/next.
-    private func transportButton(action: @escaping () -> Void, systemImage: String, label: String) -> some View {
+    private func transportButton(action: @escaping () -> Void, systemImage: String, label: String, disabled: Bool = false) -> some View {
         Button(action: action) {
             Image(systemName: systemImage)
         }
@@ -216,6 +217,7 @@ struct ListenScreen: View {
         .buttonStyle(.bordered)
         .controlSize(.large)
         .accessibilityLabel(label)
+        .disabled(disabled)
     }
 
     private var knownButton: some View {
