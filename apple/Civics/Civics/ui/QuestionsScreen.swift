@@ -13,17 +13,45 @@ struct QuestionsScreen: View {
 
     /// View-local filter over the list: all / only known / only not known.
     @State private var filter: KnownFilter = .all
+    /// View-local search text, applied on top of `filter`.
+    @State private var query = ""
 
     private var shown: [Question] {
-        switch filter {
+        let filtered: [Question] = switch filter {
         case .all: questions
         case .known: questions.filter { known.contains($0.n) }
         case .notKnown: questions.filter { !known.contains($0.n) }
         }
+        guard !query.isEmpty else { return filtered }
+        return filtered.filter { $0.matches(query: query, categoryName: CategoriesL10n.name($0.category)) }
     }
 
     var body: some View {
         VStack(spacing: 0) {
+            HStack(spacing: 8) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundStyle(.secondary)
+                TextField(L10n.t("questions.search"), text: $query)
+                    .textFieldStyle(.plain)
+                    .autocorrectionDisabled()
+                if !query.isEmpty {
+                    Button {
+                        query = ""
+                    } label: {
+                        Image(systemName: "xmark.circle.fill")
+                            .foregroundStyle(.secondary)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel(L10n.t("questions.search"))
+                }
+            }
+            .font(.subheadline)
+            .padding(.horizontal, 12)
+            .padding(.vertical, 7)
+            .background(RoundedRectangle(cornerRadius: 10).fill(Color.secondary.opacity(0.15)))
+            .padding(.horizontal, 20)
+            .padding(.top, 8)
+
             HStack(spacing: 8) {
                 ForEach(KnownFilter.allCases, id: \.self) { f in
                     Chip(label: filterLabel(f), selected: filter == f, action: { filter = f })

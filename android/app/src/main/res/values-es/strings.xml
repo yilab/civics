@@ -88,4 +88,6 @@
     <string name="filter_all">Todas</string>
     <string name="filter_known">Aprendidas</string>
     <string name="filter_not_known">Por aprender</string>
+    <string name="search_questions">Buscar preguntas</string>
+    <string name="search_clear">Borrar búsqueda</string>
 </resources>

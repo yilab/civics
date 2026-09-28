@@ -90,4 +90,29 @@ struct QuestionRepositoryTests {
         #expect(q2?.translation(.spanish) == nil)
         #expect(q2?.dynamic == false) // absent dynamic decodes as false
     }
+
+    @Test func searchMatchesTextNumberCategoryAndTranslations() {
+        let supremeLaw = repo.byNumber(2)!
+        #expect(supremeLaw.question == "What is the supreme law of the land?")
+        // English text, case-insensitive.
+        #expect(supremeLaw.matches(query: "supreme law", categoryName: "American Government"))
+        // Diacritic-insensitive matching.
+        let republic = repo.byNumber(1)!
+        #expect(republic.matches(query: "FORM", categoryName: "American Government"))
+        let resume = Question(n: 99, category: "American History", question: "What is a résumé?",
+                              answer: "a", spoken: "a", dynamic: false, note: nil)
+        #expect(resume.matches(query: "resume", categoryName: "American History"))
+        // Question number, with or without the "Q" prefix.
+        #expect(supremeLaw.matches(query: "2", categoryName: "American Government"))
+        #expect(supremeLaw.matches(query: "Q2", categoryName: "American Government"))
+        #expect(!supremeLaw.matches(query: "22", categoryName: "American Government"))
+        // Localized category label.
+        #expect(supremeLaw.matches(query: "government", categoryName: "American Government"))
+        #expect(!supremeLaw.matches(query: "history", categoryName: "American Government"))
+        // Translated question text.
+        #expect(supremeLaw.matches(query: "最高法律", categoryName: "American Government"))
+        // No match, and empty query matches everything.
+        #expect(!supremeLaw.matches(query: "xyzzy", categoryName: "American Government"))
+        #expect(supremeLaw.matches(query: "", categoryName: "American Government"))
+    }
 }

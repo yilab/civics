@@ -13,6 +13,8 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Close
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Circle
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
@@ -20,6 +22,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.FilterChip
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -51,13 +54,37 @@ fun QuestionsScreen(
     val playingSuffix = stringResource(R.string.questions_playing_suffix)
     // View-local filter over the list: all / only known / only not known.
     var filter by remember { mutableStateOf(KnownFilter.ALL) }
-    val shown = when (filter) {
-        KnownFilter.ALL -> questions
-        KnownFilter.KNOWN -> questions.filter { it.n in known }
-        KnownFilter.NOT_KNOWN -> questions.filter { it.n !in known }
-    }
+    // View-local search text; composes with the known filter above.
+    var query by remember { mutableStateOf("") }
+    val shown = questions
+        .filter {
+            when (filter) {
+                KnownFilter.ALL -> true
+                KnownFilter.KNOWN -> it.n in known
+                KnownFilter.NOT_KNOWN -> it.n !in known
+            }
+        }
+        .filter { matchesSearch(it, query, categoryLabel(it.category)) }
 
     Column(modifier = modifier.fillMaxSize()) {
+        OutlinedTextField(
+            value = query,
+            onValueChange = { query = it },
+            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            placeholder = { Text(stringResource(R.string.search_questions)) },
+            leadingIcon = { Icon(Icons.Filled.Search, contentDescription = null) },
+            trailingIcon = {
+                if (query.isNotEmpty()) {
+                    IconButton(onClick = { query = "" }) {
+                        Icon(
+                            Icons.Filled.Close,
+                            contentDescription = stringResource(R.string.search_clear),
+                        )
+                    }
+                }
+            },
+            singleLine = true,
+        )
         Row(
             modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -129,4 +156,16 @@ fun QuestionsScreen(
             }
         }
     }
+}
+
+/** Case-insensitive search over the English text, every translation, the
+ * question number ("12" or "Q12"), and the category label. */
+private fun matchesSearch(q: Question, query: String, categoryLabel: String): Boolean {
+    val needle = query.trim().lowercase()
+    if (needle.isEmpty()) return true
+    needle.removePrefix("q").toIntOrNull()?.let { if (it == q.n) return true }
+    if (q.question.lowercase().contains(needle)) return true
+    if (q.category.lowercase().contains(needle)) return true
+    if (categoryLabel.lowercase().contains(needle)) return true
+    return q.translations.values.any { it.question.lowercase().contains(needle) }
 }

@@ -128,6 +128,20 @@ struct Question: Hashable, Decodable {
         translations[language.translationKey]
     }
 
+    /// Case/diacritic-insensitive match for the Questions-tab search. Matches
+    /// the English question text, every translated question text, the question
+    /// number ("12" or "Q12"), and the given (localized) category label.
+    func matches(query: String, categoryName: String) -> Bool {
+        let trimmed = query.trimmingCharacters(in: .whitespaces)
+        guard !trimmed.isEmpty else { return true }
+        var digits = trimmed.lowercased()
+        if digits.hasPrefix("q") { digits.removeFirst() }
+        if digits == String(n) { return true }
+        if categoryName.localizedStandardContains(trimmed) { return true }
+        if question.localizedStandardContains(trimmed) { return true }
+        return translations.values.contains { $0.question.localizedStandardContains(trimmed) }
+    }
+
     init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         n = try c.decode(Int.self, forKey: .n)

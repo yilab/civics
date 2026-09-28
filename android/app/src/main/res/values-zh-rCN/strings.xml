@@ -91,4 +91,6 @@
     <string name="filter_all">全部</string>
     <string name="filter_known">已掌握</string>
     <string name="filter_not_known">未掌握</string>
+    <string name="search_questions">搜索题目</string>
+    <string name="search_clear">清除搜索</string>
 </resources>

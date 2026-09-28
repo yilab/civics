@@ -213,6 +213,12 @@
   .nav button:focus-visible,.btn-primary:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
 
   /* ---------- Questions list ---------- */
+  .q-search{
+    width:100%;padding:9px 12px;margin:0 0 12px;
+    font:inherit;font-size:14.5px;color:var(--ink);
+    background:var(--card);border:1px solid var(--hair-strong);border-radius:10px;
+  }
+  .q-search:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
   #q-list{max-height:62vh;overflow-y:auto;border-top:1px solid var(--hair);}
   .q-row{display:flex;align-items:center;border-bottom:1px solid var(--hair);}
   .q-main{

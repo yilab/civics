@@ -91,4 +91,6 @@
     <string name="filter_all">All</string>
     <string name="filter_known">Known</string>
     <string name="filter_not_known">Not known</string>
+    <string name="search_questions">Search questions</string>
+    <string name="search_clear">Clear search</string>
 </resources>

@@ -6,10 +6,37 @@ import { personalizedQuestions, state, jumpTo, toggleKnown } from '../engine.js'
 import { selectTab } from '../main.js';
 
 let qFilter = 'all'; // view-local, reset to All on each visit
+let qSearch = '';    // view-local, cleared on each visit
+
+el('q-search').addEventListener('input', e => {
+  qSearch = e.target.value.trim().toLowerCase();
+  renderQuestions();
+});
 
 export function enterQuestionsTab() {
   qFilter = 'all';
+  qSearch = '';
+  el('q-search').value = '';
   renderQuestions();
+}
+
+/* Live search: bare/Q-prefixed digits match the question number exactly;
+   anything else is a substring match over the English question, every
+   translation, and the category label (English + localized). */
+function matchesQuery(q, query) {
+  if (!query) return true;
+  const num = /^q?(\d+)$/.exec(query);
+  if (num) return q.n === Number(num[1]);
+  if (q.question.toLowerCase().indexOf(query) !== -1) return true;
+  if (q.category.toLowerCase().indexOf(query) !== -1) return true;
+  if (catLabel(q.category).toLowerCase().indexOf(query) !== -1) return true;
+  if (q.translations) {
+    for (const lang in q.translations) {
+      const tr = q.translations[lang];
+      if (tr && tr.question && tr.question.toLowerCase().indexOf(query) !== -1) return true;
+    }
+  }
+  return false;
 }
 
 function renderQuestionFilters() {
@@ -21,11 +48,15 @@ function renderQuestionFilters() {
 }
 export function renderQuestions() {
   renderQuestionFilters();
+  const search = el('q-search');
+  search.placeholder = t('search_questions');
+  search.setAttribute('aria-label', t('search_questions'));
   const list = el('q-list');
   list.innerHTML = '';
   const lang = spokenLanguage();
   const shown = personalizedQuestions().filter(q =>
-    qFilter === 'all' || (qFilter === 'known') === settings.known.has(q.n));
+    (qFilter === 'all' || (qFilter === 'known') === settings.known.has(q.n)) &&
+    matchesQuery(q, qSearch));
   shown.forEach(q => {
     const row = document.createElement('div');
     row.className = 'q-row';
