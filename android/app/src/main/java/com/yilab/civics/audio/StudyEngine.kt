@@ -5,6 +5,7 @@ import com.yilab.civics.data.OfficialsData
 import com.yilab.civics.data.Question
 import com.yilab.civics.data.QuestionRepository
 import com.yilab.civics.data.SpeechLanguage
+import com.yilab.civics.settings.QuestionStat
 import com.yilab.civics.settings.StudySettings
 import java.time.LocalDate
 import kotlinx.coroutines.CoroutineScope
@@ -50,24 +51,42 @@ data class SpokenHighlight(
 /** The outcome of a finished practice test. */
 enum class TestOutcome { NONE, PASSED, FAILED }
 
+/** One graded answer inside a practice test, in ask order. */
+data class GradedAnswer(val n: Int, val correct: Boolean)
+
 /** One recorded practice test, kept for history. */
 data class TestRecord(
     val correct: Int,
     val wrong: Int,
     val passed: Boolean,
     val epochMillis: Long,
+    /** True for a shortened review session over missed questions. */
+    val review: Boolean = false,
+    /** The graded answers in ask order (empty on records from older versions). */
+    val answers: List<GradedAnswer> = emptyList(),
 ) {
-    fun encode(): String = "$correct,$wrong,${if (passed) 1 else 0},$epochMillis"
+    fun encode(): String =
+        "$correct,$wrong,${if (passed) 1 else 0},$epochMillis,${if (review) 1 else 0}," +
+            answers.joinToString("|") { "${it.n}:${if (it.correct) 1 else 0}" }
 
     companion object {
         fun parse(s: String): TestRecord? {
             val p = s.split(',')
-            if (p.size != 4) return null
+            // 4 fields = the pre-review shape; 6 = current.
+            if (p.size != 4 && p.size != 6) return null
             return TestRecord(
                 correct = p[0].toIntOrNull() ?: return null,
                 wrong = p[1].toIntOrNull() ?: return null,
                 passed = p[2] == "1",
                 epochMillis = p[3].toLongOrNull() ?: return null,
+                review = p.getOrNull(4) == "1",
+                answers = p.getOrNull(5).orEmpty().split('|')
+                    .filter { it.isNotBlank() }
+                    .mapNotNull { pair ->
+                        val f = pair.split(':')
+                        val n = f.getOrNull(0)?.toIntOrNull() ?: return@mapNotNull null
+                        GradedAnswer(n, f.getOrNull(1) == "1")
+                    },
             )
         }
     }
@@ -88,6 +107,13 @@ data class StudyState(
     val testCorrect: Int = 0,
     val testWrong: Int = 0,
     val testOutcome: TestOutcome = TestOutcome.NONE,
+    /** The graded answers so far, in ask order. */
+    val answers: List<GradedAnswer> = emptyList(),
+    /** True when this test is a review session over missed questions. */
+    val review: Boolean = false,
+    /** Pass/fail marks scaled to the deck size (12/9 for the standard 20). */
+    val testPassAt: Int = TEST_PASS_AT,
+    val testFailAt: Int = TEST_FAIL_AT,
 ) {
     val deckSize: Int get() = deck.size
     val playing: Boolean get() = phase != Phase.IDLE
@@ -114,6 +140,8 @@ class StudyEngine(
     private val settingsFlow: StateFlow<StudySettings>,
     private val scope: CoroutineScope,
     private val onKnownChanged: (Int, Boolean) -> Unit = { _, _ -> },
+    private val statsProvider: () -> Map<Int, QuestionStat> = { emptyMap() },
+    private val onGraded: (Int, Boolean) -> Unit = { _, _ -> },
     private val onTestFinished: (TestRecord) -> Unit = {},
 ) {
 
@@ -159,19 +187,39 @@ class StudyEngine(
         emit(state.value.copy(phase = Phase.IDLE, highlight = null))
     }
 
-    /** Starts a scored practice test: 20 random questions, pass at 12, fail at 9. */
+    /** Starts a scored practice test: 20 random questions, pass at 12, fail at 9.
+     * Missed questions are pulled into up to half the deck when review focus is on. */
     fun startTest() {
+        beginTest(
+            TestPicker.pickDeck(testPool(), statsProvider(), settingsFlow.value.reviewFocus),
+            review = false,
+        )
+    }
+
+    /** Starts a graded review session over the missed questions; a no-op when
+     * nothing is missed (the button is disabled, but the engine stays safe). */
+    fun startReview() {
+        val ranked = TestPicker.reviewRanking(testPool(), statsProvider())
+        if (ranked.isEmpty()) return
+        beginTest(ranked.take(StudyState.TEST_TOTAL).shuffled(), review = true)
+    }
+
+    /** The questions eligible for tests: personalized, minus state questions the
+     * user can't answer yet (no place/district set) — they can't be graded on
+     * "choose your state in Settings". */
+    private fun testPool(): List<Question> {
+        val s = settingsFlow.value
+        val unresolved = officials.unresolvedStateQuestions(s.jurisdiction, s.district)
+        return personalized(repo.questions, s).filter { it.n !in unresolved }
+    }
+
+    private fun beginTest(questions: List<Question>, review: Boolean) {
         cancelTimer()
         expectedUtterance = null
         speech.stop()
-        // State questions the user can't answer yet (no place/district set) are left
-        // out — they can't be graded on "choose your state in Settings".
-        val s = settingsFlow.value
-        val unresolved = officials.unresolvedStateQuestions(s.jurisdiction, s.district)
-        deck = personalized(repo.questions, s)
-            .filter { it.n !in unresolved }
-            .shuffled()
-            .take(StudyState.TEST_TOTAL)
+        if (questions.isEmpty()) return
+        deck = questions
+        val (passAt, failAt) = TestPicker.thresholds(deck.size)
         emit(
             state.value.copy(
                 deck = deck,
@@ -182,6 +230,10 @@ class StudyEngine(
                 testCorrect = 0,
                 testWrong = 0,
                 testOutcome = TestOutcome.NONE,
+                answers = emptyList(),
+                review = review,
+                testPassAt = passAt,
+                testFailAt = failAt,
             )
         )
         speakQuestionAt(0)
@@ -197,17 +249,20 @@ class StudyEngine(
         if (!correct && q.n in state.value.known) {
             onKnownChanged(q.n, false)
         }
+        onGraded(q.n, correct)
+        val answersNow = state.value.answers + GradedAnswer(q.n, correct)
         when {
-            correctNow >= StudyState.TEST_PASS_AT -> finishTest(true, correctNow, wrongNow)
-            wrongNow >= StudyState.TEST_FAIL_AT -> finishTest(false, correctNow, wrongNow)
+            correctNow >= state.value.testPassAt -> finishTest(true, correctNow, wrongNow, answersNow)
+            wrongNow >= state.value.testFailAt -> finishTest(false, correctNow, wrongNow, answersNow)
             state.value.testIndex + 1 >= deck.size ->
-                finishTest(correctNow >= StudyState.TEST_PASS_AT, correctNow, wrongNow)
+                finishTest(correctNow >= state.value.testPassAt, correctNow, wrongNow, answersNow)
             else -> {
                 emit(
                     state.value.copy(
                         testIndex = state.value.testIndex + 1,
                         testCorrect = correctNow,
                         testWrong = wrongNow,
+                        answers = answersNow,
                     )
                 )
                 speakQuestionAt(state.value.testIndex)
@@ -237,13 +292,15 @@ class StudyEngine(
                 highlight = null,
                 mode = EngineMode.STUDY,
                 testOutcome = TestOutcome.NONE,
+                answers = emptyList(),
+                review = false,
             )
         )
     }
 
-    private fun finishTest(passed: Boolean, correct: Int, wrong: Int) {
+    private fun finishTest(passed: Boolean, correct: Int, wrong: Int, answers: List<GradedAnswer>) {
         cancelTimer()
-        val record = TestRecord(correct, wrong, passed, System.currentTimeMillis())
+        val record = TestRecord(correct, wrong, passed, System.currentTimeMillis(), state.value.review, answers)
         emit(
             state.value.copy(
                 phase = Phase.FINISHED,

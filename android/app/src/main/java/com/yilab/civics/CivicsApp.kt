@@ -61,6 +61,10 @@ class CivicsApp : Application() {
                     settingsRepo.update { s -> s.copy(known = if (known) s.known + n else s.known - n) }
                 }
             },
+            statsProvider = { settingsRepo.stats.value },
+            onGraded = { n, correct ->
+                appScope.launch { settingsRepo.recordGraded(n, correct) }
+            },
             onTestFinished = { record ->
                 appScope.launch { settingsRepo.recordTest(record) }
             },

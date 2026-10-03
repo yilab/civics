@@ -80,11 +80,16 @@ class StudyEngineTest {
         settings: MutableStateFlow<StudySettings>,
         repo: QuestionRepository = this@StudyEngineTest.repo,
         onKnownChanged: (Int, Boolean) -> Unit = { _, _ -> },
+        statsProvider: () -> Map<Int, com.yilab.civics.settings.QuestionStat> = { emptyMap() },
+        onGraded: (Int, Boolean) -> Unit = { _, _ -> },
         onTestFinished: (TestRecord) -> Unit = {},
     ): Pair<StudyEngine, FakeSpeechEngine> {
         val speech = FakeSpeechEngine()
         // backgroundScope: the engine's settings-collection coroutine never completes by design
-        val engine = StudyEngine(speech, repo, officials, settings, backgroundScope, onKnownChanged, onTestFinished)
+        val engine = StudyEngine(
+            speech, repo, officials, settings, backgroundScope,
+            onKnownChanged, statsProvider, onGraded, onTestFinished,
+        )
         return engine to speech
     }
 
@@ -691,6 +696,111 @@ class StudyEngineTest {
         runCurrent()
         assertEquals(deckBefore, engine.state.value.deck.map { it.n })
         assertEquals(com.yilab.civics.audio.EngineMode.TEST, engine.state.value.mode)
+    }
+
+    @Test
+    fun `grading reports through the onGraded callback`() = runTest {
+        val graded = mutableListOf<Pair<Int, Boolean>>()
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()), onGraded = { n, c -> graded += n to c })
+        engine.startTest()
+        repeat(2) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(true)
+        }
+        assertEquals(2, graded.size)
+        assertTrue(graded.all { it.second })
+        assertEquals(2, graded.map { it.first }.toSet().size) // one report per distinct question
+    }
+
+    @Test
+    fun `a finished test record carries its answers`() = runTest {
+        var finished: TestRecord? = null
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()), onTestFinished = { finished = it })
+        engine.startTest()
+        repeat(com.yilab.civics.audio.StudyState.TEST_PASS_AT) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(true)
+        }
+        val record = finished!!
+        assertEquals(false, record.review)
+        assertEquals(com.yilab.civics.audio.StudyState.TEST_PASS_AT, record.answers.size)
+        assertTrue(record.answers.all { it.correct })
+        assertEquals(
+            engine.state.value.deck.take(com.yilab.civics.audio.StudyState.TEST_PASS_AT).map { it.n },
+            record.answers.map { it.n },
+        )
+    }
+
+    @Test
+    fun `startReview drills the missed questions with scaled thresholds`() = runTest {
+        var finished: TestRecord? = null
+        val stats = mapOf(
+            1 to com.yilab.civics.settings.QuestionStat(0, 3, 30),
+            5 to com.yilab.civics.settings.QuestionStat(0, 2, 20),
+            9 to com.yilab.civics.settings.QuestionStat(0, 1, 10),
+        )
+        val (engine, speech) = engine(
+            MutableStateFlow(StudySettings()),
+            statsProvider = { stats },
+            onTestFinished = { finished = it },
+        )
+        engine.startReview()
+        assertEquals(com.yilab.civics.audio.EngineMode.TEST, engine.state.value.mode)
+        assertTrue(engine.state.value.review)
+        assertEquals(3, engine.state.value.deckSize)
+        assertEquals(2, engine.state.value.testPassAt)
+        assertEquals(2, engine.state.value.testFailAt)
+        // Two correct out of three clears the 60%-of-3 bar.
+        repeat(2) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(true)
+        }
+        assertEquals(Phase.FINISHED, engine.state.value.phase)
+        assertEquals(com.yilab.civics.audio.TestOutcome.PASSED, engine.state.value.testOutcome)
+        assertEquals(true, finished?.review)
+        // passAt=2 ends the review after two answers; they must come from the missed set.
+        assertEquals(2, finished?.answers?.size)
+        assertTrue(finished?.answers?.all { it.n in setOf(1, 5, 9) } == true)
+    }
+
+    @Test
+    fun `startReview with nothing missed is a no-op`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startReview()
+        assertEquals(Phase.IDLE, engine.state.value.phase)
+        assertTrue(speech.spoken.isEmpty())
+    }
+
+    @Test
+    fun `review deck excludes unresolved state questions`() = runTest {
+        val stats = mapOf(
+            23 to com.yilab.civics.settings.QuestionStat(0, 1, 10),
+            5 to com.yilab.civics.settings.QuestionStat(0, 2, 20),
+        )
+        val (engine) = engine(MutableStateFlow(StudySettings()), statsProvider = { stats })
+        engine.startReview()
+        assertEquals(setOf(5), engine.state.value.deck.map { it.n }.toSet())
+    }
+
+    @Test
+    fun `a regular test pulls every missed question when review focus is on`() = runTest {
+        val stats = mapOf(
+            1 to com.yilab.civics.settings.QuestionStat(0, 3, 30),
+            5 to com.yilab.civics.settings.QuestionStat(0, 2, 20),
+            9 to com.yilab.civics.settings.QuestionStat(0, 1, 10),
+            23 to com.yilab.civics.settings.QuestionStat(0, 9, 99), // unresolved: not in the pool
+        )
+        val (engine) = engine(MutableStateFlow(StudySettings()), statsProvider = { stats })
+        engine.startTest()
+        val ns = engine.state.value.deck.map { it.n }.toSet()
+        assertTrue(listOf(1, 5, 9).all { it in ns })
+        assertFalse(23 in ns)
     }
 
     // ------------------------------------------------------------- state answers
