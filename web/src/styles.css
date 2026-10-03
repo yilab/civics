@@ -237,6 +237,7 @@
   }
   .q-check.on{color:var(--green);}
   .q-check:focus-visible{outline:2px solid var(--brass);outline-offset:-2px;}
+  .q-miss{flex:0 0 auto;font-size:12px;font-weight:600;color:var(--red);margin-right:2px;}
 
   /* ---------- Practice test ---------- */
   .start-card{
@@ -256,6 +257,8 @@
   .btn-primary:hover{background:#1d3354;}
   .btn-primary.green{background:var(--green);}
   .btn-primary.ghost{background:transparent;color:var(--ink);border:1px solid var(--hair-strong);box-shadow:none;}
+  .btn-primary:disabled{opacity:.45;cursor:default;}
+  .h-summary{font-size:13.5px;color:var(--slate);margin:16px 0 0;text-align:left;}
   .h-title{
     font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--brass);
     font-weight:700;margin:22px 0 4px;text-align:left;
@@ -300,6 +303,9 @@
   .score .big{font-family:"Fraunces",Georgia,serif;font-weight:600;font-size:46px;line-height:1;margin:16px 0 2px;}
   .score .big .of{color:var(--slate);font-size:24px;}
   .score .verdict{font-size:14px;color:var(--slate);max-width:40ch;margin:8px auto 22px;}
+  .score .missed-list{margin:-10px auto 22px;}
+  .score .missed-list .m-title{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--red);font-weight:700;}
+  .score .missed-list .m-nums{font-size:14px;color:var(--slate);margin-top:4px;}
 
   /* ---------- Settings ---------- */
   .s-section{margin:0 0 24px;}

@@ -9,6 +9,7 @@ const DEFAULTS = {
   speech_rate: 1.0, think_seconds: 3, auto_advance: false, category: 'All',
   shuffle: false, announce_meta: true, known: [], known_filter: 'all',
   language: 'system', test_history: [], jurisdiction: null, district: null,
+  review_focus: true, question_stats: {},
 };
 export const store = {
   get(k) {
@@ -47,6 +48,8 @@ export const settings = {
   jurisdiction: /^[A-Z]{2}$/.test(store.get('jurisdiction') || '') ? store.get('jurisdiction') : null,
   /* Congressional district for Q29; null = not chosen (only needed in multi-seat states). */
   district: Number.isInteger(store.get('district')) && store.get('district') >= 1 ? store.get('district') : null,
+  /* Practice tests pull missed questions into up to half the deck. */
+  reviewFocus: store.get('review_focus') !== false,
 };
 function clampNum(v, lo, hi, dflt) {
   const n = parseFloat(v);
@@ -61,17 +64,19 @@ export function persistSettings() {
   store.set('announce_meta', settings.announceMeta);
   store.set('known_filter', settings.knownFilter);
   store.set('language', settings.language);
+  store.set('review_focus', settings.reviewFocus);
 }
 export function persistKnown() { store.set('known', Array.from(settings.known).sort((a, b) => a - b)); }
 
-/* The place/district answers change Q23/29/61/62, so their known marks reset. */
+/* The place/district answers change Q23/29/61/62, so their known marks and stats reset. */
 export function setLocation(placeCode, district) {
   settings.jurisdiction = placeCode;
   settings.district = placeCode ? district : null;
   store.set('jurisdiction', settings.jurisdiction);
   store.set('district', settings.district);
-  for (const n of [23, 29, 61, 62]) settings.known.delete(n);
+  for (const n of [23, 29, 61, 62]) { settings.known.delete(n); delete stats[n]; }
   persistKnown();
+  persistStats();
 }
 
 /* ---------- test history ---------- */
@@ -83,4 +88,33 @@ export function recordTest(rec) {
   const h = getHistory();
   h.unshift(rec);
   store.set('test_history', h.slice(0, 20));
+}
+
+/* ---------- question stats ---------- */
+/* Right/wrong history per question number, updated by every graded answer.
+   JSON object keys are strings; numeric lookups (stats[57]) still hit. */
+export const stats = loadStats();
+function loadStats() {
+  const raw = store.get('question_stats');
+  const out = {};
+  if (raw && typeof raw === 'object') {
+    for (const k of Object.keys(raw)) {
+      const s = raw[k];
+      const n = Number(k);
+      if (Number.isInteger(n) && s && Number.isInteger(s.r) && Number.isInteger(s.w) && typeof s.lw === 'number') {
+        out[n] = { r: s.r, w: s.w, lw: s.lw };
+      }
+    }
+  }
+  return out;
+}
+function persistStats() { store.set('question_stats', stats); }
+export function recordGraded(n, correct) {
+  const s = stats[n] || { r: 0, w: 0, lw: 0 };
+  stats[n] = correct ? { r: s.r + 1, w: s.w, lw: 0 } : { r: s.r, w: s.w + 1, lw: Date.now() };
+  persistStats();
+}
+export function resetQuestionStats() {
+  for (const k of Object.keys(stats)) delete stats[k];
+  persistStats();
 }

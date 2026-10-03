@@ -80,6 +80,8 @@ export function applyChrome() {
   setText('s-shuffle-label', t('shuffle'));
   setText('s-progress-title', t('settings_progress'));
   setText('s-clear', t('clear_known'));
+  setText('s-review-focus-label', t('settings_review_focus'));
+  setText('s-reset-stats', t('settings_reset_stats'));
 }
 
 /* ---------- master render ---------- */

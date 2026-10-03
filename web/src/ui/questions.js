@@ -1,7 +1,7 @@
 // Questions tab: view-local known filter, scrollable 128-row list, tap-to-jump.
 import { el, makeChips } from './dom.js';
 import { t, catLabel, translationFor, displayPair, spokenLanguage } from '../i18n.js';
-import { settings } from '../settings.js';
+import { settings, stats } from '../settings.js';
 import { personalizedQuestions, state, jumpTo, toggleKnown } from '../engine.js';
 import { selectTab } from '../main.js';
 
@@ -83,6 +83,18 @@ export function renderQuestions() {
       main.appendChild(h2);
     }
     main.onclick = () => { jumpTo(q.n); selectTab('listen'); };
+
+    // How many times this question was missed in tests, when any. Own node so
+    // updateQuestionsPlaying's over.textContent rewrite can't clobber it.
+    const st = stats[q.n];
+    if (st && st.w > 0) {
+      const miss = document.createElement('span');
+      miss.className = 'q-miss';
+      miss.textContent = '×' + st.w;
+      miss.setAttribute('role', 'img');
+      miss.setAttribute('aria-label', t('questions_missed_times', st.w));
+      row.appendChild(miss);
+    }
 
     const check = document.createElement('button');
     check.className = 'q-check';

@@ -151,6 +151,8 @@
       <h2 id="test-h2">Practice test</h2>
       <ul class="rules" id="test-rules"><li></li><li></li><li></li></ul>
       <button class="btn-primary" id="start-test">Start practice test</button>
+      <button class="btn-primary ghost block" id="start-review" style="margin-top:10px;" disabled>Practice missed questions</button>
+      <p class="h-summary" id="test-summary" hidden></p>
       <div id="test-history"></div>
     </div>
 
@@ -193,6 +195,10 @@
         <div class="stamp" id="r-stamp">Passed</div>
         <div class="big"><span id="r-score">0</span><span class="of"> / <span id="r-total">20</span></span></div>
         <div class="verdict" id="r-verdict">…</div>
+        <div class="missed-list" id="r-missed" hidden>
+          <div class="m-title" id="r-missed-title">Missed this time</div>
+          <div class="m-nums" id="r-missed-nums"></div>
+        </div>
         <button class="btn-primary green block" id="r-again" style="margin-bottom:10px;">Take another test</button>
         <button class="btn-primary ghost block" id="r-back">Back to listening</button>
       </div>
@@ -243,7 +249,13 @@
     <div class="s-section">
       <p class="s-title" id="s-progress-title">Progress</p>
       <p class="s-label" id="s-known-label">0 of 128 marked as known</p>
-      <button class="btn-primary ghost" id="s-clear">Clear known marks</button>
+      <label class="s-row"><span id="s-review-focus-label">Prioritize missed questions in tests</span>
+        <span class="switch"><input type="checkbox" id="s-review-focus" checked><span class="track"></span></span>
+      </label>
+      <div style="display:flex;gap:10px;flex-wrap:wrap;">
+        <button class="btn-primary ghost" id="s-clear">Clear known marks</button>
+        <button class="btn-primary ghost" id="s-reset-stats">Reset question stats</button>
+      </div>
     </div>
   </section>
 

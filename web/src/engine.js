@@ -4,10 +4,14 @@
 // web/data/questions-source.js are the human-edited source of truth and are not
 // imported by the app.
 import { BANK } from '../data/bank.generated.js';
-import { settings, persistSettings, persistKnown, recordTest } from './settings.js';
+import { settings, stats, persistSettings, persistKnown, recordTest, recordGraded } from './settings.js';
 import { spokenLanguage, bilingual, translationFor, Q_PREFIX, TTS_LOCALE } from './i18n.js';
 import { personalize, unresolvedStateQuestions } from './officials.js';
 import { speech } from './speech.js';
+import { pickDeck, reviewRanking, thresholds, TEST_TOTAL, shuffleArr } from './picker.js';
+
+// Re-exported for existing importers (ui/test.js re-exports of the old home).
+export { TEST_TOTAL, shuffleArr };
 
 if (!BANK || !Array.isArray(BANK.questions) || BANK.questions.length !== 128) {
   throw new Error('Question bank missing — run: node android/tools/extract-questions.mjs');
@@ -26,11 +30,12 @@ export const Phase = {
 };
 export const Mode = { STUDY: 'STUDY', TEST: 'TEST' };
 export const Outcome = { NONE: 'NONE', PASSED: 'PASSED', FAILED: 'FAILED' };
-export const TEST_TOTAL = 20, TEST_PASS_AT = 12, TEST_FAIL_AT = 9, AUTO_ADVANCE_MS = 2000;
+export const TEST_PASS_AT = 12, TEST_FAIL_AT = 9, AUTO_ADVANCE_MS = 2000;
 
 export const state = {
   phase: Phase.IDLE, position: 0, current: null, answerRevealed: false,
   mode: Mode.STUDY, testIndex: 0, testCorrect: 0, testWrong: 0, testOutcome: Outcome.NONE,
+  answers: [], review: false, testPassAt: TEST_PASS_AT, testFailAt: TEST_FAIL_AT,
   highlight: null, // {id, block, translation, text, start, end} — set by speak(), ranged by boundary events
 };
 let deck = [];
@@ -50,13 +55,6 @@ export function initDeck() {
   deck = repoDeck(settings.category, settings.shuffle, settings.knownFilter, settings.known);
 }
 
-export function shuffleArr(a) {
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const tmp = a[i]; a[i] = a[j]; a[j] = tmp;
-  }
-  return a;
-}
 export function repoDeck(category, shuffle, knownFilter, known) {
   const personalized = personalize(QUESTIONS, settings.jurisdiction, settings.district);
   let list = category === 'All' ? personalized : personalized.filter(q => q.category === category);
@@ -101,22 +99,41 @@ export function pause() {
   if (state.phase !== Phase.IDLE) { state.phase = Phase.IDLE; update(); }
 }
 export function startTest() {
+  beginTest(pickDeck(testPool(), stats, settings.reviewFocus), false);
+}
+/* Starts a graded review session over the missed questions; a no-op when
+   nothing is missed (the button is disabled, but the engine stays safe). */
+export function startReview() {
+  const ranked = reviewRanking(testPool(), stats);
+  if (!ranked.length) return;
+  beginTest(shuffleArr(ranked.slice(0, TEST_TOTAL)), true);
+}
+/* The questions eligible for tests: personalized, minus state questions the
+   user can't answer yet (no place/district set) — they can't be graded on
+   "choose your state in Settings". */
+function testPool() {
+  const unresolved = unresolvedStateQuestions(settings.jurisdiction, settings.district);
+  return personalize(QUESTIONS, settings.jurisdiction, settings.district)
+    .filter(q => !unresolved.has(q.n));
+}
+function beginTest(questions, review) {
   cancelTimer();
   expectedUtterance = null;
   state.highlight = null;
   speech.stop();
-  // State questions the user can't answer yet (no place/district set) are left out —
-  // they can't be graded on "choose your state in Settings".
-  const unresolved = unresolvedStateQuestions(settings.jurisdiction, settings.district);
-  const pool = personalize(QUESTIONS, settings.jurisdiction, settings.district)
-    .filter(q => !unresolved.has(q.n));
-  deck = shuffleArr(pool).slice(0, TEST_TOTAL);
+  if (!questions.length) return;
+  deck = questions;
+  const [passAt, failAt] = thresholds(deck.length);
   state.position = 0;
   state.mode = Mode.TEST;
   state.testIndex = 0;
   state.testCorrect = 0;
   state.testWrong = 0;
   state.testOutcome = Outcome.NONE;
+  state.answers = [];
+  state.review = review;
+  state.testPassAt = passAt;
+  state.testFailAt = failAt;
   speakQuestionAt(0);
 }
 export function grade(correct) {
@@ -127,9 +144,11 @@ export function grade(correct) {
   const wrongNow = state.testWrong + (correct ? 0 : 1);
   // Mistakes resurface in study mode: a wrong answer unmarks a known question.
   if (!correct && settings.known.has(q.n)) setKnown(q.n, false);
-  if (correctNow >= TEST_PASS_AT) finishTest(true, correctNow, wrongNow);
-  else if (wrongNow >= TEST_FAIL_AT) finishTest(false, correctNow, wrongNow);
-  else if (state.testIndex + 1 >= deck.length) finishTest(correctNow >= TEST_PASS_AT, correctNow, wrongNow);
+  recordGraded(q.n, correct);
+  state.answers.push({ n: q.n, c: correct ? 1 : 0 });
+  if (correctNow >= state.testPassAt) finishTest(true, correctNow, wrongNow);
+  else if (wrongNow >= state.testFailAt) finishTest(false, correctNow, wrongNow);
+  else if (state.testIndex + 1 >= deck.length) finishTest(correctNow >= state.testPassAt, correctNow, wrongNow);
   else {
     state.testIndex++;
     state.testCorrect = correctNow;
@@ -147,6 +166,8 @@ export function startStudy() {
   state.position = 0;
   state.mode = Mode.STUDY;
   state.testOutcome = Outcome.NONE;
+  state.answers = [];
+  state.review = false;
   update();
 }
 function finishTest(passed, correct, wrong) {
@@ -158,7 +179,7 @@ function finishTest(passed, correct, wrong) {
   state.testOutcome = passed ? Outcome.PASSED : Outcome.FAILED;
   state.highlight = null;
   speech.stop();
-  recordTest({ c: correct, w: wrong, p: passed ? 1 : 0, ts: Date.now() });
+  recordTest({ c: correct, w: wrong, p: passed ? 1 : 0, ts: Date.now(), r: state.review ? 1 : 0, a: state.answers });
   update();
 }
 export function next() {

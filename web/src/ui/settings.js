@@ -1,7 +1,7 @@
 // Settings tab: six sections (language, location, voice, playback, deck, progress).
 import { el, setText, show, makeChips } from './dom.js';
 import { t, catLabel, AUTONYM, chromeLang } from '../i18n.js';
-import { settings, persistKnown, store, CATS, LANGS, setLocation } from '../settings.js';
+import { settings, persistKnown, resetQuestionStats, store, CATS, LANGS, setLocation } from '../settings.js';
 import { applySettings } from '../engine.js';
 import { PLACES, districtOptions } from '../officials.js';
 import { renderCard } from './flashcards.js';
@@ -73,6 +73,7 @@ export function renderSettings() {
   makeChips('s-cat-chips', CATS.map(c => ({ value: c, label: catLabel(c) })),
     settings.category, v => { settings.category = v; applySettings(); });
   el('s-shuffle').checked = settings.shuffle;
+  el('s-review-focus').checked = settings.reviewFocus;
   setText('s-known-label', t('known_progress', settings.known.size));
 }
 el('s-rate').addEventListener('input', () => {
@@ -84,6 +85,7 @@ el('s-rate').addEventListener('input', () => {
 el('s-announce').addEventListener('change', () => { settings.announceMeta = el('s-announce').checked; applySettings(); });
 el('s-auto').addEventListener('change', () => { settings.autoAdvance = el('s-auto').checked; applySettings(); });
 el('s-shuffle').addEventListener('change', () => { settings.shuffle = el('s-shuffle').checked; applySettings(); });
+el('s-review-focus').addEventListener('change', () => { settings.reviewFocus = el('s-review-focus').checked; applySettings(); });
 el('s-place').addEventListener('change', () => {
   setLocation(el('s-place').value || null, null);
   applySettings();
@@ -96,3 +98,4 @@ el('s-dist').addEventListener('change', () => {
   renderAll();
 });
 el('s-clear').onclick = () => { settings.known.clear(); persistKnown(); applySettings(); renderCard(); };
+el('s-reset-stats').onclick = () => { resetQuestionStats(); renderAll(); };

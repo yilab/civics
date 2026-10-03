@@ -1,8 +1,10 @@
-// Test tab: start screen + history, TTS-driven running view, result stamp.
+// Test tab: start screen + stats + history, TTS-driven running view, result stamp.
 import { el, setText, show, setSpokenText } from './dom.js';
 import { t, catLabel, translationFor, displayPair, spokenLanguage, translationPrimary, CHROME_LOCALE, chromeLang } from '../i18n.js';
-import { getHistory } from '../settings.js';
-import { state, Phase, Mode, Outcome, TEST_TOTAL, startTest, primaryAction, grade, startStudy, activeHighlight } from '../engine.js';
+import { getHistory, settings, stats } from '../settings.js';
+import { state, Phase, Mode, Outcome, deckSize, startTest, startReview, primaryAction, grade, startStudy, activeHighlight, personalizedQuestions } from '../engine.js';
+import { reviewRanking } from '../picker.js';
+import { unresolvedStateQuestions } from '../officials.js';
 import { selectTab } from '../main.js';
 
 export function renderTest() {
@@ -20,10 +22,30 @@ export function renderTest() {
   run.hidden = true; result.hidden = true; start.hidden = false;
   renderHistory();
 }
+
+/* The same pool rule the engine's test decks use, so the count matches the deck. */
+function missedCount() {
+  const unresolved = unresolvedStateQuestions(settings.jurisdiction, settings.district);
+  return reviewRanking(personalizedQuestions().filter(q => !unresolved.has(q.n)), stats).length;
+}
 function renderHistory() {
+  // Summary + review button (count-aware, so owned here rather than applyChrome).
+  const missed = missedCount();
+  const reviewBtn = el('start-review');
+  reviewBtn.disabled = missed === 0;
+  setText('start-review', t('test_start_review', missed));
+  const hist = getHistory();
+  const parts = [];
+  if (hist.length) {
+    parts.push(t('test_summary_tests', hist.length));
+    parts.push(t('test_summary_pass', Math.round(100 * hist.filter(r => r.p).length / hist.length)));
+  }
+  parts.push(t('test_summary_missed', missed));
+  setText('test-summary', parts.join(' · '));
+  el('test-summary').hidden = !hist.length && missed === 0;
+
   const box = el('test-history');
   box.innerHTML = '';
-  const hist = getHistory();
   if (!hist.length) return;
   const title = document.createElement('p');
   title.className = 'h-title';
@@ -34,7 +56,7 @@ function renderHistory() {
     row.className = 'h-row';
     const score = document.createElement('span');
     score.className = r.p ? 'h-pass' : 'h-fail';
-    score.textContent = (r.p ? '✓ ' : '✗ ') + r.c + ' / ' + (r.c + r.w);
+    score.textContent = (r.p ? '✓ ' : '✗ ') + r.c + ' / ' + (r.c + r.w) + (r.r ? ' · ' + t('test_history_review') : '');
     const date = document.createElement('span');
     date.className = 'h-date';
     date.textContent = new Date(r.ts).toLocaleDateString(CHROME_LOCALE[chromeLang()]);
@@ -44,10 +66,10 @@ function renderHistory() {
   });
 }
 function renderTestRun() {
-  setText('t-progress', t('question_of', state.testIndex + 1, TEST_TOTAL));
+  setText('t-progress', t('question_of', state.testIndex + 1, deckSize()));
   setText('t-correct', state.testCorrect);
   setText('t-wrong', state.testWrong);
-  el('t-bar').style.width = (state.testIndex / TEST_TOTAL * 100) + '%';
+  el('t-bar').style.width = (state.testIndex / deckSize() * 100) + '%';
   const q = state.current;
   if (q) {
     setText('t-num', 'Q' + q.n);
@@ -80,7 +102,16 @@ function renderTestResult() {
   stamp.className = 'stamp ' + (passed ? 'pass' : 'fail');
   setText('r-score', state.testCorrect);
   setText('r-total', state.testCorrect + state.testWrong);
-  setText('r-verdict', passed ? t('test_verdict_pass') : t('test_verdict_fail'));
+  setText('r-verdict', passed ? t('test_verdict_pass', state.testPassAt) : t('test_verdict_fail', state.testFailAt));
+  const missed = (state.answers || []).filter(a => !a.c);
+  show('r-missed', missed.length > 0);
+  if (missed.length) {
+    setText('r-missed-title', t('test_missed_heading'));
+    setText('r-missed-nums', missed.map(a => 'Q' + a.n).join(' · '));
+  }
+  // A finished review restarts as a review — unless the missed set emptied.
+  const againReview = state.review && missedCount() > 0;
+  setText('r-again', againReview ? t('test_review_again') : t('test_again'));
 }
 
 /* Same pair logic as the Listen tab: the line matching the utterance's block
@@ -104,9 +135,10 @@ export function renderTestHighlight() {
 }
 
 el('start-test').onclick = () => startTest();
+el('start-review').onclick = () => startReview();
 el('t-reveal').onclick = () => primaryAction(); // same routing as the mobile reveal button
 el('t-got').onclick = () => grade(true);
 el('t-miss').onclick = () => grade(false);
 el('t-stop').onclick = () => startStudy(); // abort: back to the start screen, no history recorded
-el('r-again').onclick = () => startTest();
+el('r-again').onclick = () => ((state.review && missedCount() > 0) ? startReview() : startTest());
 el('r-back').onclick = () => { startStudy(); selectTab('listen'); };
