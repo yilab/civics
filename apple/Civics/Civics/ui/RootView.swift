@@ -40,6 +40,17 @@ struct RootView: View {
             district: settings.district,
             today: OfficialsData.today()
         )
+        // How many test-eligible questions are in the missed set right now — the
+        // same pool rule the engine's test decks use, so the count matches the deck.
+        let missedCount = TestPicker.reviewRanking(
+            personalized.filter {
+                !model.officialsRepo.data.unresolvedStateQuestions(
+                    placeCode: settings.jurisdiction,
+                    district: settings.district
+                ).contains($0.n)
+            },
+            model.settingsRepo.questionStats
+        ).count
         // Persistent brand mark in the upper left, laid out as a real row above
         // the tabs. Unlike .safeAreaInset (whose inset TabView content does not
         // reliably respect), a VStack row structurally guarantees tab content
@@ -86,6 +97,7 @@ struct RootView: View {
                     QuestionsScreen(
                         questions: personalized,
                         known: model.engine.state.known,
+                        stats: model.settingsRepo.questionStats,
                         currentNumber: model.engine.state.current?.n,
                         language: spoken,
                         translationPrimary: translationPrimary,
@@ -97,9 +109,11 @@ struct RootView: View {
                     TestScreen(
                         state: model.engine.state,
                         history: model.settingsRepo.testHistory,
+                        missedCount: missedCount,
                         language: spoken,
                         translationPrimary: translationPrimary,
                         onStart: { model.engine.startTest() },
+                        onStartReview: { model.engine.startReview() },
                         onReveal: { model.playback.play() },
                         onGrade: { model.engine.grade(correct: $0) },
                         onBackToStudy: { model.engine.startStudy() }
@@ -109,7 +123,8 @@ struct RootView: View {
                     SettingsScreen(
                         settings: model.settingsRepo.settings,
                         officials: model.officialsRepo.data,
-                        onChange: { transform in model.settingsRepo.update(transform) }
+                        onChange: { transform in model.settingsRepo.update(transform) },
+                        onResetStats: { model.settingsRepo.resetQuestionStats() }
                     )
                 }
             }

@@ -43,6 +43,10 @@ final class AppModel {
                     s.copy(known: known ? s.known.union([n]) : s.known.subtracting([n]))
                 }
             },
+            stats: { [weak settingsRepo] in settingsRepo?.questionStats ?? [:] },
+            onGraded: { n, correct in
+                settingsRepo.recordGraded(n, correct: correct)
+            },
             onTestFinished: { record in
                 settingsRepo.recordTest(record)
             }

@@ -19,12 +19,48 @@ enum TestOutcome: Equatable {
     case none, passed, failed
 }
 
+/// One graded answer inside a practice test, in ask order.
+struct GradedAnswer: Equatable, Codable {
+    let n: Int
+    let correct: Bool
+}
+
 /// One recorded practice test, kept for history.
 struct TestRecord: Equatable, Codable {
     let correct: Int
     let wrong: Int
     let passed: Bool
     let date: Date
+    /// True for a shortened review session over missed questions.
+    var review: Bool = false
+    /// The graded answers in ask order (empty on records from older versions).
+    var answers: [GradedAnswer] = []
+
+    init(correct: Int, wrong: Int, passed: Bool, date: Date,
+         review: Bool = false, answers: [GradedAnswer] = []) {
+        self.correct = correct
+        self.wrong = wrong
+        self.passed = passed
+        self.date = date
+        self.review = review
+        self.answers = answers
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case correct, wrong, passed, date, review, answers
+    }
+
+    /// Older records lack the review/answers keys — decode them with defaults
+    /// instead of failing (which would wipe the whole history).
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        correct = try c.decode(Int.self, forKey: .correct)
+        wrong = try c.decode(Int.self, forKey: .wrong)
+        passed = try c.decode(Bool.self, forKey: .passed)
+        date = try c.decode(Date.self, forKey: .date)
+        review = try c.decodeIfPresent(Bool.self, forKey: .review) ?? false
+        answers = try c.decodeIfPresent([GradedAnswer].self, forKey: .answers) ?? []
+    }
 }
 
 /// The word currently being spoken, for karaoke-style highlighting in the UI.
@@ -75,6 +111,13 @@ struct StudyState: Equatable {
     var testCorrect = 0
     var testWrong = 0
     var testOutcome: TestOutcome = .none
+    /// The graded answers so far, in ask order.
+    var answers: [GradedAnswer] = []
+    /// True when this test is a review session over missed questions.
+    var review = false
+    /// Pass/fail marks scaled to the deck size (12/9 for the standard 20).
+    var testPassAt = StudyState.testPassAt
+    var testFailAt = StudyState.testFailAt
 
     var deckSize: Int { deck.count }
     var playing: Bool { phase != .idle }
@@ -95,7 +138,11 @@ struct StudyState: Equatable {
         testIndex: Int? = nil,
         testCorrect: Int? = nil,
         testWrong: Int? = nil,
-        testOutcome: TestOutcome? = nil
+        testOutcome: TestOutcome? = nil,
+        answers: [GradedAnswer]? = nil,
+        review: Bool? = nil,
+        testPassAt: Int? = nil,
+        testFailAt: Int? = nil
     ) -> StudyState {
         StudyState(
             phase: phase ?? self.phase,
@@ -110,7 +157,11 @@ struct StudyState: Equatable {
             testIndex: testIndex ?? self.testIndex,
             testCorrect: testCorrect ?? self.testCorrect,
             testWrong: testWrong ?? self.testWrong,
-            testOutcome: testOutcome ?? self.testOutcome
+            testOutcome: testOutcome ?? self.testOutcome,
+            answers: answers ?? self.answers,
+            review: review ?? self.review,
+            testPassAt: testPassAt ?? self.testPassAt,
+            testFailAt: testFailAt ?? self.testFailAt
         )
     }
 }
@@ -127,6 +178,8 @@ final class StudyEngine {
     private let settings: any SettingsSource
     private let scheduler: any StudyScheduler
     private let onKnownChanged: (Int, Bool) -> Void
+    private let stats: () -> [Int: QuestionStat]
+    private let onGraded: (Int, Bool) -> Void
     private let onTestFinished: (TestRecord) -> Void
 
     private(set) var state = StudyState()
@@ -142,6 +195,8 @@ final class StudyEngine {
         settings: any SettingsSource,
         scheduler: any StudyScheduler,
         onKnownChanged: @escaping (Int, Bool) -> Void = { _, _ in },
+        stats: @escaping () -> [Int: QuestionStat] = { [:] },
+        onGraded: @escaping (Int, Bool) -> Void = { _, _ in },
         onTestFinished: @escaping (TestRecord) -> Void = { _ in }
     ) {
         self.speech = speech
@@ -150,6 +205,8 @@ final class StudyEngine {
         self.settings = settings
         self.scheduler = scheduler
         self.onKnownChanged = onKnownChanged
+        self.stats = stats
+        self.onGraded = onGraded
         self.onTestFinished = onTestFinished
 
         speech.callback = self
@@ -180,18 +237,35 @@ final class StudyEngine {
     }
 
     /// Starts a scored practice test: 20 random questions, pass at 12, fail at 9.
+    /// Missed questions are pulled into up to half the deck when review focus is on.
     func startTest() {
+        beginTest(TestPicker.pickDeck(testPool(), stats(), focus: settings.value.reviewFocus), review: false)
+    }
+
+    /// Starts a graded review session over the missed questions; a no-op when
+    /// nothing is missed (the button is disabled, but the engine stays safe).
+    func startReview() {
+        let ranked = TestPicker.reviewRanking(testPool(), stats())
+        guard !ranked.isEmpty else { return }
+        beginTest(Array(ranked.prefix(StudyState.testTotal).shuffled()), review: true)
+    }
+
+    /// The questions eligible for tests: personalized, minus state questions the
+    /// user can't answer yet (no place/district set) — they can't be graded on
+    /// "choose your state in Settings".
+    private func testPool() -> [Question] {
+        let s = settings.value
+        let unresolved = officials.unresolvedStateQuestions(placeCode: s.jurisdiction, district: s.district)
+        return personalized(repo.questions, s).filter { !unresolved.contains($0.n) }
+    }
+
+    private func beginTest(_ questions: [Question], review: Bool) {
         cancelTimer()
         expectedUtterance = nil
         speech.stop()
-        // State questions the user can't answer yet (no place/district set) are left
-        // out — they can't be graded on "choose your state in Settings".
-        let s = settings.value
-        let unresolved = officials.unresolvedStateQuestions(placeCode: s.jurisdiction, district: s.district)
-        deck = Array(personalized(repo.questions, s)
-            .filter { !unresolved.contains($0.n) }
-            .shuffled()
-            .prefix(StudyState.testTotal))
+        guard !questions.isEmpty else { return }
+        deck = questions
+        let marks = TestPicker.thresholds(deck.count)
         emit(state.copy(
             deck: deck,
             position: 0,
@@ -199,7 +273,11 @@ final class StudyEngine {
             testIndex: 0,
             testCorrect: 0,
             testWrong: 0,
-            testOutcome: .none
+            testOutcome: .none,
+            answers: [],
+            review: review,
+            testPassAt: marks.passAt,
+            testFailAt: marks.failAt
         ))
         speakQuestionAt(0)
     }
@@ -213,15 +291,17 @@ final class StudyEngine {
         if !correct && state.known.contains(q.n) {
             onKnownChanged(q.n, false)
         }
-        if correctNow >= StudyState.testPassAt {
-            finishTest(passed: true, correct: correctNow, wrong: wrongNow)
-        } else if wrongNow >= StudyState.testFailAt {
-            finishTest(passed: false, correct: correctNow, wrong: wrongNow)
+        onGraded(q.n, correct)
+        let answersNow = state.answers + [GradedAnswer(n: q.n, correct: correct)]
+        if correctNow >= state.testPassAt {
+            finishTest(passed: true, correct: correctNow, wrong: wrongNow, answers: answersNow)
+        } else if wrongNow >= state.testFailAt {
+            finishTest(passed: false, correct: correctNow, wrong: wrongNow, answers: answersNow)
         } else if state.testIndex + 1 >= deck.count {
             // Ran out of questions (deck shorter than the terminal counts).
-            finishTest(passed: correctNow >= StudyState.testPassAt, correct: correctNow, wrong: wrongNow)
+            finishTest(passed: correctNow >= state.testPassAt, correct: correctNow, wrong: wrongNow, answers: answersNow)
         } else {
-            emit(state.copy(testIndex: state.testIndex + 1, testCorrect: correctNow, testWrong: wrongNow))
+            emit(state.copy(testIndex: state.testIndex + 1, testCorrect: correctNow, testWrong: wrongNow, answers: answersNow))
             speakQuestionAt(state.testIndex)
         }
     }
@@ -237,13 +317,20 @@ final class StudyEngine {
             knownFilter: settings.value.knownFilter,
             known: settings.value.known
         ), settings.value)
-        emit(state.copy(phase: .idle, deck: deck, position: 0, mode: .study, testOutcome: .none))
+        emit(state.copy(phase: .idle, deck: deck, position: 0, mode: .study, testOutcome: .none, answers: [], review: false))
     }
 
-    private func finishTest(passed: Bool, correct: Int, wrong: Int) {
+    private func finishTest(passed: Bool, correct: Int, wrong: Int, answers: [GradedAnswer]) {
         cancelTimer()
         expectedUtterance = nil
-        let record = TestRecord(correct: correct, wrong: wrong, passed: passed, date: Date())
+        let record = TestRecord(
+            correct: correct,
+            wrong: wrong,
+            passed: passed,
+            date: Date(),
+            review: state.review,
+            answers: answers
+        )
         emit(state.copy(
             phase: .finished,
             answerRevealed: true,
@@ -407,11 +494,15 @@ final class StudyEngine {
 
     private func applySettings(_ s: StudySettings) {
         speech.speechRate = s.speechRate
-        let newDeck = personalized(repo.deck(category: s.category, shuffle: s.shuffle, knownFilter: s.knownFilter, known: s.known), s)
-        if deck.map(\.n) != newDeck.map(\.n) {
-            deck = newDeck
-            let pos = state.current.flatMap { c in deck.firstIndex { $0.n == c.n } } ?? 0
-            emit(state.copy(deck: deck, position: pos))
+        // While a test is in flight the deck is fixed: a settings emission (e.g. a
+        // wrong answer unmarking a known question) must not swap in the study deck.
+        if state.mode != .test {
+            let newDeck = personalized(repo.deck(category: s.category, shuffle: s.shuffle, knownFilter: s.knownFilter, known: s.known), s)
+            if deck.map(\.n) != newDeck.map(\.n) {
+                deck = newDeck
+                let pos = state.current.flatMap { c in deck.firstIndex { $0.n == c.n } } ?? 0
+                emit(state.copy(deck: deck, position: pos))
+            }
         }
         if state.known != s.known {
             emit(state.copy(known: s.known))

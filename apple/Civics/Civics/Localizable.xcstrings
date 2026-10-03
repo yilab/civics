@@ -1981,25 +1981,25 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "9 missed ends the test. Review in study mode, then try again."
+            "value": "%lld missed ends the test. Review in study mode, then try again."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "答错 9 题，测试结束。回到听题模式复习后再试。"
+            "value": "答错 %lld 题，测试结束。回到听题模式复习后再试。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "答错 9 题，测试结束。回到听题模式复习后再试。"
+            "value": "答錯 %lld 題，測試結束。回到聽題模式複習後再試。"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "9 missed ends the test. Review in study mode, then try again."
+            "value": "%lld falladas terminan el examen. Repase en el modo de estudio y vuelva a intentarlo."
           }
         }
       }
@@ -2010,25 +2010,25 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "You reached 12 correct — that's a passing score."
+            "value": "You reached %lld correct — that's a passing score."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "你已答对 12 题——达到通过标准。"
+            "value": "你已答对 %lld 题——达到通过标准。"
           }
         },
         "zh-Hant": {
           "stringUnit": {
             "state": "translated",
-            "value": "你已答对 12 题——达到通过标准。"
+            "value": "你已答對 %lld 題——達到通過標準。"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "You reached 12 correct — that's a passing score."
+            "value": "Alcanzó %lld correctas — es una puntuación aprobatoria."
           }
         }
       }
@@ -2575,6 +2575,296 @@
           "stringUnit": {
             "state": "translated",
             "value": "隨機排序"
+          }
+        }
+      }
+    },
+    "test.reviewAgain": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice missed questions again"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再复习一次答错的题"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "再複習一次答錯的題"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practicar de nuevo las falladas"
+          }
+        }
+      }
+    },
+    "test.summaryTests": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld tests"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 次测试"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 次測試"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld exámenes"
+          }
+        }
+      }
+    },
+    "test.summaryPass": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% passed"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通过率 %lld%%"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "通過率 %lld%%"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld%% aprobados"
+          }
+        }
+      }
+    },
+    "test.summaryMissed": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld missed"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 题待复习"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 題待複習"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld por repasar"
+          }
+        }
+      }
+    },
+    "test.startReview": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practice missed questions (%lld)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复习答错的题（%lld）"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "複習答錯的題（%lld）"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Practicar las preguntas falladas (%lld)"
+          }
+        }
+      }
+    },
+    "test.historyReview": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Review"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "复习"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "複習"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Repaso"
+          }
+        }
+      }
+    },
+    "test.missedHeading": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missed this time"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本次答错"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "本次答錯"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Falladas esta vez"
+          }
+        }
+      }
+    },
+    "questions.missedTimes": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Missed %lld times"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "答错 %lld 次"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "答錯 %lld 次"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fallada %lld veces"
+          }
+        }
+      }
+    },
+    "settings.reviewFocus": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Prioritize missed questions in tests"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "测试优先复习答错的题"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "測試優先複習答錯的題"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Priorizar las preguntas falladas en los exámenes"
+          }
+        }
+      }
+    },
+    "settings.resetStats": {
+      "extractionState": "stale",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset question stats"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置答题统计"
+          }
+        },
+        "zh-Hant": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置答題統計"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer las estadísticas de respuestas"
           }
         }
       }

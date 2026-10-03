@@ -8,6 +8,8 @@ struct StudySettings: Equatable {
     var thinkSeconds: Int = 3
     /// Automatically move to the next question after the answer has been spoken.
     var autoAdvance: Bool = false
+    /// Practice tests pull missed questions into up to half the deck.
+    var reviewFocus: Bool = true
     var category: String = Categories.all
     var shuffle: Bool = false
     /// Speak "Question N" before the question text.
@@ -40,6 +42,7 @@ struct StudySettings: Equatable {
         speechRate: Float? = nil,
         thinkSeconds: Int? = nil,
         autoAdvance: Bool? = nil,
+        reviewFocus: Bool? = nil,
         category: String? = nil,
         shuffle: Bool? = nil,
         announceMeta: Bool? = nil,
@@ -53,6 +56,7 @@ struct StudySettings: Equatable {
             speechRate: speechRate ?? self.speechRate,
             thinkSeconds: thinkSeconds ?? self.thinkSeconds,
             autoAdvance: autoAdvance ?? self.autoAdvance,
+            reviewFocus: reviewFocus ?? self.reviewFocus,
             category: category ?? self.category,
             shuffle: shuffle ?? self.shuffle,
             announceMeta: announceMeta ?? self.announceMeta,

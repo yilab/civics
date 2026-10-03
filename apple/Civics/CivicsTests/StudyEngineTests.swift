@@ -110,6 +110,8 @@ struct StudyEngineTests {
         scheduler: ManualScheduler = ManualScheduler(),
         repo: QuestionRepository? = nil,
         onKnownChanged: @escaping (Int, Bool) -> Void = { _, _ in },
+        stats: @escaping () -> [Int: QuestionStat] = { [:] },
+        onGraded: @escaping (Int, Bool) -> Void = { _, _ in },
         onTestFinished: @escaping (TestRecord) -> Void = { _ in }
     ) -> (StudyEngine, FakeSpeechEngine) {
         let speech = FakeSpeechEngine()
@@ -120,6 +122,8 @@ struct StudyEngineTests {
             settings: settings,
             scheduler: scheduler,
             onKnownChanged: onKnownChanged,
+            stats: stats,
+            onGraded: onGraded,
             onTestFinished: onTestFinished
         )
         return (engine, speech)
@@ -564,11 +568,15 @@ struct StudyEngineTests {
 
     private func makeTestEngine(
         onKnownChanged: @escaping (Int, Bool) -> Void = { _, _ in },
+        stats: @escaping () -> [Int: QuestionStat] = { [:] },
+        onGraded: @escaping (Int, Bool) -> Void = { _, _ in },
         onTestFinished: @escaping (TestRecord) -> Void = { _ in }
     ) -> (StudyEngine, FakeSpeechEngine) {
         makeEngine(
             settings: SettingsBox(StudySettings()),
             onKnownChanged: onKnownChanged,
+            stats: stats,
+            onGraded: onGraded,
             onTestFinished: onTestFinished
         )
     }
@@ -661,6 +669,120 @@ struct StudyEngineTests {
         // No skipping: the spoken utterance is unchanged.
         #expect(speech.spoken.last?.utteranceID == before)
         #expect(engine.state.phase == .speakingQuestion)
+    }
+
+    @Test func aSettingsChangeDuringATestDoesNotReplaceTheTestDeck() {
+        let settings = SettingsBox(StudySettings())
+        let (engine, _) = makeEngine(settings: settings)
+        engine.startTest()
+        let deckBefore = engine.state.deck.map(\.n)
+        // A grade-time settings emission (e.g. a wrong answer unmarking a known
+        // question) rebuilds the study deck — it must not touch the test deck.
+        settings.value = settings.value.copy(category: "American History", shuffle: true)
+        #expect(engine.state.deck.map(\.n) == deckBefore)
+        #expect(engine.state.mode == .test)
+    }
+
+    @Test func gradingReportsThroughTheOnGradedCallback() {
+        var graded: [(Int, Bool)] = []
+        let (engine, speech) = makeTestEngine(onGraded: { n, correct in graded.append((n, correct)) })
+        engine.startTest()
+        for _ in 0..<2 {
+            speech.finishLast() // question -> think
+            engine.primaryAction() // reveal
+            speech.finishLast() // answer -> awaiting grade
+            engine.grade(correct: true)
+        }
+        #expect(graded.count == 2)
+        let allCorrect = graded.allSatisfy { $0.1 }
+        #expect(allCorrect)
+        let distinctQuestions = Set(graded.map { $0.0 }).count
+        #expect(distinctQuestions == 2) // one report per distinct question
+    }
+
+    @Test func aFinishedTestRecordCarriesItsAnswers() throws {
+        var finished: TestRecord?
+        let (engine, speech) = makeTestEngine(onTestFinished: { finished = $0 })
+        engine.startTest()
+        for _ in 0..<StudyState.testPassAt {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(correct: true)
+        }
+        let record = try #require(finished)
+        #expect(record.review == false)
+        #expect(record.answers.count == StudyState.testPassAt)
+        let allGradedCorrect = record.answers.allSatisfy { $0.correct }
+        #expect(allGradedCorrect)
+        #expect(record.answers.map(\.n) == Array(engine.state.deck.map(\.n).prefix(StudyState.testPassAt)))
+    }
+
+    @Test func startReviewDrillsTheMissedQuestionsWithScaledThresholds() throws {
+        var finished: TestRecord?
+        let stats: [Int: QuestionStat] = [
+            1: QuestionStat(right: 0, wrong: 3, lastWrongMillis: 30),
+            5: QuestionStat(right: 0, wrong: 2, lastWrongMillis: 20),
+            9: QuestionStat(right: 0, wrong: 1, lastWrongMillis: 10),
+        ]
+        let (engine, speech) = makeEngine(
+            settings: SettingsBox(StudySettings()),
+            stats: { stats },
+            onTestFinished: { finished = $0 }
+        )
+        engine.startReview()
+        #expect(engine.state.mode == .test)
+        #expect(engine.state.review)
+        #expect(engine.state.deckSize == 3)
+        #expect(engine.state.testPassAt == 2)
+        #expect(engine.state.testFailAt == 2)
+        // Two correct out of three clears the 60%-of-3 bar.
+        for _ in 0..<2 {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(correct: true)
+        }
+        #expect(engine.state.phase == .finished)
+        #expect(engine.state.testOutcome == .passed)
+        let record = try #require(finished)
+        #expect(record.review)
+        // passAt=2 ends the review after two answers; they must come from the missed set.
+        #expect(record.answers.count == 2)
+        let fromMissedSet = record.answers.allSatisfy { [1, 5, 9].contains($0.n) }
+        #expect(fromMissedSet)
+    }
+
+    @Test func startReviewWithNothingMissedIsANoop() {
+        let (engine, speech) = makeTestEngine()
+        engine.startReview()
+        #expect(engine.state.phase == .idle)
+        #expect(speech.spoken.isEmpty)
+    }
+
+    @Test func reviewDeckExcludesUnresolvedStateQuestions() {
+        let stats: [Int: QuestionStat] = [
+            23: QuestionStat(right: 0, wrong: 1, lastWrongMillis: 10),
+            5: QuestionStat(right: 0, wrong: 2, lastWrongMillis: 20),
+        ]
+        let (engine, _) = makeEngine(settings: SettingsBox(StudySettings()), stats: { stats })
+        engine.startReview()
+        #expect(engine.state.deck.map(\.n) == [5])
+    }
+
+    @Test func aRegularTestPullsEveryMissedQuestionWhenReviewFocusIsOn() {
+        let stats: [Int: QuestionStat] = [
+            1: QuestionStat(right: 0, wrong: 3, lastWrongMillis: 30),
+            5: QuestionStat(right: 0, wrong: 2, lastWrongMillis: 20),
+            9: QuestionStat(right: 0, wrong: 1, lastWrongMillis: 10),
+            23: QuestionStat(right: 0, wrong: 9, lastWrongMillis: 99), // unresolved: not in the pool
+        ]
+        let (engine, _) = makeEngine(settings: SettingsBox(StudySettings()), stats: { stats })
+        engine.startTest()
+        let ns = Set(engine.state.deck.map(\.n))
+        let allMissedPresent = [1, 5, 9].allSatisfy { ns.contains($0) }
+        #expect(allMissedPresent)
+        #expect(!ns.contains(23))
     }
 
     // MARK: - State answers

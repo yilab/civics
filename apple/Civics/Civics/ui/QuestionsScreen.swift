@@ -3,6 +3,8 @@ import SwiftUI
 struct QuestionsScreen: View {
     let questions: [Question]
     let known: Set<Int>
+    /// Right/wrong history per question, for the miss badges.
+    var stats: [Int: QuestionStat] = [:]
     let currentNumber: Int?
     /// The spoken language whose translation is shown alongside the English text.
     var language: SpeechLanguage = .english
@@ -97,6 +99,13 @@ struct QuestionsScreen: View {
                                 }
                             }
                             Spacer(minLength: 8)
+                            // How many times this question was missed in tests, when any.
+                            if let stat = stats[q.n], stat.wrong > 0 {
+                                Text("×\(stat.wrong)")
+                                    .font(.footnote.weight(.semibold))
+                                    .foregroundStyle(.red)
+                                    .accessibilityLabel(L10n.t("questions.missedTimes", stat.wrong))
+                            }
                             // Tap the check to unmark a known question (or mark one).
                             Button {
                                 onToggleKnown(q.n)

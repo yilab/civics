@@ -3,11 +3,14 @@ import SwiftUI
 struct TestScreen: View {
     let state: StudyState
     let history: [TestRecord]
+    /// How many eligible questions are currently in the missed set.
+    var missedCount: Int = 0
     /// The spoken language whose translation is shown alongside the English text.
     var language: SpeechLanguage = .english
     /// True when the translation takes visual precedence (UI language matches it).
     var translationPrimary: Bool = false
     let onStart: () -> Void
+    let onStartReview: () -> Void
     let onReveal: () -> Void
     let onGrade: (Bool) -> Void
     let onBackToStudy: () -> Void
@@ -49,6 +52,23 @@ struct TestScreen: View {
             .controlSize(.large)
             .accessibilityIdentifier("startTest")
 
+            Button(action: onStartReview) {
+                Text(L10n.t("test.startReview", missedCount))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 24)
+            }
+            .buttonStyle(.bordered)
+            .controlSize(.large)
+            .disabled(missedCount == 0)
+            .accessibilityIdentifier("startReview")
+
+            if !history.isEmpty || missedCount > 0 {
+                Text(summary)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+                    .padding(.top, 4)
+            }
+
             if !history.isEmpty {
                 Text(L10n.t("test.history").uppercased())
                     .font(.footnote.weight(.medium))
@@ -59,7 +79,8 @@ struct TestScreen: View {
                     HStack {
                         Image(systemName: r.passed ? "checkmark.circle.fill" : "xmark.circle.fill")
                             .foregroundStyle(r.passed ? .green : .red)
-                        Text(L10n.t("test.score", r.correct, r.correct + r.wrong))
+                        Text(L10n.t("test.score", r.correct, r.correct + r.wrong)
+                             + (r.review ? " · " + L10n.t("test.historyReview") : ""))
                             .font(.subheadline.weight(.semibold))
                         Spacer()
                         Text(r.date, style: .date)
@@ -71,12 +92,24 @@ struct TestScreen: View {
         }
     }
 
+    /// "N tests · M% passed · K missed", the history part only when tests exist.
+    private var summary: String {
+        var parts: [String] = []
+        if !history.isEmpty {
+            parts.append(L10n.t("test.summaryTests", history.count))
+            parts.append(L10n.t("test.summaryPass",
+                                100 * history.filter(\.passed).count / history.count))
+        }
+        parts.append(L10n.t("test.summaryMissed", missedCount))
+        return parts.joined(separator: " · ")
+    }
+
     // MARK: - Running
 
     private var running: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack {
-                Text(L10n.t("test.progress", state.testIndex + 1, StudyState.testTotal))
+                Text(L10n.t("test.progress", state.testIndex + 1, state.deckSize))
                 Spacer()
                 Label("\(state.testCorrect)", systemImage: "checkmark.circle.fill")
                     .foregroundStyle(.green)
@@ -85,7 +118,7 @@ struct TestScreen: View {
             }
             .font(.footnote.weight(.semibold))
 
-            ProgressView(value: Double(state.testIndex) / Double(StudyState.testTotal))
+            ProgressView(value: Double(state.testIndex) / Double(max(state.deckSize, 1)))
                 .padding(.vertical, 8)
 
             card
@@ -211,6 +244,10 @@ struct TestScreen: View {
 
     private var finished: some View {
         let passed = state.testOutcome == .passed
+        let missed = state.answers.filter { !$0.correct }
+        // A finished review restarts as a review (over the updated missed set) —
+        // unless the session just emptied the missed set.
+        let againReview = state.review && missedCount > 0
         return VStack(spacing: 16) {
             Text(passed ? L10n.t("test.passed") : L10n.t("test.failed"))
                 .font(.title.weight(.bold))
@@ -218,12 +255,26 @@ struct TestScreen: View {
                 .padding(.top, 24)
             Text(L10n.t("test.score", state.testCorrect, state.testCorrect + state.testWrong))
                 .font(.system(size: 48, weight: .semibold, design: .rounded))
-            Text(passed ? L10n.t("test.verdictPass") : L10n.t("test.verdictFail"))
+            Text(passed
+                 ? L10n.t("test.verdictPass", state.testPassAt)
+                 : L10n.t("test.verdictFail", state.testFailAt))
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
                 .multilineTextAlignment(.center)
-            Button(action: onStart) {
-                Text(L10n.t("test.again")).frame(maxWidth: .infinity).frame(height: 24)
+            if !missed.isEmpty {
+                VStack(spacing: 4) {
+                    Text(L10n.t("test.missedHeading").uppercased())
+                        .font(.footnote.weight(.medium))
+                        .foregroundStyle(.red)
+                    Text(missed.map { "Q\($0.n)" }.joined(separator: " · "))
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                }
+            }
+            Button(action: againReview ? onStartReview : onStart) {
+                Text(L10n.t(againReview ? "test.reviewAgain" : "test.again"))
+                    .frame(maxWidth: .infinity)
+                    .frame(height: 24)
             }
             .buttonStyle(.borderedProminent)
             .controlSize(.large)

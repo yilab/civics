@@ -32,6 +32,9 @@ final class SettingsRepository: SettingsSource {
         static let testHistory = "test_history"
         static let jurisdiction = "jurisdiction"
         static let district = "district"
+        /// Per-question right/wrong history, encoded by `QuestionStats`.
+        static let questionStats = "question_stats"
+        static let reviewFocus = "review_focus"
     }
 
     private static func language(_ raw: String?) -> SpeechLanguage? {
@@ -69,6 +72,9 @@ final class SettingsRepository: SettingsSource {
 
     private(set) var settings: StudySettings
 
+    /// Right/wrong history per question number; updates as answers are graded.
+    private(set) var questionStats: [Int: QuestionStat]
+
     var value: StudySettings { settings }
 
     init(defaults: UserDefaults = .standard) {
@@ -95,6 +101,7 @@ final class SettingsRepository: SettingsSource {
             thinkSeconds: defaults.object(forKey: Keys.thinkSeconds) == nil
                 ? 3 : defaults.integer(forKey: Keys.thinkSeconds),
             autoAdvance: bool(Keys.autoAdvance, false),
+            reviewFocus: bool(Keys.reviewFocus, true),
             category: defaults.string(forKey: Keys.category) ?? Categories.all,
             shuffle: bool(Keys.shuffle, false),
             announceMeta: bool(Keys.announceMeta, true),
@@ -106,6 +113,13 @@ final class SettingsRepository: SettingsSource {
             district: defaults.object(forKey: Keys.district) == nil
                 ? nil : defaults.integer(forKey: Keys.district) >= 1 ? defaults.integer(forKey: Keys.district) : nil
         )
+
+        if let data = defaults.data(forKey: Keys.questionStats),
+           let decoded = try? JSONDecoder().decode([Int: QuestionStat].self, from: data) {
+            questionStats = decoded
+        } else {
+            questionStats = [:]
+        }
     }
 
     func observe(_ onChange: @escaping (StudySettings) -> Void) {
@@ -116,14 +130,17 @@ final class SettingsRepository: SettingsSource {
     func update(_ transform: (StudySettings) -> StudySettings) {
         var s = transform(settings)
         if s.jurisdiction != settings.jurisdiction || s.district != settings.district {
-            // The four state answers changed — their known marks must be re-earned.
+            // The four state answers changed — their known marks and stats must be re-earned.
             s.known.subtract(OfficialsData.stateQuestions)
             if s.jurisdiction == nil { s.district = nil }
+            questionStats = QuestionStats.drop(questionStats, OfficialsData.stateQuestions)
+            persistQuestionStats()
         }
         // All keys written in one pass, like DataStore's atomic edit.
         defaults.set(Double(s.speechRate), forKey: Keys.speechRate)
         defaults.set(s.thinkSeconds, forKey: Keys.thinkSeconds)
         defaults.set(s.autoAdvance, forKey: Keys.autoAdvance)
+        defaults.set(s.reviewFocus, forKey: Keys.reviewFocus)
         defaults.set(s.category, forKey: Keys.category)
         defaults.set(s.shuffle, forKey: Keys.shuffle)
         defaults.set(s.announceMeta, forKey: Keys.announceMeta)
@@ -158,5 +175,30 @@ final class SettingsRepository: SettingsSource {
     /// Appends a finished test, keeping the 20 most recent.
     func recordTest(_ record: TestRecord) {
         testHistory = ([record] + testHistory).prefix(20).map { $0 }
+    }
+
+    // MARK: - Question stats
+
+    private func persistQuestionStats() {
+        if let data = try? JSONEncoder().encode(questionStats) {
+            defaults.set(data, forKey: Keys.questionStats)
+        }
+    }
+
+    /// Applies one graded answer to the stats store.
+    func recordGraded(_ n: Int, correct: Bool) {
+        questionStats = QuestionStats.record(
+            questionStats,
+            n,
+            correct: correct,
+            now: Int(Date().timeIntervalSince1970 * 1000)
+        )
+        persistQuestionStats()
+    }
+
+    /// Clears all per-question stats.
+    func resetQuestionStats() {
+        questionStats = [:]
+        defaults.removeObject(forKey: Keys.questionStats)
     }
 }

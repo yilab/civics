@@ -5,6 +5,7 @@ struct SettingsScreen: View {
     let settings: StudySettings
     let officials: OfficialsData
     let onChange: ((StudySettings) -> StudySettings) -> Void
+    var onResetStats: () -> Void = {}
 
     var body: some View {
         ScrollView {
@@ -86,10 +87,21 @@ struct SettingsScreen: View {
                 SettingsSection("settings.progressSection") {
                     Text(L10n.t("settings.knownProgress", settings.known.count))
                         .font(.body)
-                    Button(L10n.t("settings.clearKnown")) {
-                        onChange { $0.copy(known: []) }
+                    SwitchRow(
+                        label: L10n.t("settings.reviewFocus"),
+                        checked: settings.reviewFocus,
+                        onChange: { v in onChange { $0.copy(reviewFocus: v) } }
+                    )
+                    HStack(spacing: 12) {
+                        Button(L10n.t("settings.clearKnown")) {
+                            onChange { $0.copy(known: []) }
+                        }
+                        .buttonStyle(.borderedProminent)
+                        Button(L10n.t("settings.resetStats")) {
+                            onResetStats()
+                        }
+                        .buttonStyle(.bordered)
                     }
-                    .buttonStyle(.borderedProminent)
                 }
             }
             .padding(.horizontal, 20)
