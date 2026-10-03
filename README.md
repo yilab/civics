@@ -18,6 +18,10 @@ Branded **Starwave**. No ads, no tracking, no accounts, no network calls.
   can read along.
 - **Hands-free practice test** — asks 20 questions and stops the moment you reach
   12 correct (pass) or 9 wrong (fail), just like the real interview.
+- **Per-question stats & review sessions** — every graded answer is counted per
+  question (miss badges in the Questions tab, test history with the missed list);
+  tests pull missed questions into up to half the deck, and "Practice missed
+  questions" runs a graded review over them with the pass mark scaled to the set.
 - **Flashcards** and a **three-way known filter** (known / unknown / all) on the
   Listen and Questions tabs.
 - Configurable think pause (default 3 s), speech rate, and voice.
@@ -101,8 +105,15 @@ All three platforms share the same design, with same-named modules:
 - **StudyEngine** (`audio/StudyEngine.kt` · `.swift` · `src/engine.js`) — the core
   state machine: speak question → think pause → speak answer → advance.
   Phases: IDLE, SPEAKING_QUESTION, THINKING, SPEAKING_ANSWER, AWAITING_ADVANCE,
-  AWAITING_GRADE, FINISHED. Modes: STUDY vs TEST (the early-stop practice test).
+  AWAITING_GRADE, FINISHED. Modes: STUDY vs TEST (the early-stop practice test;
+  pass/fail marks scale to the deck size — 12/9 for the standard 20).
   The engine never touches the UI; screens observe engine state.
+- **TestPicker** (`audio/TestPicker.kt` · `.swift` · `src/picker.js`) — pure test
+  deck selection: stratified sampling toward missed questions, the review-session
+  ranking (most misses first), and the scaled pass/fail thresholds.
+- **QuestionStats** (`settings/QuestionStats.kt` · `.swift` · `src/settings.js`) —
+  per-question right/wrong history driving the missed set, review decks, and the
+  miss badges; reset for the four state questions when the location changes.
 - **SpeechEngine** — per-platform TTS (Android `TextToSpeech`, Apple
   `AVSpeechSynthesizer`, web `SpeechSynthesis`). All skip utterances whose language
   has no installed voice rather than garbling them.
