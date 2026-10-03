@@ -32,6 +32,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.contentDescription
+import androidx.compose.ui.semantics.semantics
 import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
 import com.yilab.civics.data.KnownFilter
@@ -42,6 +44,8 @@ import com.yilab.civics.data.SpeechLanguage
 fun QuestionsScreen(
     questions: List<Question>,
     known: Set<Int>,
+    /** Right/wrong history per question, for the miss badges. */
+    stats: Map<Int, com.yilab.civics.settings.QuestionStat>,
     currentNumber: Int?,
     /** The spoken language whose translation is shown alongside the English text. */
     language: SpeechLanguage,
@@ -139,16 +143,31 @@ fun QuestionsScreen(
                         }
                     },
                     trailingContent = {
-                        // Tap to unmark a known question (or mark one).
-                        IconButton(onClick = { onToggleKnown(q.n) }) {
-                            Icon(
-                                if (isKnown) Icons.Filled.CheckCircle else Icons.Outlined.Circle,
-                                contentDescription = stringResource(
-                                    if (isKnown) R.string.questions_unmark else R.string.questions_mark,
-                                ),
-                                tint = if (isKnown) MaterialTheme.colorScheme.primary
-                                else MaterialTheme.colorScheme.onSurfaceVariant,
-                            )
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            // How many times this question was missed in tests, when any.
+                            val stat = stats[q.n]
+                            if (stat != null && stat.wrong > 0) {
+                                val missedLabel = stringResource(R.string.questions_missed_times, stat.wrong)
+                                Text(
+                                    "×${stat.wrong}",
+                                    style = MaterialTheme.typography.labelMedium,
+                                    color = MaterialTheme.colorScheme.error,
+                                    modifier = Modifier
+                                        .padding(end = 4.dp)
+                                        .semantics { contentDescription = missedLabel },
+                                )
+                            }
+                            // Tap to unmark a known question (or mark one).
+                            IconButton(onClick = { onToggleKnown(q.n) }) {
+                                Icon(
+                                    if (isKnown) Icons.Filled.CheckCircle else Icons.Outlined.Circle,
+                                    contentDescription = stringResource(
+                                        if (isKnown) R.string.questions_unmark else R.string.questions_mark,
+                                    ),
+                                    tint = if (isKnown) MaterialTheme.colorScheme.primary
+                                    else MaterialTheme.colorScheme.onSurfaceVariant,
+                                )
+                            }
                         }
                     },
                 )

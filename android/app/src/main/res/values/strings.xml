@@ -34,12 +34,19 @@
     <string name="test_progress">Question %1$d of %2$d</string>
     <string name="test_passed">Passed</string>
     <string name="test_failed">Not yet</string>
-    <string name="test_verdict_pass">You reached 12 correct — that\'s a passing score.</string>
-    <string name="test_verdict_fail">9 missed ends the test. Review in study mode, then try again.</string>
+    <string name="test_verdict_pass">You reached %1$d correct — that\'s a passing score.</string>
+    <string name="test_verdict_fail">%1$d missed ends the test. Review in study mode, then try again.</string>
     <string name="test_again">Take another test</string>
+    <string name="test_review_again">Practice missed questions again</string>
     <string name="test_back_to_study">Back to listening</string>
     <string name="test_history">Recent tests</string>
     <string name="test_score">%1$d / %2$d</string>
+    <string name="test_summary_tests">%1$d tests</string>
+    <string name="test_summary_pass">%1$d%% passed</string>
+    <string name="test_summary_missed">%1$d missed</string>
+    <string name="test_start_review">Practice missed questions (%1$d)</string>
+    <string name="test_history_review">Review</string>
+    <string name="test_missed_heading">Missed this time</string>
     <string name="listen_previous_question">Previous question</string>
     <string name="listen_stop">Stop</string>
     <string name="listen_mark_known">Mark known</string>
@@ -48,6 +55,7 @@
     <string name="questions_known">Known</string>
     <string name="questions_unmark">Unmark as known</string>
     <string name="questions_mark">Mark as known</string>
+    <string name="questions_missed_times">Missed %1$d times</string>
 
     <string name="flashcards_tap_to_reveal">Tap to reveal</string>
     <string name="flashcards_tap_for_question">Tap for question</string>
@@ -83,6 +91,8 @@
     <string name="settings_shuffle">Shuffle</string>
     <string name="settings_known_progress">%1$d of 128 marked as known</string>
     <string name="settings_clear_known">Clear known marks</string>
+    <string name="settings_review_focus">Prioritize missed questions in tests</string>
+    <string name="settings_reset_stats">Reset question stats</string>
 
     <string name="category_all">All 128 questions</string>
     <string name="category_american_government">American Government</string>

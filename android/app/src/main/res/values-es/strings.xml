@@ -34,18 +34,26 @@
     <string name="test_progress">第 %1$d 题 / 共 %2$d 题</string>
     <string name="test_passed">通过</string>
     <string name="test_failed">未通过</string>
-    <string name="test_verdict_pass">你已答对 12 题——达到通过标准。</string>
-    <string name="test_verdict_fail">答错 9 题，测试结束。回到听题模式复习后再试。</string>
-    <string name="test_again">再测一次</string>
-    <string name="test_back_to_study">返回听题</string>
-    <string name="test_history">最近测试</string>
+    <string name="test_verdict_pass">Alcanzó %1$d correctas — es una puntuación aprobatoria.</string>
+    <string name="test_verdict_fail">%1$d falladas terminan el examen. Repase en el modo de estudio y vuelva a intentarlo.</string>
+    <string name="test_again">Hacer otro examen</string>
+    <string name="test_review_again">Practicar de nuevo las falladas</string>
+    <string name="test_back_to_study">Volver a escuchar</string>
+    <string name="test_history">Exámenes recientes</string>
     <string name="test_score">%1$d / %2$d</string>
+    <string name="test_summary_tests">%1$d exámenes</string>
+    <string name="test_summary_pass">%1$d%% aprobados</string>
+    <string name="test_summary_missed">%1$d por repasar</string>
+    <string name="test_start_review">Practicar las preguntas falladas (%1$d)</string>
+    <string name="test_history_review">Repaso</string>
+    <string name="test_missed_heading">Falladas esta vez</string>
     <string name="listen_previous_question">上一题</string>
     <string name="listen_stop">停止</string>
     <string name="listen_mark_known">标记为已掌握</string>
     <string name="listen_known">已掌握</string>
     <string name="questions_playing_suffix"> · 播放中</string>
     <string name="questions_known">已掌握</string>
+    <string name="questions_missed_times">Fallada %1$d veces</string>
 
     <string name="flashcards_tap_to_reveal">Toca para ver la respuesta</string>
     <string name="flashcards_tap_for_question">Toca para ver la pregunta</string>
@@ -80,6 +88,8 @@
     <string name="settings_shuffle">随机顺序</string>
     <string name="settings_known_progress">已掌握 %1$d / 128 题</string>
     <string name="settings_clear_known">清除已掌握标记</string>
+    <string name="settings_review_focus">Priorizar las preguntas falladas en los exámenes</string>
+    <string name="settings_reset_stats">Restablecer las estadísticas de respuestas</string>
 
     <string name="category_all">全部 128 题</string>
     <string name="category_american_government">美国政府</string>

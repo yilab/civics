@@ -46,6 +46,7 @@ fun SettingsScreen(
     settings: StudySettings,
     officials: OfficialsData,
     onChange: ((StudySettings) -> StudySettings) -> Unit,
+    onResetStats: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     Column(
@@ -144,8 +145,18 @@ fun SettingsScreen(
                 stringResource(R.string.settings_known_progress, settings.known.size),
                 style = MaterialTheme.typography.bodyLarge,
             )
-            TextButton(onClick = { onChange { it.copy(known = emptySet()) } }) {
-                Text(stringResource(R.string.settings_clear_known))
+            SwitchRow(
+                label = stringResource(R.string.settings_review_focus),
+                checked = settings.reviewFocus,
+                onCheckedChange = { v -> onChange { it.copy(reviewFocus = v) } },
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                TextButton(onClick = { onChange { it.copy(known = emptySet()) } }) {
+                    Text(stringResource(R.string.settings_clear_known))
+                }
+                TextButton(onClick = onResetStats) {
+                    Text(stringResource(R.string.settings_reset_stats))
+                }
             }
         }
     }

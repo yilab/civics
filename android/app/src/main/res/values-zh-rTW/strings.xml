@@ -34,18 +34,26 @@
     <string name="test_progress">第 %1$d 题 / 共 %2$d 题</string>
     <string name="test_passed">通过</string>
     <string name="test_failed">未通过</string>
-    <string name="test_verdict_pass">你已答对 12 题——达到通过标准。</string>
-    <string name="test_verdict_fail">答错 9 题，测试结束。回到听题模式复习后再试。</string>
-    <string name="test_again">再测一次</string>
-    <string name="test_back_to_study">返回听题</string>
-    <string name="test_history">最近测试</string>
+    <string name="test_verdict_pass">你已答對 %1$d 題——達到通過標準。</string>
+    <string name="test_verdict_fail">答錯 %1$d 題，測試結束。回到聽題模式複習後再試。</string>
+    <string name="test_again">再測一次</string>
+    <string name="test_review_again">再複習一次答錯的題</string>
+    <string name="test_back_to_study">返回聽題</string>
+    <string name="test_history">最近測試</string>
     <string name="test_score">%1$d / %2$d</string>
+    <string name="test_summary_tests">%1$d 次測試</string>
+    <string name="test_summary_pass">通過率 %1$d%%</string>
+    <string name="test_summary_missed">%1$d 題待複習</string>
+    <string name="test_start_review">複習答錯的題（%1$d）</string>
+    <string name="test_history_review">複習</string>
+    <string name="test_missed_heading">本次答錯</string>
     <string name="listen_previous_question">上一题</string>
     <string name="listen_stop">停止</string>
     <string name="listen_mark_known">标记为已掌握</string>
     <string name="listen_known">已掌握</string>
     <string name="questions_playing_suffix"> · 播放中</string>
     <string name="questions_known">已掌握</string>
+    <string name="questions_missed_times">答錯 %1$d 次</string>
 
     <string name="flashcards_tap_to_reveal">點按顯示答案</string>
     <string name="flashcards_tap_for_question">點按看題目</string>
@@ -80,6 +88,8 @@
     <string name="settings_shuffle">随机顺序</string>
     <string name="settings_known_progress">已掌握 %1$d / 128 题</string>
     <string name="settings_clear_known">清除已掌握标记</string>
+    <string name="settings_review_focus">測試優先複習答錯的題</string>
+    <string name="settings_reset_stats">重置答題統計</string>
 
     <string name="category_all">全部 128 题</string>
     <string name="category_american_government">美国政府</string>

@@ -113,6 +113,7 @@ fun CivicsRoot() {
 
     val state by engine.state.collectAsState()
     val settings by app.settingsRepo.settings.collectAsState()
+    val stats by app.settingsRepo.stats.collectAsState()
     val ttsAvailable by app.ttsAvailable.collectAsState()
     var currentDestination by rememberSaveable { mutableStateOf(AppDestinations.LISTEN) }
 
@@ -133,6 +134,16 @@ fun CivicsRoot() {
             settings.district,
             java.time.LocalDate.now().toString(),
         )
+    }
+
+    // How many test-eligible questions are in the missed set right now — the
+    // same pool rule the engine's test decks use, so the count matches the deck.
+    val missedCount = remember(stats, settings.jurisdiction, settings.district) {
+        val unresolved = app.officialsRepo.data.unresolvedStateQuestions(settings.jurisdiction, settings.district)
+        com.yilab.civics.audio.TestPicker.reviewRanking(
+            personalizedQuestions.filter { it.n !in unresolved },
+            stats,
+        ).size
     }
 
     // Route transport through the session so on-screen and AirPod presses behave identically.
@@ -189,6 +200,7 @@ fun CivicsRoot() {
                 AppDestinations.QUESTIONS -> QuestionsScreen(
                     questions = personalizedQuestions,
                     known = state.known,
+                    stats = stats,
                     currentNumber = state.current?.n,
                     language = spoken,
                     translationPrimary = translationPrimary,
@@ -201,6 +213,7 @@ fun CivicsRoot() {
                     settings = settings,
                     officials = app.officialsRepo.data,
                     onChange = { transform -> app.appScope.launch { app.settingsRepo.update(transform) } },
+                    onResetStats = { app.appScope.launch { app.settingsRepo.resetQuestionStats() } },
                     modifier = Modifier.padding(innerPadding),
                 )
 
@@ -212,9 +225,11 @@ fun CivicsRoot() {
                     com.yilab.civics.ui.TestScreen(
                         state = state,
                         history = history,
+                        missedCount = missedCount,
                         language = spoken,
                         translationPrimary = translationPrimary,
                         onStart = { engine.startTest() },
+                        onStartReview = { engine.startReview() },
                         onReveal = primary,
                         onGrade = { engine.grade(it) },
                         onBackToStudy = { engine.startStudy() },

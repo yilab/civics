@@ -15,6 +15,7 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -35,11 +36,14 @@ import com.yilab.civics.data.SpeechLanguage
 fun TestScreen(
     state: StudyState,
     history: List<TestRecord>,
+    /** How many eligible questions are currently in the missed set. */
+    missedCount: Int,
     /** The spoken language whose translation is shown alongside the English text. */
     language: SpeechLanguage,
     /** True when the translation takes visual precedence (UI language matches it). */
     translationPrimary: Boolean,
     onStart: () -> Unit,
+    onStartReview: () -> Unit,
     onReveal: () -> Unit,
     onGrade: (Boolean) -> Unit,
     onBackToStudy: () -> Unit,
@@ -52,15 +56,15 @@ fun TestScreen(
             .padding(horizontal = 20.dp, vertical = 16.dp),
     ) {
         when (state.phase) {
-            Phase.FINISHED -> Finished(state, onStart, onBackToStudy)
-            Phase.IDLE -> Start(history, onStart)
+            Phase.FINISHED -> Finished(state, onStart, onStartReview, onBackToStudy)
+            Phase.IDLE -> Start(history, missedCount, onStart, onStartReview)
             else -> Running(state, language, translationPrimary, onReveal, onGrade)
         }
     }
 }
 
 @Composable
-private fun Start(history: List<TestRecord>, onStart: () -> Unit) {
+private fun Start(history: List<TestRecord>, missedCount: Int, onStart: () -> Unit, onStartReview: () -> Unit) {
     Text(stringResource(R.string.test_title), style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
     Spacer(Modifier.height(12.dp))
     Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
@@ -71,6 +75,26 @@ private fun Start(history: List<TestRecord>, onStart: () -> Unit) {
     Spacer(Modifier.height(16.dp))
     Button(onClick = onStart, modifier = Modifier.fillMaxWidth().height(56.dp)) {
         Text(stringResource(R.string.test_start))
+    }
+    Spacer(Modifier.height(8.dp))
+    OutlinedButton(onClick = onStartReview, enabled = missedCount > 0, modifier = Modifier.fillMaxWidth().height(56.dp)) {
+        Text(stringResource(R.string.test_start_review, missedCount))
+    }
+    if (history.isNotEmpty() || missedCount > 0) {
+        Spacer(Modifier.height(20.dp))
+        Text(
+            buildString {
+                if (history.isNotEmpty()) {
+                    append(stringResource(R.string.test_summary_tests, history.size))
+                    append(" · ")
+                    append(stringResource(R.string.test_summary_pass, 100 * history.count { it.passed } / history.size))
+                    append(" · ")
+                }
+                append(stringResource(R.string.test_summary_missed, missedCount))
+            },
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurfaceVariant,
+        )
     }
     if (history.isNotEmpty()) {
         Spacer(Modifier.height(20.dp))
@@ -87,7 +111,8 @@ private fun Start(history: List<TestRecord>, onStart: () -> Unit) {
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
-                    (if (r.passed) "✓ " else "✗ ") + stringResource(R.string.test_score, r.correct, r.correct + r.wrong),
+                    (if (r.passed) "✓ " else "✗ ") + stringResource(R.string.test_score, r.correct, r.correct + r.wrong) +
+                        (if (r.review) " · " + stringResource(R.string.test_history_review) else ""),
                     style = MaterialTheme.typography.bodyMedium,
                     color = if (r.passed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error,
                 )
@@ -115,7 +140,7 @@ private fun Running(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
-            stringResource(R.string.test_progress, state.testIndex + 1, StudyState.TEST_TOTAL),
+            stringResource(R.string.test_progress, state.testIndex + 1, state.deckSize),
             style = MaterialTheme.typography.labelLarge,
         )
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -124,7 +149,7 @@ private fun Running(
         }
     }
     LinearProgressIndicator(
-        progress = { state.testIndex / StudyState.TEST_TOTAL.toFloat() },
+        progress = { if (state.deckSize == 0) 0f else state.testIndex / state.deckSize.toFloat() },
         modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp),
     )
 
@@ -197,8 +222,9 @@ private fun Running(
 }
 
 @Composable
-private fun Finished(state: StudyState, onStart: () -> Unit, onBackToStudy: () -> Unit) {
+private fun Finished(state: StudyState, onStart: () -> Unit, onStartReview: () -> Unit, onBackToStudy: () -> Unit) {
     val passed = state.testOutcome == TestOutcome.PASSED
+    val missed = state.answers.filter { !it.correct }
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
         Spacer(Modifier.height(24.dp))
         Text(
@@ -214,13 +240,36 @@ private fun Finished(state: StudyState, onStart: () -> Unit, onBackToStudy: () -
         )
         Spacer(Modifier.height(12.dp))
         Text(
-            stringResource(if (passed) R.string.test_verdict_pass else R.string.test_verdict_fail),
+            stringResource(
+                if (passed) R.string.test_verdict_pass else R.string.test_verdict_fail,
+                if (passed) state.testPassAt else state.testFailAt,
+            ),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
+        if (missed.isNotEmpty()) {
+            Spacer(Modifier.height(16.dp))
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(
+                    stringResource(R.string.test_missed_heading).uppercase(),
+                    style = MaterialTheme.typography.labelMedium,
+                    color = MaterialTheme.colorScheme.error,
+                )
+                Spacer(Modifier.height(4.dp))
+                Text(
+                    missed.joinToString(" · ") { "Q${it.n}" },
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                )
+            }
+        }
         Spacer(Modifier.height(24.dp))
-        Button(onClick = onStart, modifier = Modifier.fillMaxWidth().height(56.dp)) {
-            Text(stringResource(R.string.test_again))
+        // A finished review restarts as a review (over the updated missed set).
+        Button(
+            onClick = { if (state.review) onStartReview() else onStart() },
+            modifier = Modifier.fillMaxWidth().height(56.dp),
+        ) {
+            Text(stringResource(if (state.review) R.string.test_review_again else R.string.test_again))
         }
         Spacer(Modifier.height(8.dp))
         TextButton(onClick = onBackToStudy, modifier = Modifier.fillMaxWidth()) {
