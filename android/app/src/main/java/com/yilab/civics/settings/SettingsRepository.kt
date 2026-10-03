@@ -44,6 +44,9 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
         val TEST_HISTORY = stringPreferencesKey("test_history")
         val JURISDICTION = stringPreferencesKey("jurisdiction")
         val DISTRICT = intPreferencesKey("district")
+        /** Per-question right/wrong history, encoded by [QuestionStats]. */
+        val QUESTION_STATS = stringPreferencesKey("question_stats")
+        val REVIEW_FOCUS = booleanPreferencesKey("review_focus")
     }
 
     private fun languageFor(raw: String?): SpeechLanguage? = when (raw) {
@@ -77,6 +80,7 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
                 speechRate = prefs[Keys.SPEECH_RATE] ?: 1.0f,
                 thinkSeconds = prefs[Keys.THINK_SECONDS] ?: 3,
                 autoAdvance = prefs[Keys.AUTO_ADVANCE] ?: false,
+                reviewFocus = prefs[Keys.REVIEW_FOCUS] ?: true,
                 category = prefs[Keys.CATEGORY] ?: com.yilab.civics.data.Categories.ALL,
                 shuffle = prefs[Keys.SHUFFLE] ?: false,
                 announceMeta = prefs[Keys.ANNOUNCE_META] ?: true,
@@ -98,13 +102,18 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
             val before = settings.value
             var s = transform(before)
             if (s.jurisdiction != before.jurisdiction || s.district != before.district) {
-                // The four state answers changed — their known marks must be re-earned.
+                // The four state answers changed — their known marks and stats must be re-earned.
                 s = s.copy(known = s.known - com.yilab.civics.data.OfficialsData.STATE_QUESTIONS)
                 if (s.jurisdiction == null) s = s.copy(district = null)
+                val stats = QuestionStats.parse(prefs[Keys.QUESTION_STATS])
+                prefs[Keys.QUESTION_STATS] = QuestionStats.encode(
+                    QuestionStats.drop(stats, com.yilab.civics.data.OfficialsData.STATE_QUESTIONS)
+                )
             }
             prefs[Keys.SPEECH_RATE] = s.speechRate
             prefs[Keys.THINK_SECONDS] = s.thinkSeconds
             prefs[Keys.AUTO_ADVANCE] = s.autoAdvance
+            prefs[Keys.REVIEW_FOCUS] = s.reviewFocus
             prefs[Keys.CATEGORY] = s.category
             prefs[Keys.SHUFFLE] = s.shuffle
             prefs[Keys.ANNOUNCE_META] = s.announceMeta
@@ -137,5 +146,30 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
                 .take(20)
             prefs[Keys.TEST_HISTORY] = list.joinToString(";")
         }
+    }
+
+    // ------------------------------------------------------------ question stats
+
+    /** Right/wrong history per question number; updates as answers are graded. */
+    val stats: StateFlow<Map<Int, QuestionStat>> = store.data
+        .map { prefs -> QuestionStats.parse(prefs[Keys.QUESTION_STATS]) }
+        .stateIn(scope, SharingStarted.Eagerly, emptyMap())
+
+    /** Applies one graded answer to the stats store (atomic read-modify-write). */
+    suspend fun recordGraded(n: Int, correct: Boolean) {
+        store.edit { prefs ->
+            val updated = QuestionStats.record(
+                QuestionStats.parse(prefs[Keys.QUESTION_STATS]),
+                n,
+                correct,
+                System.currentTimeMillis(),
+            )
+            prefs[Keys.QUESTION_STATS] = QuestionStats.encode(updated)
+        }
+    }
+
+    /** Clears all per-question stats. */
+    suspend fun resetQuestionStats() {
+        store.edit { prefs -> prefs.remove(Keys.QUESTION_STATS) }
     }
 }

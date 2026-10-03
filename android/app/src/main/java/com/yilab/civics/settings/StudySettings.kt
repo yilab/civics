@@ -10,6 +10,8 @@ data class StudySettings(
     val thinkSeconds: Int = 3,
     /** Automatically move to the next question after the answer has been spoken. */
     val autoAdvance: Boolean = false,
+    /** Practice tests pull missed questions into up to half the deck. */
+    val reviewFocus: Boolean = true,
     val category: String = Categories.ALL,
     val shuffle: Boolean = false,
     /** Speak "Question N" before the question text. */
