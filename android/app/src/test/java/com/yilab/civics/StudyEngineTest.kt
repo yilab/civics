@@ -679,6 +679,20 @@ class StudyEngineTest {
         assertEquals(Phase.SPEAKING_QUESTION, engine.state.value.phase)
     }
 
+    @Test
+    fun `a settings change during a test does not replace the test deck`() = runTest {
+        val settings = MutableStateFlow(StudySettings())
+        val (engine) = engine(settings)
+        engine.startTest()
+        val deckBefore = engine.state.value.deck.map { it.n }
+        // A grade-time settings emission (e.g. a wrong answer unmarking a known
+        // question) rebuilds the study deck — it must not touch the test deck.
+        settings.value = settings.value.copy(shuffle = true, category = "American History")
+        runCurrent()
+        assertEquals(deckBefore, engine.state.value.deck.map { it.n })
+        assertEquals(com.yilab.civics.audio.EngineMode.TEST, engine.state.value.mode)
+    }
+
     // ------------------------------------------------------------- state answers
 
     @Test

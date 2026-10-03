@@ -428,12 +428,16 @@ class StudyEngine(
 
     private fun applySettings(s: StudySettings) {
         speech.speechRate = s.speechRate
-        val newDeck = personalized(repo.deck(s.category, s.shuffle, s.knownFilter, s.known), s)
-        if (deck.map { it.n } != newDeck.map { it.n }) {
-            deck = newDeck
-            val pos = state.value.current?.let { c -> deck.indexOfFirst { it.n == c.n } }
-                ?.takeIf { it >= 0 } ?: 0
-            emit(state.value.copy(deck = deck, position = pos))
+        // While a test is in flight the deck is fixed: a settings emission (e.g. a
+        // wrong answer unmarking a known question) must not swap in the study deck.
+        if (state.value.mode != EngineMode.TEST) {
+            val newDeck = personalized(repo.deck(s.category, s.shuffle, s.knownFilter, s.known), s)
+            if (deck.map { it.n } != newDeck.map { it.n }) {
+                deck = newDeck
+                val pos = state.value.current?.let { c -> deck.indexOfFirst { it.n == c.n } }
+                    ?.takeIf { it >= 0 } ?: 0
+                emit(state.value.copy(deck = deck, position = pos))
+            }
         }
         if (state.value.known != s.known) {
             emit(state.value.copy(known = s.known))
