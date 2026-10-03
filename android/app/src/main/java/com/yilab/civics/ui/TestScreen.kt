@@ -56,7 +56,7 @@ fun TestScreen(
             .padding(horizontal = 20.dp, vertical = 16.dp),
     ) {
         when (state.phase) {
-            Phase.FINISHED -> Finished(state, onStart, onStartReview, onBackToStudy)
+            Phase.FINISHED -> Finished(state, missedCount, onStart, onStartReview, onBackToStudy)
             Phase.IDLE -> Start(history, missedCount, onStart, onStartReview)
             else -> Running(state, language, translationPrimary, onReveal, onGrade)
         }
@@ -222,7 +222,7 @@ private fun Running(
 }
 
 @Composable
-private fun Finished(state: StudyState, onStart: () -> Unit, onStartReview: () -> Unit, onBackToStudy: () -> Unit) {
+private fun Finished(state: StudyState, missedCount: Int, onStart: () -> Unit, onStartReview: () -> Unit, onBackToStudy: () -> Unit) {
     val passed = state.testOutcome == TestOutcome.PASSED
     val missed = state.answers.filter { !it.correct }
     Column(modifier = Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -264,12 +264,14 @@ private fun Finished(state: StudyState, onStart: () -> Unit, onStartReview: () -
             }
         }
         Spacer(Modifier.height(24.dp))
-        // A finished review restarts as a review (over the updated missed set).
+        // A finished review restarts as a review (over the updated missed set) —
+        // unless the session just emptied the missed set.
+        val againReview = state.review && missedCount > 0
         Button(
-            onClick = { if (state.review) onStartReview() else onStart() },
+            onClick = { if (againReview) onStartReview() else onStart() },
             modifier = Modifier.fillMaxWidth().height(56.dp),
         ) {
-            Text(stringResource(if (state.review) R.string.test_review_again else R.string.test_again))
+            Text(stringResource(if (againReview) R.string.test_review_again else R.string.test_again))
         }
         Spacer(Modifier.height(8.dp))
         TextButton(onClick = onBackToStudy, modifier = Modifier.fillMaxWidth()) {
