@@ -49,6 +49,11 @@ class QuestionRepositoryTest {
         assertEquals(72, repo.deck("American Government", shuffle = false).size)
         assertEquals(46, repo.deck("American History", shuffle = false).size)
         assertEquals(10, repo.deck("Symbols & Holidays", shuffle = false).size)
+        // The virtual category collects the eight dynamic questions.
+        assertEquals(
+            listOf(23, 29, 30, 38, 39, 57, 61, 62),
+            repo.deck(Categories.VARIES, shuffle = false).map { it.n },
+        )
 
         val ordered = repo.deck(Categories.ALL, shuffle = false).map { it.n }
         val shuffled = repo.deck(Categories.ALL, shuffle = true).map { it.n }

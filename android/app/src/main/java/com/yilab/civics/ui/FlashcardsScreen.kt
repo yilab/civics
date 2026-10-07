@@ -68,8 +68,11 @@ fun FlashcardsScreen(
     var flipped by rememberSaveable { mutableStateOf(false) }
 
     val deck = remember(questions, category, shuffleSeed) {
-        val filtered =
-            if (category == Categories.ALL) questions else questions.filter { it.category == category }
+        val filtered = when (category) {
+            Categories.ALL -> questions
+            Categories.VARIES -> questions.filter { it.dynamic }
+            else -> questions.filter { it.category == category }
+        }
         shuffleSeed?.let { filtered.shuffled(Random(it)) } ?: filtered
     }
     val q = deck.getOrNull(position)

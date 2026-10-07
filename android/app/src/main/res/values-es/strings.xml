@@ -95,6 +95,7 @@
     <string name="category_american_government">美国政府</string>
     <string name="category_american_history">美国历史</string>
     <string name="category_symbols_holidays">象征与节日</string>
+    <string name="category_varies">Respuestas que cambian</string>
     <string name="filter_all">Todas</string>
     <string name="filter_known">Aprendidas</string>
     <string name="filter_not_known">Por aprender</string>

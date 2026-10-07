@@ -98,6 +98,7 @@
     <string name="category_american_government">American Government</string>
     <string name="category_american_history">American History</string>
     <string name="category_symbols_holidays">Symbols &amp; Holidays</string>
+    <string name="category_varies">Answers That Change</string>
     <string name="filter_all">All</string>
     <string name="filter_known">Known</string>
     <string name="filter_not_known">Not known</string>

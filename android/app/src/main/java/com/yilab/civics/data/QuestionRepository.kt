@@ -13,8 +13,11 @@ class QuestionRepository(private val jsonSource: () -> String) {
         knownFilter: KnownFilter = KnownFilter.ALL,
         known: Set<Int> = emptySet(),
     ): List<Question> {
-        var filtered =
-            if (category == Categories.ALL) questions else questions.filter { it.category == category }
+        var filtered = when (category) {
+            Categories.ALL -> questions
+            Categories.VARIES -> questions.filter { it.dynamic }
+            else -> questions.filter { it.category == category }
+        }
         filtered = when (knownFilter) {
             KnownFilter.ALL -> filtered
             KnownFilter.KNOWN -> filtered.filter { it.n in known }

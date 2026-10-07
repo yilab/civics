@@ -344,6 +344,7 @@ private fun spokenLine(
 @Composable
 fun categoryLabel(category: String): String = when (category) {
     com.yilab.civics.data.Categories.ALL -> stringResource(R.string.category_all)
+    com.yilab.civics.data.Categories.VARIES -> stringResource(R.string.category_varies)
     "American Government" -> stringResource(R.string.category_american_government)
     "American History" -> stringResource(R.string.category_american_history)
     "Symbols & Holidays" -> stringResource(R.string.category_symbols_holidays)

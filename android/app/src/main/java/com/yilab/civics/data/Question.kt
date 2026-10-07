@@ -83,7 +83,10 @@ data class Question(
 
 object Categories {
     const val ALL = "All"
-    val values = listOf(ALL, "American Government", "American History", "Symbols & Holidays")
+
+    /** Virtual category: the questions whose answers change (dynamic). */
+    const val VARIES = "Varies"
+    val values = listOf(ALL, "American Government", "American History", "Symbols & Holidays", VARIES)
 }
 
 /** Filters a deck by whether questions are marked known. */
