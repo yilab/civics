@@ -3,7 +3,7 @@
 // stored `language` and `category` values are validated against them at load time.
 
 export const LANGS = ['english', 'zh-Hans', 'zh-Hant', 'es', 'vi', 'tl', 'ko', 'ar', 'hi', 'pt', 'ru'];
-export const CATS = ['All', 'American Government', 'American History', 'Symbols & Holidays'];
+export const CATS = ['All', 'American Government', 'American History', 'Symbols & Holidays', 'Varies'];
 
 const DEFAULTS = {
   speech_rate: 1.0, think_seconds: 3, auto_advance: false, category: 'All',

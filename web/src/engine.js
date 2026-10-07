@@ -57,7 +57,9 @@ export function initDeck() {
 
 export function repoDeck(category, shuffle, knownFilter, known) {
   const personalized = personalize(QUESTIONS, settings.jurisdiction, settings.district);
-  let list = category === 'All' ? personalized : personalized.filter(q => q.category === category);
+  let list = category === 'All' ? personalized
+    : category === 'Varies' ? personalized.filter(q => q.dynamic)
+    : personalized.filter(q => q.category === category);
   if (knownFilter === 'known') list = list.filter(q => known.has(q.n));
   else if (knownFilter === 'notKnown') list = list.filter(q => !known.has(q.n));
   return shuffle ? shuffleArr(list) : list;

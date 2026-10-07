@@ -105,6 +105,7 @@ const CHROME = {
     settings_review_focus: 'Prioritize missed questions in tests',
     settings_reset_stats: 'Reset question stats',
     cat_all: 'All 128', cat_gov: 'American Government', cat_hist: 'American History', cat_sym: 'Symbols & Holidays',
+    cat_varies: 'Answers That Change',
     filter_all: 'All', filter_known: 'Known', filter_not_known: 'Not known',
     search_questions: 'Search questions',
     feat_no_ads: 'No ads', feat_no_data: 'No data collection',
@@ -187,6 +188,7 @@ const CHROME = {
     settings_review_focus: 'Priorizar las preguntas falladas en los exámenes',
     settings_reset_stats: 'Restablecer las estadísticas de respuestas',
     cat_all: 'Todas las 128', cat_gov: 'Gobierno estadounidense', cat_hist: 'Historia estadounidense', cat_sym: 'Símbolos y feriados',
+    cat_varies: 'Respuestas que cambian',
     filter_all: 'Todas', filter_known: 'Aprendidas', filter_not_known: 'Por aprender',
     search_questions: 'Buscar preguntas',
     feat_no_ads: 'Sin anuncios', feat_no_data: 'Sin recopilación de datos',
@@ -269,6 +271,7 @@ const CHROME = {
     settings_review_focus: '测试优先复习答错的题',
     settings_reset_stats: '重置答题统计',
     cat_all: '全部 128 题', cat_gov: '美国政府', cat_hist: '美国历史', cat_sym: '象征与节日',
+    cat_varies: '会变化的答案',
     filter_all: '全部', filter_known: '已掌握', filter_not_known: '未掌握',
     search_questions: '搜索题目',
     feat_no_ads: '无广告', feat_no_data: '不收集数据',
@@ -351,6 +354,7 @@ const CHROME = {
     settings_review_focus: '測試優先複習答錯的題',
     settings_reset_stats: '重置答題統計',
     cat_all: '全部 128 題', cat_gov: '美國政府', cat_hist: '美國歷史', cat_sym: '象徵與節日',
+    cat_varies: '會變化的答案',
     filter_all: '全部', filter_known: '已掌握', filter_not_known: '未掌握',
     search_questions: '搜尋題目',
     feat_no_ads: '無廣告', feat_no_data: '不收集資料',
@@ -395,6 +399,7 @@ export function catLabel(cat) {
     case 'American Government': return t('cat_gov');
     case 'American History': return t('cat_hist');
     case 'Symbols & Holidays': return t('cat_sym');
+    case 'Varies': return t('cat_varies');
     default: return cat;
   }
 }

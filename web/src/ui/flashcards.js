@@ -11,7 +11,9 @@ let fcPos = 0;
 
 export function fcBuild(shuffleIt) {
   const personalized = personalizedQuestions();
-  fcDeck = fcFilter === 'All' ? personalized : personalized.filter(q => q.category === fcFilter);
+  fcDeck = fcFilter === 'All' ? personalized
+    : fcFilter === 'Varies' ? personalized.filter(q => q.dynamic)
+    : personalized.filter(q => q.category === fcFilter);
   if (shuffleIt) shuffleArr(fcDeck);
   fcPos = 0;
 }
@@ -27,7 +29,7 @@ export function renderCard() {
   card.classList.remove('flipped');
   setText('f-num', 'Q' + item.n);
   setText('b-num', 'Q' + item.n);
-  setText('f-cat', catLabel(item.c));
+  setText('f-cat', catLabel(item.category));
   setText('back-cat', t('answer_label'));
   const tr = translationFor(item, spokenLanguage());
   const qp = displayPair(item.question, tr ? tr.question : null);
