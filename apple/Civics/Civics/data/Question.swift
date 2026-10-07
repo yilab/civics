@@ -158,7 +158,10 @@ struct Question: Hashable, Decodable {
 
 enum Categories {
     static let all = "All"
-    static let values = [all, "American Government", "American History", "Symbols & Holidays"]
+
+    /// Virtual category: the questions whose answers change (dynamic).
+    static let varies = "Varies"
+    static let values = [all, "American Government", "American History", "Symbols & Holidays", varies]
 }
 
 /// Filters a deck by whether questions are marked known.

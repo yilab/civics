@@ -100,7 +100,12 @@ struct FlashcardsScreen: View {
     /// Rebuilds the deck for the current filter and resets to the first card,
     /// unflipped. Shuffle is one-shot — it never touches the persisted setting.
     private func rebuildDeck(shuffle: Bool) {
-        var filtered = filter == Categories.all ? questions : questions.filter { $0.category == filter }
+        var filtered: [Question]
+        switch filter {
+        case Categories.all: filtered = questions
+        case Categories.varies: filtered = questions.filter { $0.dynamic }
+        default: filtered = questions.filter { $0.category == filter }
+        }
         if shuffle { filtered.shuffle() }
         deck = filtered
         position = 0

@@ -16,7 +16,12 @@ final class QuestionRepository {
     }()
 
     func deck(category: String, shuffle: Bool, knownFilter: KnownFilter = .all, known: Set<Int> = []) -> [Question] {
-        var filtered = category == Categories.all ? questions : questions.filter { $0.category == category }
+        var filtered: [Question]
+        switch category {
+        case Categories.all: filtered = questions
+        case Categories.varies: filtered = questions.filter { $0.dynamic }
+        default: filtered = questions.filter { $0.category == category }
+        }
         switch knownFilter {
         case .all: break
         case .known: filtered = filtered.filter { known.contains($0.n) }

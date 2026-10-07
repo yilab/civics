@@ -35,6 +35,8 @@ struct QuestionRepositoryTests {
         #expect(repo.deck(category: "American Government", shuffle: false).count == 72)
         #expect(repo.deck(category: "American History", shuffle: false).count == 46)
         #expect(repo.deck(category: "Symbols & Holidays", shuffle: false).count == 10)
+        // The virtual category collects the eight dynamic questions.
+        #expect(repo.deck(category: Categories.varies, shuffle: false).map(\.n) == [23, 29, 30, 38, 39, 57, 61, 62])
 
         let ordered = repo.deck(category: Categories.all, shuffle: false).map(\.n)
         let shuffled = repo.deck(category: Categories.all, shuffle: true).map(\.n)

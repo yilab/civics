@@ -39,6 +39,7 @@ enum CategoriesL10n {
     static func name(_ raw: String) -> String {
         switch raw {
         case Categories.all: L10n.t("category.all")
+        case Categories.varies: L10n.t("category.varies")
         case "American Government": L10n.t("category.americanGovernment")
         case "American History": L10n.t("category.americanHistory")
         case "Symbols & Holidays": L10n.t("category.symbolsHolidays")
