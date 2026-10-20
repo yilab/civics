@@ -1,13 +1,9 @@
 // Linux speech-dispatcher backend, dlopen'ed so the app still runs (without
-// speech) when libspeechd isn't installed. Word notifications require
-// speech-dispatcher >= 0.10; callbacks arrive on speech-dispatcher's event
-// thread and translate SSIP byte offsets to UTF-16 indices against the spoken
-// text before the worker polls them out.
-//
-// NOTE: written against the libspeechd 0.10/0.11 headers (the SPDConnection
-// layout below only touches fields up to the callbacks, which precede the
-// private tail). Verify on a Linux box before shipping — if word callbacks
-// misbehave, speech still works, only karaoke highlighting degrades.
+// speech) when libspeechd isn't installed. speech-dispatcher reports message
+// begin/end/cancel but nothing per word, so Linux has no karaoke highlighting
+// (the JS driver just never gets boundary events). END/CANCEL callbacks arrive
+// on libspeechd's event thread carrying the message id spd_say returned; the
+// worker matches them to the in-flight utterance when it polls.
 use std::ffi::c_char;
 use std::ffi::{c_int, CStr, CString};
 use std::sync::Mutex;
@@ -24,33 +20,31 @@ struct SpdVoice {
     variant: *mut c_char,
 }
 
+/// The PUBLIC head of libspeechd's SPDConnection: these six callbacks lead
+/// the struct unchanged from 0.8 through 0.12. The private tail after them
+/// changed in 0.9 and again in 0.12, so it is not declared; the struct is
+/// only ever reached through the pointer spd_open returns.
 #[repr(C)]
 struct SpdConnection {
-    socket: c_int,
-    connection_name: *mut c_char,
-    client_name: *mut c_char,
-    component_name: *mut c_char,
-    mode: c_int,
-    pipe0: [c_int; 2],
-    pipe1: [c_int; 2],
-    events_thread: usize, // pthread_t
     callback_begin: Option<SpdCallback>,
     callback_end: Option<SpdCallback>,
     callback_cancel: Option<SpdCallback>,
     callback_pause: Option<SpdCallback>,
     callback_resume: Option<SpdCallback>,
-    callback_im: Option<SpdCallback>,
-    callback_word: Option<SpdCallback>,
-    callback_sentence: Option<SpdCallback>,
+    callback_im: Option<SpdCallbackIm>,
 }
 
-type SpdCallback = unsafe extern "C" fn(msg_id: c_int, start: c_int, end: c_int);
+/// (msg_id, client_id, SPDNotificationType)
+type SpdCallback = unsafe extern "C" fn(msg_id: usize, client_id: usize, state: c_int);
+type SpdCallbackIm =
+    unsafe extern "C" fn(msg_id: usize, client_id: usize, state: c_int, mark: *mut c_char);
 
 const SPD_MODE_THREADED: c_int = 1;
 const SPD_TEXT: c_int = 3; // priority
-                           // SPDNotification enum values (libspeechd.h)
+
+// SPDNotification bits (speechd_types.h)
 const SPD_END: c_int = 2;
-const SPD_WORD: c_int = 7;
+const SPD_CANCEL: c_int = 8;
 
 struct Fns {
     spd_open: unsafe extern "C" fn(
@@ -64,7 +58,7 @@ struct Fns {
         priority: c_int,
         text: *const c_char,
     ) -> c_int,
-    spd_stop: unsafe extern "C" fn(conn: *mut SpdConnection) -> c_int,
+    spd_cancel: unsafe extern "C" fn(conn: *mut SpdConnection) -> c_int,
     spd_set_voice_rate: unsafe extern "C" fn(conn: *mut SpdConnection, rate: c_int) -> c_int,
     spd_set_language: unsafe extern "C" fn(conn: *mut SpdConnection, lang: *const c_char) -> c_int,
     spd_set_synthesis_voice:
@@ -84,7 +78,7 @@ fn fns() -> Option<&'static Fns> {
         Some(Fns {
             spd_open: *lib.get(b"spd_open\0").ok()?,
             spd_say: *lib.get(b"spd_say\0").ok()?,
-            spd_stop: *lib.get(b"spd_stop\0").ok()?,
+            spd_cancel: *lib.get(b"spd_cancel\0").ok()?,
             spd_set_voice_rate: *lib.get(b"spd_set_voice_rate\0").ok()?,
             spd_set_language: *lib.get(b"spd_set_language\0").ok()?,
             spd_set_synthesis_voice: *lib.get(b"spd_set_synthesis_voice\0").ok()?,
@@ -95,85 +89,26 @@ fn fns() -> Option<&'static Fns> {
     .as_ref()
 }
 
-/* ---------- callback context (single connection per process) ---------- */
-struct CallbackCtx {
-    queue: Vec<TtsEvent>,
-    utterance: String,
-    /// The exact UTF-8 text spoken, for byte-offset -> UTF-16 conversion.
-    text: String,
-}
-static CALLBACK_CTX: Mutex<CallbackCtx> = Mutex::new(CallbackCtx {
-    queue: Vec::new(),
-    utterance: String::new(),
-    text: String::new(),
-});
+/* ---------- finished messages (single connection per process) ---------- */
+/// Ids of messages that ended or were cancelled, pushed from libspeechd's
+/// event thread. Never hold this lock across an spd_* call: that thread also
+/// delivers the replies those calls wait for.
+static FINISHED: Mutex<Vec<usize>> = Mutex::new(Vec::new());
 
-unsafe extern "C" fn on_word(_msg: c_int, start: c_int, end: c_int) {
-    let mut g = CALLBACK_CTX.lock().unwrap();
-    if g.utterance.is_empty() {
-        return; // stale
+/// Registered for both END and CANCEL: either way the message is done.
+unsafe extern "C" fn on_finished(msg_id: usize, _client_id: usize, _state: c_int) {
+    if let Ok(mut finished) = FINISHED.lock() {
+        finished.push(msg_id);
     }
-    let (start, end) = byte_range_to_utf16(&g.text, start.max(0) as usize, end.max(0) as usize);
-    let utterance = g.utterance.clone();
-    g.queue.push(TtsEvent::Word {
-        utterance,
-        start,
-        end,
-    });
-}
-
-unsafe extern "C" fn on_end(_msg: c_int, _start: c_int, _end: c_int) {
-    let mut g = CALLBACK_CTX.lock().unwrap();
-    if g.utterance.is_empty() {
-        return;
-    }
-    let utterance = g.utterance.clone();
-    g.utterance.clear();
-    g.text.clear();
-    g.queue.push(TtsEvent::End { utterance });
-}
-
-unsafe extern "C" fn on_cancel(_msg: c_int, _start: c_int, _end: c_int) {
-    let mut g = CALLBACK_CTX.lock().unwrap();
-    if g.utterance.is_empty() {
-        return;
-    }
-    let utterance = g.utterance.clone();
-    g.utterance.clear();
-    g.text.clear();
-    g.queue.push(TtsEvent::End { utterance }); // JS drops it via its stale-id check
-}
-
-/// SSIP reports byte offsets; JS highlights UTF-16 indices. When no end offset
-/// arrives, extend to the next whitespace — same fallback as the web driver.
-fn byte_range_to_utf16(text: &str, bstart: usize, bend: usize) -> (u32, u32) {
-    let snap = |mut i: usize| {
-        i = i.min(text.len());
-        while i > 0 && !text.is_char_boundary(i) {
-            i -= 1;
-        }
-        i
-    };
-    let mut s = snap(bstart);
-    let mut e = snap(bend);
-    if e <= s {
-        e = s;
-        while e < text.len() {
-            let ch = text[e..].chars().next().unwrap();
-            if ch.is_whitespace() {
-                break;
-            }
-            e += ch.len_utf8();
-        }
-    }
-    let start = text[..s].encode_utf16().count() as u32;
-    let end = text[..e].encode_utf16().count() as u32;
-    (start, end)
 }
 
 pub struct Speechd {
     conn: *mut SpdConnection,
     voices: Vec<VoiceInfo>,
+    /// Utterance id and speech-dispatcher message id of the in-flight
+    /// spd_say; the utterance id is empty when idle.
+    current: String,
+    current_msg: usize,
 }
 
 // The connection pointer is only dereferenced on the worker thread that owns
@@ -197,11 +132,10 @@ impl Speechd {
             if conn.is_null() {
                 return false;
             }
-            (*conn).callback_end = Some(on_end);
-            (*conn).callback_cancel = Some(on_cancel);
-            (*conn).callback_word = Some(on_word);
-            let _ = (f.spd_set_notification_on)(conn, SPD_END);
-            let _ = (f.spd_set_notification_on)(conn, SPD_WORD);
+            // Callbacks first: the server sends no events until notified.
+            (*conn).callback_end = Some(on_finished);
+            (*conn).callback_cancel = Some(on_finished);
+            let _ = (f.spd_set_notification_on)(conn, SPD_END | SPD_CANCEL);
             self.conn = conn;
         }
         true
@@ -213,6 +147,8 @@ impl SpeechBackend for Speechd {
         Speechd {
             conn: std::ptr::null_mut(),
             voices: Vec::new(),
+            current: String::new(),
+            current_msg: 0,
         }
     }
 
@@ -249,6 +185,8 @@ impl SpeechBackend for Speechd {
     }
 
     fn speak(&mut self, utterance: String, text: String, voice_id: String, rate: f64) -> bool {
+        // Whatever was in flight is superseded: its END/CANCEL is stale now.
+        self.current.clear();
         if !self.ensure_conn() {
             return false;
         }
@@ -265,33 +203,44 @@ impl SpeechBackend for Speechd {
             // speech-dispatcher rate is -100..100 (1.0x -> 0).
             let spd_rate = ((rate - 1.0) * 100.0).round().clamp(-100.0, 100.0) as i32;
             let _ = (f.spd_set_voice_rate)(self.conn, spd_rate);
-            let Ok(ctext) = CString::new(text.as_str()) else {
+            let Ok(ctext) = CString::new(text) else {
                 return false;
             };
             // Flush anything in flight, like the web driver's cancel-then-speak.
-            let _ = (f.spd_stop)(self.conn);
-            {
-                let mut g = CALLBACK_CTX.lock().unwrap();
-                g.utterance = utterance;
-                g.text = text;
+            let _ = (f.spd_cancel)(self.conn);
+            let msg = (f.spd_say)(self.conn, SPD_TEXT, ctext.as_ptr());
+            if msg < 0 {
+                return false;
             }
-            (f.spd_say)(self.conn, SPD_TEXT, ctext.as_ptr()) >= 0
+            // Recorded before the next poll drains FINISHED, so an END that
+            // lands before spd_say returns still matches.
+            self.current = utterance;
+            self.current_msg = msg as usize;
         }
+        true
     }
 
     fn stop(&mut self) {
+        self.current.clear();
         if !self.conn.is_null() {
             if let Some(f) = fns() {
-                unsafe { (f.spd_stop)(self.conn) };
+                // CANCEL, not STOP: STOP leaves a message that is still queued
+                // (behind another client's speech) to play later.
+                unsafe { (f.spd_cancel)(self.conn) };
             }
         }
-        let mut g = CALLBACK_CTX.lock().unwrap();
-        g.utterance.clear();
-        g.text.clear();
     }
 
     fn poll(&mut self) -> Vec<TtsEvent> {
-        let mut g = CALLBACK_CTX.lock().unwrap();
-        std::mem::take(&mut g.queue)
+        let finished = std::mem::take(&mut *FINISHED.lock().unwrap());
+        // A replaced or stopped message's END/CANCEL is dropped here. CANCEL
+        // of the current one (another client's speech pre-empted it) ends it,
+        // like the web driver's 'interrupted' error: skip, don't stall.
+        if self.current.is_empty() || !finished.contains(&self.current_msg) {
+            return Vec::new();
+        }
+        vec![TtsEvent::End {
+            utterance: std::mem::take(&mut self.current),
+        }]
     }
 }

@@ -18,9 +18,11 @@ use super::{SpeechBackend, TtsEvent, VoiceInfo};
 pub struct Sapi {
     voice: Option<ISpVoice>,
     tokens: Vec<(String, ISpObjectToken)>,
-    /// Utterance id and text of the in-flight Speak; empty when idle.
+    /// Utterance id, text and SAPI stream number of the in-flight Speak; the
+    /// id is empty when idle.
     current: String,
     current_text: String,
+    current_stream: u32,
 }
 
 // The COM pointers are created and used on the speech worker thread only; the
@@ -76,6 +78,7 @@ impl SpeechBackend for Sapi {
             tokens: Vec::new(),
             current: String::new(),
             current_text: String::new(),
+            current_stream: 0,
         }
     }
 
@@ -170,19 +173,25 @@ impl SpeechBackend for Sapi {
         let Some(voice) = self.ensure() else {
             return false;
         };
+        // Events carry the stream number Speak assigns; poll() matches on it.
+        let mut stream = 0u32;
         unsafe {
             if let Some(token) = token {
                 let _ = voice.SetVoice(&token);
             }
-            // SAPI rate is -10..10; the app's 0.75x..1.5x multiplier maps
-            // linearly (1.0 -> 0, 1.5 -> 5, 0.75 -> -3).
-            let sapi_rate = ((rate - 1.0) * 10.0).round().clamp(-10.0, 10.0) as i32;
+            // SAPI rate is -10..10 on a log scale (+10 = 3x, -10 = 1/3x), so
+            // the app's multiplier maps as 10*log3(rate): 1.5x -> 4, 0.75x -> -3.
+            let sapi_rate = (10.0 * rate.ln() / 3f64.ln()).round().clamp(-10.0, 10.0) as i32;
             let _ = voice.SetRate(sapi_rate);
             // ASYNC + PURGEBEFORESPEAK = the web driver's cancel-then-speak.
             let text16 = HSTRING::from(&text);
             let flags = (SPF_ASYNC.0 | SPF_PURGEBEFORESPEAK.0) as u32;
             if voice
-                .Speak(PCWSTR::from_raw(text16.as_ptr()), flags, None)
+                .Speak(
+                    PCWSTR::from_raw(text16.as_ptr()),
+                    flags,
+                    Some(&mut stream as *mut u32),
+                )
                 .is_err()
             {
                 return false;
@@ -190,6 +199,7 @@ impl SpeechBackend for Sapi {
         }
         self.current = utterance;
         self.current_text = text;
+        self.current_stream = stream;
         true
     }
 
@@ -220,8 +230,10 @@ impl SpeechBackend for Sapi {
             // SPEVENT packs { eEventId, elParamType } into the first 4 bytes;
             // the event id is the low word.
             let event_id = (evt._bitfield as u32) & 0xFFFF;
-            if idle {
-                continue; // discard events for an already-stopped utterance
+            if idle || evt.ulStreamNum != self.current_stream {
+                // A stopped utterance, or a stream the latest Speak purged:
+                // its queued words/end must not land on the current one.
+                continue;
             }
             if event_id == SPEI_WORD_BOUNDARY.0 as u32 {
                 // Empirically verified against sapi.h semantics: wParam is

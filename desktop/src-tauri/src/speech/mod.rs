@@ -19,6 +19,8 @@ mod speechd;
 use sapi::Sapi as Platform;
 #[cfg(target_os = "linux")]
 use speechd::Speechd as Platform;
+#[cfg(not(any(windows, target_os = "linux")))]
+use Unavailable as Platform;
 
 #[derive(Clone, Serialize)]
 pub struct VoiceInfo {
@@ -28,6 +30,9 @@ pub struct VoiceInfo {
     pub lang: String,
 }
 
+/// Only SAPI reports words: speech-dispatcher has no word events, and other
+/// targets have no engine at all.
+#[cfg_attr(not(windows), allow(dead_code))]
 pub enum TtsEvent {
     /// UTF-16 [start, end) range of the word about to be spoken.
     Word {
@@ -51,6 +56,28 @@ pub trait SpeechBackend: Send + 'static {
     fn stop(&mut self);
     /// Drain queued engine events; called ~40x/s by the worker loop.
     fn poll(&mut self) -> Vec<TtsEvent>;
+}
+
+/// No speech engine on other targets (macOS dev builds): no voices, so the UI
+/// shows its no-TTS warning.
+#[cfg(not(any(windows, target_os = "linux")))]
+struct Unavailable;
+
+#[cfg(not(any(windows, target_os = "linux")))]
+impl SpeechBackend for Unavailable {
+    fn new() -> Self {
+        Unavailable
+    }
+    fn voices(&mut self) -> Vec<VoiceInfo> {
+        Vec::new()
+    }
+    fn speak(&mut self, _: String, _: String, _: String, _: f64) -> bool {
+        false
+    }
+    fn stop(&mut self) {}
+    fn poll(&mut self) -> Vec<TtsEvent> {
+        Vec::new()
+    }
 }
 
 enum WorkerCmd {
@@ -148,8 +175,16 @@ pub fn spawn_worker(app: AppHandle) {
         .ok();
 }
 
+/// Async so it doesn't run on the main thread: waiting on a busy or hung
+/// worker there would freeze the window for the whole timeout.
 #[tauri::command]
-pub fn tts_voices() -> Vec<VoiceInfo> {
+pub async fn tts_voices() -> Vec<VoiceInfo> {
+    tauri::async_runtime::spawn_blocking(request_voices)
+        .await
+        .unwrap_or_default()
+}
+
+fn request_voices() -> Vec<VoiceInfo> {
     let (tx, rx) = channel();
     let Some(worker) = WORKER.get() else {
         return Vec::new();

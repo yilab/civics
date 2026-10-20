@@ -16,6 +16,7 @@ fn main() {
             media::media_update,
         ])
         .setup(|app| {
+            #[cfg(windows)]
             use tauri::Manager;
             let handle = app.handle().clone();
             speech::spawn_worker(handle.clone());

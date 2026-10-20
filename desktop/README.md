@@ -34,9 +34,11 @@ cargo test         # in src-tauri/ — includes live SAPI voice + karaoke tests
     strings). Voice enumeration via `ISpObjectTokenCategory` + the `Language`
     attribute (hex LCIDs → BCP-47).
   - `speechd.rs` (Linux): speech-dispatcher via `dlopen`ed `libspeechd`
-    (app still runs without it, speech simply disabled). Byte-offset word
-    callbacks are converted to UTF-16 indices. Needs speech-dispatcher ≥ 0.10
-    for word events — verify on a Linux box before shipping.
+    (app still runs without it, speech simply disabled). speech-dispatcher
+    reports when a message ends or is cancelled, but not which word is being
+    spoken, so Linux has no karaoke highlighting. Only the public head of
+    `SPDConnection` (its six callbacks) is declared; checked against libspeechd
+    0.11 and 0.12, including an end-to-end run against a real daemon.
 - **`src-tauri/src/media.rs`** — headset/lock-screen buttons via `souvlaki`
   (SMTC on Windows, MPRIS on Linux), plus OS media-session metadata.
 
@@ -96,8 +98,8 @@ git tag desktop-v0.2.0 && git push --tags
    then PR the manifest + generated sources to `flathub/flathub` as
    `com.yilab.civics.desktop`.
 5. **Verify TTS inside the sandbox** on a real Linux box before submitting —
-   the app reaches the host speech-dispatcher via its runtime socket; if word
-   callbacks misbehave, speech still works but karaoke degrades.
+   the app reaches the host speech-dispatcher via its runtime socket, which
+   only a real session can exercise.
 
 ### winget (packaging/winget/)
 
