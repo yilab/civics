@@ -120,7 +120,8 @@ struct StudyState: Equatable {
     var testFailAt = StudyState.testFailAt
 
     var deckSize: Int { deck.count }
-    var playing: Bool { phase != .idle }
+    /// Speech or a timer is in flight; a finished test is at rest, like idle.
+    var playing: Bool { phase != .idle && phase != .finished }
 
     static let testTotal = 20
     static let testPassAt = 12
@@ -230,6 +231,8 @@ final class StudyEngine {
     }
 
     func pause() {
+        // A finished test keeps its result on screen; there is nothing left to pause.
+        guard state.phase != .finished else { return }
         cancelTimer()
         expectedUtterance = nil
         speech.stop()
@@ -336,7 +339,8 @@ final class StudyEngine {
             answerRevealed: true,
             testCorrect: correct,
             testWrong: wrong,
-            testOutcome: passed ? .passed : .failed
+            testOutcome: passed ? .passed : .failed,
+            answers: answers
         ))
         speech.stop()
         onTestFinished(record)
@@ -363,6 +367,11 @@ final class StudyEngine {
     }
 
     func jumpTo(_ questionNumber: Int) {
+        if state.mode == .test {
+            // A running test keeps its fixed deck; a finished one hands back to study.
+            guard state.phase == .finished else { return }
+            startStudy()
+        }
         var idx = deck.firstIndex { $0.n == questionNumber }
         if idx == nil {
             deck = personalized(repo.deck(category: Categories.all, shuffle: false), settings.value)
@@ -498,10 +507,13 @@ final class StudyEngine {
         // wrong answer unmarking a known question) must not swap in the study deck.
         if state.mode != .test {
             let newDeck = personalized(repo.deck(category: s.category, shuffle: s.shuffle, knownFilter: s.knownFilter, known: s.known), s)
-            if deck.map(\.n) != newDeck.map(\.n) {
+            // Content, not just numbers: a new place, district or date re-personalizes
+            // the state questions without moving them.
+            if deck != newDeck {
                 deck = newDeck
-                let pos = state.current.flatMap { c in deck.firstIndex { $0.n == c.n } } ?? 0
-                emit(state.copy(deck: deck, position: pos))
+                let pos = state.current.flatMap { c in deck.firstIndex { $0.n == c.n } }
+                // The re-personalized copy, so a new answer shows at once.
+                emit(state.copy(deck: deck, position: pos ?? 0, current: pos.map { deck[$0] }))
             }
         }
         if state.known != s.known {

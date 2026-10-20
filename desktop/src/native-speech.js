@@ -10,7 +10,7 @@
 import { invoke } from '@tauri-apps/api/core';
 import { listen } from '@tauri-apps/api/event';
 import { spokenLanguage, bilingual, TTS_LOCALE } from '../../web/src/i18n.js';
-import { state, Phase, primaryAction, pause, next, previous } from '../../web/src/engine.js';
+import { state, isPlaying, primaryAction, pause, next, previous } from '../../web/src/engine.js';
 
 export const speech = {
   supported: typeof window !== 'undefined' && '__TAURI_INTERNALS__' in window,
@@ -107,7 +107,7 @@ export function updateMediaSession() {
     invoke('media_update', {
       title: state.current ? 'Q' + state.current.n + ' · ' + state.current.category : null,
       artist: 'Civics Audio Prep',
-      playing: state.phase !== Phase.IDLE,
+      playing: isPlaying(),
     }).catch(() => {});
   } catch (e) {}
 }

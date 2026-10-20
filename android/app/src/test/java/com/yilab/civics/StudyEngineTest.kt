@@ -736,6 +736,71 @@ class StudyEngineTest {
     }
 
     @Test
+    fun `the finished state lists every graded answer, including the last`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        repeat(com.yilab.civics.audio.StudyState.TEST_FAIL_AT) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(false)
+        }
+        assertEquals(Phase.FINISHED, engine.state.value.phase)
+        // The miss that ended the test is listed with the others.
+        assertEquals(com.yilab.civics.audio.StudyState.TEST_FAIL_AT, engine.state.value.answers.count { !it.correct })
+    }
+
+    @Test
+    fun `a finished test is at rest and pausing cannot resume it`() = runTest {
+        val records = mutableListOf<TestRecord>()
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()), onTestFinished = { records += it })
+        engine.startTest()
+        repeat(com.yilab.civics.audio.StudyState.TEST_PASS_AT) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(true)
+        }
+        assertFalse(engine.state.value.playing)
+        val spokenBefore = speech.spoken.size
+        // A lock-screen pause or audio-focus loss after the result, then a press.
+        engine.pause()
+        engine.primaryAction()
+        assertEquals(Phase.FINISHED, engine.state.value.phase)
+        assertEquals(spokenBefore, speech.spoken.size)
+        assertEquals(1, records.size)
+    }
+
+    @Test
+    fun `jumping to a question during a test leaves the test alone`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        val deck = engine.state.value.deck.map { it.n }
+        val spokenBefore = speech.spoken.size
+        engine.jumpTo(23) // never in a test deck while no place is set
+        engine.jumpTo(deck[5])
+        assertEquals(deck, engine.state.value.deck.map { it.n })
+        assertEquals(spokenBefore, speech.spoken.size)
+        assertEquals(0, engine.state.value.testIndex)
+        assertEquals(deck[0], engine.state.value.current?.n)
+    }
+
+    @Test
+    fun `jumping to a question after a finished test returns to study`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        repeat(com.yilab.civics.audio.StudyState.TEST_PASS_AT) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(true)
+        }
+        engine.jumpTo(7)
+        assertEquals(com.yilab.civics.audio.EngineMode.STUDY, engine.state.value.mode)
+        assertEquals("q-7", speech.spoken.last().first)
+    }
+
+    @Test
     fun `startReview drills the missed questions with scaled thresholds`() = runTest {
         var finished: TestRecord? = null
         val stats = mapOf(
@@ -836,5 +901,23 @@ class StudyEngineTest {
         assertEquals("Lateefah Simon.", deck.first { it.n == 29 }.answer)
         assertEquals("Gavin Newsom.", deck.first { it.n == 61 }.answer)
         assertEquals("Sacramento.", deck.first { it.n == 62 }.answer)
+    }
+
+    @Test
+    fun `a new place re-personalizes the study deck and the current question`() = runTest {
+        val settings = MutableStateFlow(StudySettings())
+        val (engine, speech) = engine(settings)
+        engine.jumpTo(61)
+        engine.pause()
+        assertTrue(engine.state.value.current!!.spoken.contains("Choose your state in Settings"))
+        // Same question numbers in the same order — only the answers change.
+        settings.value = settings.value.copy(jurisdiction = "CA")
+        runCurrent()
+        assertEquals("Gavin Newsom.", engine.state.value.current?.answer)
+        assertEquals("Gavin Newsom.", engine.state.value.deck.first { it.n == 61 }.answer)
+        engine.primaryAction() // resume: Q61 again
+        engine.primaryAction() // reveal
+        assertEquals("a-61", speech.spoken.last().first)
+        assertEquals("Gavin Newsom.", speech.spoken.last().second)
     }
 }

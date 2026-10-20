@@ -116,7 +116,9 @@ data class StudyState(
     val testFailAt: Int = TEST_FAIL_AT,
 ) {
     val deckSize: Int get() = deck.size
-    val playing: Boolean get() = phase != Phase.IDLE
+
+    /** Speech or a timer is in flight; a finished test is at rest, like idle. */
+    val playing: Boolean get() = phase != Phase.IDLE && phase != Phase.FINISHED
 
     /** The highlight to render, and only while speech is actually in flight. */
     val activeHighlight: SpokenHighlight?
@@ -181,6 +183,8 @@ class StudyEngine(
     }
 
     fun pause() {
+        // A finished test keeps its result on screen; there is nothing left to pause.
+        if (state.value.phase == Phase.FINISHED) return
         cancelTimer()
         expectedUtterance = null
         speech.stop()
@@ -309,6 +313,7 @@ class StudyEngine(
                 testCorrect = correct,
                 testWrong = wrong,
                 testOutcome = if (passed) TestOutcome.PASSED else TestOutcome.FAILED,
+                answers = answers,
             )
         )
         speech.stop()
@@ -336,6 +341,11 @@ class StudyEngine(
     }
 
     fun jumpTo(questionNumber: Int) {
+        if (state.value.mode == EngineMode.TEST) {
+            // A running test keeps its fixed deck; a finished one hands back to study.
+            if (state.value.phase != Phase.FINISHED) return
+            startStudy()
+        }
         var idx = deck.indexOfFirst { it.n == questionNumber }
         if (idx < 0) {
             deck = personalized(repo.deck(Categories.ALL, shuffle = false), settingsFlow.value)
@@ -489,11 +499,20 @@ class StudyEngine(
         // wrong answer unmarking a known question) must not swap in the study deck.
         if (state.value.mode != EngineMode.TEST) {
             val newDeck = personalized(repo.deck(s.category, s.shuffle, s.knownFilter, s.known), s)
-            if (deck.map { it.n } != newDeck.map { it.n }) {
+            // Content, not just numbers: a new place, district or date re-personalizes
+            // the state questions without moving them.
+            if (deck != newDeck) {
                 deck = newDeck
                 val pos = state.value.current?.let { c -> deck.indexOfFirst { it.n == c.n } }
-                    ?.takeIf { it >= 0 } ?: 0
-                emit(state.value.copy(deck = deck, position = pos))
+                    ?.takeIf { it >= 0 }
+                emit(
+                    state.value.copy(
+                        deck = deck,
+                        position = pos ?: 0,
+                        // The re-personalized copy, so a new answer shows at once.
+                        current = pos?.let { deck[it] } ?: state.value.current,
+                    )
+                )
             }
         }
         if (state.value.known != s.known) {

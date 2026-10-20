@@ -42,6 +42,12 @@ let deck = [];
 let timer = null;
 let expectedUtterance = null;
 
+/* Speech or a timer is in flight (StudyState.playing); a finished test is at
+   rest, like idle. */
+export function isPlaying() {
+  return state.phase !== Phase.IDLE && state.phase !== Phase.FINISHED;
+}
+
 /* The engine never touches the DOM; main.js registers the UI refresh callback. */
 let updateFn = () => {};
 export function onEngineUpdate(fn) { updateFn = fn; }
@@ -64,9 +70,13 @@ export function repoDeck(category, shuffle, knownFilter, known) {
   else if (knownFilter === 'notKnown') list = list.filter(q => !known.has(q.n));
   return shuffle ? shuffleArr(list) : list;
 }
-function sameNumbers(a, b) {
+/* Same questions with the same text. personalize() returns fresh copies of the
+   state questions, so a new place, district or date shows up as changed text. */
+function sameDeck(a, b) {
   if (a.length !== b.length) return false;
-  for (let i = 0; i < a.length; i++) if (a[i].n !== b[i].n) return false;
+  for (let i = 0; i < a.length; i++) {
+    if (a[i] !== b[i] && JSON.stringify(a[i]) !== JSON.stringify(b[i])) return false;
+  }
   return true;
 }
 function cancelTimer() { if (timer !== null) { clearTimeout(timer); timer = null; } }
@@ -94,6 +104,8 @@ export function primaryAction() {
   }
 }
 export function pause() {
+  // A finished test keeps its result on screen; there is nothing left to pause.
+  if (state.phase === Phase.FINISHED) return;
   cancelTimer();
   expectedUtterance = null;
   state.highlight = null;
@@ -200,6 +212,11 @@ export function previous() {
   }
 }
 export function jumpTo(questionNumber) {
+  if (state.mode === Mode.TEST) {
+    // A running test keeps its fixed deck; a finished one hands back to study.
+    if (state.phase !== Phase.FINISHED) return;
+    startStudy();
+  }
   let idx = deck.findIndex(q => q.n === questionNumber);
   if (idx < 0) {
     deck = repoDeck('All', false, 'all', settings.known);
@@ -319,11 +336,13 @@ export function applySettings() {
   persistSettings();
   if (state.mode !== Mode.TEST) {
     const newDeck = repoDeck(settings.category, settings.shuffle, settings.knownFilter, settings.known);
-    if (!sameNumbers(deck, newDeck)) {
+    if (!sameDeck(deck, newDeck)) {
       deck = newDeck;
       const cur = state.current;
       const idx = cur ? deck.findIndex(q => q.n === cur.n) : -1;
       state.position = idx >= 0 ? idx : 0;
+      // The re-personalized copy, so a new answer shows at once.
+      if (idx >= 0) state.current = deck[idx];
     }
   }
   update();

@@ -718,6 +718,67 @@ struct StudyEngineTests {
         #expect(record.answers.map(\.n) == Array(engine.state.deck.map(\.n).prefix(StudyState.testPassAt)))
     }
 
+    @Test func theFinishedStateListsEveryGradedAnswerIncludingTheLast() {
+        let (engine, speech) = makeTestEngine()
+        engine.startTest()
+        for _ in 0..<StudyState.testFailAt {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(correct: false)
+        }
+        #expect(engine.state.phase == .finished)
+        // The miss that ended the test is listed with the others.
+        #expect(engine.state.answers.filter { !$0.correct }.count == StudyState.testFailAt)
+    }
+
+    @Test func aFinishedTestIsAtRestAndPausingCannotResumeIt() {
+        var records: [TestRecord] = []
+        let (engine, speech) = makeTestEngine(onTestFinished: { records.append($0) })
+        engine.startTest()
+        for _ in 0..<StudyState.testPassAt {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(correct: true)
+        }
+        #expect(!engine.state.playing)
+        let spokenBefore = speech.spoken.count
+        // A lock-screen pause or an interruption after the result, then a press.
+        engine.pause()
+        engine.primaryAction()
+        #expect(engine.state.phase == .finished)
+        #expect(speech.spoken.count == spokenBefore)
+        #expect(records.count == 1)
+    }
+
+    @Test func jumpingToAQuestionDuringATestLeavesTheTestAlone() {
+        let (engine, speech) = makeTestEngine()
+        engine.startTest()
+        let deck = engine.state.deck.map(\.n)
+        let spokenBefore = speech.spoken.count
+        engine.jumpTo(23) // never in a test deck while no place is set
+        engine.jumpTo(deck[5])
+        #expect(engine.state.deck.map(\.n) == deck)
+        #expect(speech.spoken.count == spokenBefore)
+        #expect(engine.state.testIndex == 0)
+        #expect(engine.state.current?.n == deck[0])
+    }
+
+    @Test func jumpingToAQuestionAfterAFinishedTestReturnsToStudy() {
+        let (engine, speech) = makeTestEngine()
+        engine.startTest()
+        for _ in 0..<StudyState.testPassAt {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(correct: true)
+        }
+        engine.jumpTo(7)
+        #expect(engine.state.mode == .study)
+        #expect(speech.spoken.last?.utteranceID == "q-7")
+    }
+
     @Test func startReviewDrillsTheMissedQuestionsWithScaledThresholds() throws {
         var finished: TestRecord?
         let stats: [Int: QuestionStat] = [
@@ -813,5 +874,21 @@ struct StudyEngineTests {
         #expect(deck.first { $0.n == 29 }?.answer == "Lateefah Simon.")
         #expect(deck.first { $0.n == 61 }?.answer == "Gavin Newsom.")
         #expect(deck.first { $0.n == 62 }?.answer == "Sacramento.")
+    }
+
+    @Test func aNewPlaceRePersonalizesTheStudyDeckAndTheCurrentQuestion() {
+        let settings = SettingsBox(StudySettings())
+        let (engine, speech) = makeEngine(settings: settings)
+        engine.jumpTo(61)
+        engine.pause()
+        #expect(engine.state.current?.spoken.contains("Choose your state in Settings") == true)
+        // Same question numbers in the same order — only the answers change.
+        settings.value = settings.value.copy(jurisdiction: .some("CA"))
+        #expect(engine.state.current?.answer == "Gavin Newsom.")
+        #expect(engine.state.deck.first { $0.n == 61 }?.answer == "Gavin Newsom.")
+        engine.primaryAction() // resume: Q61 again
+        engine.primaryAction() // reveal
+        #expect(speech.spoken.last?.utteranceID == "a-61")
+        #expect(speech.spoken.last?.text == "Gavin Newsom.")
     }
 }

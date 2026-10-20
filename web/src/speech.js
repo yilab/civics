@@ -2,7 +2,7 @@
 // integration (headset / lock-screen buttons). Imports engine bindings only for
 // media-session handlers and metadata; those run after both modules are live.
 import { spokenLanguage, bilingual, TTS_LOCALE } from './i18n.js';
-import { state, Phase, primaryAction, next, previous } from './engine.js';
+import { state, isPlaying, primaryAction, next, previous } from './engine.js';
 
 export const speech = {
   supported: typeof window !== 'undefined' && 'speechSynthesis' in window,
@@ -150,9 +150,9 @@ export function updateMediaSession() {
         artist: 'Civics Audio Prep',
       });
     }
-    navigator.mediaSession.playbackState = state.phase === Phase.IDLE ? 'paused' : 'playing';
+    navigator.mediaSession.playbackState = isPlaying() ? 'playing' : 'paused';
   } catch (e) {}
-  if (state.phase === Phase.IDLE) stopKeepAlive(); else startKeepAlive();
+  if (isPlaying()) startKeepAlive(); else stopKeepAlive();
 }
 if ('mediaSession' in navigator) {
   const handle = (action, fn) => { try { navigator.mediaSession.setActionHandler(action, fn); } catch (e) {} };
