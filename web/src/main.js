@@ -111,13 +111,20 @@ export function renderAll() {
 }
 
 /* ---------- keyboard & lifecycle ---------- */
+/* A button clicked with the mouse keeps focus without :focus-visible; Space
+   there is still the global shortcut. A button reached with Tab keeps Space. */
+function mouseFocused(target) {
+  try { return !target.matches(':focus-visible'); } catch (e) { return false; }
+}
 document.addEventListener('keydown', e => {
   const tag = (e.target && e.target.tagName || '').toLowerCase();
-  const inControl = tag === 'button' || tag === 'input' || tag === 'select' || tag === 'textarea'
+  const inControl = (tag === 'button' && !mouseFocused(e.target))
+    || tag === 'input' || tag === 'select' || tag === 'textarea'
     || (e.target && e.target.isContentEditable);
   if (e.key === ' ' && activeTab === 'listen' && !inControl) {
     e.preventDefault();
-    primaryAction();
+    if (tag === 'button') e.target.blur(); // no click on keyup
+    if (!e.repeat) primaryAction();
     return;
   }
   if (activeTab === 'cards' && !inControl) {

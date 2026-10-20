@@ -13,7 +13,8 @@ function placeName(p) {
   return p.name[cl === 'en' ? 'english' : cl] || p.name.english;
 }
 
-function fillSelect(sel, items, current, key) {
+function fillSelect(id, items, current, key) {
+  const sel = el(id);
   if (sel.dataset.key !== key) {
     sel.dataset.key = key;
     sel.innerHTML = '';
@@ -97,5 +98,11 @@ el('s-dist').addEventListener('change', () => {
   applySettings();
   renderAll();
 });
-el('s-clear').onclick = () => { settings.known.clear(); persistKnown(); applySettings(); renderCard(); };
+el('s-clear').onclick = () => {
+  settings.known.clear();
+  persistKnown();
+  applySettings();
+  renderCard();
+  setText('s-known-label', t('known_progress', settings.known.size));
+};
 el('s-reset-stats').onclick = () => { resetQuestionStats(); renderAll(); };

@@ -65,7 +65,6 @@ export function renderQuestions() {
 
     const main = document.createElement('button');
     main.className = 'q-main';
-    main.setAttribute('aria-label', 'Q' + q.n);
     const over = document.createElement('span');
     over.className = 'q-over';
     const head = document.createElement('span');
@@ -87,13 +86,13 @@ export function renderQuestions() {
     // How many times this question was missed in tests, when any. Own node so
     // updateQuestionsPlaying's over.textContent rewrite can't clobber it.
     const st = stats[q.n];
+    let miss = null;
     if (st && st.w > 0) {
-      const miss = document.createElement('span');
+      miss = document.createElement('span');
       miss.className = 'q-miss';
       miss.textContent = '×' + st.w;
       miss.setAttribute('role', 'img');
       miss.setAttribute('aria-label', t('questions_missed_times', st.w));
-      row.appendChild(miss);
     }
 
     const check = document.createElement('button');
@@ -109,6 +108,7 @@ export function renderQuestions() {
     check.onclick = () => { toggleKnown(q.n); paint(); };
 
     row.appendChild(main);
+    if (miss) row.appendChild(miss);
     row.appendChild(check);
     list.appendChild(row);
   });
@@ -118,7 +118,7 @@ export function updateQuestionsPlaying() {
   const cur = state.current;
   const rows = el('q-list').children;
   for (let i = 0; i < rows.length; i++) {
-    const over = rows[i].firstChild.firstChild;
+    const over = rows[i].querySelector('.q-over');
     const n = Number(rows[i].dataset.n);
     const isCur = !!cur && cur.n === n;
     over.classList.toggle('playing-now', isCur);

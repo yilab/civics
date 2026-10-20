@@ -38,11 +38,14 @@ export const speech = {
     /* ---------- media keys (SMTC / MPRIS -> Rust -> here) ---------- */
     listen('media:action', e => {
       const a = e.payload;
-      if (a === 'play') primaryAction();
-      else if (a === 'pause' || a === 'stop') pause();
+      // A headset press arrives as play, pause or toggle depending on the state
+      // the OS last saw; all mean the phase's primary action (hear the answer /
+      // continue), never pause — matching the web app, Android and iOS. Only an
+      // explicit stop pauses; pausing otherwise stays on the on-screen Stop.
+      if (a === 'play' || a === 'pause' || a === 'toggle') primaryAction();
+      else if (a === 'stop') pause();
       else if (a === 'next') next();
       else if (a === 'previous') previous();
-      else if (a === 'toggle') { if (state.phase === Phase.IDLE) primaryAction(); else pause(); }
     });
     this.refreshVoices();
   },

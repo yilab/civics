@@ -67,12 +67,14 @@ export const speech = {
       done();
     };
     u.onerror = e => {
-      const err = e && e.error;
-      if (err === 'interrupted' || err === 'canceled') return; // expected from cancel()
+      // Our own cancel() always follows a currentId change, so its
+      // 'interrupted'/'canceled' errors land here as stale.
       if (this.currentId !== id) return;
+      const err = e && e.error;
       this.currentId = null;
-      // Skip a failed utterance rather than wedging the session (a flaky network
-      // voice must not stall the deck); the flow continues as if it had ended.
+      // Skip a failed or externally interrupted utterance rather than wedging the
+      // session (a flaky network voice must not stall the deck); the flow
+      // continues as if it had ended.
       try { console.warn('speech: utterance failed (' + err + '), skipping', id); } catch (e2) {}
       done();
     };
