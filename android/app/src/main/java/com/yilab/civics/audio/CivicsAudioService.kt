@@ -59,6 +59,10 @@ class CivicsAudioService : MediaSessionService() {
     private var inForeground = false
     private var wasPlaying = false
 
+    /** Started, not just bound: the activity's controller binds, and a bound-only
+     * service would go down with the activity (a swipe from Recents). */
+    private var started = false
+
     private val noisyReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
             if (intent.action == AudioManager.ACTION_AUDIO_BECOMING_NOISY) engine.pause()
@@ -130,8 +134,34 @@ class CivicsAudioService : MediaSessionService() {
                 engine.previous()
                 return START_STICKY
             }
+            // Our own start request (see updateNotification): nothing to do, and no
+            // restart after a process kill — a fresh process has nothing playing.
+            ACTION_START -> return START_NOT_STICKY
+            ACTION_DISMISS -> {
+                // The paused notification was swiped away: stop re-posting it, and let
+                // the service go once nothing binds it.
+                if (!engine.state.value.playing) {
+                    wasPlaying = false
+                    started = false
+                    stopSelf()
+                }
+                return START_NOT_STICKY
+            }
         }
         return super.onStartCommand(intent, flags, startId)
+    }
+
+    /** Swiped away from Recents: keep speaking, with the notification, while a session
+     * plays; otherwise there is nothing to keep alive. Media3's default would stop
+     * either way, since its notification manager (bypassed here) never reports playback. */
+    override fun onTaskRemoved(rootIntent: Intent?) {
+        if (!engine.state.value.playing) {
+            // Without a foreground service the process is killed right after this,
+            // before onDestroy runs, so take the notification down now.
+            NotificationManagerCompat.from(this).cancel(NOTIFICATION_ID)
+            started = false
+            stopSelf()
+        }
     }
 
     override fun onGetSession(controllerInfo: MediaSession.ControllerInfo): MediaSession = session
@@ -140,6 +170,8 @@ class CivicsAudioService : MediaSessionService() {
     override fun onUpdateNotification(session: MediaSession, startInForegroundRequired: Boolean) = Unit
 
     override fun onDestroy() {
+        // Speech never outlives the service that keeps it in the foreground.
+        engine.pause()
         serviceScope.cancel()
         updatePlaybackResources(false)
         if (inForeground) {
@@ -174,6 +206,13 @@ class CivicsAudioService : MediaSessionService() {
         try {
             if (state.playing) {
                 if (!inForeground) {
+                    if (!started) {
+                        ContextCompat.startForegroundService(
+                            this,
+                            Intent(this, CivicsAudioService::class.java).setAction(ACTION_START),
+                        )
+                        started = true
+                    }
                     ServiceCompat.startForeground(
                         this,
                         NOTIFICATION_ID,
@@ -219,6 +258,7 @@ class CivicsAudioService : MediaSessionService() {
             )
             .setSubText(q?.category)
             .setContentIntent(contentIntent)
+            .setDeleteIntent(actionIntent(ACTION_DISMISS))
             .setOngoing(playing)
             .setShowWhen(false)
             .setCategory(NotificationCompat.CATEGORY_TRANSPORT)
@@ -311,5 +351,7 @@ class CivicsAudioService : MediaSessionService() {
         private const val ACTION_PLAY_PAUSE = "com.yilab.civics.action.PLAY_PAUSE"
         private const val ACTION_NEXT = "com.yilab.civics.action.NEXT"
         private const val ACTION_PREVIOUS = "com.yilab.civics.action.PREVIOUS"
+        private const val ACTION_START = "com.yilab.civics.action.START"
+        private const val ACTION_DISMISS = "com.yilab.civics.action.DISMISS"
     }
 }
