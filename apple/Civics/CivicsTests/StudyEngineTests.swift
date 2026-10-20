@@ -249,6 +249,47 @@ struct StudyEngineTests {
         #expect(engine.state.position == 0)
     }
 
+    @Test func markingTheCurrentQuestionKnownUnderNotKnownContinuesWithTheNextOne() {
+        let settings = SettingsBox(StudySettings(knownFilter: .notKnown))
+        let (engine, speech) = makeEngine(settings: settings)
+        engine.primaryAction() // Q1
+        engine.next() // Q2
+        // Marked known while it plays: Q2 leaves the deck.
+        settings.value = settings.value.copy(known: [2])
+        engine.next()
+        #expect(speech.spoken.last?.utteranceID == "q-3")
+        // Stopped on Q3, then Q3 and Q4 marked known: play resumes at Q5.
+        engine.pause()
+        settings.value = settings.value.copy(known: [2, 3, 4])
+        engine.primaryAction()
+        #expect(speech.spoken.last?.utteranceID == "q-5")
+    }
+
+    @Test func previousAfterTheCurrentQuestionLeavesTheDeckGoesToTheOneBeforeIt() {
+        let settings = SettingsBox(StudySettings(knownFilter: .notKnown))
+        let (engine, speech) = makeEngine(settings: settings)
+        engine.jumpTo(5)
+        speech.finishLast()
+        engine.primaryAction() // hearing Q5's answer
+        settings.value = settings.value.copy(known: [5])
+        engine.previous()
+        #expect(speech.spoken.last?.utteranceID == "q-4")
+    }
+
+    @Test func aShuffledDeckKeepsItsOrderAcrossSettingsChanges() {
+        let settings = SettingsBox(StudySettings(shuffle: true, knownFilter: .notKnown))
+        let (engine, _) = makeEngine(settings: settings)
+        let order = engine.state.deck.map(\.n)
+        settings.value = settings.value.copy(speechRate: 1.2, thinkSeconds: 5)
+        #expect(engine.state.deck.map(\.n) == order)
+        // A question marked known drops out in place.
+        settings.value = settings.value.copy(known: [order[3]])
+        #expect(engine.state.deck.map(\.n) == order.filter { $0 != order[3] })
+        // Turning Shuffle off restores bank order.
+        settings.value = settings.value.copy(shuffle: false)
+        #expect(engine.state.deck.map(\.n) == Array(1...128).filter { $0 != order[3] })
+    }
+
     @Test func knownFilterLimitsTheDeck() {
         let settings = SettingsBox(StudySettings(known: [1, 2]))
         let (engine, _) = makeEngine(settings: settings)

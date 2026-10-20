@@ -185,6 +185,8 @@ final class StudyEngine {
 
     private(set) var state = StudyState()
     private var deck: [Question] = []
+    /// The deck's order is a shuffle to keep across settings changes.
+    private var deckShuffled = false
     private var timer: (any ScheduledTask)?
     private var expectedUtterance: String?
     private var stateObservers: [(StudyState) -> Void] = []
@@ -320,6 +322,7 @@ final class StudyEngine {
             knownFilter: settings.value.knownFilter,
             known: settings.value.known
         ), settings.value)
+        deckShuffled = settings.value.shuffle
         emit(state.copy(phase: .idle, deck: deck, position: 0, mode: .study, testOutcome: .none, answers: [], review: false))
     }
 
@@ -349,20 +352,20 @@ final class StudyEngine {
     func next() {
         guard state.mode == .study else { return } // no skipping during a test
         guard !deck.isEmpty else { return }
-        let pos = (state.position + 1) % deck.count
-        speakQuestionAt(pos)
+        // When the current question has left the deck, position already holds the
+        // question that followed it.
+        let step = onCurrent ? 1 : 0
+        speakQuestionAt((state.position + step) % deck.count)
     }
 
     /// Music-player style: while hearing the answer, repeat this question; otherwise go back one.
     func previous() {
         guard state.mode == .study else { return } // no skipping during a test
         guard !deck.isEmpty else { return }
-        switch state.phase {
-        case .speakingAnswer, .awaitingAdvance:
+        if onCurrent && (state.phase == .speakingAnswer || state.phase == .awaitingAdvance) {
             speakQuestionAt(state.position)
-        default:
-            let pos = (state.position - 1 + deck.count) % deck.count
-            speakQuestionAt(pos)
+        } else {
+            speakQuestionAt((state.position - 1 + deck.count) % deck.count)
         }
     }
 
@@ -375,6 +378,7 @@ final class StudyEngine {
         var idx = deck.firstIndex { $0.n == questionNumber }
         if idx == nil {
             deck = personalized(repo.deck(category: Categories.all, shuffle: false), settings.value)
+            deckShuffled = false
             emit(state.copy(deck: deck))
             idx = deck.firstIndex { $0.n == questionNumber }
         }
@@ -506,14 +510,33 @@ final class StudyEngine {
         // While a test is in flight the deck is fixed: a settings emission (e.g. a
         // wrong answer unmarking a known question) must not swap in the study deck.
         if state.mode != .test {
-            let newDeck = personalized(repo.deck(category: s.category, shuffle: s.shuffle, knownFilter: s.knownFilter, known: s.known), s)
+            // A shuffled deck keeps its order until Shuffle is turned on again; only
+            // its membership follows the settings.
+            let members = personalized(
+                repo.deck(category: s.category, shuffle: false, knownFilter: s.knownFilter, known: s.known), s)
+            let newDeck: [Question]
+            if !s.shuffle {
+                newDeck = members
+            } else if deckShuffled {
+                newDeck = keepOrder(deck, members)
+            } else {
+                newDeck = members.shuffled()
+            }
+            deckShuffled = s.shuffle
             // Content, not just numbers: a new place, district or date re-personalizes
             // the state questions without moving them.
             if deck != newDeck {
+                let old = deck
                 deck = newDeck
                 let pos = state.current.flatMap { c in deck.firstIndex { $0.n == c.n } }
-                // The re-personalized copy, so a new answer shows at once.
-                emit(state.copy(deck: deck, position: pos ?? 0, current: pos.map { deck[$0] }))
+                emit(state.copy(
+                    deck: deck,
+                    // Gone from the deck (e.g. just marked known under "Not known"):
+                    // hold the question that followed it, for next() and play.
+                    position: pos ?? followerIndex(old, state.current, state.position),
+                    // The re-personalized copy, so a new answer shows at once.
+                    current: pos.map { deck[$0] }
+                ))
             }
         }
         if state.known != s.known {
@@ -522,6 +545,32 @@ final class StudyEngine {
     }
 
     // ------------------------------------------------------------------ helpers
+
+    /// False once the current question has left the deck; position then holds its follower.
+    private var onCurrent: Bool {
+        guard let c = state.current else { return true }
+        return deck.indices.contains(state.position) && deck[state.position].n == c.n
+    }
+
+    /// `members` in `old`'s order; newcomers join at the end, shuffled.
+    private func keepOrder(_ old: [Question], _ members: [Question]) -> [Question] {
+        let byNumber = Dictionary(uniqueKeysWithValues: members.map { ($0.n, $0) })
+        let kept = old.compactMap { byNumber[$0.n] }
+        let keptNumbers = Set(kept.map(\.n))
+        return kept + members.filter { !keptNumbers.contains($0.n) }.shuffled()
+    }
+
+    /// The index in `deck` of the first question still in it after `current`'s slot
+    /// in `old` — or, if `current` had already left, from `oldPosition` on.
+    private func followerIndex(_ old: [Question], _ current: Question?, _ oldPosition: Int) -> Int {
+        let at = current.flatMap { c in old.firstIndex { $0.n == c.n } }
+        let start = at.map { $0 + 1 } ?? oldPosition
+        for step in old.indices {
+            let n = old[(start + step) % old.count].n
+            if let idx = deck.firstIndex(where: { $0.n == n }) { return idx }
+        }
+        return 0
+    }
 
     /// The question list with the four state questions filled in for the chosen
     /// place/district on today's date.

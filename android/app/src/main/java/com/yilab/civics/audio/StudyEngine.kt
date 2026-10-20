@@ -151,6 +151,9 @@ class StudyEngine(
     val state: StateFlow<StudyState> = _state.asStateFlow()
 
     private var deck: List<Question> = emptyList()
+
+    /** The deck's order is a shuffle to keep across settings changes. */
+    private var deckShuffled = false
     private var timerJob: Job? = null
     private var expectedUtterance: String? = null
 
@@ -288,6 +291,7 @@ class StudyEngine(
             ),
             settingsFlow.value,
         )
+        deckShuffled = settingsFlow.value.shuffle
         emit(
             state.value.copy(
                 phase = Phase.IDLE,
@@ -323,20 +327,21 @@ class StudyEngine(
     fun next() {
         if (state.value.mode == EngineMode.TEST) return // no skipping during a test
         if (deck.isEmpty()) return
-        val pos = (state.value.position + 1) % deck.size
-        speakQuestionAt(pos)
+        // When the current question has left the deck, position already holds the
+        // question that followed it.
+        val step = if (onCurrent()) 1 else 0
+        speakQuestionAt((state.value.position + step) % deck.size)
     }
 
     /** Music-player style: while hearing the answer, repeat this question; otherwise go back one. */
     fun previous() {
         if (state.value.mode == EngineMode.TEST) return // no skipping during a test
         if (deck.isEmpty()) return
-        when (state.value.phase) {
-            Phase.SPEAKING_ANSWER, Phase.AWAITING_ADVANCE -> speakQuestionAt(state.value.position)
-            else -> {
-                val pos = (state.value.position - 1 + deck.size) % deck.size
-                speakQuestionAt(pos)
-            }
+        val phase = state.value.phase
+        if (onCurrent() && (phase == Phase.SPEAKING_ANSWER || phase == Phase.AWAITING_ADVANCE)) {
+            speakQuestionAt(state.value.position)
+        } else {
+            speakQuestionAt((state.value.position - 1 + deck.size) % deck.size)
         }
     }
 
@@ -349,6 +354,7 @@ class StudyEngine(
         var idx = deck.indexOfFirst { it.n == questionNumber }
         if (idx < 0) {
             deck = personalized(repo.deck(Categories.ALL, shuffle = false), settingsFlow.value)
+            deckShuffled = false
             emit(state.value.copy(deck = deck))
             idx = deck.indexOfFirst { it.n == questionNumber }
         }
@@ -498,19 +504,33 @@ class StudyEngine(
         // While a test is in flight the deck is fixed: a settings emission (e.g. a
         // wrong answer unmarking a known question) must not swap in the study deck.
         if (state.value.mode != EngineMode.TEST) {
-            val newDeck = personalized(repo.deck(s.category, s.shuffle, s.knownFilter, s.known), s)
+            // A shuffled deck keeps its order until Shuffle is turned on again; only
+            // its membership follows the settings.
+            val members = personalized(
+                repo.deck(s.category, shuffle = false, knownFilter = s.knownFilter, known = s.known),
+                s,
+            )
+            val newDeck = when {
+                !s.shuffle -> members
+                deckShuffled -> keepOrder(deck, members)
+                else -> members.shuffled()
+            }
+            deckShuffled = s.shuffle
             // Content, not just numbers: a new place, district or date re-personalizes
             // the state questions without moving them.
             if (deck != newDeck) {
+                val old = deck
                 deck = newDeck
-                val pos = state.value.current?.let { c -> deck.indexOfFirst { it.n == c.n } }
-                    ?.takeIf { it >= 0 }
+                val current = state.value.current
+                val pos = current?.let { c -> deck.indexOfFirst { it.n == c.n } }?.takeIf { it >= 0 }
                 emit(
                     state.value.copy(
                         deck = deck,
-                        position = pos ?: 0,
+                        // Gone from the deck (e.g. just marked known under "Not known"):
+                        // hold the question that followed it, for next() and play.
+                        position = pos ?: followerIndex(old, current, state.value.position),
                         // The re-personalized copy, so a new answer shows at once.
-                        current = pos?.let { deck[it] } ?: state.value.current,
+                        current = pos?.let { deck[it] } ?: current,
                     )
                 )
             }
@@ -521,6 +541,32 @@ class StudyEngine(
     }
 
     // ------------------------------------------------------------------ helpers
+
+    /** False once the current question has left the deck; position then holds its follower. */
+    private fun onCurrent(): Boolean {
+        val c = state.value.current ?: return true
+        return deck.getOrNull(state.value.position)?.n == c.n
+    }
+
+    /** [members] in [old]'s order; newcomers join at the end, shuffled. */
+    private fun keepOrder(old: List<Question>, members: List<Question>): List<Question> {
+        val byNumber = members.associateBy { it.n }
+        val kept = old.mapNotNull { byNumber[it.n] }
+        val keptNumbers = kept.mapTo(HashSet()) { it.n }
+        return kept + members.filter { it.n !in keptNumbers }.shuffled()
+    }
+
+    /** The index in [deck] of the first question still in it after [current]'s slot
+     * in [old] — or, if [current] had already left, from [oldPosition] on. */
+    private fun followerIndex(old: List<Question>, current: Question?, oldPosition: Int): Int {
+        val at = current?.let { c -> old.indexOfFirst { it.n == c.n } } ?: -1
+        val start = if (at >= 0) at + 1 else oldPosition
+        for (step in old.indices) {
+            val idx = deck.indexOfFirst { it.n == old[(start + step).mod(old.size)].n }
+            if (idx >= 0) return idx
+        }
+        return 0
+    }
 
     /** The question list with the four state questions filled in for the chosen
      * place/district on today's date. */

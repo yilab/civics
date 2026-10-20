@@ -239,6 +239,56 @@ class StudyEngineTest {
     }
 
     @Test
+    fun `marking the current question known under Not known continues with the next one`() = runTest {
+        val settings = MutableStateFlow(StudySettings(knownFilter = KnownFilter.NOT_KNOWN))
+        val (engine, speech) = engine(settings)
+        engine.primaryAction() // Q1
+        engine.next() // Q2
+        // Marked known while it plays: Q2 leaves the deck.
+        settings.value = settings.value.copy(known = setOf(2))
+        runCurrent()
+        engine.next()
+        assertEquals("q-3", speech.spoken.last().first)
+        // Stopped on Q3, then Q3 and Q4 marked known: play resumes at Q5.
+        engine.pause()
+        settings.value = settings.value.copy(known = setOf(2, 3, 4))
+        runCurrent()
+        engine.primaryAction()
+        assertEquals("q-5", speech.spoken.last().first)
+    }
+
+    @Test
+    fun `previous after the current question leaves the deck goes to the one before it`() = runTest {
+        val settings = MutableStateFlow(StudySettings(knownFilter = KnownFilter.NOT_KNOWN))
+        val (engine, speech) = engine(settings)
+        engine.jumpTo(5)
+        speech.finishLast()
+        engine.primaryAction() // hearing Q5's answer
+        settings.value = settings.value.copy(known = setOf(5))
+        runCurrent()
+        engine.previous()
+        assertEquals("q-4", speech.spoken.last().first)
+    }
+
+    @Test
+    fun `a shuffled deck keeps its order across settings changes`() = runTest {
+        val settings = MutableStateFlow(StudySettings(shuffle = true, knownFilter = KnownFilter.NOT_KNOWN))
+        val (engine) = engine(settings)
+        val order = engine.state.value.deck.map { it.n }
+        settings.value = settings.value.copy(thinkSeconds = 5, speechRate = 1.2f)
+        runCurrent()
+        assertEquals(order, engine.state.value.deck.map { it.n })
+        // A question marked known drops out in place.
+        settings.value = settings.value.copy(known = setOf(order[3]))
+        runCurrent()
+        assertEquals(order - order[3], engine.state.value.deck.map { it.n })
+        // Turning Shuffle off restores bank order.
+        settings.value = settings.value.copy(shuffle = false)
+        runCurrent()
+        assertEquals((1..128).filter { it != order[3] }, engine.state.value.deck.map { it.n })
+    }
+
+    @Test
     fun `empty filtered deck is safe`() = runTest {
         val settings = MutableStateFlow(StudySettings(knownFilter = KnownFilter.KNOWN)) // nothing known yet
         val (engine, speech) = engine(settings)

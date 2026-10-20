@@ -39,6 +39,7 @@ export const state = {
   highlight: null, // {id, block, translation, text, start, end} — set by speak(), ranged by boundary events
 };
 let deck = [];
+let deckShuffled = false; // the deck's order is a shuffle to keep across settings changes
 let timer = null;
 let expectedUtterance = null;
 
@@ -59,6 +60,7 @@ export function onHighlightUpdate(fn) { highlightFn = fn; }
 export function deckSize() { return deck.length; }
 export function initDeck() {
   deck = repoDeck(settings.category, settings.shuffle, settings.knownFilter, settings.known);
+  deckShuffled = settings.shuffle;
 }
 
 export function repoDeck(category, shuffle, knownFilter, known) {
@@ -78,6 +80,33 @@ function sameDeck(a, b) {
     if (a[i] !== b[i] && JSON.stringify(a[i]) !== JSON.stringify(b[i])) return false;
   }
   return true;
+}
+/* members in old's order; newcomers join at the end, shuffled. */
+function keepOrder(old, members) {
+  const byN = new Map(members.map(q => [q.n, q]));
+  const kept = [];
+  for (const q of old) {
+    const m = byN.get(q.n);
+    if (m) { kept.push(m); byN.delete(q.n); }
+  }
+  return kept.concat(shuffleArr([...byN.values()]));
+}
+/* The index in deck of the first question still in it after cur's slot in old
+   — or, if cur had already left, from oldPosition on. */
+function followerIndex(old, cur, oldPosition) {
+  const at = cur ? old.findIndex(q => q.n === cur.n) : -1;
+  const start = at >= 0 ? at + 1 : oldPosition;
+  for (let step = 0; step < old.length; step++) {
+    const n = old[(start + step) % old.length].n;
+    const idx = deck.findIndex(q => q.n === n);
+    if (idx >= 0) return idx;
+  }
+  return 0;
+}
+/* False once the current question has left the deck; position then holds its follower. */
+function onCurrent() {
+  const c = state.current;
+  return !c || (!!deck[state.position] && deck[state.position].n === c.n);
 }
 function cancelTimer() { if (timer !== null) { clearTimeout(timer); timer = null; } }
 
@@ -176,6 +205,7 @@ export function startStudy() {
   state.highlight = null;
   speech.stop();
   deck = repoDeck(settings.category, settings.shuffle, settings.knownFilter, settings.known);
+  deckShuffled = settings.shuffle;
   state.phase = Phase.IDLE;
   state.position = 0;
   state.mode = Mode.STUDY;
@@ -199,13 +229,15 @@ function finishTest(passed, correct, wrong) {
 export function next() {
   if (state.mode === Mode.TEST) return; // no skipping during a test
   if (!deck.length) return;
-  speakQuestionAt((state.position + 1) % deck.length);
+  // When the current question has left the deck, position already holds the
+  // question that followed it.
+  speakQuestionAt((state.position + (onCurrent() ? 1 : 0)) % deck.length);
 }
 /* Music-player style: while hearing the answer, repeat this question; otherwise go back one. */
 export function previous() {
   if (state.mode === Mode.TEST) return; // no skipping during a test
   if (!deck.length) return;
-  if (state.phase === Phase.SPEAKING_ANSWER || state.phase === Phase.AWAITING_ADVANCE) {
+  if (onCurrent() && (state.phase === Phase.SPEAKING_ANSWER || state.phase === Phase.AWAITING_ADVANCE)) {
     speakQuestionAt(state.position);
   } else {
     speakQuestionAt((state.position - 1 + deck.length) % deck.length);
@@ -220,6 +252,7 @@ export function jumpTo(questionNumber) {
   let idx = deck.findIndex(q => q.n === questionNumber);
   if (idx < 0) {
     deck = repoDeck('All', false, 'all', settings.known);
+    deckShuffled = false;
     idx = deck.findIndex(q => q.n === questionNumber);
   }
   if (idx >= 0) speakQuestionAt(idx);
@@ -335,14 +368,25 @@ function beginAwaitingAdvance() {
 export function applySettings() {
   persistSettings();
   if (state.mode !== Mode.TEST) {
-    const newDeck = repoDeck(settings.category, settings.shuffle, settings.knownFilter, settings.known);
+    // A shuffled deck keeps its order until Shuffle is turned on again; only its
+    // membership follows the settings.
+    const members = repoDeck(settings.category, false, settings.knownFilter, settings.known);
+    const newDeck = !settings.shuffle ? members
+      : deckShuffled ? keepOrder(deck, members) : shuffleArr(members);
+    deckShuffled = settings.shuffle;
     if (!sameDeck(deck, newDeck)) {
+      const old = deck;
       deck = newDeck;
       const cur = state.current;
       const idx = cur ? deck.findIndex(q => q.n === cur.n) : -1;
-      state.position = idx >= 0 ? idx : 0;
-      // The re-personalized copy, so a new answer shows at once.
-      if (idx >= 0) state.current = deck[idx];
+      if (idx >= 0) {
+        state.position = idx;
+        state.current = deck[idx]; // the re-personalized copy, so a new answer shows at once
+      } else {
+        // Gone from the deck (e.g. just marked known under "Not known"): hold the
+        // question that followed it, for next() and play.
+        state.position = followerIndex(old, cur, state.position);
+      }
     }
   }
   update();
