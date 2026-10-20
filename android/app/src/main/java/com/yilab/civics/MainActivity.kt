@@ -94,19 +94,14 @@ fun CivicsRoot() {
     // playback alive with the screen off and receives AirPods media buttons.
     var controller by remember { mutableStateOf<MediaController?>(null) }
     DisposableEffect(Unit) {
-        var connected: MediaController? = null
         val token = SessionToken(context, ComponentName(context, CivicsAudioService::class.java))
         val future = MediaController.Builder(context, token).buildAsync()
         future.addListener(
-            {
-                runCatching { future.get() }.onSuccess {
-                    connected = it
-                    controller = it
-                }
-            },
+            { runCatching { future.get() }.onSuccess { controller = it } },
             ContextCompat.getMainExecutor(context),
         )
-        onDispose { connected?.release() }
+        // Releases the controller, or cancels the connection when disposed first.
+        onDispose { MediaController.releaseFuture(future) }
     }
 
     RequestNotificationPermission()
@@ -126,13 +121,15 @@ fun CivicsRoot() {
     // The translation takes visual precedence when the UI language matches it.
     val translationPrimary = settings.translationPrimary
 
-    // The four state questions show the officials for the chosen place/district.
-    val personalizedQuestions = remember(settings.jurisdiction, settings.district) {
+    // The four state questions show the officials for the chosen place/district,
+    // on today's date (a new term takes effect without a restart).
+    val today = java.time.LocalDate.now().toString()
+    val personalizedQuestions = remember(settings.jurisdiction, settings.district, today) {
         app.officialsRepo.data.personalize(
             app.questionRepo.questions,
             settings.jurisdiction,
             settings.district,
-            java.time.LocalDate.now().toString(),
+            today,
         )
     }
 

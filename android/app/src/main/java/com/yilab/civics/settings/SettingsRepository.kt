@@ -1,6 +1,7 @@
 package com.yilab.civics.settings
 
 import android.content.Context
+import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.floatPreferencesKey
@@ -67,39 +68,43 @@ class SettingsRepository(context: Context, scope: CoroutineScope) {
     private fun languageName(language: SpeechLanguage?): String? =
         language?.let { if (it.translationKey == "en") "english" else it.translationKey }
 
+    private fun read(prefs: Preferences): StudySettings {
+        // Resolve the merged language, migrating from the older split keys:
+        // language, then ui_language, then spoken_language, then speech_mode.
+        val resolvedLanguage = languageFor(prefs[Keys.LANGUAGE])
+            ?: languageFor(prefs[Keys.UI_LANGUAGE])
+            ?: languageFor(prefs[Keys.SPOKEN_LANGUAGE])
+            ?: prefs[Keys.LEGACY_SPEECH_MODE]
+                ?.let { languageFor(if (it == "english") "english" else "zh-Hans") }
+        return StudySettings(
+            speechRate = prefs[Keys.SPEECH_RATE] ?: 1.0f,
+            thinkSeconds = prefs[Keys.THINK_SECONDS] ?: 3,
+            autoAdvance = prefs[Keys.AUTO_ADVANCE] ?: false,
+            reviewFocus = prefs[Keys.REVIEW_FOCUS] ?: true,
+            category = prefs[Keys.CATEGORY] ?: com.yilab.civics.data.Categories.ALL,
+            shuffle = prefs[Keys.SHUFFLE] ?: false,
+            announceMeta = prefs[Keys.ANNOUNCE_META] ?: true,
+            known = prefs[Keys.KNOWN].orEmpty().mapNotNull { it.toIntOrNull() }.toSet(),
+            knownFilter = when (prefs[Keys.KNOWN_FILTER]) {
+                "known" -> KnownFilter.KNOWN
+                "notKnown" -> KnownFilter.NOT_KNOWN
+                else -> KnownFilter.ALL
+            },
+            language = resolvedLanguage,
+            jurisdiction = prefs[Keys.JURISDICTION]?.takeIf { it.matches(Regex("[A-Z]{2}")) },
+            district = prefs[Keys.DISTRICT]?.takeIf { it >= 1 },
+        )
+    }
+
     val settings: StateFlow<StudySettings> = store.data
-        .map { prefs ->
-            // Resolve the merged language, migrating from the older split keys:
-            // language, then ui_language, then spoken_language, then speech_mode.
-            val resolvedLanguage = languageFor(prefs[Keys.LANGUAGE])
-                ?: languageFor(prefs[Keys.UI_LANGUAGE])
-                ?: languageFor(prefs[Keys.SPOKEN_LANGUAGE])
-                ?: prefs[Keys.LEGACY_SPEECH_MODE]
-                    ?.let { languageFor(if (it == "english") "english" else "zh-Hans") }
-            StudySettings(
-                speechRate = prefs[Keys.SPEECH_RATE] ?: 1.0f,
-                thinkSeconds = prefs[Keys.THINK_SECONDS] ?: 3,
-                autoAdvance = prefs[Keys.AUTO_ADVANCE] ?: false,
-                reviewFocus = prefs[Keys.REVIEW_FOCUS] ?: true,
-                category = prefs[Keys.CATEGORY] ?: com.yilab.civics.data.Categories.ALL,
-                shuffle = prefs[Keys.SHUFFLE] ?: false,
-                announceMeta = prefs[Keys.ANNOUNCE_META] ?: true,
-                known = prefs[Keys.KNOWN].orEmpty().mapNotNull { it.toIntOrNull() }.toSet(),
-                knownFilter = when (prefs[Keys.KNOWN_FILTER]) {
-                    "known" -> KnownFilter.KNOWN
-                    "notKnown" -> KnownFilter.NOT_KNOWN
-                    else -> KnownFilter.ALL
-                },
-                language = resolvedLanguage,
-                jurisdiction = prefs[Keys.JURISDICTION]?.takeIf { it.matches(Regex("[A-Z]{2}")) },
-                district = prefs[Keys.DISTRICT]?.takeIf { it >= 1 },
-            )
-        }
+        .map(::read)
         .stateIn(scope, SharingStarted.Eagerly, StudySettings())
 
     suspend fun update(transform: (StudySettings) -> StudySettings) {
         store.edit { prefs ->
-            val before = settings.value
+            // From this transaction's snapshot, not settings.value: that flow lags
+            // the store, and a stale base would revert a back-to-back update.
+            val before = read(prefs)
             var s = transform(before)
             if (s.jurisdiction != before.jurisdiction || s.district != before.district) {
                 // The four state answers changed — their known marks and stats must be re-earned.

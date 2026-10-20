@@ -219,7 +219,11 @@ private fun LocationSection(
                     items(officials.places) { p ->
                         PickerRow(p.name(settings.spokenLanguage)) {
                             showPlacePicker = false
-                            onChange { it.copy(jurisdiction = p.code, district = null) }
+                            // Re-picking the current place keeps its district (and with
+                            // it the state questions' known marks and stats).
+                            if (p.code != settings.jurisdiction) {
+                                onChange { it.copy(jurisdiction = p.code, district = null) }
+                            }
                         }
                     }
                 }

@@ -27,7 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -57,9 +57,9 @@ fun QuestionsScreen(
 ) {
     val playingSuffix = stringResource(R.string.questions_playing_suffix)
     // View-local filter over the list: all / only known / only not known.
-    var filter by remember { mutableStateOf(KnownFilter.ALL) }
+    var filter by rememberSaveable { mutableStateOf(KnownFilter.ALL) }
     // View-local search text; composes with the known filter above.
-    var query by remember { mutableStateOf("") }
+    var query by rememberSaveable { mutableStateOf("") }
     val shown = questions
         .filter {
             when (filter) {
