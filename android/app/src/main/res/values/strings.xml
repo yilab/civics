@@ -51,8 +51,7 @@
     <string name="listen_stop">Stop</string>
     <string name="listen_mark_known">Mark known</string>
     <string name="listen_known">Known</string>
-    <string name="questions_playing_suffix"> · playing</string>
-    <string name="questions_known">Known</string>
+    <string name="questions_playing_suffix">" · playing"</string>
     <string name="questions_unmark">Unmark as known</string>
     <string name="questions_mark">Mark as known</string>
     <string name="questions_missed_times">Missed %1$d times</string>
@@ -69,8 +68,6 @@
     <string name="settings_progress">Progress</string>
     <string name="settings_speech_rate">Speech rate: %1$s×</string>
     <string name="settings_announce_meta">Announce question number</string>
-    <string name="settings_speech_language">Speech language</string>
-    <string name="settings_bilingual">Also hear the English original</string>
     <string name="settings_ui_language">App language</string>
     <string name="ui_system">System</string>
     <string name="settings_location">Location</string>
@@ -79,10 +76,6 @@
     <string name="settings_not_set">Not set</string>
     <string name="settings_location_hint">Used for the four questions about your state (Q23, Q29, Q61, Q62). Saved only on this device.</string>
     <string name="settings_find_district">Find my district (house.gov)</string>
-    <string name="ui_english">English</string>
-    <string name="ui_zh_hans">简体</string>
-    <string name="ui_zh_hant">繁體</string>
-    <string name="ui_spanish">Español</string>
     <string name="settings_think_pause">Pause before revealing the answer</string>
     <string name="think_wait">Wait</string>
     <string name="think_none">None</string>

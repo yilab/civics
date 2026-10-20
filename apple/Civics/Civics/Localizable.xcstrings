@@ -19,7 +19,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I got it"
+            "value" : "La acerté"
           }
         },
         "zh-Hans" : {
@@ -31,7 +31,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "答对了"
+            "value" : "答對了"
           }
         }
       }
@@ -48,7 +48,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Hear the answer"
+            "value" : "Escuchar la respuesta"
           }
         },
         "zh-Hans" : {
@@ -60,7 +60,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "听答案"
+            "value" : "聽答案"
           }
         }
       }
@@ -77,7 +77,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "I missed it"
+            "value" : "La fallé"
           }
         },
         "zh-Hans" : {
@@ -89,7 +89,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "答错了"
+            "value" : "答錯了"
           }
         }
       }
@@ -106,7 +106,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Next question"
+            "value" : "Siguiente pregunta"
           }
         },
         "zh-Hans" : {
@@ -118,7 +118,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "下一题"
+            "value" : "下一題"
           }
         }
       }
@@ -135,7 +135,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start listening"
+            "value" : "Comenzar a escuchar"
           }
         },
         "zh-Hans" : {
@@ -147,7 +147,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开始听题"
+            "value" : "開始聽題"
           }
         }
       }
@@ -164,7 +164,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "All 128 questions"
+            "value" : "Todas las 128 preguntas"
           }
         },
         "zh-Hans" : {
@@ -176,7 +176,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "全部 128 题"
+            "value" : "全部 128 題"
           }
         }
       }
@@ -193,7 +193,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "American Government"
+            "value" : "Gobierno estadounidense"
           }
         },
         "zh-Hans" : {
@@ -205,7 +205,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "美国政府"
+            "value" : "美國政府"
           }
         }
       }
@@ -222,7 +222,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "American History"
+            "value" : "Historia estadounidense"
           }
         },
         "zh-Hans" : {
@@ -234,7 +234,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "美国历史"
+            "value" : "美國歷史"
           }
         }
       }
@@ -251,7 +251,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Symbols & Holidays"
+            "value" : "Símbolos y feriados"
           }
         },
         "zh-Hans" : {
@@ -263,7 +263,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "象征与节日"
+            "value" : "象徵與節日"
           }
         }
       }
@@ -420,7 +420,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toca para ver la pregunta"
+            "value" : "Toque para ver la pregunta"
           }
         },
         "zh-Hans" : {
@@ -448,7 +448,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Toca para ver la respuesta"
+            "value" : "Toque para ver la respuesta"
           }
         },
         "zh-Hans" : {
@@ -477,7 +477,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "ACCEPTABLE ANSWER"
+            "value" : "RESPUESTA ACEPTABLE"
           }
         },
         "zh-Hans" : {
@@ -535,7 +535,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Known"
+            "value" : "Aprendida"
           }
         },
         "zh-Hans" : {
@@ -564,7 +564,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld known"
+            "value" : "%lld aprendidas"
           }
         },
         "zh-Hans" : {
@@ -593,7 +593,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Mark known"
+            "value" : "Marcar aprendida"
           }
         },
         "zh-Hans" : {
@@ -605,7 +605,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "标记为已掌握"
+            "value" : "標記為已掌握"
           }
         }
       }
@@ -622,7 +622,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No questions"
+            "value" : "No hay preguntas"
           }
         },
         "zh-Hans" : {
@@ -634,7 +634,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "暂无题目"
+            "value" : "暫無題目"
           }
         }
       }
@@ -651,7 +651,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "No text-to-speech voice is available. Enable a voice in Settings › Accessibility › Spoken Content › Voices to hear questions."
+            "value" : "No hay ninguna voz de texto a voz disponible. Active una voz en Ajustes › Accesibilidad › Contenido leído › Voces para escuchar las preguntas."
           }
         },
         "zh-Hans" : {
@@ -663,7 +663,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未找到可用的语音合成声音。请在 设置 › 辅助功能 › 朗读内容 › 声音 中启用一个声音。"
+            "value" : "找不到可用的語音合成聲音。請在 設定 › 輔助使用 › 語音內容 › 聲音 中啟用一個聲音。"
           }
         }
       }
@@ -680,7 +680,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Press Start, put your phone away, and answer each question out loud. On AirPods: one press to hear the answer or continue, two presses for the next question, three to repeat."
+            "value" : "Pulse Comenzar, guarde el teléfono y responda cada pregunta en voz alta. Con AirPods: una pulsación para escuchar la respuesta o continuar, dos para la siguiente pregunta y tres para repetir."
           }
         },
         "zh-Hans" : {
@@ -692,7 +692,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "点击开始，把手机放到一边，大声回答每道题。AirPods：按一下听答案或继续，按两下下一题，按三下重复本题。"
+            "value" : "點按開始，把手機放到一邊，大聲回答每道題。AirPods：按一下聽答案或繼續，按兩下下一題，按三下重複本題。"
           }
         }
       }
@@ -709,7 +709,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Previous question"
+            "value" : "Pregunta anterior"
           }
         },
         "zh-Hans" : {
@@ -721,7 +721,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "上一题"
+            "value" : "上一題"
           }
         }
       }
@@ -738,7 +738,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Question %lld of %lld"
+            "value" : "Pregunta %lld de %lld"
           }
         },
         "zh-Hans" : {
@@ -750,7 +750,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "第 %lld 题 / 共 %lld 题"
+            "value" : "第 %lld 題 / 共 %lld 題"
           }
         }
       }
@@ -767,7 +767,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Stop"
+            "value" : "Detener"
           }
         },
         "zh-Hans" : {
@@ -780,93 +780,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "停止"
-          }
-        }
-      }
-    },
-    "mode.bilingual" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "English + 中文"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "English + 中文"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "英语 + 中文"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "英语 + 中文"
-          }
-        }
-      }
-    },
-    "mode.chinese" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中文"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中文"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中文"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中文"
-          }
-        }
-      }
-    },
-    "mode.english" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "English"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "English"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "英语"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "英语"
           }
         }
       }
@@ -883,7 +796,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Press for the next question"
+            "value" : "Pulse para la siguiente pregunta"
           }
         },
         "zh-Hans" : {
@@ -895,7 +808,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "按一下进入下一题"
+            "value" : "按一下進入下一題"
           }
         }
       }
@@ -912,7 +825,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Did you get it right?"
+            "value" : "¿La acertó?"
           }
         },
         "zh-Hans" : {
@@ -924,7 +837,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "答对了吗？"
+            "value" : "答對了嗎？"
           }
         }
       }
@@ -941,7 +854,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speaking the answer"
+            "value" : "Leyendo la respuesta"
           }
         },
         "zh-Hans" : {
@@ -953,7 +866,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在读答案"
+            "value" : "正在讀答案"
           }
         }
       }
@@ -970,7 +883,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speaking the question — press to hear the answer"
+            "value" : "Leyendo la pregunta — pulse para escuchar la respuesta"
           }
         },
         "zh-Hans" : {
@@ -982,7 +895,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "正在读题——按一下听答案"
+            "value" : "正在讀題——按一下聽答案"
           }
         }
       }
@@ -999,7 +912,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Your turn — answer out loud, then press"
+            "value" : "Su turno — responda en voz alta y luego pulse"
           }
         },
         "zh-Hans" : {
@@ -1011,42 +924,13 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "轮到你了——大声作答，然后按一下"
+            "value" : "輪到你了——大聲作答，然後按一下"
           }
         }
       }
     },
     "Q%lld" : {
 
-    },
-    "questions.known" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Known"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Known"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已掌握"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "已掌握"
-          }
-        }
-      }
     },
     "questions.mark" : {
       "localizations" : {
@@ -1056,10 +940,22 @@
             "value" : "Mark as known"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Marcar como aprendida"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "标记为已掌握"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "標記為已掌握"
           }
         }
       }
@@ -1105,7 +1001,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : " · playing"
+            "value" : " · sonando"
           }
         },
         "zh-Hans" : {
@@ -1158,10 +1054,22 @@
             "value" : "Unmark as known"
           }
         },
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Quitar la marca de aprendida"
+          }
+        },
         "zh-Hans" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "取消已掌握标记"
+          }
+        },
+        "zh-Hant" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "取消已掌握標記"
           }
         }
       }
@@ -1178,7 +1086,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Announce question number"
+            "value" : "Anunciar el número de pregunta"
           }
         },
         "zh-Hans" : {
@@ -1190,7 +1098,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "读出题号"
+            "value" : "讀出題號"
           }
         }
       }
@@ -1207,7 +1115,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Auto-advance after the answer"
+            "value" : "Avanzar automáticamente tras la respuesta"
           }
         },
         "zh-Hans" : {
@@ -1219,36 +1127,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "答案结束后自动下一题"
-          }
-        }
-      }
-    },
-    "settings.bilingual" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Also hear the English original"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Also hear the English original"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "同时朗读英文原文"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "同时朗读英文原文"
+            "value" : "答案結束後自動下一題"
           }
         }
       }
@@ -1265,7 +1144,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Clear known marks"
+            "value" : "Borrar las marcas de aprendidas"
           }
         },
         "zh-Hans" : {
@@ -1277,7 +1156,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "清除已掌握标记"
+            "value" : "清除已掌握標記"
           }
         }
       }
@@ -1294,7 +1173,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "DECK"
+            "value" : "MAZO"
           }
         },
         "zh-Hans" : {
@@ -1306,7 +1185,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "题库"
+            "value" : "題庫"
           }
         }
       }
@@ -1381,7 +1260,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%lld of 128 marked as known"
+            "value" : "%lld de 128 marcadas como aprendidas"
           }
         },
         "zh-Hans" : {
@@ -1393,7 +1272,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "已掌握 %lld / 128 题"
+            "value" : "已掌握 %lld / 128 題"
           }
         }
       }
@@ -1410,7 +1289,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "LANGUAGE"
+            "value" : "IDIOMA"
           }
         },
         "zh-Hans" : {
@@ -1422,7 +1301,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "语言"
+            "value" : "語言"
           }
         }
       }
@@ -1526,7 +1405,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PLAYBACK"
+            "value" : "REPRODUCCIÓN"
           }
         },
         "zh-Hans" : {
@@ -1555,7 +1434,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "PROGRESS"
+            "value" : "PROGRESO"
           }
         },
         "zh-Hans" : {
@@ -1567,7 +1446,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "进度"
+            "value" : "進度"
           }
         }
       }
@@ -1642,7 +1521,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Shuffle"
+            "value" : "Aleatorio"
           }
         },
         "zh-Hans" : {
@@ -1654,36 +1533,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "随机顺序"
-          }
-        }
-      }
-    },
-    "settings.speechLanguage" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Speech language"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Speech language"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "朗读语言"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "朗读语言"
+            "value" : "隨機順序"
           }
         }
       }
@@ -1700,7 +1550,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speech rate: %@×"
+            "value" : "Velocidad de voz: %@×"
           }
         },
         "zh-Hans" : {
@@ -1712,7 +1562,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "语速：%@×"
+            "value" : "語速：%@×"
           }
         }
       }
@@ -1729,7 +1579,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Pause before revealing the answer"
+            "value" : "Pausa antes de revelar la respuesta"
           }
         },
         "zh-Hans" : {
@@ -1741,7 +1591,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "显示答案前的停顿"
+            "value" : "顯示答案前的停頓"
           }
         }
       }
@@ -1758,7 +1608,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "App language"
+            "value" : "Idioma de la aplicación"
           }
         },
         "zh-Hans" : {
@@ -1770,7 +1620,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "界面语言"
+            "value" : "介面語言"
           }
         }
       }
@@ -1787,7 +1637,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "VOICE"
+            "value" : "VOZ"
           }
         },
         "zh-Hans" : {
@@ -1799,7 +1649,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "语音"
+            "value" : "語音"
           }
         }
       }
@@ -1873,7 +1723,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Listen"
+            "value" : "Escuchar"
           }
         },
         "zh-Hans" : {
@@ -1885,7 +1735,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "听题"
+            "value" : "聽題"
           }
         }
       }
@@ -1902,7 +1752,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Questions"
+            "value" : "Preguntas"
           }
         },
         "zh-Hans" : {
@@ -1914,7 +1764,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "题库"
+            "value" : "題庫"
           }
         }
       }
@@ -1931,7 +1781,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Settings"
+            "value" : "Ajustes"
           }
         },
         "zh-Hans" : {
@@ -1943,7 +1793,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "设置"
+            "value" : "設定"
           }
         }
       }
@@ -1960,7 +1810,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Test"
+            "value" : "Examen"
           }
         },
         "zh-Hans" : {
@@ -1972,7 +1822,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "测试"
+            "value" : "測試"
           }
         }
       }
@@ -1989,7 +1839,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Take another test"
+            "value" : "Hacer otro examen"
           }
         },
         "zh-Hans" : {
@@ -2001,7 +1851,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "再测一次"
+            "value" : "再測一次"
           }
         }
       }
@@ -2018,7 +1868,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Back to listening"
+            "value" : "Volver a escuchar"
           }
         },
         "zh-Hans" : {
@@ -2030,36 +1880,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "返回听题"
-          }
-        }
-      }
-    },
-    "test.correctLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "correct"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "correct"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "答对"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "答对"
+            "value" : "返回聽題"
           }
         }
       }
@@ -2076,7 +1897,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Not yet"
+            "value" : "Aún no"
           }
         },
         "zh-Hans" : {
@@ -2088,7 +1909,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "未通过"
+            "value" : "未通過"
           }
         }
       }
@@ -2105,7 +1926,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Recent tests"
+            "value" : "Exámenes recientes"
           }
         },
         "zh-Hans" : {
@@ -2117,7 +1938,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最近测试"
+            "value" : "最近測試"
           }
         }
       }
@@ -2180,35 +2001,6 @@
         }
       }
     },
-    "test.missedLabel" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "missed"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "missed"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "答错"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "答错"
-          }
-        }
-      }
-    },
     "test.passed" : {
       "extractionState" : "stale",
       "localizations" : {
@@ -2221,7 +2013,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Passed"
+            "value" : "Aprobado"
           }
         },
         "zh-Hans" : {
@@ -2233,7 +2025,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "通过"
+            "value" : "通過"
           }
         }
       }
@@ -2250,7 +2042,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Question %lld of %lld"
+            "value" : "Pregunta %lld de %lld"
           }
         },
         "zh-Hans" : {
@@ -2262,7 +2054,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "第 %lld 题 / 共 %lld 题"
+            "value" : "第 %lld 題 / 共 %lld 題"
           }
         }
       }
@@ -2308,7 +2100,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Up to 20 questions, one at a time."
+            "value" : "Hasta 20 preguntas, una a la vez."
           }
         },
         "zh-Hans" : {
@@ -2320,7 +2112,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "最多 20 道题，逐题作答。"
+            "value" : "最多 20 道題，逐題作答。"
           }
         }
       }
@@ -2337,7 +2129,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reveal the answer, then mark whether you got it right."
+            "value" : "Revele la respuesta y luego marque si la acertó."
           }
         },
         "zh-Hans" : {
@@ -2349,7 +2141,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "先看答案，再如实判断自己是否答对。"
+            "value" : "先看答案，再如實判斷自己是否答對。"
           }
         }
       }
@@ -2366,7 +2158,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Reach 12 correct to pass; miss 9 and the test ends — like the real interview."
+            "value" : "Alcance 12 correctas para aprobar; falle 9 y el examen termina — igual que la entrevista real."
           }
         },
         "zh-Hans" : {
@@ -2378,7 +2170,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "答对 12 题即通过；答错 9 题测试结束——与真实面试相同。"
+            "value" : "答對 12 題即通過；答錯 9 題測試結束——與真實面試相同。"
           }
         }
       }
@@ -2424,7 +2216,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Start practice test"
+            "value" : "Comenzar examen de práctica"
           }
         },
         "zh-Hans" : {
@@ -2436,7 +2228,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "开始模拟测试"
+            "value" : "開始模擬測試"
           }
         }
       }
@@ -2569,7 +2361,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Practice test"
+            "value" : "Examen de práctica"
           }
         },
         "zh-Hans" : {
@@ -2581,7 +2373,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "模拟测试"
+            "value" : "模擬測試"
           }
         }
       }
@@ -2656,7 +2448,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "None"
+            "value" : "Ninguna"
           }
         },
         "zh-Hans" : {
@@ -2668,7 +2460,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "不停顿"
+            "value" : "不停頓"
           }
         }
       }
@@ -2685,7 +2477,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "%llds"
+            "value" : "%lld s"
           }
         },
         "zh-Hans" : {
@@ -2714,7 +2506,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wait"
+            "value" : "Esperar"
           }
         },
         "zh-Hans" : {
@@ -2726,94 +2518,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "手动继续"
-          }
-        }
-      }
-    },
-    "ui.chinese" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中文"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中文"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中文"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "中文"
-          }
-        }
-      }
-    },
-    "ui.english" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "English"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "English"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "English"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "English"
-          }
-        }
-      }
-    },
-    "ui.spanish" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Español"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Español"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Español"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Español"
+            "value" : "手動繼續"
           }
         }
       }
@@ -2830,7 +2535,7 @@
         "es" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "System"
+            "value" : "Sistema"
           }
         },
         "zh-Hans" : {
@@ -2842,65 +2547,7 @@
         "zh-Hant" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "跟随系统"
-          }
-        }
-      }
-    },
-    "ui.zhHans" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "简体"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "简体"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "简体"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "简体"
-          }
-        }
-      }
-    },
-    "ui.zhHant" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "繁體"
-          }
-        },
-        "es" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "繁體"
-          }
-        },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "繁體"
-          }
-        },
-        "zh-Hant" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "繁體"
+            "value" : "跟隨系統"
           }
         }
       }
