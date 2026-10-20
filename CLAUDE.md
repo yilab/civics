@@ -20,7 +20,7 @@ The app speaks each question, pauses for you to answer aloud, then speaks the an
 ```bash
 # Android (from android/)
 ./gradlew test                                        # all unit tests
-./gradlew test --tests "com.yilab.civics.StudyEngineTest"   # single test class
+./gradlew testDebugUnitTest --tests "com.yilab.civics.StudyEngineTest"   # single test class (`test` rejects --tests)
 ./gradlew installDebug                                # build + install to device/emulator
 
 # Apple (from apple/Civics/)
