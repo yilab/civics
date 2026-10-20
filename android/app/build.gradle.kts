@@ -23,8 +23,10 @@ android {
 
     buildTypes {
         release {
+            // R8 with the default and library keep rules; without it the full
+            // material-icons-extended set ships unshrunk.
             optimization {
-                enable = false
+                enable = true
             }
         }
     }
