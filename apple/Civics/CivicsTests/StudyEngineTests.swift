@@ -793,6 +793,25 @@ struct StudyEngineTests {
         #expect(records.count == 1)
     }
 
+    @Test func aPausedTestResumesOnTheSameQuestion() throws {
+        let (engine, speech) = makeTestEngine()
+        engine.startTest()
+        for _ in 0..<2 {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(correct: true)
+        }
+        let q = try #require(engine.state.current).n
+        engine.pause() // a call, a lock-screen pause
+        #expect(engine.state.phase == .idle)
+        #expect(engine.state.mode == .test)
+        engine.primaryAction() // Resume
+        #expect(speech.spoken.last?.utteranceID == "q-\(q)")
+        #expect(engine.state.testIndex == 2)
+        #expect(engine.state.testCorrect == 2)
+    }
+
     @Test func jumpingToAQuestionDuringATestLeavesTheTestAlone() {
         let (engine, speech) = makeTestEngine()
         engine.startTest()

@@ -61,7 +61,7 @@ export function applyChrome() {
   setText('t-reveal', t('button_hear_answer'));
   setText('t-miss', '✗ ' + t('button_missed_it'));
   setText('t-got', '✓ ' + t('button_got_it'));
-  setText('t-stop', t('stop'));
+  setText('t-stop', t('test_end'));
   setText('r-again', t('test_again'));
   setText('r-back', t('test_back'));
   setText('s-lang-title', t('settings_language'));

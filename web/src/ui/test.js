@@ -14,7 +14,8 @@ export function renderTest() {
     renderTestResult();
     return;
   }
-  if (state.mode === Mode.TEST && state.phase !== Phase.IDLE) {
+  // Idle in test mode is a paused test (a call, a hidden tab): keep it on screen.
+  if (state.mode === Mode.TEST) {
     start.hidden = true; result.hidden = true; run.hidden = false;
     renderTestRun();
     return;
@@ -89,11 +90,14 @@ function renderTestRun() {
     THINKING: t('phase_thinking'),
     SPEAKING_ANSWER: t('phase_speaking_answer'),
     AWAITING_GRADE: t('phase_awaiting_grade'),
+    IDLE: t('test_paused'),
   }[state.phase] || '';
   setText('t-phase', cap);
   const grading = state.phase === Phase.AWAITING_GRADE;
   show('t-grade', grading);
   show('t-reveal', !grading);
+  // Resume repeats the paused question (the engine's play from idle).
+  setText('t-reveal', state.phase === Phase.IDLE ? t('test_resume') : t('button_hear_answer'));
 }
 function renderTestResult() {
   const passed = state.testOutcome === Outcome.PASSED;

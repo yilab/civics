@@ -20,7 +20,8 @@ struct TestScreen: View {
             VStack(alignment: .leading, spacing: 16) {
                 switch state.phase {
                 case .finished: finished
-                case .idle: start
+                // Idle in test mode is a paused test (a call, a lock-screen pause): keep it on screen.
+                case .idle where state.mode != .test: start
                 default: running
                 }
             }
@@ -157,6 +158,18 @@ struct TestScreen: View {
                 .controlSize(.large)
                 .accessibilityIdentifier("revealAnswer")
             }
+
+            if state.phase == .idle {
+                Button(action: onBackToStudy) {
+                    Text(L10n.t("test.end"))
+                        .frame(maxWidth: .infinity)
+                        .frame(height: 24)
+                }
+                .buttonStyle(.bordered)
+                .controlSize(.large)
+                .padding(.top, 8)
+                .accessibilityIdentifier("endTest")
+            }
         }
     }
 
@@ -232,12 +245,14 @@ struct TestScreen: View {
         case .thinking: L10n.t("phase.thinking")
         case .speakingAnswer: L10n.t("phase.speakingAnswer")
         case .awaitingGrade: L10n.t("phase.awaitingGrade")
+        case .idle: L10n.t("test.paused")
         default: ""
         }
     }
 
+    /// Resume repeats the paused question (the engine's play from idle).
     private var revealLabel: String {
-        L10n.t("button.hearAnswer")
+        state.phase == .idle ? L10n.t("test.resume") : L10n.t("button.hearAnswer")
     }
 
     // MARK: - Finished

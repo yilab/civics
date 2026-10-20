@@ -25,6 +25,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.yilab.civics.R
+import com.yilab.civics.audio.EngineMode
 import com.yilab.civics.audio.Phase
 import com.yilab.civics.audio.SpokenBlock
 import com.yilab.civics.audio.StudyState
@@ -55,10 +56,11 @@ fun TestScreen(
             .verticalScroll(rememberScrollState())
             .padding(horizontal = 20.dp, vertical = 16.dp),
     ) {
-        when (state.phase) {
-            Phase.FINISHED -> Finished(state, missedCount, onStart, onStartReview, onBackToStudy)
-            Phase.IDLE -> Start(history, missedCount, onStart, onStartReview)
-            else -> Running(state, language, translationPrimary, onReveal, onGrade)
+        when {
+            state.phase == Phase.FINISHED -> Finished(state, missedCount, onStart, onStartReview, onBackToStudy)
+            // Idle in test mode is a paused test (a call, a lock-screen pause): keep it on screen.
+            state.phase == Phase.IDLE && state.mode != EngineMode.TEST -> Start(history, missedCount, onStart, onStartReview)
+            else -> Running(state, language, translationPrimary, onReveal, onGrade, onEnd = onBackToStudy)
         }
     }
 }
@@ -133,7 +135,9 @@ private fun Running(
     translationPrimary: Boolean,
     onReveal: () -> Unit,
     onGrade: (Boolean) -> Unit,
+    onEnd: () -> Unit,
 ) {
+    val paused = state.phase == Phase.IDLE
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -198,6 +202,7 @@ private fun Running(
             Phase.THINKING -> stringResource(R.string.phase_thinking)
             Phase.SPEAKING_ANSWER -> stringResource(R.string.phase_speaking_answer)
             Phase.AWAITING_GRADE -> stringResource(R.string.phase_awaiting_grade)
+            Phase.IDLE -> stringResource(R.string.test_paused)
             else -> ""
         },
         style = MaterialTheme.typography.bodyMedium,
@@ -215,8 +220,15 @@ private fun Running(
             }
         }
     } else {
+        // Resume repeats the paused question (the engine's play from idle).
         Button(onClick = onReveal, modifier = Modifier.fillMaxWidth().height(56.dp)) {
-            Text(stringResource(R.string.button_hear_answer))
+            Text(stringResource(if (paused) R.string.test_resume else R.string.button_hear_answer))
+        }
+    }
+    if (paused) {
+        Spacer(Modifier.height(8.dp))
+        OutlinedButton(onClick = onEnd, modifier = Modifier.fillMaxWidth().height(56.dp)) {
+            Text(stringResource(R.string.test_end))
         }
     }
 }

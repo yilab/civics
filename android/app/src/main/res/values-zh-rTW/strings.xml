@@ -47,6 +47,9 @@
     <string name="test_start_review">複習答錯的題（%1$d）</string>
     <string name="test_history_review">複習</string>
     <string name="test_missed_heading">本次答錯</string>
+    <string name="test_paused">已暫停</string>
+    <string name="test_resume">繼續測試</string>
+    <string name="test_end">結束測試</string>
     <string name="listen_previous_question">上一題</string>
     <string name="listen_stop">停止</string>
     <string name="listen_mark_known">標記為已掌握</string>

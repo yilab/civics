@@ -822,6 +822,26 @@ class StudyEngineTest {
     }
 
     @Test
+    fun `a paused test resumes on the same question`() = runTest {
+        val (engine, speech) = engine(MutableStateFlow(StudySettings()))
+        engine.startTest()
+        repeat(2) {
+            speech.finishLast()
+            engine.primaryAction()
+            speech.finishLast()
+            engine.grade(true)
+        }
+        val q = engine.state.value.current!!.n
+        engine.pause() // a call, a lock-screen pause
+        assertEquals(Phase.IDLE, engine.state.value.phase)
+        assertEquals(com.yilab.civics.audio.EngineMode.TEST, engine.state.value.mode)
+        engine.primaryAction() // Resume
+        assertEquals("q-$q", speech.spoken.last().first)
+        assertEquals(2, engine.state.value.testIndex)
+        assertEquals(2, engine.state.value.testCorrect)
+    }
+
+    @Test
     fun `jumping to a question during a test leaves the test alone`() = runTest {
         val (engine, speech) = engine(MutableStateFlow(StudySettings()))
         engine.startTest()

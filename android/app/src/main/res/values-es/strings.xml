@@ -47,6 +47,9 @@
     <string name="test_start_review">Practicar las preguntas falladas (%1$d)</string>
     <string name="test_history_review">Repaso</string>
     <string name="test_missed_heading">Falladas esta vez</string>
+    <string name="test_paused">En pausa</string>
+    <string name="test_resume">Reanudar el examen</string>
+    <string name="test_end">Terminar el examen</string>
     <string name="listen_previous_question">Pregunta anterior</string>
     <string name="listen_stop">Detener</string>
     <string name="listen_mark_known">Marcar aprendida</string>

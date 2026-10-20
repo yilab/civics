@@ -47,6 +47,9 @@
     <string name="test_start_review">Practice missed questions (%1$d)</string>
     <string name="test_history_review">Review</string>
     <string name="test_missed_heading">Missed this time</string>
+    <string name="test_paused">Paused</string>
+    <string name="test_resume">Resume test</string>
+    <string name="test_end">End test</string>
     <string name="listen_previous_question">Previous question</string>
     <string name="listen_stop">Stop</string>
     <string name="listen_mark_known">Mark known</string>
