@@ -53,6 +53,7 @@ python3 android/tools/capture-screenshots.py tablet-7   # 7" tablet (Nexus_7)
 # Web (from web/, npm install once)
 npm run sync      # regenerate question bank from sources + rebuild artifact
 npm run build     # rebuild web/civics-test-study-tool.html from web/src/
+npm test          # web test suite (node:test, no extra dependencies)
 npm run dev       # build + wrangler dev (local Cloudflare Workers)
 npm run deploy    # build + wrangler deploy
 
@@ -62,7 +63,7 @@ npm run app       # rebuild web bundle + tauri build (release installers)
 (cd src-tauri && cargo test)   # SAPI voice/karaoke tests (Windows)
 ```
 
-Web has no test suite — a clean `npm run build` is its smoke test. Android unit tests use JUnit + `kotlinx-coroutines-test` (`StudyEngineTest` drives the engine via a `FakeSpeechEngine` with virtual time). Apple unit tests are in `CivicsTests` (StudyEngine, KaraokeText, QuestionRepository). Desktop: `cargo test` in `desktop/src-tauri/` exercises the SAPI backend live (voice enumeration, word-boundary events).
+Web tests live in `web/test/` and run on `node:test`: `picker.test.mjs` and `officials.test.mjs` mirror the Kotlin `TestPickerTest`/`OfficialsDataTest`, and `app.test.mjs` loads the real UI and engine against a minimal browser stand-in (`test/support/browser.mjs`; CSS imports are stubbed by a module hook). CI (`.github/workflows/ci.yml`, Linux) runs the web suite, `npm run sync` with a no-diff check on every generated file, and the Android unit tests; Apple tests run locally. Android unit tests use JUnit + `kotlinx-coroutines-test` (`StudyEngineTest` drives the engine via a `FakeSpeechEngine` with virtual time). Apple unit tests are in `CivicsTests` (StudyEngine, KaraokeText, QuestionRepository). Desktop: `cargo test` in `desktop/src-tauri/` exercises the SAPI backend live (voice enumeration, word-boundary events).
 
 ## Question-Bank Data Pipeline
 

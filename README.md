@@ -75,8 +75,11 @@ The privacy policy (`web/src/privacy.html`) is written to `dist/privacy.html` an
 at `/privacy` — that's the privacy-policy URL for the App Store and Google Play. Update
 it whenever the apps' data handling changes.
 
-The web app has no test suite; a clean build is its smoke test. Android and Apple
-have unit tests for the engine, karaoke highlighting, and question repository.
+`npm test` runs the web suite: the deck picker and state-answer rules, plus the
+whole app driven in Node against a minimal browser stand-in. Android and Apple have
+unit tests for the engine, karaoke highlighting, and question repository. CI runs the
+web suite, a check that every generated file matches its sources, and the Android
+unit tests.
 
 ## Question bank pipeline
 
