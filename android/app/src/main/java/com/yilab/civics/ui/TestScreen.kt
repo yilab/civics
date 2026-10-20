@@ -58,9 +58,10 @@ fun TestScreen(
     ) {
         when {
             state.phase == Phase.FINISHED -> Finished(state, missedCount, onStart, onStartReview, onBackToStudy)
-            // Idle in test mode is a paused test (a call, a lock-screen pause): keep it on screen.
-            state.phase == Phase.IDLE && state.mode != EngineMode.TEST -> Start(history, missedCount, onStart, onStartReview)
-            else -> Running(state, language, translationPrimary, onReveal, onGrade, onEnd = onBackToStudy)
+            // A test in progress, including a paused one (a call, a lock-screen pause).
+            // Study playback is not a test: the tab keeps offering one.
+            state.mode == EngineMode.TEST -> Running(state, language, translationPrimary, onReveal, onGrade, onEnd = onBackToStudy)
+            else -> Start(history, missedCount, onStart, onStartReview)
         }
     }
 }

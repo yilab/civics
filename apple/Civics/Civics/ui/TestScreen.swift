@@ -18,11 +18,12 @@ struct TestScreen: View {
     var body: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
-                switch state.phase {
-                case .finished: finished
-                // Idle in test mode is a paused test (a call, a lock-screen pause): keep it on screen.
-                case .idle where state.mode != .test: start
-                default: running
+                switch (state.phase, state.mode) {
+                case (.finished, _): finished
+                // A test in progress, including a paused one (a call, a lock-screen pause).
+                // Study playback is not a test: the tab keeps offering one.
+                case (_, .test): running
+                default: start
                 }
             }
             .padding(.horizontal, 20)
