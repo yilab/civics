@@ -131,6 +131,9 @@ struct SettingsScreen: View {
                 }
                 ForEach(officials.places, id: \.code) { p in
                     Button(p.name(language: settings.spokenLanguage)) {
+                        // Re-picking the current place keeps its district (and with
+                        // it the state questions' known marks and stats).
+                        guard p.code != settings.jurisdiction else { return }
                         onChange { $0.copy(jurisdiction: .some(p.code), district: .some(nil)) }
                     }
                 }

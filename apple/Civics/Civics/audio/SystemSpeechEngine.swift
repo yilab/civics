@@ -5,8 +5,8 @@ import AVFoundation
 /// Unlike Android's TextToSpeech there is no async initialization step: voice
 /// availability is known synchronously at construction, so no pending-utterance
 /// slot is needed. There is no error delegate callback either — `didCancel`
-/// stands in for it (user stops are filtered out by StudyEngine's
-/// expectedUtterance guard, so only flaky system-side cancels reach it).
+/// stands in for it (user stops are dropped by the utterance serial check, so
+/// only system-side cancels of the live utterance reach it).
 @MainActor
 final class SystemSpeechEngine: NSObject, SpeechEngine {
 
@@ -17,12 +17,20 @@ final class SystemSpeechEngine: NSObject, SpeechEngine {
 
     private let synthesizer = AVSpeechSynthesizer()
 
-    /// Carries the utterance id through the delegate callbacks.
+    /// Serial of the utterance this engine last started (0 after a stop). Callbacks
+    /// for any other — a flushed or stopped utterance — are dropped: the id alone
+    /// can't tell them apart when the question in flight is spoken again.
+    private var currentSerial = 0
+    private var lastSerial = 0
+
+    /// Carries the utterance id and serial through the delegate callbacks.
     private final class TaggedUtterance: AVSpeechUtterance {
         let utteranceID: String
+        let serial: Int
 
-        init(utteranceID: String, text: String) {
+        init(utteranceID: String, text: String, serial: Int) {
             self.utteranceID = utteranceID
+            self.serial = serial
             super.init(string: text)
         }
 
@@ -59,16 +67,19 @@ final class SystemSpeechEngine: NSObject, SpeechEngine {
             }
             return
         }
-        let u = TaggedUtterance(utteranceID: utteranceID, text: text)
+        lastSerial += 1
+        let u = TaggedUtterance(utteranceID: utteranceID, text: text, serial: lastSerial)
         u.voice = voice
         // Linear scaling around the default rate, mirroring Android's speech-rate multiplier.
         u.rate = AVSpeechUtteranceDefaultSpeechRate * speechRate
         // AVSpeechSynthesizer enqueues by default; flush first for QUEUE_FLUSH parity.
         synthesizer.stopSpeaking(at: .immediate)
+        currentSerial = u.serial
         synthesizer.speak(u)
     }
 
     func stop() {
+        currentSerial = 0
         synthesizer.stopSpeaking(at: .immediate)
     }
 
@@ -83,8 +94,9 @@ extension SystemSpeechEngine: AVSpeechSynthesizerDelegate {
     // like Android's mainHandler.post.
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
         guard let tagged = utterance as? TaggedUtterance else { return }
-        let id = tagged.utteranceID
+        let id = tagged.utteranceID, serial = tagged.serial
         Task { @MainActor in
+            guard serial == self.currentSerial else { return }
             self.callback?.onDone(utteranceID: id)
         }
     }
@@ -93,19 +105,21 @@ extension SystemSpeechEngine: AVSpeechSynthesizerDelegate {
     // holds UTF-16 offsets into the utterance string.
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, willSpeakRangeOfSpeechString characterRange: NSRange, utterance: AVSpeechUtterance) {
         guard let tagged = utterance as? TaggedUtterance else { return }
-        let id = tagged.utteranceID
+        let id = tagged.utteranceID, serial = tagged.serial
         Task { @MainActor in
+            guard serial == self.currentSerial else { return }
             self.callback?.onRange(utteranceID: id, range: characterRange)
         }
     }
 
-    // Reached for user stops (pause/skip/flush — those ids are stale by delivery
-    // time and ignored by StudyEngine) and for system-side cancellations. Reported
-    // as an error so a flaky cancel skips the utterance instead of wedging the deck.
+    // User stops (pause/skip/flush) fail the serial check and are dropped; what
+    // remains is a system-side cancel of the live utterance, reported as an error
+    // so it skips the utterance instead of wedging the deck.
     nonisolated func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didCancel utterance: AVSpeechUtterance) {
         guard let tagged = utterance as? TaggedUtterance else { return }
-        let id = tagged.utteranceID
+        let id = tagged.utteranceID, serial = tagged.serial
         Task { @MainActor in
+            guard serial == self.currentSerial else { return }
             self.callback?.onError(utteranceID: id)
         }
     }

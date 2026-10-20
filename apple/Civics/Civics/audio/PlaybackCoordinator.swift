@@ -14,6 +14,9 @@ final class PlaybackCoordinator {
     /// like CivicsPlayer's hasStarted gate.
     private var hasStarted = false
 
+    /// The last engine state applied here, minus its karaoke highlight.
+    private var lastApplied: StudyState?
+
     init(engine: StudyEngine) {
         self.engine = engine
     }
@@ -67,6 +70,12 @@ final class PlaybackCoordinator {
 
         engine.observeState { [weak self] state in
             guard let self else { return }
+            // Word-range highlight updates arrive several times per second; the
+            // audio session and now-playing info only care about the rest.
+            var settled = state
+            settled.highlight = nil
+            guard settled != lastApplied else { return }
+            lastApplied = settled
             if state.playing { hasStarted = true }
             updatePlaybackResources(playing: state.playing)
             updateNowPlaying(state)
@@ -115,8 +124,9 @@ final class PlaybackCoordinator {
             // otherwise iOS suspends the app in the background and the timers die.
             try? session.setActive(true)
         } else if hasStarted {
-            // Released on pause so other audio can resume, like abandoning focus.
-            try? session.setActive(false)
+            // Released on pause so other audio can resume, like abandoning focus;
+            // without the option, interrupted apps are never told they may.
+            try? session.setActive(false, options: .notifyOthersOnDeactivation)
         }
         #endif
     }
@@ -125,8 +135,16 @@ final class PlaybackCoordinator {
         let center = MPNowPlayingInfoCenter.default()
         guard hasStarted, let q = state.current else {
             center.nowPlayingInfo = nil
+            #if os(macOS)
+            center.playbackState = .stopped
+            #endif
             return
         }
+        #if os(macOS)
+        // macOS has no audio session to infer playback from; it reads this state
+        // to route media keys and show the app in Now Playing.
+        center.playbackState = state.playing ? .playing : .paused
+        #endif
         center.nowPlayingInfo = [
             MPMediaItemPropertyTitle: "Question \(q.n)",
             MPMediaItemPropertyArtist: q.category,

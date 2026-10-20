@@ -113,8 +113,11 @@ final class ScreenshotTests: XCTestCase {
         let reveal = app.buttons["revealAnswer"]
         XCTAssertTrue(reveal.waitForExistence(timeout: 10))
         reveal.tap()
+        // Grading appears only after the whole answer is spoken — English then
+        // the translation in Chinese mode, for a randomly drawn question — so
+        // a long answer on a loaded simulator can take well over 10 s.
         let gotIt = app.buttons["gradeCorrect"]
-        XCTAssertTrue(gotIt.waitForExistence(timeout: 10))
+        XCTAssertTrue(gotIt.waitForExistence(timeout: 45))
         gotIt.tap()
         XCTAssertTrue(app.staticTexts[labels.testQuestion2].waitForExistence(timeout: 10))
         Thread.sleep(forTimeInterval: highlightDelay)

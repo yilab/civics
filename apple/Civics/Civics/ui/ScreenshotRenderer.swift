@@ -111,7 +111,8 @@ enum ScreenshotRenderer {
             render(chrome(.test) {
                 TestScreen(state: testState, history: [], language: lang,
                            translationPrimary: translationPrimary,
-                           onStart: {}, onReveal: {}, onGrade: { _ in }, onBackToStudy: {})
+                           onStart: {}, onStartReview: {}, onReveal: {}, onGrade: { _ in },
+                           onBackToStudy: {})
             }, to: out, locale: locale, name: "04-test")
 
             // 5 — Settings (language grid, speech rate, think pause).

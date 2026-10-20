@@ -75,9 +75,12 @@ final class OfficialsData {
         templates = file.templates
     }
 
-    /// Local date in the data's yyyy-MM-dd format.
+    /// Local date in the data's yyyy-MM-dd format. Always Gregorian, whatever the
+    /// device calendar: Buddhist years run 543 ahead, Japanese and Persian ones far behind.
     static func today(_ date: Date = Date()) -> String {
-        let c = Calendar.current.dateComponents([.year, .month, .day], from: date)
+        var calendar = Calendar(identifier: .gregorian)
+        calendar.timeZone = .current
+        let c = calendar.dateComponents([.year, .month, .day], from: date)
         return String(format: "%04d-%02d-%02d", c.year ?? 0, c.month ?? 0, c.day ?? 0)
     }
 

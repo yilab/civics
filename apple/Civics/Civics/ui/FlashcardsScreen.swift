@@ -93,6 +93,12 @@ struct FlashcardsScreen: View {
             .padding(.horizontal, 20)
             .padding(.vertical, 16)
         }
+        .onChange(of: questions) {
+            // A new place, district or date re-personalizes the state questions;
+            // swap in the new copies so the order, position, and flip survive.
+            let byNumber = Dictionary(uniqueKeysWithValues: questions.map { ($0.n, $0) })
+            deck = deck.map { byNumber[$0.n] ?? $0 }
+        }
     }
 
     // MARK: - Pieces
